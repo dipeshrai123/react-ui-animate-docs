@@ -90,14 +90,14 @@
 .hover-menu-2,
 .hover-menu-3,
 .hover-menu-4 {
-  height: 50px;
+  height: 40px;
   min-width: 200px;
   border-radius: 7% 11% 10% 9% / 6% 6% 7% 9%;
   padding: 10px;
   position: absolute;
   top: 0px;
   left: 0px;
-  margin: 0;
+
   border-right: 2px solid rgb(22, 52, 223);
   border-left: 2px solid rgb(22, 52, 223);
   /* background-image: radial-gradient(

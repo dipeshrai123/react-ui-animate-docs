@@ -47,7 +47,7 @@ export const HoverMenu = () => {
                     translateX: interpolate(
                       animation.value,
                       [0, 1],
-                      ["0px", "-70px"]
+                      ["0px", "-80px"]
                     ),
                   }}
                 >
@@ -95,7 +95,7 @@ export const HoverMenu = () => {
                     translateX: interpolate(
                       animation.value,
                       [0, 1],
-                      ["0px", "70px"]
+                      ["0px", "80px"]
                     ),
                   }}
                 >

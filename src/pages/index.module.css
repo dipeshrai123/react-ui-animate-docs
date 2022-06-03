@@ -80,6 +80,8 @@
   border-left: 2px solid rgb(22, 52, 223);
   position: relative;
   text-decoration: none;
+  font-size: 14px;
+  transition: border 0.4s;
 }
 
 .buttons:before {
@@ -93,4 +95,11 @@
   border-left: 2px solid rgb(22, 52, 223);
   transform: translate3d(-50%, -50%, 0) scale(1.025) rotate(0.7deg);
   border-radius: 5% 5% 7% 9% / 6% 10% 11% 9%;
+}
+
+.buttons:hover {
+  text-decoration: none;
+  text-shadow: none;
+  color: rgb(22, 52, 223);
+  border: 1px solid rgb(22, 52, 223);
 }
