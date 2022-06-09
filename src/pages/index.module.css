@@ -82,6 +82,7 @@
   text-decoration: none;
   font-size: 14px;
   transition: border 0.4s;
+  width: 120px;
 }
 
 .buttons:before {
