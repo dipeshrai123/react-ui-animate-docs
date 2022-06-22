@@ -16,11 +16,11 @@ Gestures in React UI Animate is a set of gestures that let you bind mouse and to
 
 Currently, the library provides the following list of gesture hooks. All these hooks share similar API pattern:
 
-- [`useScroll`](#) for scroll gesture.
-- [`useMouseMove`](#) for mouse move gesture.
-- [`useDrag`](#) for drag gesture.
-- [`useWheel`](#) for mouse wheel gesture.
-- [`useGesture`](#) for multiple gestures.
+- [`useScroll`](/docs/1.4.6/api-references/hooks/use-scroll) for scroll gesture.
+- [`useMouseMove`](/docs/1.4.6/api-references/hooks/use-mouse-move) for mouse move gesture.
+- [`useDrag`](/docs/1.4.6/api-references/hooks/use-drag) for drag gesture.
+- [`useWheel`](/docs/1.4.6/api-references/hooks/use-wheel) for mouse wheel gesture.
+- [`useGesture`](/docs/1.4.6/api-references/hooks/use-gesture) for multiple gestures. 
 
 ## Binding a gesture to a Node
 
