@@ -25,7 +25,7 @@ const FeatureList = [
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        React UI Animate comes with variaties of APIs to implement very complex
+        React UI Animate comes with variaties of APIs to implement complex
         gestures in easy way.
       </>
     ),
