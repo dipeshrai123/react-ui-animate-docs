@@ -4,18 +4,12 @@ id: intro
 title: Introduction
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
-React UI Animate is a react library that allows for creating smooth animations and gesture interactions.
+**React UI Animate** is a React library that enables smooth animations and gesture interactions on the web.
 
 ## Motivation and Library overview
 
-Animations on web without any performance drops is very important and we also want controlled animations.
+Creating animations on the web without performance drops is crucial, and controlled animations are equally important. This library adopts a modern approach to animation, drawing inspiration from Framer Motion and React Native Reanimated.
 
-This library represents a modern approach to animation. It is very much inspired by **`framer-motion`** & **`react-native-reanimated`**. It provides very ease of use APIs to implement physics based spring and duration based timing animations with performance. It also provides different hooks to implement gestures on web.
+React UI Animate offers easy-to-use APIs for implementing both physics-based spring animations and duration-based timing animations, all while ensuring high performance. It also includes various hooks for adding gestures to web applications.
 
-**`react-ui-animate`** is a great tool for creating smooth animations as well as gesture interaction on web. It provides very simple and easy APIs to create very powerful and smooth animation without any performance issues. And it also provides different easy to use hooks for gesture interactions. This library represents a modern way of animating and creating gesture based interaction on web. The UI can be animated without any perfomance issues and it also supports powerful interpolation. It does not cast any re-renders and affects any of your views. It simply animates the way you want your view to animate.
+With React UI Animate, you can create smooth, powerful animations and gesture interactions effortlessly. The library's simple APIs allow you to achieve high-quality animations without compromising performance. React UI Animate supports advanced interpolation and ensures that your UI can be animated seamlessly without causing unnecessary re-renders or affecting the rest of your views. This library represents a contemporary method for animating and creating gesture-based interactions on the web, allowing your views to animate exactly as desired.

@@ -2,7 +2,7 @@ import React from 'react';
 import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
 import { Button, Grid, Box, ButtonGroup } from '@mui/material';
 
-export const Example = () => {
+const Example = () => {
   const left = useAnimatedValue(0);
 
   return (
@@ -30,7 +30,7 @@ export const Example = () => {
 
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonGroup variant="contained" aria-label="outlined button group">
+          <ButtonGroup variant='contained' aria-label='outlined button group'>
             <Button onClick={() => (left.value = 0)}>Animate Left</Button>
             <Button onClick={() => (left.value = 500)}>Animate Right</Button>
           </ButtonGroup>
@@ -39,3 +39,5 @@ export const Example = () => {
     </Box>
   );
 };
+
+export default Example;
