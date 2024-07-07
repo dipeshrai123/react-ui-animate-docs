@@ -4,21 +4,29 @@ id: animated-values
 title: Animated Values
 ---
 
-Animated Values are the fundamental concepts behind **`react-ui-animate`**. They carry animated data, providing easy way to drive animations.
+Animated Values are the core concept of **react-ui-animate**. They hold and manage the data that
+drives your animations, providing a straightforward way to create smooth and responsive
+animations.
 
 ## Defining Animated Value
 
-`useAnimatedValue` is a hook that returns an object containing properties like: `.value` and `.currentValue`. Animated Value objects serve as references to pieces of shared animation data that can be accessed and modified using their `.value` property. It is important to remember that `.value` property must be used to modify or to read data. `useAnimatedValue` is similar to `useRef`, it also stores the data until the component is unmounted, does not lose data on other state changes and data modification is done without re-render.
+`useAnimatedValue` is a hook that returns an object containing properties like `.value` and
+`.currentValue`. These Animated Value objects serve as references to pieces of shared animation data,
+which can be accessed and modified using their `.value` property. Similar to `useRef`,
+`useAnimatedValue` stores data until the component is unmounted, maintains data across
+state changes, and modifies data without triggering re-renders.
 
-In order to create an Animated Value, you should use `useAnimatedValue` hook:
+To create an Animated Value, use the `useAnimatedValue` hook:
 
 ```js
 const animationNode = useAnimatedValue(initialValue);
 ```
 
-It returns a mutable object whose .value property is initialized to the passed argument initialValue. This can be any primitive like number or string.
+This returns a mutable object whose `.value` property is initialized to the provided initialValue,
+which can be any primitive type like a `number` or `string`.
 
-In order to update Animated Value, you should set a new value of same primitive type onto the .value property. The modification is sponteneous which shows the instant reactiveness.
+To update an Animated Value, set a new value of the same primitive type onto the `.value` property.
+This spontaneous modification reflects instant reactivity.
 
 ```jsx
 import { useAnimatedValue } from 'react-ui-animate';
@@ -34,101 +42,101 @@ function SomeComponent() {
 }
 ```
 
-In the above example we update value from intial value 0 to random values. Updates are automatically animated smoothly. Lets see an example:
+In the above example, the value is updated from the initial value of 0 to random values.
+Updates are automatically and smoothly animated.
+
+### Example
+
+Let's look at a practical example:
 
 ```jsx
 import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
 
 export default function () {
-  const opacity = useAnimatedValue(0); // It initializes opacity object with value 0.
+  const opacity = useAnimatedValue(1);
 
   return (
     <div>
-      {/* AnimatedBlock component can read useAnimatedValue() */}
       <AnimatedBlock
         style={{
-          opacity: opacity.value, // using opacity with value property
+          opacity: opacity.value,
           width: 100,
           padding: 20,
           background: '#39F',
+          borderRadius: 4,
         }}
       >
         ANIMATED
       </AnimatedBlock>
 
-      {/* Assigning value to 1 auto animates from initialized value 0 to 1 smoothly */}
-      <button onClick={() => (opacity.value = 1)}>Animate Me</button>
+      <button onClick={() => (opacity.value = 0)}>Fade Out</button>
     </div>
   );
 }
 ```
 
-In the above example when we click button, opacity is animated from 0 to 1 smoothly. As you can notice AnimatedBlock is used instead of any other HTML Element because the Animated Values cannot be read by HTML Elements, we need special type of Component that can read it. Here, we have AnimatedBlock HOC which is a div element and also can read Animated Values.
+In this example, clicking the button animates the opacity from 1 to 0 smoothly.
+The `AnimatedBlock` component is used instead of a regular HTML element because it can read and
+respond to Animated Values. The `AnimatedBlock` HOC (Higher-Order Component) acts as a div element
+that can also interpret Animated Values.
 
-## Mounting and Unmounting Components
+import AnimatedValues from '/src/components/AnimatedValues';
 
-Second most important aspect of Animated Value is that they provide a way to handle mounting and unmounting of any component. Generally, we use state to handle mounting and unmounting, but we don't have a proper way to make transitions between mounting as well as unmounting. React UI Animate provides useMountedValue hook to handle these scenarios.
+<AnimatedValues />
 
-To create Mounted Value, we use useMountedValue hook:
+## Higher Order Components
 
-```js
-const mountedFunction = useMountedValue(boolean, {
-  from: number,
-  enter: number,
-  exit: number,
-});
-```
+`react-ui-animate` provides three built-in Higher Order Components (HOCs) that can accept animation
+values, allowing you to easily animate standard HTML elements:
 
-useMountedValue returns a function when a state and phases are passed as first and second arguments. The first argument must be a boolean state and second argument is an object with three phases property, from, enter and exit. The phases from, enter and exit are three numeric values which defines the transition lifecycle of a component when it mounts and unmounts.
+1. `AnimatedBlock`: A `div` element
+2. `AnimatedInline`: A `span` element
+3. `AnimatedImage`: A `img` element
+
+These components are designed to seamlessly integrate with Animated Values, enabling smooth and
+responsive animations for these common elements.
+
+### Extending to Other Elements
+
+In real-world applications, you might need to animate elements other than `div`, `span`, or `img`.
+For this purpose, `react-ui-animate` offers a flexible solution through the `fluid` utility, which
+supports all HTML tags.
+
+To use `fluid`, import it from react-ui-animate:
 
 ```jsx
-import { useState } from 'react';
-import { useMountedValue } from 'react-ui-animate';
-
-function SomeComponent() {
-  const [visible, setVisible] = useState(false);
-
-  const open = useMountedValue(visible, { from: 0, enter: 1, exit: 0 });
-
-  return (
-    <div>
-      <button onClick={() => setVisible((prev) => !prev)}>CLICK ME</button>
-    </div>
-  );
-}
+import { fluid } from 'react-ui-animate';
 ```
 
-In the above example, by default the state is visible = false and the phases are `{from: 0, enter: 1, exit: 0}`. Now, lets use the mounted function open with a component.
+You can then create animated versions of any HTML element using `fluid`:
 
 ```jsx
-import { useState } from 'react';
-import { useMountedValue } from 'react-ui-animate';
-
-function SomeComponent() {
-  const [visible, setVisible] = useState(false);
-
-  const open = useMountedValue(visible, { from: 0, enter: 1, exit: 0 });
-
-  return (
-    <div>
-      {open(
-        (animation, mounted) =>
-          mounted && (
-            <AnimatedBlock
-              style={{
-                width: 100,
-                height: 100,
-                backgroundColor: '#3399ff',
-                opacity: animation.value,
-              }}
-            />
-          )
-      )}
-
-      <button onClick={() => setVisible((prev) => !prev)}>CLICK ME</button>
-    </div>
-  );
-}
+render(
+  <fluid.ul>
+    <fluid.li></fluid.li>
+  </fluid.ul>
+);
 ```
 
-In the above example, open function receives a callback that receives two arguments: the Animated Value and a boolean respectively. The first argument, Animated Value animates from from = 0 to enter = 1 when the visible is true and enter = 1 to exit = 0 when visible is false. And the second argument, boolean dinamically determines whether the component is mounted or not after animation. AnimatedBlock HOC is used to read animated values.
+In this example, `fluid.ul` and `fluid.li` are animated versions of the `ul` and `li` elements, respectively.
+This allows you to apply animated values to any HTML element without restriction.
+
+### Creating Custom Animated Components
+
+If you need to create a custom component that can accept animation values, you can use the `makeFluid()`
+function. This utility transforms your custom component into an animated component that can read and
+respond to Animated Values.
+
+```jsx
+import { makeFluid } from 'react-ui-animate';
+
+const CustomComponent = (props) => <div {...props}>Custom Content</div>;
+
+const AnimatedCustomComponent = makeFluid(CustomComponent);
+```
+
+In this example:
+
+1. `CustomComponent`: A standard React component that renders a div with custom content.
+2. `AnimatedCustomComponent`: A new component created by passing `CustomComponent` to `makeFluid()`.
+   This animated version can now accept and respond to Animated Values.

@@ -8,17 +8,16 @@ In this section, you'll learn how to create your first animation using React UI 
 We'll guide you through the process with a simple example, focusing on each of the three main steps:
 initializing, applying, and updating animation values.
 
-### 1. Initialize the Animation Value
+## Defining the Animation Value
 
 The first step is to initialize an animation value. This value will control the property you want
-to animate.
+to animate. You can create a animation value using `useAnimatedValue()` hook.
 
 ```jsx
 import { useAnimatedValue } from 'react-ui-animate';
 
 export const Example = () => {
-  // Initialize animated value with initial value 0
-  const left = useAnimatedValue(0);
+  const left = useAnimatedValue(0); // initialize with value 0
 
   return (
     <>{/* The rest of the example will be added in the next sections */}</>
@@ -26,11 +25,14 @@ export const Example = () => {
 };
 ```
 
-### 2. Apply the Animation Value to a Node
+## Apply the Animation Value to a Node
 
 Next, apply the initialized animation value to a node. This node will use the animated value
-for its style properties. `AnimatedBlock`, `AnimatedImage`, and `AnimatedInline` are built-in HOCs
-(Higher-Order Components) that can read animated values.
+for its style properties. Use the `left` animation value in the `AnimatedBlock` component for
+the `left` style property.
+
+The animation value's `.value` property is read by the `AnimatedBlock`
+component and can be modified when a new value is assigned to it.
 
 ```jsx
 import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
@@ -56,10 +58,11 @@ export const Example = () => {
 };
 ```
 
-### 3. Update the Animation Value
+## Update the Animation Value
 
-Finally, update the animation value based on user interaction or any other event. In this example,
-we'll update the left property when a button is clicked.
+Finally, update the animation value based on user interaction or any other event.
+In this example, we'll update the `left` property when a button is clicked.
+Modify the `.value` property to automatically animate the value.
 
 ```jsx
 import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate'; // Import your Button component
@@ -87,7 +90,7 @@ export const Example = () => {
 };
 ```
 
-### Demo:
+## Example
 
 import GettingStartedExamples from '/src/components/GettingStartedExamples';
 
