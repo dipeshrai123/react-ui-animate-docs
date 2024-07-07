@@ -16,6 +16,7 @@ const config = {
       {
         docs: {
           sidebarPath: './sidebars.js',
+          sidebarCollapsed: false,
         },
         theme: {
           customCss: ['./src/css/custom.css'],

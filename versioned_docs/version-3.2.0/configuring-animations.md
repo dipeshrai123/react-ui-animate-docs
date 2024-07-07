@@ -66,3 +66,11 @@ import { CubicBezierAnimation } from '/src/components/ConfiguringAnimation'
 <CubicBezierAnimation />
 
 These examples demonstrate how to customize animations in React UI Animate using different configurations, including spring-based animations, pre-defined animation types, timing-based animations with easing functions, and timing-based animations with cubic bezier curves. Each configuration offers unique capabilities for creating engaging and dynamic animations in your applications.
+
+## Summary
+
+React UI Animate offers flexible animation configurations including spring-based and timing-based animations, pre-defined styles like `BOUNCE`, and custom easing with cubic bezier curves. These options enable developers to create dynamic and engaging animations tailored to their application's needs.
+
+## What's Next ?
+
+In the next section, we will look at `Unmounting Components`.
