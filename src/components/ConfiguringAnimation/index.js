@@ -25,7 +25,7 @@ export const SpringAnimation = () => {
 
       <ButtonGroup variant='outlined' style={{ marginTop: 10 }}>
         <Button onClick={() => (left.value = 0)}>Left</Button>
-        <Button onClick={() => (left.value = 500)}>Right</Button>
+        <Button onClick={() => (left.value = 200)}>Right</Button>
       </ButtonGroup>
     </Paper>
   );
@@ -49,7 +49,7 @@ export const TimingAnimation = () => {
 
       <ButtonGroup variant='outlined' style={{ marginTop: 10 }}>
         <Button onClick={() => (left.value = 0)}>Left</Button>
-        <Button onClick={() => (left.value = 500)}>Right</Button>
+        <Button onClick={() => (left.value = 200)}>Right</Button>
       </ButtonGroup>
     </Paper>
   );
@@ -73,7 +73,7 @@ export const BounceAnimation = () => {
 
       <ButtonGroup variant='outlined' style={{ marginTop: 10 }}>
         <Button onClick={() => (left.value = 0)}>Left</Button>
-        <Button onClick={() => (left.value = 500)}>Right</Button>
+        <Button onClick={() => (left.value = 200)}>Right</Button>
       </ButtonGroup>
     </Paper>
   );
@@ -100,7 +100,7 @@ export const CubicBezierAnimation = () => {
 
       <ButtonGroup variant='outlined' style={{ marginTop: 10 }}>
         <Button onClick={() => (left.value = 0)}>Left</Button>
-        <Button onClick={() => (left.value = 500)}>Right</Button>
+        <Button onClick={() => (left.value = 200)}>Right</Button>
       </ButtonGroup>
     </Paper>
   );

@@ -1,5 +1,5 @@
-import { Button, Paper } from '@mui/material';
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { Button, Paper, ButtonGroup } from '@mui/material';
+import { AnimatedBlock, useAnimatedValue, withTiming } from 'react-ui-animate';
 
 export default function () {
   const opacity = useAnimatedValue(1);
@@ -16,13 +16,14 @@ export default function () {
         }}
       />
 
-      <Button
-        style={{ marginTop: 10 }}
-        variant='outlined'
-        onClick={() => (opacity.value = 0)}
-      >
-        Fade Out
-      </Button>
+      <ButtonGroup variant='outlined' style={{ marginTop: 10 }}>
+        <Button onClick={() => (opacity.value = 0)}>Fade Out</Button>
+        <Button
+          onClick={() => (opacity.value = withTiming(1, { duration: 0 }))}
+        >
+          Reset
+        </Button>
+      </ButtonGroup>
     </Paper>
   );
 }
