@@ -40,6 +40,7 @@ export default function () {
     <>
       <AnimatedBlock
         style={{
+          // highlight-next-line
           width: interpolate(left.value, [0, 200], [100, 400]),
           height: 100,
           backgroundColor: '#3399ff',
@@ -64,6 +65,12 @@ In this example:
 1. `left`: An animated value initialized to `0`.
 2. `AnimatedBlock`: The element we want to animate.
 3. `interpolate`: Maps `left.value` from the range `[0, 200]` to `[100, 400]` for the width style property.
+
+:::tip
+
+Instead of setting the `position` to `relative` and animating the `left` CSS property, you can use the provided helper CSS properties such as `translateX`, `scaleX`, and `rotateZ` for transforms in all the Higher Order Components provided by `react-ui-animate`.
+
+:::
 
 ## Advanced Interpolation
 

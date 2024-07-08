@@ -14,14 +14,14 @@ The first step is to initialize an animation value. This value will control the 
 to animate. You can create a animation value using `useAnimatedValue()` hook.
 
 ```jsx
+// highlight-next-line
 import { useAnimatedValue } from 'react-ui-animate';
 
 export const Example = () => {
-  const left = useAnimatedValue(0); // initialize with value 0
+  // highlight-next-line
+  const left = useAnimatedValue(0);
 
-  return (
-    <>{/* The rest of the example will be added in the next sections */}</>
-  );
+  return <>...</>;
 };
 ```
 
@@ -48,11 +48,11 @@ export const Example = () => {
           height: 100,
           background: '#39F',
           position: 'relative',
-          left: left.value, // Apply animated value with .value property
+          // highlight-next-line
+          left: left.value,
         }}
       />
-
-      {/* The rest of the example will be added in the next section */}
+      ...
     </>
   );
 };
@@ -65,7 +65,7 @@ In this example, we'll update the `left` property when a button is clicked.
 Modify the `.value` property to automatically animate the value.
 
 ```jsx
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate'; // Import your Button component
+import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
 
 export const Example = () => {
   const left = useAnimatedValue(0);
@@ -78,13 +78,13 @@ export const Example = () => {
           height: 100,
           background: '#39F',
           position: 'relative',
-          left: left.value, // Apply animated value with .value property
+          left: left.value,
         }}
       />
-
-      {/* Update the animation value */}
+      // highlight-start
       <button onClick={() => (left.value = 0)}>Animate Left</button>
-      <button onClick={() => (left.value = 500)}>Animate Right</button>
+      <button onClick={() => (left.value = 200)}>Animate Right</button>
+      // highlight-end
     </>
   );
 };
