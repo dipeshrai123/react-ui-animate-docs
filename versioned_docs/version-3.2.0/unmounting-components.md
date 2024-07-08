@@ -5,12 +5,18 @@ title: Unmounting components
 ---
 
 When working with animations in React, especially when mounting and unmounting components with
-transitions, `useMountedValue()` hook from React UI Animate is a powerful tool. It facilitates smooth
+transitions, `useMountedValue()` hook or `MountedBlock` HOC from React UI Animate is a powerful tool. It facilitates smooth
 transitions for components entering and leaving the DOM.
 
 import { Unmounting } from '/src/components/Unmounting';
 
 <Unmounting />
+
+:::tip
+
+Both `useMountedValue()` hook and HOC `MountedBlock` provide same result. The `MountedBlock` HOC is easier and better to use. Check [`MountedBlock`](#using-mountedblock-hoc).
+
+:::
 
 ## Using `useMountedValue()`
 
@@ -174,14 +180,62 @@ export default function App() {
 }
 ```
 
+## Using `MountedBlock` HOC
+
+`MountedBlock` is a higher-order component (HOC) that simplifies the process of mounting and unmounting components with animations. It is built using the `useMountedValue` hook and provides a more convenient way to handle the same logic.
+
+```jsx
+import { useState } from 'react';
+import {
+  MountedBlock,
+  AnimatedBlock,
+  AnimationConfigUtils,
+  interpolate,
+} from 'react-ui-animate';
+
+export default function App() {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setVisible(!visible)}>
+        {visible ? 'Hide' : 'Show'}
+      </button>
+
+      <MountedBlock state={visible} config={AnimationConfigUtils.BOUNCE}>
+        {(animation) => (
+          <AnimatedBlock
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: 'red',
+              translateX: interpolate(animation.value, [0, 1], [0, 200]),
+              opacity: 0.3,
+            }}
+          />
+        )}
+      </MountedBlock>
+    </div>
+  );
+}
+```
+
+**Explanation**
+
+1. **State Management:**
+
+   - We start with a `visible` state variable (`false` initially) to toggle the visibility of our component.
+
+2. **Rendering Logic:**
+   - `MountedBlock` HOC wraps the `AnimatedBlock` component.
+   - The `state` prop of `MountedBlock` is set to the `visible` state, indicating whether the component should be mounted (`true`) or unmounted (`false`).
+   - The config `prop` allows for additional animation configuration.
+   - The `AnimatedBlock` component is rendered with the specified styles and interpolated values based on the animation state.
+   - The children as a function is passed with the argument of animated value, animating from `0` to `1`.
+
 ## Summary
 
-Using `useMountedValue()` from React UI Animate allows developers to easily manage and customize
-mounting and unmounting animations in React applications. By defining animation states and
-configurations, such as duration, easing functions, and predefined animations,
-developers can create smooth and intuitive transitions that enhance user experience and
-interface dynamics. This approach ensures that animations are not only visually appealing but
-also responsive to user interactions, making applications more engaging and user-friendly.
+Using `useMountedValue` and `MountedBlock` from React UI Animate allows developers to easily manage and customize mounting and unmounting animations in React applications. By defining animation states and configurations, such as duration, easing functions, and predefined animations, developers can create smooth and intuitive transitions that enhance user experience and interface dynamics. This approach ensures that animations are not only visually appealing but also responsive to user interactions, making applications more engaging and user-friendly.
 
 ## What's Next ?
 
