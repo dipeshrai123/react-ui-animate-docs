@@ -4,21 +4,41 @@ id: move
 title: move
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
-`move` function moves the array item from one position to another.
+The `move` function repositions an item within an array from one index to another.
 
 ```js
-function move(items: array, moveIndex: number, toIndex: number)
+function move(array: any[], moveIndex: number, toIndex: number): any[];
 ```
 
-## Example
+## Arguments
+
+#### array [ any[] ]
+
+The array containing the items to be moved.
+
+#### moveIndex [ number ]
+
+The index of the item to move within the array.
+
+#### toIndex [ number ]
+
+The index where the item should be moved to within the array.
+
+## Returns
+
+#### [ any[] ]
+
+Returns a new array with the item moved from moveIndex to toIndex.
+
+Example
 
 ```js
-// moves the item of 0th index to 1st index.
-const newOrder = move(['Apple', 'Mango', 'Orange', 'Banana'], 0, 1);
+import { move } from 'react-ui-animate';
+
+// Example usage
+const fruits = ['Apple', 'Mango', 'Orange', 'Banana'];
+const newOrder = move(fruits, 0, 1);
+console.log(newOrder); // Output: ['Mango', 'Apple', 'Orange', 'Banana']
 ```
+
+In this example, the `move` function moves the item at index `0` (Apple) to index `1` in the fruits array, resulting in ['Mango', 'Apple', 'Orange', 'Banana'].
