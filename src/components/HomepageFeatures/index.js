@@ -1,10 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
-import { FaHandHoldingHeart } from "react-icons/fa";
-import { MdDraw } from "react-icons/md";
-import { PiHandTapFill } from "react-icons/pi";
-
-import styles from './styles.module.css';
+import { FaHandHoldingHeart } from 'react-icons/fa';
+import { MdDraw } from 'react-icons/md';
+import { PiHandTapFill } from 'react-icons/pi';
 
 const FeatureList = [
   {
@@ -42,10 +40,8 @@ const FeatureList = [
 function Feature({ icon, title, description }) {
   return (
     <div className={clsx('col col--4')}>
-      <div className='text--center'>
-        {icon}
-      </div>
-      <div className='text--center padding-horiz--md'>
+      <div className="text--center">{icon}</div>
+      <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
       </div>
@@ -55,9 +51,16 @@ function Feature({ icon, title, description }) {
 
 export default function HomepageFeatures() {
   return (
-    <section className={styles.features}>
-      <div className='container'>
-        <div className='row'>
+    <section
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: '2rem 0',
+        width: '100%',
+      }}
+    >
+      <div className="container">
+        <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}

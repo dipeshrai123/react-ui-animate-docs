@@ -8,7 +8,7 @@ import {
 import { Button, Paper } from '@mui/material';
 
 export const Unmounting = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const open = useMountedValue(visible, {
     from: 0,
@@ -17,7 +17,7 @@ export const Unmounting = () => {
   });
 
   return (
-    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
       {open(
         (animation, mounted) =>
           mounted && (
@@ -25,7 +25,7 @@ export const Unmounting = () => {
               style={{
                 width: 100,
                 height: 100,
-                backgroundColor: '#3399ff',
+                backgroundColor: '#31915f',
                 borderRadius: 4,
                 opacity: animation.value,
                 marginBottom: 10,
@@ -34,7 +34,7 @@ export const Unmounting = () => {
           )
       )}
 
-      <Button variant='outlined' onClick={() => setVisible(!visible)}>
+      <Button variant="outlined" onClick={() => setVisible(!visible)}>
         {visible ? 'Hide' : 'Show'}
       </Button>
     </Paper>
@@ -52,7 +52,7 @@ export const ConfigureUnmounting = () => {
   });
 
   return (
-    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
       {open(
         (animation, mounted) =>
           mounted && (
@@ -71,7 +71,7 @@ export const ConfigureUnmounting = () => {
           )
       )}
 
-      <Button variant='outlined' onClick={() => setVisible(!visible)}>
+      <Button variant="outlined" onClick={() => setVisible(!visible)}>
         {visible ? 'Hide' : 'Show'}
       </Button>
     </Paper>

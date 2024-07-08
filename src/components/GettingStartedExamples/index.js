@@ -6,7 +6,7 @@ const Example = () => {
   const left = useAnimatedValue(0);
 
   return (
-    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
       <AnimatedBlock
         style={{
           width: 100,
@@ -18,8 +18,8 @@ const Example = () => {
         }}
       />
       <ButtonGroup
-        variant='outlined'
-        aria-label='outlined button group'
+        variant="outlined"
+        aria-label="outlined button group"
         style={{ marginTop: 10 }}
       >
         <Button onClick={() => (left.value = 0)}>Animate Left</Button>

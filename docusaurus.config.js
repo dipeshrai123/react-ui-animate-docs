@@ -6,7 +6,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/react-ui-animate.svg',
+  favicon: 'img/react-ui-animate-logo.png',
   organizationName: 'dipeshrai123',
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
@@ -29,7 +29,7 @@ const config = {
       title: 'React UI Animate',
       logo: {
         alt: 'React UI Animate Logo',
-        src: 'img/react-ui-animate.svg',
+        src: 'img/react-ui-animate-logo.png',
       },
       items: [
         {
