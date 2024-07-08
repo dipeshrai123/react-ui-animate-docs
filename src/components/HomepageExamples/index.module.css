@@ -1,6 +1,6 @@
 .container {
   width: 40%;
-  margin: 40px auto;
+  margin: 60px auto 40px auto;
   gap: 10px;
   display: flex;
   flex-direction: column;

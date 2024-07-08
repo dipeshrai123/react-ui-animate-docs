@@ -40,6 +40,7 @@ const Unmounting = () => {
                 borderRadius: 4,
                 opacity: animation.value,
                 margin: 'auto',
+                marginBottom: 10,
               }}
             />
           )
@@ -49,7 +50,6 @@ const Unmounting = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginTop: 10,
         }}
       >
         <Button variant="outlined" onClick={() => setVisible(!visible)}>
@@ -74,6 +74,7 @@ const AnimatedTransitionExample = () => {
           borderRadius: 4,
           rotate: interpolate(left.value, [0, 200], [0, 180]),
           width: interpolate(left.value, [0, 200], [100, 200]),
+          marginBottom: 10,
         }}
       />
 
@@ -81,14 +82,9 @@ const AnimatedTransitionExample = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginTop: 10,
         }}
       >
-        <ButtonGroup
-          variant="outlined"
-          aria-label="outlined button group"
-          style={{ marginTop: 10 }}
-        >
+        <ButtonGroup variant="outlined" aria-label="outlined button group">
           <Button onClick={() => (left.value = 0)}>Animate Left</Button>
           <Button onClick={() => (left.value = 200)}>Animate Right</Button>
         </ButtonGroup>
