@@ -94,10 +94,12 @@ const AnimatedTransitionExample = () => {
 };
 
 export const Gesture = () => {
-  const animation = useAnimatedValue(0);
+  const x = useAnimatedValue(0);
+  const y = useAnimatedValue(0);
 
-  const bind = useDrag(({ down, movementX }) => {
-    animation.value = down ? movementX : withSpring(0);
+  const bind = useDrag(({ down, movementX, movementY }) => {
+    x.value = down ? movementX : withSpring(0);
+    y.value = down ? movementY : withSpring(0);
   });
 
   return (
@@ -109,13 +111,16 @@ export const Gesture = () => {
           height: 100,
           backgroundColor: '#f5533d',
           borderRadius: 4,
-          translateX: animation.value,
+          translateX: x.value,
+          translateY: y.value,
           cursor: 'grabbing',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0px auto',
           color: 'white',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         DRAG ME
