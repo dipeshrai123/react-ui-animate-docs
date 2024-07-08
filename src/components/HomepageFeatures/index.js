@@ -1,43 +1,46 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './styles.module.css';
+import { FaHandHoldingHeart } from 'react-icons/fa';
+import { MdDraw } from 'react-icons/md';
+import { PiHandTapFill } from 'react-icons/pi';
 
 const FeatureList = [
   {
     title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    icon: <FaHandHoldingHeart size={60} />,
     description: (
       <>
-        React UI Animate is designed with easy to use APIs for implementing
-        gestures and animations.
+        React UI Animate offers intuitive APIs that simplify implementing
+        animations and gestures in your projects.
       </>
     ),
   },
   {
-    title: 'Animate anything',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Animate Anything',
+    icon: <MdDraw size={60} />,
     description: (
-      <>React UI Animate helps you to animate anything beautifully.</>
+      <>
+        With React UI Animate, you can create beautiful animations for any
+        element effortlessly.
+      </>
     ),
   },
   {
-    title: 'Interact with anything',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Engage with Interactive Elements',
+    icon: <PiHandTapFill size={60} />,
     description: (
       <>
-        React UI Animate comes with variaties of APIs to implement complex
-        gestures in easy way.
+        React UI Animate provides a variety of APIs to easily implement complex
+        gestures, enhancing user interaction.
       </>
     ),
   },
 ];
 
-function Feature({ Svg, title, description }) {
+function Feature({ icon, title, description }) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
+      <div className="text--center">{icon}</div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
@@ -48,7 +51,14 @@ function Feature({ Svg, title, description }) {
 
 export default function HomepageFeatures() {
   return (
-    <section className={styles.features}>
+    <section
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: '2rem 0',
+        width: '100%',
+      }}
+    >
       <div className="container">
         <div className="row">
           {FeatureList.map((props, idx) => (

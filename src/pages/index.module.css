@@ -22,3 +22,13 @@
   justify-content: center;
   gap: 10px;
 }
+
+.installation {
+  padding: 8px 0;
+  font-family: monospace;
+  border: 1px solid #a2c9f8;
+  width: 280px;
+  border-radius: 4px;
+  margin: 40px auto 50px auto;
+  font-size: 18px;
+}
