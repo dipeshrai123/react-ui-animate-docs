@@ -6,9 +6,9 @@ import {
   interpolate,
   AnimationConfigUtils,
   useMountedValue,
+  useDrag,
+  withSpring,
 } from 'react-ui-animate';
-
-import { DragGesture } from '../Gestures';
 
 import styles from './index.module.css';
 
@@ -93,6 +93,37 @@ const AnimatedTransitionExample = () => {
   );
 };
 
+export const Gesture = () => {
+  const animation = useAnimatedValue(0);
+
+  const bind = useDrag(({ down, movementX }) => {
+    animation.value = down ? movementX : withSpring(0);
+  });
+
+  return (
+    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
+      <AnimatedBlock
+        {...bind()}
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: '#f5533d',
+          borderRadius: 4,
+          translateX: animation.value,
+          cursor: 'grabbing',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0px auto',
+          color: 'white',
+        }}
+      >
+        DRAG ME
+      </AnimatedBlock>
+    </Paper>
+  );
+};
+
 const HomepageExamples = () => {
   return (
     <>
@@ -110,7 +141,7 @@ const HomepageExamples = () => {
           <h4 className={styles.subheading}>
             Handle complex gestures according to your need
           </h4>
-          <DragGesture />
+          <Gesture />
         </div>
 
         <div>

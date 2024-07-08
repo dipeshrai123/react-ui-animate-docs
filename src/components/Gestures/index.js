@@ -1,17 +1,12 @@
 import React from 'react';
-import {
-  AnimatedBlock,
-  useAnimatedValue,
-  useDrag,
-  withSpring,
-} from 'react-ui-animate';
+import { AnimatedBlock, useAnimatedValue, useDrag } from 'react-ui-animate';
 import { Paper } from '@mui/material';
 
 export const DragGesture = () => {
-  const animation = useAnimatedValue(0);
+  const left = useAnimatedValue(0);
 
   const bind = useDrag(({ down, movementX }) => {
-    animation.value = down ? movementX : withSpring(0);
+    left.value = down ? movementX : 0;
   });
 
   return (
@@ -23,17 +18,10 @@ export const DragGesture = () => {
           height: 100,
           backgroundColor: '#f5533d',
           borderRadius: 4,
-          translateX: animation.value,
-          cursor: 'grabbing',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0px auto',
-          color: 'white',
+          position: 'relative',
+          left: left.value,
         }}
-      >
-        DRAG ME
-      </AnimatedBlock>
+      />
     </Paper>
   );
 };

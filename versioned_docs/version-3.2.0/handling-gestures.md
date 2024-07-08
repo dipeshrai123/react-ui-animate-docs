@@ -4,27 +4,29 @@ id: handling-gestures
 title: Handling Gestures
 ---
 
-:::info
+React UI Animate provides a powerful set of gesture hooks that enable you to easily bind mouse and touch events to any node. This allows for the creation of complex interactions, such as dragging and scrolling, with just a few lines of code.
 
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
+import { Gesture } from '/src/components/HomepageExamples';
 
-:::
+<Gesture />
 
-Gestures in React UI Animate is a set of gestures that let you bind mouse and touch events to any node. With the data you receive, it becomes easy to set up complex gestures like dragging and scrolling with a few lines of code.
+## Defining a gesture
 
-## Available gesture hooks
+To get started with gestures, you first need to import the appropriate gesture hook and define it inside a component. For instance, to use the `useDrag` hook, you can set it up as follows:
 
-Currently, the library provides the following list of gesture hooks. All these hooks share similar API pattern:
+```jsx
+import { useDrag } from 'react-ui-animate';
 
-- `useScroll` for scroll gesture.
-- `useMouseMove` for mouse move gesture.
-- `useDrag` for drag gesture.
-- `useWheel` for mouse wheel gesture.
-- `useGesture` for multiple gestures.
+function Component() {
+  const bind = useDrag(() => {});
+}
+```
+
+The `useDrag` hook takes a function as an argument, which receives all the drag/event data. This hook is assigned to a `bind` variable that contains all the necessary event handlers. You can then attach these handlers to a component.
 
 ## Binding a gesture to a Node
 
-Due to similar pattern of gesture hooks, it becomes quite easy to implement any gesture effortlessly. To bind a gesture to a node, the gesture hooks returns a function, which when called returns an object with event handlers. Let say we want a `<div />` to be draggable.
+Thanks to the consistent pattern of gesture hooks, binding a gesture to a node is straightforward. The gesture hooks return a function that, when called, provides an object with event handlers. Here’s an example of making a `<div />` draggable:
 
 ```jsx
 import { useDrag } from 'react-ui-animate';
@@ -45,9 +47,9 @@ export default function () {
 }
 ```
 
-In the above example, a `<div />` receives an object with event handlers when you spread `...bind()`, you're actually adding onPointerDown, onMouseDown, and other event handlers. The `useDrag` hook accepts a callback function with state as a parameter. state is an object containing all attributes of the gesture. The `state` is passed to your handler every time the gesture updates.
+In this example, the `<div />` element receives an object with event handlers when you spread `...bind()`. This includes handlers like `onPointerDown` and `onMouseDown`. The `useDrag` hook's callback function receives a `state` object containing all the gesture's attributes. This `state` object is passed to your handler every time the gesture updates.
 
-To actually implement dragging of an element, we should be using it with Animated Value.
+To implement actual dragging, use the gesture hook in conjunction with an Animated Value:
 
 ```jsx
 import { useDrag, useAnimatedValue, AnimatedBlock } from 'react-ui-animate';
@@ -63,10 +65,11 @@ export default function () {
     <AnimatedBlock
       {...bind()}
       style={{
-        width: 60,
-        height: 60,
-        backgroundColor: '#3399ff',
-        position: 'absolute',
+        width: 100,
+        height: 100,
+        backgroundColor: '#f5533d',
+        borderRadius: 4,
+        position: 'relative',
         left: left.value,
       }}
     />
@@ -74,4 +77,20 @@ export default function () {
 }
 ```
 
-In the above example, `left` is an animated value. The `state` object has `down` which represents the current state of a mouse click and `movementX` which represents the movement in x-axis always starting from 0.
+In this example, `left` is an animated value. The `state` object includes `down`, which represents whether the mouse button is pressed, and `movementX`, which tracks the movement along the x-axis starting from 0.
+
+import { DragGesture } from '/src/components/Gestures';
+
+<DragGesture />
+
+## Available gesture hooks
+
+React UI Animate offers the following gesture hooks, all of which share a similar API pattern:
+
+- `useScroll` for scroll gestures.
+- `useMouseMove` for mouse move gestures.
+- `useDrag` for drag gestures.
+- `useWheel` for mouse wheel gestures.
+- `useGesture` for multiple gesturess.
+
+These hooks provide a flexible and efficient way to handle various user interactions, making it easy to implement responsive and interactive UI elements.
