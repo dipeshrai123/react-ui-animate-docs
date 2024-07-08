@@ -1,11 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
+import { FaHandHoldingHeart } from "react-icons/fa";
+import { MdDraw } from "react-icons/md";
+import { PiHandTapFill } from "react-icons/pi";
+
 import styles from './styles.module.css';
 
 const FeatureList = [
   {
     title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    icon: <FaHandHoldingHeart size={60} />,
     description: (
       <>
         React UI Animate offers intuitive APIs that simplify implementing
@@ -15,7 +19,7 @@ const FeatureList = [
   },
   {
     title: 'Animate Anything',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    icon: <MdDraw size={60} />,
     description: (
       <>
         With React UI Animate, you can create beautiful animations for any
@@ -25,7 +29,7 @@ const FeatureList = [
   },
   {
     title: 'Engage with Interactive Elements',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    icon: <PiHandTapFill size={60} />,
     description: (
       <>
         React UI Animate provides a variety of APIs to easily implement complex
@@ -35,11 +39,11 @@ const FeatureList = [
   },
 ];
 
-function Feature({ Svg, title, description }) {
+function Feature({ icon, title, description }) {
   return (
     <div className={clsx('col col--4')}>
       <div className='text--center'>
-        <Svg className={styles.featureSvg} role='img' />
+        {icon}
       </div>
       <div className='text--center padding-horiz--md'>
         <h3>{title}</h3>

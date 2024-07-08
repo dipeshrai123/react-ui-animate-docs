@@ -6,7 +6,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/react-ui-animate.ico',
+  favicon: 'img/react-ui-animate.svg',
   organizationName: 'dipeshrai123',
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
