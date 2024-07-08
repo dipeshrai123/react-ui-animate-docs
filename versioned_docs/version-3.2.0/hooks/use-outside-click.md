@@ -4,12 +4,6 @@ id: use-outside-value
 title: useOutsideClick
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
 This hook provides a way to handle clicks outside of any element.
 
 ## Arguments

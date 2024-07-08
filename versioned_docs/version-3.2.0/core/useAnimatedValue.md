@@ -4,15 +4,13 @@ id: use-animated-value
 title: useAnimatedValue()
 ---
 
-:::info
+`useAnimatedValue` is a hook that returns an object containing properties like `.value` and
+`.currentValue`. These Animated Value objects serve as references to pieces of shared animation data,
+which can be accessed and modified using their `.value` property. Similar to `useRef`,
+`useAnimatedValue` stores data until the component is unmounted, maintains data across
+state changes, and modifies data without triggering re-renders.
 
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
-`useAnimatedValue` is a hook that returns an object containing properties like: `.value` and `.currentValue`. Animated Value objects serve as references to pieces of shared animation data that can be accessed and modified using their `.value` property. It is important to remember that `.value` property must be used to modify or to read data. `useAnimatedValue` is similar to useRef, it also stores the data until the component is unmounted, does not lose data on other state changes and data modification is done without re-render.
-
-It returns a mutable object whose `.value` property is initialized to the passed argument initialValue. This can be any primitive like number, boolean, string or Animation Values it self.
+It returns a mutable object whose `.value` property is initialized to the passed argument initialValue. The initial value can be `number` or `string`.
 
 ## Arguments
 

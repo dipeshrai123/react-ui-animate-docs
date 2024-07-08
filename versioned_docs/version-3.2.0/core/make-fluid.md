@@ -4,12 +4,6 @@ id: make-fluid
 title: makeFluid
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
 `makeFluid` function takes any component and make it animatable which can read Animated Values.
 
 ## Arguments

@@ -4,13 +4,7 @@ id: interpolate
 title: interpolate
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
-An interpolation maps input ranges to output ranges, typically using a linear interpolation but also supports easing functions. By default, it will extrapolate the curve beyond the ranges given, but you can also have it clamp the output value. `interpolate` function allows the Animated Value to map from input ranges to output ranges.
+An interpolation maps input ranges to output ranges. By default, it uses linear interpolation but also supports easing functions. Interpolation can extrapolate the curve beyond the given ranges or clamp the output value.
 
 ## Arguments
 

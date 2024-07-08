@@ -4,13 +4,15 @@ id: use-mounted-value
 title: useMountedValue()
 ---
 
-:::info
+`useMountedValue` facilitates the management of mounting and unmounting transitions for components. When invoked with a boolean state and an object defining transition phases, it returns a function.
 
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
+The boolean state (`boolean`) indicates whether the component is mounted (`true`) or unmounted (`false`). The second argument is an object containing three numeric properties: `from`, `enter`, and `exit`. These properties define the progression of the component's transition lifecycle:
 
-:::
+- `from`: Initial state of the transition.
+- `enter`: State when the component mounts.
+- `exit`: State when the component unmounts.
 
-`useMountedValue` is used for mounting and unmounting of a component with transition. `useMountedValue` returns a function when a state and phases are passed as first and second arguments. The first argument must be a `boolean` state and second argument is an `object` with three phases property, `from`, `enter` and `exit`. The phases `from`, `enter` and `exit` are three numeric values which defines the transition lifecycle of a component when it mounts and unmounts.
+This hook enables seamless integration of transition effects into components, ensuring smooth and visually appealing mounting and unmounting experiences.
 
 ## Arguments
 
@@ -22,12 +24,12 @@ The first argument is `initialState` which determines the current mounting state
 
 Optional `object` containing the animation configuration. Allowed parameters are listed below:
 
-| Options | Default   | Description                                                                                            |
-| ------- | --------- | ------------------------------------------------------------------------------------------------------ |
-| from    | undefined | Initial state of animation value when component mounts                                                 |
-| enter   | undefined | Animation value animates from `from` phase to `enter` phase when component mounts                      |
-| exit    | undefined | Animation value animates from `enter` phase to `exit` phase when state is false and component unmounts |
-| config? | undefined | Animation configuration object                                                                         |
+| Options | Description                                                                                            |
+| ------- | ------------------------------------------------------------------------------------------------------ |
+| from    | Initial state of animation value when component mounts                                                 |
+| enter   | Animation value animates from `from` phase to `enter` phase when component mounts                      |
+| exit    | Animation value animates from `enter` phase to `exit` phase when state is false and component unmounts |
+| config? | Animation configuration object                                                                         |
 
 `config` object is animation configuration object with following properties:
 

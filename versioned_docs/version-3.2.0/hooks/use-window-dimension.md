@@ -4,12 +4,6 @@ id: use-window-dimension
 title: useWindowDimension
 ---
 
-:::info
-
-Due to time constraint, we couldn't complete this page. We will complete as soon as possible.
-
-:::
-
 This hook provides a way to measure the `window/document`. It handles the resize of the window.
 
 ## Arguments
