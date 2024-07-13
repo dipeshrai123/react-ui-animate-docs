@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 id: use-mounted-value
-title: useMountedValue()
+title: useMountedValue
 ---
 
 `useMountedValue` facilitates the management of mounting and unmounting transitions for components. When invoked with a boolean state and an object defining transition phases, it returns a function.
