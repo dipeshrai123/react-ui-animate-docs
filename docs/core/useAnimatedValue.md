@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 id: use-animated-value
-title: useAnimatedValue()
+title: useAnimatedValue
 ---
 
 `useAnimatedValue` is a hook that returns an object containing properties like `.value` and

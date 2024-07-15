@@ -99,46 +99,46 @@ responsive animations for these common elements.
 ### Extending to Other Elements
 
 In real-world applications, you might need to animate elements other than `div`, `span`, or `img`.
-For this purpose, `react-ui-animate` offers a flexible solution through the `fluid` utility, which
+For this purpose, `react-ui-animate` offers a flexible solution through the `animate` utility, which
 supports all HTML tags.
 
-To use `fluid`, import it from react-ui-animate:
+To use `animate`, import it from react-ui-animate:
 
 ```jsx
-import { fluid } from 'react-ui-animate';
+import { animate } from 'react-ui-animate';
 ```
 
-You can then create animated versions of any HTML element using `fluid`:
+You can then create animated versions of any HTML element using `animate`:
 
 ```jsx
 render(
-  <fluid.ul>
-    <fluid.li></fluid.li>
-  </fluid.ul>
+  <animate.ul>
+    <animate.li></animate.li>
+  </animate.ul>
 );
 ```
 
-In this example, `fluid.ul` and `fluid.li` are animated versions of the `ul` and `li` elements, respectively.
+In this example, `animate.ul` and `animate.li` are animated versions of the `ul` and `li` elements, respectively.
 This allows you to apply animated values to any HTML element without restriction.
 
 ### Creating Custom Animated Components
 
-If you need to create a custom component that can accept animation values, you can use the `makeFluid()`
+If you need to create a custom component that can accept animation values, you can use the `makeAnimated()`
 function. This utility transforms your custom component into an animated component that can read and
 respond to Animated Values.
 
 ```jsx
-import { makeFluid } from 'react-ui-animate';
+import { makeAnimated } from 'react-ui-animate';
 
 const CustomComponent = (props) => <div {...props}>Custom Content</div>;
 
-const AnimatedCustomComponent = makeFluid(CustomComponent);
+const AnimatedCustomComponent = makeAnimated(CustomComponent);
 ```
 
 In this example:
 
 1. `CustomComponent`: A standard React component that renders a div with custom content.
-2. `AnimatedCustomComponent`: A new component created by passing `CustomComponent` to `makeFluid()`.
+2. `AnimatedCustomComponent`: A new component created by passing `CustomComponent` to `makeAnimated()`.
    This animated version can now accept and respond to Animated Values.
 
 ## What's Next ?
