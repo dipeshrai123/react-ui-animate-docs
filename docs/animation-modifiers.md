@@ -125,7 +125,7 @@ const animateLeft = () => {
 };
 
 const animateRight = () => {
-  animation.value = withConfig(0, AnimationConfigUtils.BOUNCE);
+  animation.value = withConfig(100, AnimationConfigUtils.BOUNCE);
 };
 ```
 
