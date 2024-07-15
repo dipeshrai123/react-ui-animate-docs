@@ -1,7 +1,9 @@
 import { Button, ButtonGroup, Paper } from '@mui/material';
 import {
   AnimatedBlock,
+  AnimationConfigUtils,
   useAnimatedValue,
+  withConfig,
   withSequence,
   withSpring,
   withTiming,
@@ -11,7 +13,7 @@ export const WithSpringModifier = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -24,13 +26,13 @@ export const WithSpringModifier = () => {
 
       <ButtonGroup style={{ marginTop: 10 }}>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => (translateX.value = withSpring(100))}
         >
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
@@ -46,7 +48,7 @@ export const WithSpringModifierConfig = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -59,13 +61,13 @@ export const WithSpringModifierConfig = () => {
 
       <ButtonGroup style={{ marginTop: 10 }}>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => (translateX.value = withSpring(100, { friction: 5 }))}
         >
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
@@ -81,7 +83,7 @@ export const WithTimingModifier = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -94,13 +96,13 @@ export const WithTimingModifier = () => {
 
       <ButtonGroup style={{ marginTop: 10 }}>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => (translateX.value = withTiming(100))}
         >
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
@@ -116,7 +118,7 @@ export const WithTimingModifierConfig = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -129,7 +131,7 @@ export const WithTimingModifierConfig = () => {
 
       <ButtonGroup style={{ marginTop: 10 }}>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = withTiming(100, { duration: 5000 }))
           }
@@ -137,7 +139,7 @@ export const WithTimingModifierConfig = () => {
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
@@ -153,7 +155,7 @@ export const WithEaseModifier = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -165,11 +167,11 @@ export const WithEaseModifier = () => {
       />
 
       <ButtonGroup style={{ marginTop: 10 }}>
-        <Button variant="outlined" onClick={() => (translateX.value = 100)}>
+        <Button variant='outlined' onClick={() => (translateX.value = 100)}>
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
@@ -185,7 +187,7 @@ export const WithSequenceModifier = () => {
   const translateX = useAnimatedValue(0);
 
   return (
-    <Paper style={{ padding: 20 }} variant="outlined">
+    <Paper style={{ padding: 20 }} variant='outlined'>
       <AnimatedBlock
         style={{
           height: 100,
@@ -198,7 +200,7 @@ export const WithSequenceModifier = () => {
 
       <ButtonGroup style={{ marginTop: 10 }}>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => {
             translateX.value = withSequence([withSpring(50), withTiming(100)]);
           }}
@@ -206,12 +208,49 @@ export const WithSequenceModifier = () => {
           Animate Right
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() =>
             (translateX.value = { toValue: 0, config: { immediate: true } })
           }
         >
           Reset
+        </Button>
+      </ButtonGroup>
+    </Paper>
+  );
+};
+
+export const WithConfigModifier = () => {
+  const translateX = useAnimatedValue(0);
+
+  return (
+    <Paper style={{ padding: 20 }} variant='outlined'>
+      <AnimatedBlock
+        style={{
+          height: 100,
+          width: 100,
+          background: '#c370ff',
+          borderRadius: 4,
+          translateX: translateX.value,
+        }}
+      />
+
+      <ButtonGroup style={{ marginTop: 10 }}>
+        <Button
+          variant='outlined'
+          onClick={() =>
+            (translateX.value = withConfig(0, AnimationConfigUtils.WOOBLE))
+          }
+        >
+          Animate Left
+        </Button>
+        <Button
+          variant='outlined'
+          onClick={() => {
+            translateX.value = withConfig(100, AnimationConfigUtils.BOUNCE);
+          }}
+        >
+          Animate Right
         </Button>
       </ButtonGroup>
     </Paper>
