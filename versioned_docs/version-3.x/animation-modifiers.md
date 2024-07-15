@@ -105,6 +105,36 @@ import { WithSequenceModifier } from '/src/components/AnimationModifiers'
 
 <WithSequenceModifier />
 
+## Applying Pre-defined configs with `withConfig` modifier
+
+To create sequential animations, use the `withSequence` modifier in combination with other modifiers like `withTiming`, `withSpring`, or `withEase` as an array.
+
+To apply different pre-defined configs from `AnimationConfigUtils` like `ELASTIC`, `BOUNCE`, `WOOBLE` etc. we can use `withConfig` modifier.
+
+```jsx
+import {
+  useAnimatedValue,
+  withConfig,
+  AnimationConfigUtils,
+} from 'react-ui-animate';
+
+const animation = useAnimatedValue(0);
+
+const animateLeft = () => {
+  animation.value = withConfig(0, AnimationConfigUtils.WOOBLE);
+};
+
+const animateRight = () => {
+  animation.value = withConfig(0, AnimationConfigUtils.BOUNCE);
+};
+```
+
+In this example, `animation.value` is applied with `BOUNCE` animation when Animate Right button is clicked and `WOOBLE` animation when Animate Left button is clicked.
+
+import { WithConfigModifier } from '/src/components/AnimationModifiers'
+
+<WithConfigModifier />
+
 ## What's Next ?
 
 In the next section, we will look at `Handling Gestures`.
