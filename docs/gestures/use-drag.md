@@ -59,7 +59,7 @@ Apply it on a `HTMLELement`:
 In the below example, `useDrag` hook is used to make a `HTMLElement` draggable.
 
 ```jsx
-import { useAnimatedValue, useDrag, AnimatedBlock } from 'react-ui-animate';
+import { useAnimatedValue, useDrag, animate } from 'react-ui-animate';
 
 export default function () {
   const left = useAnimatedValue(0);
@@ -69,7 +69,7 @@ export default function () {
   });
 
   return (
-    <AnimatedBlock
+    <animate.div
       {...bind()} // bind here
       style={{
         width: 100,

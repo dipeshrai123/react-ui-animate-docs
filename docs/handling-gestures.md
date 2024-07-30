@@ -52,7 +52,7 @@ In this example, the `<div />` element receives an object with event handlers wh
 To implement actual dragging, use the gesture hook in conjunction with an Animated Value:
 
 ```jsx
-import { useDrag, useAnimatedValue, AnimatedBlock } from 'react-ui-animate';
+import { useDrag, useAnimatedValue, animate } from 'react-ui-animate';
 
 export default function () {
   const left = useAnimatedValue(0);
@@ -62,7 +62,7 @@ export default function () {
   });
 
   return (
-    <AnimatedBlock
+    <animate.div
       {...bind()}
       style={{
         width: 100,

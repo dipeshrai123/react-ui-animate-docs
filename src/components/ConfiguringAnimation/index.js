@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AnimatedBlock,
+  animate,
   useAnimatedValue,
   AnimationConfigUtils,
   Easing,
@@ -12,7 +12,7 @@ export const SpringAnimation = () => {
 
   return (
     <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,
@@ -36,7 +36,7 @@ export const TimingAnimation = () => {
 
   return (
     <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,
@@ -60,7 +60,7 @@ export const BounceAnimation = () => {
 
   return (
     <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,
@@ -87,7 +87,7 @@ export const CubicBezierAnimation = () => {
 
   return (
     <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,

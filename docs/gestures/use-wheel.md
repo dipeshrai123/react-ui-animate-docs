@@ -49,7 +49,7 @@ Apply it on a `HTMLELement`:
 In the below example, `useWheel` hook is used to capture wheel event on `HTMLElement`.
 
 ```jsx
-import { useAnimatedValue, useWheel, AnimatedBlock } from 'react-ui-animate';
+import { useAnimatedValue, useWheel, animate } from 'react-ui-animate';
 
 export default function () {
   const left = useAnimatedValue(0);
@@ -59,7 +59,7 @@ export default function () {
   });
 
   return (
-    <AnimatedBlock
+    <animate.div
       {...bind()} // bind here
       style={{
         width: 100,

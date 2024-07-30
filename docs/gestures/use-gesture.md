@@ -28,7 +28,7 @@ It returns a function which is spread on any `HTMLELement`.
 In the below example, `useGesture` hook for drag and wheel:
 
 ```jsx
-import { useGesture, AnimatedBlock } from "react-ui-animate";
+import { useGesture, animate } from "react-ui-animate";
 
 export default function() {
   const bind = useGesture({
@@ -37,7 +37,7 @@ export default function() {
   });
 
   return (
-    <AnimatedBlock
+    <animate.div
         {...bind()} // bind here
         style={{
           width: 100,

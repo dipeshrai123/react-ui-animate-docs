@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { animate, useAnimatedValue } from 'react-ui-animate';
 import { Button, Paper, ButtonGroup } from '@mui/material';
 
 const Example = () => {
@@ -7,7 +7,7 @@ const Example = () => {
 
   return (
     <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,

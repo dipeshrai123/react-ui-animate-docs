@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  AnimatedBlock,
+  animate,
   useMountedValue,
   interpolate,
   AnimationConfigUtils,
@@ -17,11 +17,11 @@ export const Unmounting = () => {
   });
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 100,
                 height: 100,
@@ -34,7 +34,7 @@ export const Unmounting = () => {
           )
       )}
 
-      <Button variant="outlined" onClick={() => setVisible(!visible)}>
+      <Button variant='outlined' onClick={() => setVisible(!visible)}>
         {visible ? 'Hide' : 'Show'}
       </Button>
     </Paper>
@@ -52,11 +52,11 @@ export const ConfigureUnmounting = () => {
   });
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 100,
                 height: 100,
@@ -71,7 +71,7 @@ export const ConfigureUnmounting = () => {
           )
       )}
 
-      <Button variant="outlined" onClick={() => setVisible(!visible)}>
+      <Button variant='outlined' onClick={() => setVisible(!visible)}>
         {visible ? 'Hide' : 'Show'}
       </Button>
     </Paper>
