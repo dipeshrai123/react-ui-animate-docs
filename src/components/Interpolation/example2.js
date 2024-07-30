@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AnimatedBlock,
+  animate,
   useAnimatedValue,
   interpolate,
   withTiming,
@@ -11,8 +11,8 @@ const Example = () => {
   const opacity = useAnimatedValue(0);
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+      <animate.div
         style={{
           width: 100,
           height: 100,
@@ -22,11 +22,11 @@ const Example = () => {
       />
 
       <ButtonGroup style={{ marginTop: 10 }}>
-        <Button variant="outlined" onClick={() => (opacity.value = 1)}>
+        <Button variant='outlined' onClick={() => (opacity.value = 1)}>
           Animate
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => (opacity.value = withTiming(0, { duration: 0 }))}
         >
           Reset

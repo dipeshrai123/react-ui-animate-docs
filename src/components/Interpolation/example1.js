@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AnimatedBlock,
+  animate,
   useAnimatedValue,
   interpolate,
   withTiming,
@@ -11,8 +11,8 @@ const Example = () => {
   const left = useAnimatedValue(0);
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+      <animate.div
         style={{
           width: interpolate(left.value, [0, 200], [100, 400]),
           height: 100,
@@ -24,11 +24,11 @@ const Example = () => {
       />
 
       <ButtonGroup style={{ marginTop: 10 }}>
-        <Button variant="outlined" onClick={() => (left.value = 200)}>
+        <Button variant='outlined' onClick={() => (left.value = 200)}>
           Animate
         </Button>
         <Button
-          variant="outlined"
+          variant='outlined'
           onClick={() => (left.value = withTiming(0, { duration: 0 }))}
         >
           Reset

@@ -25,7 +25,7 @@ and applies animations when it mounts and unmounts.
 
 ```jsx
 import { useState } from 'react';
-import { useMountedValue, AnimatedBlock } from 'react-ui-animate';
+import { useMountedValue, animate } from 'react-ui-animate';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
@@ -47,7 +47,7 @@ export default function App() {
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 100,
                 height: 100,
@@ -87,7 +87,7 @@ export default function App() {
    - Inside the callback, `mounted` is a boolean indicating whether the component is currently mounted (`true`)
      or unmounted (`false`).
 
-   - `open()` conditionally renders `AnimatedBlock` based on the `mounted` state. This ensures that
+   - `open()` conditionally renders `animate.div` based on the `mounted` state. This ensures that
      transitions are applied only when the component is mounting or unmounting.
 
 4. **Component Interaction:**
@@ -138,7 +138,7 @@ import { ConfigureUnmounting } from '/src/components/Unmounting';
 import { useState } from 'react';
 import {
   useMountedValue,
-  AnimatedBlock,
+  animate,
   AnimationConfigUtils,
   interpolate,
 } from 'react-ui-animate';
@@ -162,7 +162,7 @@ export default function App() {
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 100,
                 height: 100,
@@ -188,7 +188,7 @@ export default function App() {
 import { useState } from 'react';
 import {
   MountedBlock,
-  AnimatedBlock,
+  animate,
   AnimationConfigUtils,
   interpolate,
 } from 'react-ui-animate';
@@ -204,7 +204,7 @@ export default function App() {
 
       <MountedBlock state={visible} config={AnimationConfigUtils.BOUNCE}>
         {(animation) => (
-          <AnimatedBlock
+          <animate.div
             style={{
               width: 100,
               height: 100,
@@ -227,10 +227,10 @@ export default function App() {
    - We start with a `visible` state variable (`false` initially) to toggle the visibility of our component.
 
 2. **Rendering Logic:**
-   - `MountedBlock` HOC wraps the `AnimatedBlock` component.
+   - `MountedBlock` HOC wraps the `animate.div` component.
    - The `state` prop of `MountedBlock` is set to the `visible` state, indicating whether the component should be mounted (`true`) or unmounted (`false`).
    - The config `prop` allows for additional animation configuration.
-   - The `AnimatedBlock` component is rendered with the specified styles and interpolated values based on the animation state.
+   - The `animate.div` component is rendered with the specified styles and interpolated values based on the animation state.
    - The children as a function is passed with the argument of animated value, animating from `0` to `1`.
 
 ## Summary

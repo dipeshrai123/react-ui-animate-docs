@@ -60,7 +60,7 @@ const mountedFunction = useMountedValue(boolean, {
 
 ## Example
 
-In the below example, `open` function receives a callback that receives two arguments: the Animated Value and a boolean respectively. The first argument, Animated Value animates from `from = 0` to `enter = 1` when the visible is true and `enter = 1` to `exit = 0` when visible is false. And the second argument, boolean dinamically determines whether the component is mounted or not after animation. `AnimatedBlock` HOC is used to read animated values.
+In the below example, `open` function receives a callback that receives two arguments: the Animated Value and a boolean respectively. The first argument, Animated Value animates from `from = 0` to `enter = 1` when the visible is true and `enter = 1` to `exit = 0` when visible is false. And the second argument, boolean dinamically determines whether the component is mounted or not after animation. `animate.div` HOC is used to read animated values.
 
 ```jsx
 import { useState } from 'react';
@@ -76,7 +76,7 @@ function SomeComponent() {
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 100,
                 height: 100,

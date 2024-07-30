@@ -28,21 +28,21 @@ export const Example = () => {
 ## Apply the Animation Value to a Node
 
 Next, apply the initialized animation value to a node. This node will use the animated value
-for its style properties. Use the `left` animation value in the `AnimatedBlock` component for
+for its style properties. Use the `left` animation value in the `animate.div` component for
 the `left` style property.
 
-The animation value's `.value` property is read by the `AnimatedBlock`
+The animation value's `.value` property is read by the `animate.div`
 component and can be modified when a new value is assigned to it.
 
 ```jsx
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { animate, useAnimatedValue } from 'react-ui-animate';
 
 export const Example = () => {
   const left = useAnimatedValue(0);
 
   return (
     <>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,
@@ -65,14 +65,14 @@ In this example, we'll update the `left` property when a button is clicked.
 Modify the `.value` property to automatically animate the value.
 
 ```jsx
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { animate, useAnimatedValue } from 'react-ui-animate';
 
 export const Example = () => {
   const left = useAnimatedValue(0);
 
   return (
     <>
-      <AnimatedBlock
+      <animate.div
         style={{
           width: 100,
           height: 100,

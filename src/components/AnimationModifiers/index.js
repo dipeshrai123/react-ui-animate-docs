@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Paper } from '@mui/material';
 import {
-  AnimatedBlock,
+  animate,
   AnimationConfigUtils,
   useAnimatedValue,
   withConfig,
@@ -14,7 +14,7 @@ export const WithSpringModifier = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -49,7 +49,7 @@ export const WithSpringModifierConfig = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -84,7 +84,7 @@ export const WithTimingModifier = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -119,7 +119,7 @@ export const WithTimingModifierConfig = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -156,7 +156,7 @@ export const WithEaseModifier = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -188,7 +188,7 @@ export const WithSequenceModifier = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,
@@ -225,7 +225,7 @@ export const WithConfigModifier = () => {
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           height: 100,
           width: 100,

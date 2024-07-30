@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatedBlock, useAnimatedValue, useDrag } from 'react-ui-animate';
+import { animate, useAnimatedValue, useDrag } from 'react-ui-animate';
 import { Paper } from '@mui/material';
 
 export const DragGesture = () => {
@@ -10,8 +10,8 @@ export const DragGesture = () => {
   });
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+      <animate.div
         {...bind()}
         style={{
           width: 100,

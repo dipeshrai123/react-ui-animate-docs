@@ -44,18 +44,18 @@ opacity.value = 100;
 
 ## Example
 
-In the below example, we render a `AnimatedBlock` and a button. We initialize an Animated Value `opacity` and applied in `AnimatedBlock` and triggering the update with a button.
+In the below example, we render a `animate.div` and a button. We initialize an Animated Value `opacity` and applied in `animate.div` and triggering the update with a button.
 
 ```jsx
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { animate, useAnimatedValue } from 'react-ui-animate';
 
 export default function () {
   const opacity = useAnimatedValue(0); // It initializes opacity object with value 0.
 
   return (
     <div>
-      {/* AnimatedBlock component can read useAnimatedValue() */}
-      <AnimatedBlock
+      {/* animate.div component can read useAnimatedValue() */}
+      <animate.div
         style={{
           opacity: opacity.value, // using opacity with value property
           width: 100,
@@ -64,7 +64,7 @@ export default function () {
         }}
       >
         ANIMATED
-      </AnimatedBlock>
+      </animate.div>
 
       {/* Assigning value to 1 auto animates from initialized value 0 to 1 smoothly */}
       <button onClick={() => (opacity.value = 1)}>Animate Me</button>

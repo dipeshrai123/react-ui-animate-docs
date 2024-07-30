@@ -1,12 +1,12 @@
 import { Button, Paper, ButtonGroup } from '@mui/material';
-import { AnimatedBlock, useAnimatedValue, withTiming } from 'react-ui-animate';
+import { animate, useAnimatedValue, withTiming } from 'react-ui-animate';
 
 export default function () {
   const opacity = useAnimatedValue(1);
 
   return (
     <Paper style={{ padding: 20 }} variant='outlined'>
-      <AnimatedBlock
+      <animate.div
         style={{
           opacity: opacity.value,
           height: 100,

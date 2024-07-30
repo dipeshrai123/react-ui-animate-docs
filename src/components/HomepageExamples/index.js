@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, Button, ButtonGroup } from '@mui/material';
 import {
-  AnimatedBlock,
+  animate,
   useAnimatedValue,
   interpolate,
   AnimationConfigUtils,
@@ -23,7 +23,7 @@ const Unmounting = () => {
 
   return (
     <Paper
-      variant="outlined"
+      variant='outlined'
       style={{
         padding: 20,
         marginBottom: 20,
@@ -32,7 +32,7 @@ const Unmounting = () => {
       {open(
         (animation, mounted) =>
           mounted && (
-            <AnimatedBlock
+            <animate.div
               style={{
                 width: 200,
                 height: 100,
@@ -52,7 +52,7 @@ const Unmounting = () => {
           justifyContent: 'center',
         }}
       >
-        <Button variant="outlined" onClick={() => setVisible(!visible)}>
+        <Button variant='outlined' onClick={() => setVisible(!visible)}>
           {visible ? 'Hide Element' : 'Show Element'}
         </Button>
       </div>
@@ -64,8 +64,8 @@ const AnimatedTransitionExample = () => {
   const left = useAnimatedValue(0, AnimationConfigUtils.ELASTIC);
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+      <animate.div
         style={{
           height: 100,
           background: '#39F',
@@ -84,7 +84,7 @@ const AnimatedTransitionExample = () => {
           justifyContent: 'center',
         }}
       >
-        <ButtonGroup variant="outlined" aria-label="outlined button group">
+        <ButtonGroup variant='outlined' aria-label='outlined button group'>
           <Button onClick={() => (left.value = 0)}>Animate Left</Button>
           <Button onClick={() => (left.value = 200)}>Animate Right</Button>
         </ButtonGroup>
@@ -103,8 +103,8 @@ export const Gesture = () => {
   });
 
   return (
-    <Paper variant="outlined" style={{ padding: 20, marginBottom: 20 }}>
-      <AnimatedBlock
+    <Paper variant='outlined' style={{ padding: 20, marginBottom: 20 }}>
+      <animate.div
         {...bind()}
         style={{
           width: 100,
@@ -124,7 +124,7 @@ export const Gesture = () => {
         }}
       >
         DRAG ME
-      </AnimatedBlock>
+      </animate.div>
     </Paper>
   );
 };

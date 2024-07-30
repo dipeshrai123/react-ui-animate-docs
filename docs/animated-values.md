@@ -50,14 +50,14 @@ Updates are automatically and smoothly animated.
 Let's look at a practical example:
 
 ```jsx
-import { AnimatedBlock, useAnimatedValue } from 'react-ui-animate';
+import { animate, useAnimatedValue } from 'react-ui-animate';
 
 export default function () {
   const opacity = useAnimatedValue(1);
 
   return (
     <div>
-      <AnimatedBlock
+      <animate.div
         style={{
           opacity: opacity.value,
           width: 100,
@@ -67,7 +67,7 @@ export default function () {
         }}
       >
         ANIMATED
-      </AnimatedBlock>
+      </animate.div>
 
       <button onClick={() => (opacity.value = 0)}>Fade Out</button>
     </div>
@@ -76,33 +76,17 @@ export default function () {
 ```
 
 In this example, clicking the button animates the opacity from 1 to 0 smoothly.
-The `AnimatedBlock` component is used instead of a regular HTML element because it can read and
-respond to Animated Values. The `AnimatedBlock` HOC (Higher-Order Component) acts as a div element
+The `animate.div` component is used instead of a regular HTML element because it can read and
+respond to Animated Values. The `animate.div` HOC (Higher-Order Component) acts as a div element
 that can also interpret Animated Values.
 
 import AnimatedValues from '/src/components/AnimatedValues';
 
 <AnimatedValues />
 
-## Higher Order Components
-
-`react-ui-animate` provides three built-in Higher Order Components (HOCs) that can accept animation
-values, allowing you to easily animate standard HTML elements:
-
-1. `AnimatedBlock`: A `div` element
-2. `AnimatedInline`: A `span` element
-3. `AnimatedImage`: A `img` element
-
-These components are designed to seamlessly integrate with Animated Values, enabling smooth and
-responsive animations for these common elements.
-
 ### Extending to Other Elements
 
-In real-world applications, you might need to animate elements other than `div`, `span`, or `img`.
-For this purpose, `react-ui-animate` offers a flexible solution through the `animate` utility, which
-supports all HTML tags.
-
-To use `animate`, import it from react-ui-animate:
+You might need to animate elements other than `div`. The `animate` object contains all of the HTML / SVG tag elements which can be used similarly as `animated.div`.
 
 ```jsx
 import { animate } from 'react-ui-animate';

@@ -31,14 +31,14 @@ Suppose you want to move an element from left `0px` to `200px` and change its wi
 `100px` to `400px`. Here's how you can achieve this with `interpolate`:
 
 ```jsx
-import { useAnimatedValue, AnimatedBlock, interpolate } from 'react-ui-animate';
+import { useAnimatedValue, animate, interpolate } from 'react-ui-animate';
 
 export default function () {
   const left = useAnimatedValue(0);
 
   return (
     <>
-      <AnimatedBlock
+      <animate.div
         style={{
           // highlight-next-line
           width: interpolate(left.value, [0, 200], [100, 400]),
@@ -63,7 +63,7 @@ import InterpolationExample1 from '/src/components/Interpolation/example1.js';
 In this example:
 
 1. `left`: An animated value initialized to `0`.
-2. `AnimatedBlock`: The element we want to animate.
+2. `animate.div`: The element we want to animate.
 3. `interpolate`: Maps `left.value` from the range `[0, 200]` to `[100, 400]` for the width style property.
 
 :::tip
