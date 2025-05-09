@@ -4,61 +4,137 @@ id: handling-gestures
 title: Handling Gestures
 ---
 
-React UI Animate provides a powerful set of gesture hooks that enable you to easily bind mouse and touch events to any node. This allows for the creation of complex interactions, such as dragging and scrolling, with just a few lines of code.
+React UI Animate provides a set of gesture hooks that bind native pointer and scroll events to Animated Values. With just a few lines of code, you can create draggable, scroll-responsive, and gesture-driven interfaces.
 
 import { Gesture } from '/src/components/HomepageExamples';
 
 <Gesture />
 
-## Defining a gesture
+## Defining a Gesture
 
-To get started with gestures, you first need to import the appropriate gesture hook and define it inside a component. For instance, to use the `useDrag` hook, you can set it up as follows:
-
-```jsx
-import { useDrag } from 'react-ui-animate';
-
-function Component() {
-  const bind = useDrag(() => {});
-}
-```
-
-The `useDrag` hook takes a function as an argument, which receives all the drag/event data. This hook is assigned to a `bind` variable that contains all the necessary event handlers. You can then attach these handlers to a component.
-
-## Binding a gesture to a Node
-
-Thanks to the consistent pattern of gesture hooks, binding a gesture to a node is straightforward. The gesture hooks return a function that, when called, provides an object with event handlers. Here’s an example of making a `<div />` draggable:
+Import the gesture hook you need and define it inside your component. Gesture hooks return a `bind` function supplying the necessary event handlers.
 
 ```jsx
-import { useDrag } from 'react-ui-animate';
+import { useDrag } from "react-ui-animate";
 
-export default function () {
-  const bind = useDrag((state) => doSomething(state));
+export const DraggableBox = () => {
+  const bind = useDrag((state) => {
+    // state contains { down, movementX, movementY, ... }
+    console.log(state);
+  });
 
   return (
     <div
       {...bind()}
+      style={{ width: 60, height: 60, backgroundColor: "#3399ff" }}
+    />
+  );
+};
+```
+
+## Drag Example with Animated Value
+
+Combine `useDrag` with an Animated Value (`useValue`) to move an element:
+
+```jsx
+import { animate, useValue, useDrag, withSpring } from "react-ui-animate";
+
+export const DragGesture = () => {
+  const x = useValue(0);
+  const y = useValue(0);
+  const bind = useDrag(({ down, movementX, movementY }) => {
+    x.value = down ? movementX : withSpring(0);
+    y.value = down ? movementY : withSpring(0);
+  });
+
+  return (
+    <animate.div
+      {...bind()}
       style={{
-        width: 60,
-        height: 60,
-        backgroundColor: '#3399ff',
+        width: 80,
+        height: 80,
+        backgroundColor: "#f5533d",
+        borderRadius: 4,
+        translateX: x.value,
+        translateY: y.value,
       }}
     />
   );
-}
+};
 ```
 
-In this example, the `<div />` element receives an object with event handlers when you spread `...bind()`. This includes handlers like `onPointerDown` and `onMouseDown`. The `useDrag` hook's callback function receives a `state` object containing all the gesture's attributes. This `state` object is passed to your handler every time the gesture updates.
+## Scroll, Wheel, and MouseMove Hooks
 
-To implement actual dragging, use the gesture hook in conjunction with an Animated Value:
+- **useScroll**: React to page scroll
+- **useWheel**: React to wheel (trackpad/mouse wheel)
+- **useMouseMove**: React to pointer movement within a container
 
 ```jsx
-import { useDrag, useAnimatedValue, animate } from 'react-ui-animate';
+import {
+  animate,
+  useValue,
+  useScroll,
+  useWheel,
+  useMouseMove,
+} from "react-ui-animate";
 
-export default function () {
-  const left = useAnimatedValue(0);
+export const ScrollColor = () => {
+  const progress = useValue(0);
+  useScroll(({ scrollY }) => {
+    progress.value = scrollY;
+  });
 
-  const bind = useDrag(({ down, movementX }) => {
-    left.value = down ? movementX : 0;
+  return <></>;
+};
+```
+
+## Combining Gestures with Animated Values
+
+You can use any Animated Value modifiers with gesture-driven updates:
+
+```jsx
+import { animate, useValue, useWheel, withSpring } from "react-ui-animate";
+
+export const PinchZoom = () => {
+  const scale = useValue(1);
+  useWheel(({ deltaY }) => {
+    // zoom in/out with spring for bounce effect
+    const next = scale.value - deltaY * 0.001;
+    scale.value = withSpring(Math.max(0.5, Math.min(2, next)));
+  });
+
+  return (
+    <animate.div
+      style={{
+        width: 150,
+        height: 150,
+        backgroundColor: "#39F",
+        scale: scale.value,
+      }}
+    />
+  );
+};
+```
+
+## Multi-Gesture Handling
+
+Use `useGesture` to combine multiple gesture types on one element:
+
+```jsx
+import { animate, useValue, useGesture, withSpring } from "react-ui-animate";
+
+export const CombinedGesture = () => {
+  const x = useValue(0);
+  const y = useValue(0);
+
+  const bind = useGesture({
+    onDrag: ({ movementX, movementY }) => {
+      x.value = withSpring(movementX);
+      y.value = withSpring(movementY);
+    },
+    onWheel: ({ deltaY }) => {
+      x.value = withSpring(x.value - deltaY);
+    },
   });
 
   return (
@@ -67,30 +143,27 @@ export default function () {
       style={{
         width: 100,
         height: 100,
-        backgroundColor: '#f5533d',
-        borderRadius: 4,
-        position: 'relative',
-        left: left.value,
+        backgroundColor: "#39F",
+        translateX: x.value,
+        translateY: y.value,
       }}
     />
   );
-}
+};
 ```
 
-In this example, `left` is an animated value. The `state` object includes `down`, which represents whether the mouse button is pressed, and `movementX`, which tracks the movement along the x-axis starting from 0.
+## Available Gesture Hooks
 
-import { DragGesture } from '/src/components/Gestures';
+- `useDrag`
+- `useScroll`
+- `useWheel`
+- `useMouseMove`
+- `useGesture` (combine multiple gesture handlers)
 
-<DragGesture />
+## Summary
 
-## Available gesture hooks
+Gesture hooks in React UI Animate let you bind complex interactions—drag, scroll, wheel, pointer move—to Animated Values. By combining these hooks with modifiers like `withSpring` or `withTiming`, you can create highly interactive, responsive UIs.
 
-React UI Animate offers the following gesture hooks, all of which share a similar API pattern:
+## What's Next?
 
-- `useScroll` for scroll gestures.
-- `useMouseMove` for mouse move gestures.
-- `useDrag` for drag gestures.
-- `useWheel` for mouse wheel gestures.
-- `useGesture` for multiple gesturess.
-
-These hooks provide a flexible and efficient way to handle various user interactions, making it easy to implement responsive and interactive UI elements.
+In the next section, we'll explore **Custom Animated Components** using `makeAnimated()` and the animate API.

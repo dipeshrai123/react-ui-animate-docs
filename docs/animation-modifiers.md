@@ -4,137 +4,219 @@ id: animation-modifiers
 title: Animation Modifiers
 ---
 
-To achieve dynamic animations with precise control, React UI Animate provides animation modifier functions. These modifiers allow customization of animation configurations when setting animation values using `useAnimatedValue`.
+To achieve dynamic animations with precise control, React UI Animate provides modifier functions. Wrap target values in these modifiers when assigning to an Animated Value's `.value`.
 
-## Applying `withSpring` modifier
+## Applying `withSpring`
 
-The withSpring modifier facilitates spring-based animations on an animation value.
+Spring animations simulate physical motion. Use `withSpring(target, config?)`:
 
 ```jsx
-import { useAnimatedValue, withSpring } from 'react-ui-animate';
+import { useValue, animate, withSpring } from "react-ui-animate";
 
-const animation = useAnimatedValue(0);
-
-const animateRight = () => {
-  animation.value = withSpring(100);
+export const WithSpringModifier = () => {
+  const x = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button
+        onClick={() =>
+          (x.value = withSpring(100, { stiffness: 200, damping: 20 }))
+        }
+      >
+        Spring to 100
+      </button>
+    </>
+  );
 };
 ```
 
-import { WithSpringModifier } from '/src/components/AnimationModifiers'
+- **stiffness**: spring tension (higher = snappier)
+- **damping**: resistance to oscillation (higher = less bounce)
+- **mass**: weight of the item (higher = slower motion)
 
-<WithSpringModifier />
+## Applying `withTiming`
 
-You can further customize the spring configuration by passing options such as `friction` and `tension`.
-
-```js
-animation.value = withSpring(100, { friction: 5 });
-```
-
-import { WithSpringModifierConfig } from '/src/components/AnimationModifiers'
-
-<WithSpringModifierConfig />
-
-## Applying `withTiming` modifier
-
-The `withTiming` modifier enables timing-based animations on an animation value.
+Timing animations interpolate over a duration. Use `withTiming(target, { duration, easing? })`:
 
 ```jsx
-import { useAnimatedValue, withTiming } from 'react-ui-animate';
+import { useValue, animate, withTiming } from "react-ui-animate";
 
-const animation = useAnimatedValue(0);
-
-const animateRight = () => {
-  animation.value = withTiming(100);
+export const WithTimingModifier = () => {
+  const x = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button onClick={() => (x.value = withTiming(100, { duration: 500 }))}>
+        Move to 100
+      </button>
+    </>
+  );
 };
 ```
 
-import { WithTimingModifier } from '/src/components/AnimationModifiers'
+- **duration**: length in milliseconds
+- **easing**: optional function `(t: number) => number` mapping time to progress
 
-<WithTimingModifier />
+## Applying `withEase`
 
-You can adjust the timing configuration by passing options such as `duration` or `easing`.
-
-```jsx
-animation.value = withTiming(100, { duration: 5000 });
-```
-
-import { WithTimingModifierConfig } from '/src/components/AnimationModifiers'
-
-<WithTimingModifierConfig />
-
-## Applying `withEase` modifier
-
-By default, the `withEase` modifier applies ease animation. It is automatically used if no other modifier function is specified.
+Use `withEase(target, config?)` for an ease curve or custom easing:
 
 ```jsx
-import { useAnimatedValue, withEase } from 'react-ui-animate';
+import { useValue, animate, withEase } from "react-ui-animate";
 
-const animation = useAnimatedValue(0);
-
-const animateRight = () => {
-  animation.value = withEase(100); // Same as animation.value = 100
+export const WithEaseModifier = () => {
+  const x = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button onClick={() => (x.value = withEase(100))}>Ease to 100</button>
+    </>
+  );
 };
 ```
 
-import { WithEaseModifier } from '/src/components/AnimationModifiers'
+## Sequence Animations with `withSequence`
 
-<WithEaseModifier />
-
-## Sequence Animation with `withSequence` modifier
-
-To create sequential animations, use the `withSequence` modifier in combination with other modifiers like `withTiming`, `withSpring`, or `withEase` as an array.
+Chain modifiers sequentially: the next begins when the previous completes.
 
 ```jsx
 import {
-  useAnimatedValue,
+  useValue,
+  animate,
   withSequence,
   withSpring,
   withTiming,
-} from 'react-ui-animate';
+} from "react-ui-animate";
 
-const animation = useAnimatedValue(0);
-
-const animateRight = () => {
-  animation.value = withSequence([withSpring(50), withTiming(100)]);
+export const WithSequenceModifier = () => {
+  const x = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button
+        onClick={() =>
+          (x.value = withSequence([
+            withSpring(50),
+            withTiming(100, { duration: 300 }),
+          ]))
+        }
+      >
+        Sequence
+      </button>
+    </>
+  );
 };
 ```
 
-In this example, `animation.value` first animates with a spring animation to `50`, followed by a timing animation to `100`.
+## Using Predefined Configurations
 
-import { WithSequenceModifier } from '/src/components/AnimationModifiers'
-
-<WithSequenceModifier />
-
-## Applying Pre-defined configs with `withConfig` modifier
-
-To create sequential animations, use the `withSequence` modifier in combination with other modifiers like `withTiming`, `withSpring`, or `withEase` as an array.
-
-To apply different pre-defined configs from `AnimationConfigUtils` like `ELASTIC`, `BOUNCE`, `WOOBLE` etc. we can use `withConfig` modifier.
+React UI Animate exports `AnimationConfig`, containing separate presets for timing-based and spring-based animations. You can import and use these presets directly with `withTiming` and `withSpring`.
 
 ```jsx
 import {
-  useAnimatedValue,
-  withConfig,
-  AnimationConfigUtils,
-} from 'react-ui-animate';
+  useValue,
+  animate,
+  withTiming,
+  withSpring,
+  AnimationConfig,
+} from "react-ui-animate";
 
-const animation = useAnimatedValue(0);
+export const PresetExample = () => {
+  const x = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
 
-const animateLeft = () => {
-  animation.value = withConfig(0, AnimationConfigUtils.WOOBLE);
-};
+      {/* Timing Presets */}
+      <button
+        onClick={() =>
+          (x.value = withTiming(100, AnimationConfig.Timing.BOUNCE))
+        }
+      >
+        Bounce Timing
+      </button>
+      <button
+        onClick={() =>
+          (x.value = withTiming(100, AnimationConfig.Timing.POWER3))
+        }
+      >
+        Power3 Curve
+      </button>
 
-const animateRight = () => {
-  animation.value = withConfig(100, AnimationConfigUtils.BOUNCE);
+      {/* Spring Presets */}
+      <button
+        onClick={() =>
+          (x.value = withSpring(100, AnimationConfig.Spring.ELASTIC))
+        }
+      >
+        Elastic Spring
+      </button>
+      <button
+        onClick={() =>
+          (x.value = withSpring(100, AnimationConfig.Spring.WOBBLE))
+        }
+      >
+        Wobble Spring
+      </button>
+    </>
+  );
 };
 ```
 
-In this example, `animation.value` is applied with `BOUNCE` animation when Animate Right button is clicked and `WOOBLE` animation when Animate Left button is clicked.
+**Available Timing Presets:**
 
-import { WithConfigModifier } from '/src/components/AnimationModifiers'
+- `AnimationConfig.Timing.BOUNCE`
+- `AnimationConfig.Timing.EASE_IN`
+- `AnimationConfig.Timing.EASE_OUT`
+- `AnimationConfig.Timing.EASE_IN_OUT`
+- `AnimationConfig.Timing.POWER1`
+- `AnimationConfig.Timing.POWER2`
+- `AnimationConfig.Timing.POWER3`
+- `AnimationConfig.Timing.POWER4`
+- `AnimationConfig.Timing.LINEAR`
 
-<WithConfigModifier />
+**Available Spring Presets:**
 
-## What's Next ?
+- `AnimationConfig.Spring.ELASTIC`
+- `AnimationConfig.Spring.EASE`
+- `AnimationConfig.Spring.STIFF`
+- `AnimationConfig.Spring.WOBBLE`
 
-In the next section, we will look at `Handling Gestures`.
+## What's Next??
+
+In the next section, we'll explore **Handling Gestures** with hooks like `useDrag`, `useScroll`, and `useWheel`.

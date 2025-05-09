@@ -4,73 +4,154 @@ id: configuring-animations
 title: Configuring Animations
 ---
 
-React UI Animate provides two types of animation configurations: Timing and Spring based animations. By default, Animated Values in React UI Animate implement Spring based animation.
+React UI Animate uses modifier functions for configuring transitions. By default, assigning a new value to an animated value snaps instantly. To animate property changes smoothly, wrap the target in **withTiming** or **withSpring** modifiers.
 
-## Spring-Based Animation
+## Snap-to Value (Default)
 
-```jsx
-import { useAnimatedValue } from 'react-ui-animate';
-
-const left = useAnimatedValue(0, { mass: 1, friction: 10, tension: 200 });
-```
-
-In this example, `left` is initialized as a spring-based animation with custom parameters (`mass`, `friction`, and `tension`). Spring animations are naturally balanced and simulate physical systems, providing smooth and realistic motion.
-
-import { SpringAnimation } from '/src/components/ConfiguringAnimation'
-
-<SpringAnimation />
-
-## Timing-Based Animation
+Without modifiers, value assignments are applied immediately:
 
 ```jsx
-import { useAnimatedValue } from 'react-ui-animate';
+import { animate, useValue } from "react-ui-animate";
 
-const left = useAnimatedValue(0, { duration: 1000 });
+export const SnapExample = () => {
+  const x = useValue(0);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button onClick={() => (x.value = 100)}>Snap to 100px</button>
+    </>
+  );
+};
 ```
 
-Here, `left` is initialized with a timing-based animation that completes in 1 second (`duration: 1000`). Timing-based animations are linearly interpolated and depend solely on the specified duration, making them suitable for precise, time-dependent animations.
+## Timing Animation
 
-import { TimingAnimation } from '/src/components/ConfiguringAnimation'
-
-<TimingAnimation />
-
-## Pre-defined Animation Configurations
+Use `withTiming(target, { duration, easing? })` for time-based transitions. It interpolates linearly (or with a specified easing) over the given duration:
 
 ```jsx
-import { useAnimatedValue, AnimationConfigUtils } from 'react-ui-animate';
+import { animate, useValue, withTiming } from "react-ui-animate";
 
-const left = useAnimatedValue(0, AnimationConfigUtils.BOUNCE);
+export const TimingExample = () => {
+  const x = useValue(0);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button
+        onClick={() =>
+          (x.value = withTiming(200, { duration: 800, easing: (t) => t * t }))
+        }
+      >
+        Move with Timing
+      </button>
+    </>
+  );
+};
 ```
 
-You can also use pre-defined animation configurations like `ELASTIC`, `EASE`, `BOUNCE`, `STIFF`, `POWER`, `WOOBLE`, etc., provided by `AnimationConfigUtils`. These configurations offer different styles of animations tailored for specific effects.
+- **duration**: length of animation in milliseconds.
+- **easing**: optional function with signature `(t: number) => number`, mapping normalized time to progress.
 
-import { BounceAnimation } from '/src/components/ConfiguringAnimation'
+## Spring Animation
 
-<BounceAnimation />
-
-## Timing-Based Animation with Bezier Curve
+Use `withSpring(target, { stiffness?, damping?, mass? })` for physics-based motions. Springs create natural, bouncy transitions:
 
 ```jsx
-import { useAnimatedValue, Easing } from 'react-ui-animate';
+import { animate, useValue, withSpring } from "react-ui-animate";
 
-const left = useAnimatedValue(0, {
-  duration: 1000,
-  easing: Easing.bezier(0.17, 0.67, 0.83, 0.67),
-});
+export const SpringExample = () => {
+  const scale = useValue(1);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "#39F",
+          scale: scale.value,
+        }}
+      />
+      <button
+        onClick={() =>
+          (scale.value = withSpring(1.5, { stiffness: 200, damping: 20 }))
+        }
+      >
+        Pop
+      </button>
+    </>
+  );
+};
 ```
 
-Here, `left` uses a timing-based animation with a duration of 1 second and a custom cubic bezier curve defined by `Easing.bezier(0.17, 0.67, 0.83, 0.67)`. Bezier curves allow for precise control over the animation's acceleration and deceleration, mimicking the behavior of CSS transitions' timing functions.
+- **stiffness**: spring tension (higher = snappier).
+- **damping**: resistance to oscillation (higher = less bounce).
+- **mass**: weight of the item (higher = slower movement).
 
-import { CubicBezierAnimation } from '/src/components/ConfiguringAnimation'
+## Combining Modifiers
 
-<CubicBezierAnimation />
+You can chain multiple animations sequentially with `withSequence()`:
 
-These examples demonstrate how to customize animations in React UI Animate using different configurations, including spring-based animations, pre-defined animation types, timing-based animations with easing functions, and timing-based animations with cubic bezier curves. Each configuration offers unique capabilities for creating engaging and dynamic animations in your applications.
+```jsx
+import {
+  animate,
+  useValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from "react-ui-animate";
+
+export const SequenceExample = () => {
+  const x = useValue(0);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button
+        onClick={() =>
+          (x.value = withSequence([
+            withSpring(100, { stiffness: 100 }),
+            withTiming(0, { duration: 500 }),
+          ]))
+        }
+      >
+        Bounce Back
+      </button>
+    </>
+  );
+};
+```
 
 ## Summary
 
-React UI Animate offers flexible animation configurations including spring-based and timing-based animations, pre-defined styles like `BOUNCE`, and custom easing with cubic bezier curves. These options enable developers to create dynamic and engaging animations tailored to their application's needs.
+To configure animations in React UI Animate:
 
-## What's Next ?
+- Use **withTiming** for predictable, duration-based transitions.
+- Use **withSpring** for dynamic, physics-driven animations.
+- Combine with **withSequence** for chaining multiple effects.
 
-In the next section, we will look at `Unmounting Components`.
+## What's Next?
+
+In the next section, we'll explore **Unmounting Transitions** and how `useMount()` helps orchestrate entry and exit animations.

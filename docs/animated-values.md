@@ -4,127 +4,167 @@ id: animated-values
 title: Animated Values
 ---
 
-Animated Values are the core concept of **react-ui-animate**. They hold and manage the data that
-drives your animations, providing a straightforward way to create smooth and responsive
-animations.
+Animated Values are the core concept of **React UI Animate**. They hold and manage the data that drives your animations, providing a simple and reactive way to create smooth transitions.
 
-## Defining Animated Value
+## Defining an Animated Value
 
-`useAnimatedValue` is a hook that returns an object containing properties like `.value` and
-`.currentValue`. These Animated Value objects serve as references to pieces of shared animation data,
-which can be accessed and modified using their `.value` property. Similar to `useRef`,
-`useAnimatedValue` stores data until the component is unmounted, maintains data across
-state changes, and modifies data without triggering re-renders.
-
-To create an Animated Value, use the `useAnimatedValue` hook:
-
-```js
-const animationNode = useAnimatedValue(initialValue);
-```
-
-This returns a mutable object whose `.value` property is initialized to the provided initialValue,
-which can be any primitive type like a `number` or `string`.
-
-To update an Animated Value, set a new value of the same primitive type onto the `.value` property.
-This spontaneous modification reflects instant reactivity.
+Use the `useValue()` hook to create an animated value. This hook returns a mutable object with a `.value` property initialized to the provided `initialValue`. You can use any primitive type (number or string).
 
 ```jsx
-import { useAnimatedValue } from 'react-ui-animate';
+import { useValue } from "react-ui-animate";
 
-function SomeComponent() {
-  const animationNode = useAnimatedValue(0);
+export const Example = () => {
+  // Initialize an animated value at 0
+  const x = useValue(0);
+
+  return <>{/* ... */}</>;
+};
+```
+
+The `useValue` hook behaves similarly to `useRef`: it stores data across renders without causing re-renders when the `.value` changes.
+
+## Reading and Applying Animated Values
+
+Animated Values are consumed by special components exported on the `animate` object. These components read any Animated Values applied to their style or props.
+
+```jsx
+import { animate, useValue } from "react-ui-animate";
+
+export const Box = () => {
+  const x = useValue(0);
 
   return (
-    <button onClick={() => (animationNode.value = Math.random())}>
-      Randomize
-    </button>
+    <animate.div
+      style={{
+        width: 100,
+        height: 100,
+        backgroundColor: "#39F",
+        translateX: x.value,
+      }}
+    />
   );
-}
+};
 ```
 
-In the above example, the value is updated from the initial value of 0 to random values.
-Updates are automatically and smoothly animated.
+You can animate any CSS property by assigning an Animated Value to it (e.g., `opacity`, `translateY`, `width`, etc.).
 
-### Example
+## Updating Animated Values
 
-Let's look at a practical example:
+To update an Animated Value, simply assign a new value to its `.value` property. By default, this assignment snaps instantly to the target value without any transition:
 
 ```jsx
-import { animate, useAnimatedValue } from 'react-ui-animate';
+import { animate, useValue } from "react-ui-animate";
 
-export default function () {
-  const opacity = useAnimatedValue(1);
+export const SnapExample = () => {
+  const x = useValue(0);
 
   return (
-    <div>
+    <>
       <animate.div
         style={{
-          opacity: opacity.value,
-          width: 100,
-          padding: 20,
-          background: '#39F',
-          borderRadius: 4,
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
         }}
-      >
-        ANIMATED
-      </animate.div>
-
-      <button onClick={() => (opacity.value = 0)}>Fade Out</button>
-    </div>
+      />
+      <button onClick={() => (x.value = 200)}>Snap to 200px</button>
+    </>
   );
-}
+};
 ```
 
-In this example, clicking the button animates the opacity from 1 to 0 smoothly.
-The `animate.div` component is used instead of a regular HTML element because it can read and
-respond to Animated Values. The `animate.div` HOC (Higher-Order Component) acts as a div element
-that can also interpret Animated Values.
-
-import AnimatedValues from '/src/components/AnimatedValues';
-
-<AnimatedValues />
-
-### Extending to Other Elements
-
-You might need to animate elements other than `div`. The `animate` object contains all of the HTML / SVG tag elements which can be used similarly as `animated.div`.
+If you need a smooth animation instead of an immediate snap, wrap the target value in one of the modifier functions:
 
 ```jsx
-import { animate } from 'react-ui-animate';
+// Using a timing curve for smooth transition
+x.value = withTiming(200, { duration: 500 });
+
+// Using a physics-based spring
+x.value = withSpring(200);
 ```
 
-You can then create animated versions of any HTML element using `animate`:
+### Using Modifiers
+
+For more control over the animation curve, wrap the target value in modifier functions:
+
+- **Spring**: `withSpring(target, config?)`
+- **Timing**: `withTiming(target, { duration })`
+- **Sequence**: `withSequence([modifier1, modifier2, ...])`
+- **Ease**: `withEase(target, config?)`
 
 ```jsx
-render(
+import { animate, useValue, withSpring, withTiming } from "react-ui-animate";
+
+export const ModifierExample = () => {
+  const x = useValue(0);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          translateX: x.value,
+          width: 50,
+          height: 50,
+          backgroundColor: "#39F",
+        }}
+      />
+      <button onClick={() => (x.value = withSpring(200))}>
+        Spring to 200px
+      </button>
+      <button onClick={() => (x.value = withTiming(0, { duration: 1000 }))}>
+        Return with Timing
+      </button>
+    </>
+  );
+};
+```
+
+## Extending to Other Elements
+
+The `animate` object includes animated versions of all HTML and SVG elements. For example:
+
+```jsx
+import { animate } from "react-ui-animate";
+
+export const List = () => (
   <animate.ul>
-    <animate.li></animate.li>
+    <animate.li>Item 1</animate.li>
+    <animate.li>Item 2</animate.li>
   </animate.ul>
 );
 ```
 
-In this example, `animate.ul` and `animate.li` are animated versions of the `ul` and `li` elements, respectively.
-This allows you to apply animated values to any HTML element without restriction.
+## Creating Custom Animated Components
 
-### Creating Custom Animated Components
-
-If you need to create a custom component that can accept animation values, you can use the `makeAnimated()`
-function. This utility transforms your custom component into an animated component that can read and
-respond to Animated Values.
+Transform any React component into an animated component using `makeAnimated()`:
 
 ```jsx
-import { makeAnimated } from 'react-ui-animate';
+import { makeAnimated } from "react-ui-animate";
 
-const CustomComponent = (props) => <div {...props}>Custom Content</div>;
+const Card = (props) => <div {...props}>Card Content</div>;
+const AnimatedCard = makeAnimated(Card);
 
-const AnimatedCustomComponent = makeAnimated(CustomComponent);
+export const App = () => {
+  const scale = useValue(1);
+  return (
+    <AnimatedCard
+      style={{ scale: scale.value }}
+      onClick={() => (scale.value = 1.2)}
+    />
+  );
+};
 ```
 
-In this example:
+## Example Component
 
-1. `CustomComponent`: A standard React component that renders a div with custom content.
-2. `AnimatedCustomComponent`: A new component created by passing `CustomComponent` to `makeAnimated()`.
-   This animated version can now accept and respond to Animated Values.
+import AnimatedValues from "/src/components/AnimatedValues"
 
-## What's Next ?
+<AnimatedValues />
+<br />
 
-In the next section, we will look into `interpolation`.
+This example demonstrates how to define, apply, and update Animated Values using `useValue`, modifiers, and custom animated components.
+
+## What's Next?
+
+In the next section, we'll explore **Interpolation** with the `interpolate()` function to map values between ranges and colors.
