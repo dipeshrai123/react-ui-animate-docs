@@ -4,137 +4,135 @@ id: interpolation
 title: Interpolation
 ---
 
-Interpolation is a powerful feature in `react-ui-animate` that maps input ranges to output ranges,
-enabling complex animations based on the animated values. The `interpolate` function provides a
-flexible way to convert an animated value into another range or value type.
+Interpolation lets you map an animated value from one range to another, enabling complex, responsive animations. The `interpolate()` function supports linear mapping, multiple segments, color interpolation, and customizable extrapolation.
 
 ## Basic Interpolation
 
-An interpolation maps input ranges to output ranges. By default, it uses linear interpolation
-but also supports easing functions. Interpolation can extrapolate the curve beyond the given
-ranges or clamp the output value.
-
-## Basic Usage
-
-To perform a basic interpolation, you can use the `interpolate` function. For example, to
-map a `0-1` range to a `0-100` range:
+Use `interpolate()` to convert an input range to an output range.
 
 ```jsx
-interpolate(value, [0, 1], [0, 100]);
-```
+import { useValue, animate, interpolate } from "react-ui-animate";
 
-This converts the value from a `0-1` range to a `0-100` range linearly.
-
-### Example: Moving an Element
-
-Suppose you want to move an element from left `0px` to `200px` and change its width from
-`100px` to `400px`. Here's how you can achieve this with `interpolate`:
-
-```jsx
-import { useAnimatedValue, animate, interpolate } from 'react-ui-animate';
-
-export default function () {
-  const left = useAnimatedValue(0);
+export const BasicInterpolation = () => {
+  const progress = useValue(0);
 
   return (
     <>
       <animate.div
         style={{
-          // highlight-next-line
-          width: interpolate(left.value, [0, 200], [100, 400]),
-          height: 100,
-          backgroundColor: '#3399ff',
-          borderRadius: 4,
-          position: 'relative',
-          left: left.value,
+          // width maps from [0,1] → [0,100]
+          width: interpolate(progress.value, [0, 1], [0, 100]),
+          height: 20,
+          backgroundColor: "#39F",
         }}
       />
-
-      <button onClick={() => (left.value = 200)}>Animate</button>
+      <button onClick={() => (progress.value = 1)}>Fill</button>
     </>
   );
-}
+};
 ```
 
-import InterpolationExample1 from '/src/components/Interpolation/example1.js';
+By default, `interpolate` uses linear scaling and will extend beyond the input range (extrapolate).
 
-<InterpolationExample1 />
+## Moving an Element
 
-In this example:
-
-1. `left`: An animated value initialized to `0`.
-2. `animate.div`: The element we want to animate.
-3. `interpolate`: Maps `left.value` from the range `[0, 200]` to `[100, 400]` for the width style property.
-
-:::tip
-
-Instead of setting the `position` to `relative` and animating the `left` CSS property, you can use the provided helper CSS properties such as `translateX`, `scaleX`, and `rotateZ` for transforms in all the Higher Order Components provided by `react-ui-animate`.
-
-:::
-
-## Advanced Interpolation
-
-The `interpolate` function can also handle more complex scenarios, such as multiple range segments
-and clamping.
-
-### Multiple Range Segments
-
-You can define multiple input and output range segments, useful for creating animations with dead
-zones or other non-linear mappings:
+Map position and size simultaneously:
 
 ```jsx
+import { useValue, animate, interpolate, withSpring } from "react-ui-animate";
+
+export const MoveAndResize = () => {
+  const x = useValue(0);
+
+  return (
+    <>
+      <animate.div
+        style={{
+          left: x.value,
+          width: interpolate(x.value, [0, 200], [100, 400]),
+          height: 100,
+          backgroundColor: "#3399ff",
+          position: "relative",
+        }}
+      />
+      <button onClick={() => (x.value = withSpring(200))}>Animate</button>
+    </>
+  );
+};
+```
+
+Instead of animating `left`, consider using `translateX` for smoother GPU transforms:
+
+```jsx
+style={{
+  translateX: x.value,
+  width: interpolate(x.value, [0, 200], [100, 400])
+}}
+```
+
+## Multiple Range Segments
+
+Define piecewise mappings with dead zones or non-linear progress:
+
+```js
+// input: [0→0.5→1], output: [0→100→200]
 interpolate(value, [0, 0.5, 1], [0, 100, 200]);
 ```
 
-This maps the value from `0 to 0.5` to `0 to 100` and `0.5 to 1` to `100 to 200`.
+## Color Interpolation
 
-### Color Interpolation
+Animate between colors:
 
-Interpolation can also handle non-numeric values, such as colors:
-
-```jsx
-interpolate(value, [0, 1], ['red', 'black']);
+```js
+interpolate(value, [0, 1], ["red", "black"]);
 ```
 
-This changes the color from `red` to `black` as the value goes from `0` to `1`.
-
-import InterpolationExample2 from '/src/components/Interpolation/example2.js';
-
-<InterpolationExample2 />
-
-## Extrapolation
-
-By default, interpolate extrapolates values beyond the given input range. To control this behavior,
-you can use the fourth argument, which is an extrapolation configuration object. This object
-can include `extrapolate`, `extrapolateLeft`, or `extrapolateRight` options.
-
-- `extrapolate`: Sets the extrapolation for both sides (default is `extend`).
-- `extrapolateLeft`: Sets the extrapolation for the left side.
-- `extrapolateRight`: Sets the extrapolation for the right side.
-
-The options are:
-
-- `extend`: (default) Extends the curve beyond the input range.
-- `clamp`: Clamps the value to the output range.
-- `identity`: No extrapolation, returns the input value directly.
-
-Example with clamping:
-
 ```jsx
-interpolate(value, [0, 1], [0, 100], { extrapolate: 'clamp' });
+import { useValue, animate, interpolate, withTiming } from "react-ui-animate";
+
+export const ColorFade = () => {
+  const t = useValue(0);
+  return (
+    <>
+      <animate.div
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: interpolate(t.value, [0, 1], ["red", "black"]),
+        }}
+      />
+      <button onClick={() => (t.value = withTiming(1))}>Fade to Black</button>
+    </>
+  );
+};
 ```
 
-This clamps the output value to the range `[0, 100]`, preventing it from exceeding the specified range.
+## Extrapolation Options
+
+Control how `interpolate` handles values outside the input range via an options object:
+
+- **extend** (default): continue the linear curve beyond the range
+- **clamp**: cap the output to the nearest bound
+- **identity**: return the raw input value
+
+```js
+// Clamp output between 0–100
+interpolate(value, [0, 1], [0, 100], { extrapolate: "clamp" });
+```
+
+Or specify sides separately:
+
+```js
+interpolate(value, [0, 1], [0, 100], {
+  extrapolateLeft: "clamp",
+  extrapolateRight: "extend",
+});
+```
 
 ## Summary
 
-Interpolation in `react-ui-animate` provides a flexible and powerful way to create complex animations.
-Whether you're converting simple ranges, handling multiple segments, or animating colors,
-`interpolate` offers the tools you need to map animated values to desired output ranges effectively.
+Interpolation in React UI Animate empowers you to translate simple animated values into nuanced, multi-faceted animations. From scaling sizes and positions to blending colors and handling out-of-range inputs, `interpolate()` is your go-to utility for dynamic, data-driven transitions.
 
-By mastering interpolation, you can create sophisticated and responsive animations that enhance the
-user experience in your React applications.
+## What's Next?
 
-## What's Next ?
-
-In the next section, we will look at `Configuring Animations`.
+In the next section, we'll cover **Configuring Animations**, including duration, easing curves, and global defaults.
