@@ -1,0 +1,50 @@
+---
+sidebar_position: 3
+id: interpolate
+title: Interpolate
+---
+`interpolate` is a utility function that maps a numeric input value from one range (inRange) to another (outRange), supporting not only numbers but also strings with units, CSS functions, and even CSS color literals like rgb, hsl, and named colors.\
+This is particularly useful for animations, transitions, and styling transformations.
+
+## Syntax
+
+```jsx
+to(
+  input: number,
+  inRange: number[],
+  outRange: (number | string)[],
+  config?: ExtrapolateConfig
+): number | string
+```
+
+### Parameters
+
+| Name   | Type | Description
+| :-----     | :----      | :----
+|input | `number` | The current value you want to interpolate.
+|inRange | `number[]` | The input range (must be ascending). Must contain at least 2 values.
+|outRange|`(number or string)[]`| The output values mapped to each entry in inRange. Supports numbers, units, functions, or colors.
+|config|`ExtrapolateConfig (optional)`| Optional interpolation config:
+
+#### ExtrapolateConfig Signature
+
+| Property   | Type | Default | Description
+| :-----     | :----      | :---- | :----
+|extrapolate| `clamp` or `extend` or `identity` | `extend` |Global fallback for left/right
+|extrapolateLeft|`clamp` or `extend` or `identity` | Inherits from `extrapolate` | How to handle input < first inRange
+|extrapolateRight|`clamp` or `extend` or `identity` | Inherits from `extrapolate` | How to handle input < first inRange
+|easing| `(t: number) => number` | `undefined` | Easing function applied to normalized range t
+
+### Supported Output Formats
+1. **Numbers**\
+    `to(x, [0, 1], [10, 20]) → 15`
+2. **Strings with units**\
+    `to(x, [0, 1], ['10px', '20px']) → '15.000px'`
+3. **CSS functions**\
+    `to(x, [0, 1], ['rotate(0deg)', 'rotate(180deg)']) → 'rotate(90.000deg)'`
+4. **Colors**
+    - Named: `to(x, [0, 1], ['red', 'blue'])`
+    - HEX: `to(x, [0, 1], ['#000', '#fff'])`
+    - RGBA: `to(x, [0, 1], ['rgba(0,0,0,0)', 'rgba(255,255,255,1)'])`
+    - HSL: `to(x, [0, 1], ['hsl(0, 100%, 50%)', 'hsl(120, 100%, 50%)'])`
+

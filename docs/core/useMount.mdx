@@ -1,0 +1,97 @@
+---
+sidebar_position: 2
+id: use-mount
+title: useMount
+---
+
+The `useMount` hook animates the mounting and unmounting of components. It takes a boolean flag `isOpen` to control visibility and a configuration object to define the animation behavior. The key feature of `useMount` is its ability to keep a component rendered in the DOM until its exit animation completes, preventing abrupt unmounts and allowing for seamless transitions.
+
+---
+
+## API Reference
+The `useMount` hook provides two primary overloads to handle different animation scenarios: animating a single value or animating multiple values within an object.
+
+
+### 1. Signature (Single Value)
+
+Use this signature when you need to animate a single numeric or string value, typically for properties like **opacity, scale, or x position**.
+
+```jsx
+useMount(
+  isOpen: boolean,
+  config: {
+    from: number | string;
+    enter?: number | string | AnimationDescriptor;
+    exit?: number | string | AnimationDescriptor;
+  }
+): (value: number | string, isMounted: boolean) => React.ReactNode
+```
+
+### 2. Signature (Multi-Value Object)
+
+This signature is ideal for animating multiple properties simultaneously, such as an object containing x, y, and opacity values.
+
+```jsx
+useMount(
+  isOpen: boolean,
+  config: {
+    from: Record<string, number | string>;
+    enter?: Record<string, number | string> | AnimationDescriptor;
+    exit?: Record<string, number | string> | AnimationDescriptor;
+  }
+): (values: Record<string, number | string>, isMounted: boolean) => React.ReactNode
+```
+
+
+### Parameters
+
+Both overloads of `useMount` accept two main parameters:
+
+-   **`isOpen` (boolean)**: A boolean flag that controls the intended visibility of the component.
+    -   When `true`, the hook initiates the **"enter"** animation.
+    -   When `false`, it initiates the **"exit"** animation.
+-   **`config` (object)**:
+    -   **`from`**: `Primitive | Record<string, Primitive> (Required)` \
+        This defines the initial value(s) from which the animation begins.
+        -   For a single-value animation, provide a number or string (e.g., `from: 0`).
+        -   For a multi-value animation, provide an object mapping property names to their initial values\
+            (e.g., `from: { x: 0, opacity: 0 }`).
+    -   **`enter`**: `Primitive | Descriptor | Record<string, Primitive> (Optional)` \
+        This specifies the target value(s) or an [animation descriptor](animation-modifiers-overview) for the "enter" phase (when `isOpen` becomes `true`).
+        -   If a raw Primitive `(number/string)` or `Record<string, Primitive>` is provided, the hook defaults to a spring animation to this value.
+        -   Alternatively, you can pass a [animation descriptor](animation-modifiers-overview) (e.g., [withSpring(1)](animation-modifiers-withSpring), [withTiming(1)](animation-modifiers-withTiming)]) for fine-grained control over the animation type and its parameters.
+    -   **`exit`**: `Primitive | Descriptor | Record<string, Primitive> (Optional)` \
+        Similar to `enter`, this specifies the target value(s) or an [animation descriptor](animation-modifiers-overview) for the "exit" phase (when `isOpen` becomes `false`).
+        -   A raw Primitive or `Record<string, Primitive>` will trigger a default spring animation.
+        -   A [Descriptor](animation-modifiers-overview) allows for custom exit animation configurations (e.g., `exit: withSpring(0, { damping: 10 })`).
+
+---
+
+### Return Value
+
+The `useMount` hook returns a render function. This function is designed to be called directly within your JSX, providing a flexible way to render your animated content.
+The render function takes a callback function as its argument. This callback receives two crucial parameters:
+
+-   **`value`**: `MotionValue<T> | { [K in keyof I]: MotionValue<I[K]>}` \
+    This represents the current animated value(s).
+    -   For single-value animations, `value` will be a `MotionValue<Primitive>` (e.g., a `MotionValue<number>` for opacity).
+    -   For multi-value animations, `value` will be an object where each property is a `MotionValue<Primitive>` (e.g., `{ x: MotionValue<number>, opacity: MotionValue<number> }`). You typically use this value to drive style properties (e.g., opacity, transform) of your animated components.
+-   **`mounted`**: `boolean` \
+    This boolean flag indicates whether your component should currently be rendered in the DOM.\
+    -   When `isOpen` becomes `true`, `mounted` immediately becomes `true`, ensuring the component is in the DOM for its "enter" animation.
+    -   When `isOpen` becomes `false`, `mounted` remains `true` throughout the entire "exit" animation. Only after the exit animation completes does `mounted` switch to `false`, allowing the component to be safely unmounted from the DOM. This prevents visual "flickers" or immediate disappearance.
+
+---
+
+### Behavior Notes
+
+-   **Immediate mount if open**: If `isOpen` starts as `true`, the component mounts right away. The animation will run from the `from` value up to `enter`. This means your component will appear on first render, animating in from the `from` state.
+-   **Default animation**: By default, if you supply plain `enter`/`exit` values (without a descriptor), the hook will use a spring-based animation to transition between values. (You can override this by providing your own descriptor like `withTiming` or `withEase`.)
+-   **Unmount on complete**: The hook keeps the component mounted while the exit animation runs. Only when the exit animation has finished does `isMounted` become `false` and the component unmounts. In other words, the `onComplete` of the exit animation effectively triggers the final unmount.
+
+---
+
+### Examples
+
+-   Single-value animation
+-   Multi-value animation

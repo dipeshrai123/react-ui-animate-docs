@@ -1,0 +1,48 @@
+---
+sidebar_position: 3
+id: animation-modifiers-withTiming
+title: withTiming
+---
+
+The `withTiming` modifier animates a value linearly or with a specified easing function to a given target over a fixed duration. It's ideal for simple, predictable transitions like fades or scales, where precise control over the animation's timing is crucial.
+
+### Syntax
+```jsx
+withTiming(toValue, options?) => Descriptor
+```
+
+#### Parameters
+- **toValue**: The target value to reach. This can be a number, string, object, or array.
+- **Options (optional)**: An object containing timing-specific settings.
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `duration`| How long the animation lasts (in milliseconds).  |   number | 300
+| `easing`  | The easing function controls the animation's acceleration and deceleration.  | function| TODO: |
+| `delay`  | The time, in milliseconds, to wait before the animation begins. This offers an alternative to using withDelay. | number| 0 |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
+| `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
+
+### Usage Example
+#### Animating Opacity
+Here's an example of using `withTiming` to create a fade-in effect by animating the opacity property:
+
+```jsx
+const [opacity, setOpacity] = useValue(0);
+
+// Fade in with a 500ms linear timing animation:
+setOpacity(
+  withTiming(1, { 
+    duration: 500, 
+    easing: Easing.linear, // TODO: disuccss
+    onStart: () => console.log('Fade-in started'),
+    onComplete: () => console.log('Fade-in complete'),
+  })
+);
+
+```
+This code snippet animates the opacity value from its current state to 1 over a 500ms duration, using a linear easing function. The onStart callback logs a message when the fade-in begins, and onComplete logs a message once the animation is finished.
+
+
+

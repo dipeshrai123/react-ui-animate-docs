@@ -1,0 +1,26 @@
+---
+sidebar_position: 6
+id: animation-modifiers-withSequence
+title: withSequence
+---
+
+The `withSequence` modifier allows you to chain multiple animations together, executing them one after another in the order they are defined. This is useful for creating complex, multi-step animations where each step needs to be completed before the next begins.
+
+### Syntax
+```jsx
+withSequence(...animations: Animation[]) => Descriptor
+```
+
+#### Parameters
+- **...animations**: A series of animation descriptors ([withSpring](animation-modifiers-withSpring), [withTiming](animation-modifiers-withTiming), [withDecay](animation-modifiers-withDecay), etc.) that will be executed sequentially.
+
+### Usage Example
+
+```jsx
+const [x, setX] = useValue(0);
+
+setX( withSequence( withTiming(0, { duration: 300 }), withTiming(50, { duration: 300 }) ) );
+```
+This code makes the **x** value move in two steps:
+1. First, **x goes to 0**: It animates to 0 over 300 milliseconds.
+2. Then, **x goes to 50**: As soon as the first animation finishes, it immediately starts animating to 50 over another 300 milliseconds.

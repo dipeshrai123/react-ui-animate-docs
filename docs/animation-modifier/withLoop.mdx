@@ -1,0 +1,41 @@
+---
+sidebar_position: 7
+id: animation-modifiers-withLoop
+title: withLoop
+---
+
+
+The `withLoop` modifier allows you to repeat (loop) an animation a specified number of times or indefinitely. You wrap an existing animation descriptor with withLoop, and it will restart automatically based on the configured options.
+
+### Syntax
+```jsx
+withLoop(animation,iterations?, options?) => Descriptor
+```
+
+#### Parameters
+- **animation**: The animation descriptor you want to repeat (eg: ([withSpring](animation-modifiers-withSpring), [withTiming](animation-modifiers-withTiming), [withDecay](animation-modifiers-withDecay), etc.) ).
+- **iterations** (optional) : A number specifying how many times the animation should run.
+    - If omitted or set to -1, the animation will loop indefinitely.
+    - Default: -1 (Infinity).
+- options (object, optional): An object to configure the loop's behavior.
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
+
+
+### Usage Example
+
+```jsx
+const [alpha, setAlpha] = useValue(0);
+
+// Fade in and out repeatedly 5 times (reverse each time):
+setAlpha(
+  withLoop(
+    withTiming(1, { duration: 500 }),
+     5
+  )
+);
+```
+This code creates an animation where an element repeatedly fades in and then fades out. This entire fade-in/fade-out cycle will happen a total of 5 times.

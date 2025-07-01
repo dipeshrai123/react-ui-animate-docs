@@ -1,0 +1,24 @@
+---
+sidebar_position: 1
+id: useOutsideClick
+title: useOutsideClick
+---
+
+The `useOutsideClick` hook allows you to detect clicks that **occur outside a specific DOM element**, triggering a callback function when this happens.\
+It’s ideal for closing modals, dropdowns, tooltips, or any component that should dismiss when clicking elsewhere on the page.
+
+### Syntax
+```jsx
+useOutsideClick(
+  ref: RefObject<HTMLElement>,
+  callback: (event: MouseEvent | TouchEvent) => void,
+  deps?: DependencyList
+): void;
+```
+
+#### Parameters
+| Name   | Type | Description
+| :-----     | :----      | :----
+| Refs (required)| `RefObject<HTMLElement>`  | React ref to the element to detect outside clicks from
+| Callback (required) | `(event: MouseEvent or TouchEvent) => void` | Function to run when an outside click is detected.
+| deps (optional)|`DependencyList`| Dependency array for when to refresh the callback behavior

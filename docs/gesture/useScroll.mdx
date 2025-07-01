@@ -1,0 +1,33 @@
+---
+sidebar_position: 4
+id: useScroll
+title: useScroll
+---
+
+The `useScroll` hook captures scroll activity on any DOM element or the window. It reports how far you scrolled, how fast, and gives access to the native scroll event.
+
+### Syntax
+```jsx
+useScroll(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
+  callback: (event: ScrollEvent & { index: number }) => void
+): void
+```
+
+#### Parameters
+| Name   | Type | Description
+| :-----     | :----      | :----
+| Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | The scrollable target(s). You can pass a single ref, a list, or window.
+|Callback (required)|`(event:ScrollEvent) => void`| Gets called on scroll change and scroll end. index maps to ref position.
+
+#### ScrollEvent Signature
+``` tsx
+type ScrollEvent = {
+  index: number
+  movement: { x: number; y: number };  // Change since last scroll frame
+  offset: { x: number; y: number };    // Current scroll position
+  velocity: { x: number; y: number };  // Pixels/ms
+  event: Event;                        // Native scroll event
+  cancel?: () => void;                 // Optional cancel gesture cleanup
+};
+```

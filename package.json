@@ -16,16 +16,18 @@
   "dependencies": {
     "@docusaurus/core": "3.0.0",
     "@docusaurus/preset-classic": "3.0.0",
+    "@docusaurus/theme-live-codeblock": "^3.0.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mdx-js/react": "^3.0.0",
     "@mui/material": "^5.5.3",
     "clsx": "^1.1.1",
     "prism-react-renderer": "^2.1.0",
+    "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
-    "react-ui-animate": "^3.3.0"
+    "react-ui-animate": "^5.0.0-rc.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.0.0",

@@ -1,0 +1,49 @@
+---
+sidebar_position: 2
+id: animation-modifiers-withSpring
+title: withSpring
+---
+
+The `withSpring` modifier animates a value using spring physics, creating natural motion with realistic bounce and overshoot effects.
+
+### Syntax
+```jsx
+withSpring(toValue, options?) => Descriptor
+```
+
+#### Parameters
+- **toValue**: The target value for the animation. This can be a number, string, object, or array.
+- **Options (optional)**: An object to configure the spring animation.
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `stiffness`| Determines the spring's stiffness, affecting its resistance to displacement.   |   number | 158
+| `damping`  | Controls the damping ratio, influencing how quickly the spring loses energy. | number| 20 |
+| `mass`  | Represents the mass of the spring, affecting its inertia. | number| 1 |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
+| `onComplete`  |A callback function invoked when the animation finishes. | function()| - |
+
+### Usage Example
+#### Animating translateX
+Here's how you can use `withSpring` to animate a **translateX** property, including custom configuration and callback functions:
+
+```jsx
+const [x, setX] = useValue(0);
+
+// Animate x to 100 with a custom spring config:
+setX(
+  withSpring(100, { 
+    damping: 20, 
+    stiffness: 150,
+    onStart: () => console.log('Spring animation started'),
+    onChange: (v) => console.log('Current value:', v),
+    onComplete: () => console.log('Spring animation complete'),
+  })
+);
+```
+
+This code animates the x value to 100 using `withSpring`. It customizes the spring's damping and stiffness. Callbacks **(onStart, onChange, onComplete)** are used to log the animation's progress at its beginning, during each frame, and upon completion.
+
+
+

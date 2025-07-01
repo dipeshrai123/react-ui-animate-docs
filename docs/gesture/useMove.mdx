@@ -1,0 +1,33 @@
+---
+sidebar_position: 3
+id: useMove
+title: useMove
+---
+
+The `useMove` hook listens to pointer movements(without needing a press or drag) and provides real-time feedback like movement delta, velocity, and cursor offset. It supports both HTML elements and the window object.
+
+### Syntax
+```jsx
+useMove(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
+  callback: (event: MoveEvent) => void
+): void
+```
+
+#### Parameters
+| Name   | Type | Description
+| :-----     | :----      | :----
+| Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | Element(s) or window to track pointer movement over.
+|Callback (required)|`(event:MoveEvent) => void`| Called on every move event and when the pointer leaves.
+
+#### MouseEvent Signature
+``` tsx
+type MoveEvent = {
+  index: number;
+  movement: { x: number; y: number };   // Movement from start of gesture
+  offset: { x: number; y: number };     // Pointer offset inside element
+  velocity: { x: number; y: number };   // px/ms
+  event: PointerEvent;                 // Native pointer event
+  cancel?: () => void;                 // Cancels the gesture (optional)
+};
+```

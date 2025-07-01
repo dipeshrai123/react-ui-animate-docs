@@ -1,3 +1,5 @@
+const { themes } = require('prism-react-renderer');
+
 const config = {
   title: 'React UI Animate',
   tagline:
@@ -15,16 +17,22 @@ const config = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.js',
-          sidebarCollapsed: false,
+          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsed: true,
+          editUrl:
+            'https://github.com/dipeshrai123/react-ui-animate-docs/edit/main/',
         },
         theme: {
-          customCss: ['./src/css/custom.css'],
+          customCss: require.resolve('./src/css/custom.css'),
         },
       },
     ],
   ],
   themeConfig: {
+    prism: {
+      theme: themes.vsLight,
+      darkTheme: themes.vsDark,
+    },
     navbar: {
       title: 'React UI Animate',
       logo: {
@@ -75,6 +83,7 @@ const config = {
       copyright: `Copyright © ${new Date().getFullYear()}, React UI Animate`,
     },
   },
+  themes: ['@docusaurus/theme-live-codeblock'],
 };
 
 module.exports = config;
