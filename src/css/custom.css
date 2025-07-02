@@ -3,6 +3,39 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+body {
+  font-family: "Inter" !important;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+h1 {
+  font-family: "Inter" !important
+}
 
 /* You can override the default Infima variables here. */
 :root {
@@ -21,6 +54,15 @@
   --ifm-color-primary-lightest: #99ccff;
   /* Lightest Blue */
   --ifm-code-font-size: 95%;
+  /* menu item vertical padding */
+  --ifm-menu-link-padding-vertical: 8px;
+  /* menu active color */
+  --ifm-menu-color-active: #007bff;
+
+  --ifm-menu-color: #0d0d0d;
+
+  --ifm-navbar-padding-horizontal: 40px;
+  --ifm-navbar-height: 80px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -39,18 +81,45 @@
   /* Lighter Blue */
   --ifm-color-primary-lightest: #3399ff;
   /* Light Blue */
+
+  --ifm-menu-color: #999999;
 }
 
-div[class*='playgroundContainer'] {
+
+/* hide border right of side navigation */
+.docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocRoot-Layout-Sidebar-styles-module {
+  border-right: 0px !important;
+  padding-left: 20px;
+  width: auto !important;
+}
+
+.menu__list-item-collapsible {
+  font-weight: bold;
+}
+
+.menu__link--sublist-caret:after {
+  opacity: 0;
+}
+
+.menu__link--sublist-caret:hover::after {
+  opacity: 1;
+}
+
+.navbar {
   box-shadow: none !important;
 }
 
-.code_preview div {
-  box-shadow: none;
-  border-radius: none;
-  margin: none;
+.breadcrumbs {
+  display: none !important;
 }
 
-.code_preview pre {
-  margin-right: 20px;
+code {
+  border-radius: .375rem;
+  border-color: rgba(0, 0, 0, .05);
+  background-color: rgba(0, 0, 0, .05);
+  border-width: 1px;
+  padding-left: .25em;
+  padding-right: .25em;
+  padding-top: .125rem;
+  padding-bottom: .125rem;
 }
