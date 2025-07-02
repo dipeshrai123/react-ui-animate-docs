@@ -20,7 +20,7 @@ const animateRight = () => {
 };
 ```
 
-import { WithSpringModifier } from '/src/components/AnimationModifiers'
+import { WithSpringModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithSpringModifier />
 
@@ -30,7 +30,7 @@ You can further customize the spring configuration by passing options such as `f
 animation.value = withSpring(100, { friction: 5 });
 ```
 
-import { WithSpringModifierConfig } from '/src/components/AnimationModifiers'
+import { WithSpringModifierConfig } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithSpringModifierConfig />
 
@@ -48,7 +48,7 @@ const animateRight = () => {
 };
 ```
 
-import { WithTimingModifier } from '/src/components/AnimationModifiers'
+import { WithTimingModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithTimingModifier />
 
@@ -58,7 +58,7 @@ You can adjust the timing configuration by passing options such as `duration` or
 animation.value = withTiming(100, { duration: 5000 });
 ```
 
-import { WithTimingModifierConfig } from '/src/components/AnimationModifiers'
+import { WithTimingModifierConfig } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithTimingModifierConfig />
 
@@ -76,7 +76,7 @@ const animateRight = () => {
 };
 ```
 
-import { WithEaseModifier } from '/src/components/AnimationModifiers'
+import { WithEaseModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithEaseModifier />
 
@@ -101,7 +101,7 @@ const animateRight = () => {
 
 In this example, `animation.value` first animates with a spring animation to `50`, followed by a timing animation to `100`.
 
-import { WithSequenceModifier } from '/src/components/AnimationModifiers'
+import { WithSequenceModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithSequenceModifier />
 
@@ -131,7 +131,7 @@ const animateRight = () => {
 
 In this example, `animation.value` is applied with `BOUNCE` animation when Animate Right button is clicked and `WOOBLE` animation when Animate Left button is clicked.
 
-import { WithConfigModifier } from '/src/components/AnimationModifiers'
+import { WithConfigModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
 
 <WithConfigModifier />
 

@@ -80,7 +80,7 @@ The `AnimatedBlock` component is used instead of a regular HTML element because 
 respond to Animated Values. The `AnimatedBlock` HOC (Higher-Order Component) acts as a div element
 that can also interpret Animated Values.
 
-import AnimatedValues from '/src/components/AnimatedValues';
+import AnimatedValues from '/src/components/react-ui-animate-3.3.0-examples/AnimatedValues';
 
 <AnimatedValues />
 

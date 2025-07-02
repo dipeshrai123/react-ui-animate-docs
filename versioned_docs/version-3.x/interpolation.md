@@ -56,7 +56,7 @@ export default function () {
 }
 ```
 
-import InterpolationExample1 from '/src/components/Interpolation/example1.js';
+import InterpolationExample1 from '/src/components/react-ui-animate-3.3.0-examples/Interpolation/example1.js';
 
 <InterpolationExample1 />
 
@@ -98,7 +98,7 @@ interpolate(value, [0, 1], ['red', 'black']);
 
 This changes the color from `red` to `black` as the value goes from `0` to `1`.
 
-import InterpolationExample2 from '/src/components/Interpolation/example2.js';
+import InterpolationExample2 from '/src/components/react-ui-animate-3.3.0-examples/Interpolation/example2.js';
 
 <InterpolationExample2 />
 

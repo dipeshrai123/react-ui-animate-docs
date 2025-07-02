@@ -92,7 +92,7 @@ export const Example = () => {
 
 ## Example
 
-import GettingStartedExamples from '/src/components/GettingStartedExamples';
+import GettingStartedExamples from '/src/components/react-ui-animate-3.3.0-examples/GettingStartedExamples';
 
 <GettingStartedExamples />
 

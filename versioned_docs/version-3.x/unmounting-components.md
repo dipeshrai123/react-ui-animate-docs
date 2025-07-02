@@ -8,7 +8,7 @@ When working with animations in React, especially when mounting and unmounting c
 transitions, `useMountedValue()` hook or `MountedBlock` HOC from React UI Animate is a powerful tool. It facilitates smooth
 transitions for components entering and leaving the DOM.
 
-import { Unmounting } from '/src/components/Unmounting';
+import { Unmounting } from '/src/components/react-ui-animate-3.3.0-examples/Unmounting';
 
 <Unmounting />
 
@@ -130,7 +130,7 @@ interpolate(animation.value, [0, 1], [0, 200]),
 
 Here is the full example about configuring animations for `useMountedValue()`:
 
-import { ConfigureUnmounting } from '/src/components/Unmounting';
+import { ConfigureUnmounting } from '/src/components/react-ui-animate-3.3.0-examples/Unmounting';
 
 <ConfigureUnmounting />
 

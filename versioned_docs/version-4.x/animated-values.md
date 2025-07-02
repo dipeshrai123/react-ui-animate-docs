@@ -11,7 +11,7 @@ Animated Values are the core concept of **React UI Animate**. They hold and mana
 Use the `useValue()` hook to create an animated value. This hook returns a mutable object with a `.value` property initialized to the provided `initialValue`. You can use any primitive type (number or string).
 
 ```jsx
-import { useValue } from "react-ui-animate";
+import { useValue } from 'react-ui-animate';
 
 export const Example = () => {
   // Initialize an animated value at 0
@@ -28,7 +28,7 @@ The `useValue` hook behaves similarly to `useRef`: it stores data across renders
 Animated Values are consumed by special components exported on the `animate` object. These components read any Animated Values applied to their style or props.
 
 ```jsx
-import { animate, useValue } from "react-ui-animate";
+import { animate, useValue } from 'react-ui-animate';
 
 export const Box = () => {
   const x = useValue(0);
@@ -38,7 +38,7 @@ export const Box = () => {
       style={{
         width: 100,
         height: 100,
-        backgroundColor: "#39F",
+        backgroundColor: '#39F',
         translateX: x.value,
       }}
     />
@@ -53,7 +53,7 @@ You can animate any CSS property by assigning an Animated Value to it (e.g., `op
 To update an Animated Value, simply assign a new value to its `.value` property. By default, this assignment snaps instantly to the target value without any transition:
 
 ```jsx
-import { animate, useValue } from "react-ui-animate";
+import { animate, useValue } from 'react-ui-animate';
 
 export const SnapExample = () => {
   const x = useValue(0);
@@ -65,7 +65,7 @@ export const SnapExample = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button onClick={() => (x.value = 200)}>Snap to 200px</button>
@@ -94,7 +94,7 @@ For more control over the animation curve, wrap the target value in modifier fun
 - **Ease**: `withEase(target, config?)`
 
 ```jsx
-import { animate, useValue, withSpring, withTiming } from "react-ui-animate";
+import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
 
 export const ModifierExample = () => {
   const x = useValue(0);
@@ -106,7 +106,7 @@ export const ModifierExample = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button onClick={() => (x.value = withSpring(200))}>
@@ -125,7 +125,7 @@ export const ModifierExample = () => {
 The `animate` object includes animated versions of all HTML and SVG elements. For example:
 
 ```jsx
-import { animate } from "react-ui-animate";
+import { animate } from 'react-ui-animate';
 
 export const List = () => (
   <animate.ul>
@@ -140,7 +140,7 @@ export const List = () => (
 Transform any React component into an animated component using `makeAnimated()`:
 
 ```jsx
-import { makeAnimated } from "react-ui-animate";
+import { makeAnimated } from 'react-ui-animate';
 
 const Card = (props) => <div {...props}>Card Content</div>;
 const AnimatedCard = makeAnimated(Card);
@@ -158,7 +158,7 @@ export const App = () => {
 
 ## Example Component
 
-import AnimatedValues from "/src/components/AnimatedValues"
+import AnimatedValues from "/src/components/react-ui-animate-3.3.0-examples/AnimatedValues"
 
 <AnimatedValues />
 <br />
