@@ -77,9 +77,10 @@ export const Example = () => {
 
 ## Example
 
-import GettingStartedExamples from '/src/components/react-ui-animate-3.3.0-examples/GettingStartedExamples';
+import GettingStartedExamples from '@site/src/examples/strings/v3.3.0/GettingStartedExamples';
+import SandPack from "/src/components/SandPack"
 
-<GettingStartedExamples />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": GettingStartedExamples}}/>
 
 This example demonstrates how easy it is to create animations with React UI Animate—initialize animated values, apply them to components, and update them to produce interactive transitions. Once you're comfortable with these basics, you're ready to explore more advanced animations and interactions in your projects.
 

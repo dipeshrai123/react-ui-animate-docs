@@ -4,8 +4,8 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
-import HomepageFeatures from '@site/src/components/react-ui-animate-3.3.0-examples/HomepageFeatures';
-import HomepageExamples from '@site/src/components/react-ui-animate-3.3.0-examples/HomepageExamples';
+// import HomepageFeatures from '@site/src/react-ui-animate-examples/v3.3.0/HomepageFeatures';
+// import HomepageExamples from '@site/src/react-ui-animate-examples/v3.3.0/HomepageExamples/HomepageExamples';
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -44,8 +44,8 @@ export default function Home() {
       <HomepageHeader />
 
       <main>
-        <HomepageFeatures />
-        <HomepageExamples />
+        {/* <HomepageFeatures /> */}
+        {/* <HomepageExamples /> */}
       </main>
     </Layout>
   );

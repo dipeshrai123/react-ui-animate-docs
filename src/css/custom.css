@@ -4,37 +4,37 @@
  * work well for content-centric websites.
  */
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter_18pt-Regular.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('/fonts/Inter_18pt-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter_18pt-Medium.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('/fonts/Inter_18pt-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('/fonts/Inter_18pt-SemiBold.ttf') format('truetype');
   font-weight: 600;
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter_18pt-Bold.ttf") format("truetype");
+  font-family: 'Inter';
+  src: url('/fonts/Inter_18pt-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 
 body {
-  font-family: "Inter" !important;
+  font-family: 'Inter' !important;
   font-weight: 500;
   font-size: 17px;
 }
 
 h1 {
-  font-family: "Inter" !important
+  font-family: 'Inter' !important;
 }
 
 /* You can override the default Infima variables here. */
@@ -60,6 +60,7 @@ h1 {
   --ifm-menu-color-active: #007bff;
 
   --ifm-menu-color: #0d0d0d;
+  --docusaurus-highlighted-code-line-bg: rgb(255 251 221 / 1);
 
   --ifm-navbar-padding-horizontal: 40px;
   --ifm-navbar-height: 80px;
@@ -84,7 +85,6 @@ h1 {
 
   --ifm-menu-color: #999999;
 }
-
 
 /* hide border right of side navigation */
 .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocRoot-Layout-Sidebar-styles-module {
@@ -114,12 +114,12 @@ h1 {
 }
 
 code {
-  border-radius: .375rem;
-  border-color: rgba(0, 0, 0, .05);
-  background-color: rgba(0, 0, 0, .05);
+  border-radius: 0.375rem;
+  border-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   border-width: 1px;
-  padding-left: .25em;
-  padding-right: .25em;
-  padding-top: .125rem;
-  padding-bottom: .125rem;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }

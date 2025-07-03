@@ -158,9 +158,10 @@ export const App = () => {
 
 ## Example Component
 
-import AnimatedValues from "/src/components/react-ui-animate-3.3.0-examples/AnimatedValues"
+import AnimatedValues from "@site/src/examples/strings/v3.3.0/AnimatedValues"
+import SandPack from "/src/components/SandPack"
 
-<AnimatedValues />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": AnimatedValues}}/>
 <br />
 
 This example demonstrates how to define, apply, and update Animated Values using `useValue`, modifiers, and custom animated components.

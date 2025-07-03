@@ -57,13 +57,13 @@ Both overloads of `useMount` accept two main parameters:
         -   For a multi-value animation, provide an object mapping property names to their initial values\
             (e.g., `from: { x: 0, opacity: 0 }`).
     -   **`enter`**: `Primitive | Descriptor | Record<string, Primitive> (Optional)` \
-        This specifies the target value(s) or an [animation descriptor](animation-modifiers-overview) for the "enter" phase (when `isOpen` becomes `true`).
+        This specifies the target value(s) or an [animation descriptor](../animation-modifier/overview) for the "enter" phase (when `isOpen` becomes `true`).
         -   If a raw Primitive `(number/string)` or `Record<string, Primitive>` is provided, the hook defaults to a spring animation to this value.
-        -   Alternatively, you can pass a [animation descriptor](animation-modifiers-overview) (e.g., [withSpring(1)](animation-modifiers-withSpring), [withTiming(1)](animation-modifiers-withTiming)]) for fine-grained control over the animation type and its parameters.
+        -   Alternatively, you can pass a [animation descriptor](../animation-modifier/overview) (e.g., [withSpring(1)](../animation-modifier/withSpring), [withTiming(1)](../animation-modifier/withTiming)]) for fine-grained control over the animation type and its parameters.
     -   **`exit`**: `Primitive | Descriptor | Record<string, Primitive> (Optional)` \
-        Similar to `enter`, this specifies the target value(s) or an [animation descriptor](animation-modifiers-overview) for the "exit" phase (when `isOpen` becomes `false`).
+        Similar to `enter`, this specifies the target value(s) or an [animation descriptor](../animation-modifier/overview) for the "exit" phase (when `isOpen` becomes `false`).
         -   A raw Primitive or `Record<string, Primitive>` will trigger a default spring animation.
-        -   A [Descriptor](animation-modifiers-overview) allows for custom exit animation configurations (e.g., `exit: withSpring(0, { damping: 10 })`).
+        -   A [Descriptor](../animation-modifier/overview) allows for custom exit animation configurations (e.g., `exit: withSpring(0, { damping: 10 })`).
 
 ---
 

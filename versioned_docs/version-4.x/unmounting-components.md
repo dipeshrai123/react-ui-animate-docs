@@ -6,9 +6,10 @@ title: Unmounting components
 
 When animating React components in and out of the DOM, the `useMount()` hook and `MountedBlock` HOC in React UI Animate offer a simple, declarative way to orchestrate entry and exit transitions.
 
-import { Unmounting } from '/src/components/react-ui-animate-3.3.0-examples/Unmounting';
+import Unmounting from '@site/src/examples/strings/v3.3.0/Unmounting/Unmounting';
+import SandPack from "/src/components/SandPack"
 
-<Unmounting />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Unmounting}}/>
 
 ## Using `useMount()`
 

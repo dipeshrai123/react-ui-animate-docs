@@ -20,9 +20,20 @@ const animateRight = () => {
 };
 ```
 
-import { WithSpringModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
+import WithSpringModifier from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithSpringModifier';
+import WithSpringModifierConfig from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithSpringModifierConfig';
 
-<WithSpringModifier />
+import WithTimingModifier from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithTimingModifier';
+import WithTimingModifierConfig from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithTimingModifierConfig';
+
+import WithConfigModifier from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithConfigModifier';
+
+import WithSequenceModifier from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithSequenceModifier';
+import WithEaseModifier from '@site/src/examples/strings/v3.3.0/AnimationModifiers/WithEaseModifier';
+
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithSpringModifier}}/>
 
 You can further customize the spring configuration by passing options such as `friction` and `tension`.
 
@@ -30,9 +41,7 @@ You can further customize the spring configuration by passing options such as `f
 animation.value = withSpring(100, { friction: 5 });
 ```
 
-import { WithSpringModifierConfig } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithSpringModifierConfig />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithSpringModifierConfig}}/>
 
 ## Applying `withTiming` modifier
 
@@ -48,9 +57,7 @@ const animateRight = () => {
 };
 ```
 
-import { WithTimingModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithTimingModifier />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithTimingModifier}}/>
 
 You can adjust the timing configuration by passing options such as `duration` or `easing`.
 
@@ -58,9 +65,7 @@ You can adjust the timing configuration by passing options such as `duration` or
 animation.value = withTiming(100, { duration: 5000 });
 ```
 
-import { WithTimingModifierConfig } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithTimingModifierConfig />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithTimingModifierConfig}}/>
 
 ## Applying `withEase` modifier
 
@@ -76,9 +81,7 @@ const animateRight = () => {
 };
 ```
 
-import { WithEaseModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithEaseModifier />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithEaseModifier}}/>
 
 ## Sequence Animation with `withSequence` modifier
 
@@ -101,9 +104,7 @@ const animateRight = () => {
 
 In this example, `animation.value` first animates with a spring animation to `50`, followed by a timing animation to `100`.
 
-import { WithSequenceModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithSequenceModifier />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithSequenceModifier}}/>
 
 ## Applying Pre-defined configs with `withConfig` modifier
 
@@ -131,9 +132,7 @@ const animateRight = () => {
 
 In this example, `animation.value` is applied with `BOUNCE` animation when Animate Right button is clicked and `WOOBLE` animation when Animate Left button is clicked.
 
-import { WithConfigModifier } from '/src/components/react-ui-animate-3.3.0-examples/AnimationModifiers'
-
-<WithConfigModifier />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": WithConfigModifier}}/>
 
 ## What's Next ?
 

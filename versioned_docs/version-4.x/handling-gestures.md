@@ -6,9 +6,11 @@ title: Handling Gestures
 
 React UI Animate provides a set of gesture hooks that bind native pointer and scroll events to Animated Values. With just a few lines of code, you can create draggable, scroll-responsive, and gesture-driven interfaces.
 
-import { Gesture } from '/src/components/react-ui-animate-3.3.0-examples/HomepageExamples';
+import Gesture from '@site/src/examples/strings/v3.3.0/HomepageExamples/Gesture';
 
-<Gesture />
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Gesture}}/>
 
 ## Defining a Gesture
 

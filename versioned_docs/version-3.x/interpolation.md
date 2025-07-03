@@ -56,9 +56,12 @@ export default function () {
 }
 ```
 
-import InterpolationExample1 from '/src/components/react-ui-animate-3.3.0-examples/Interpolation/example1.js';
+import InterpolationExample1 from '@site/src/examples/strings/v3.3.0/Interpolation/example1';
+import InterpolationExample2 from '@site/src/examples/strings/v3.3.0/Interpolation/example2';
 
-<InterpolationExample1 />
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": InterpolationExample1}}/>
 
 In this example:
 
@@ -98,9 +101,7 @@ interpolate(value, [0, 1], ['red', 'black']);
 
 This changes the color from `red` to `black` as the value goes from `0` to `1`.
 
-import InterpolationExample2 from '/src/components/react-ui-animate-3.3.0-examples/Interpolation/example2.js';
-
-<InterpolationExample2 />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": InterpolationExample2}}/>
 
 ## Extrapolation
 
