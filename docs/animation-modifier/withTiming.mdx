@@ -6,12 +6,12 @@ title: withTiming
 
 The `withTiming` modifier animates a value linearly or with a specified easing function to a given target over a fixed duration. It's ideal for simple, predictable transitions like fades or scales, where precise control over the animation's timing is crucial.
 
-### Syntax
+## Syntax
 ```jsx
 withTiming(toValue, options?) => Descriptor
 ```
 
-#### Parameters
+### Parameters
 - **toValue**: The target value to reach. This can be a number, string, object, or array.
 - **Options (optional)**: An object containing timing-specific settings.
 
@@ -19,30 +19,21 @@ withTiming(toValue, options?) => Descriptor
 | :-----     | :----      | :----|:----   |
 | `duration`| How long the animation lasts (in milliseconds).  |   number | 300
 | `easing`  | The easing function controls the animation's acceleration and deceleration.  | function| TODO: |
-| `delay`  | The time, in milliseconds, to wait before the animation begins. This offers an alternative to using withDelay. | number| 0 |
 | `onStart`  | A callback function invoked when the animation begins. | function()| - |
 | `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
 | `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
 
-### Usage Example
-#### Animating Opacity
-Here's an example of using `withTiming` to create a fade-in effect by animating the opacity property:
+## Usage Example
+import BasicExample from "@site/src/examples/strings/v4.x.x/modifier/withTiming/BasicExample"
 
-```jsx
-const [opacity, setOpacity] = useValue(0);
+import SandPack from "@site/src/components/SandPack"
 
-// Fade in with a 500ms linear timing animation:
-setOpacity(
-  withTiming(1, { 
-    duration: 500, 
-    easing: Easing.linear, // TODO: disuccss
-    onStart: () => console.log('Fade-in started'),
-    onComplete: () => console.log('Fade-in complete'),
-  })
-);
-
-```
-This code snippet animates the opacity value from its current state to 1 over a 500ms duration, using a linear easing function. The onStart callback logs a message when the fade-in begins, and onComplete logs a message once the animation is finished.
-
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
 
 

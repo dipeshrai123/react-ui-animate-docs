@@ -6,7 +6,7 @@ title: useWheel
 
 The `useWheel` hook listens to wheel gestures on a DOM element or the window, giving you scroll-like movement data with access to deltas, velocity, and raw events — perfect for zooming, panning, and gesture-driven UIs.
 
-### Syntax
+## Syntax
 ```jsx
 useWheel(
   refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
@@ -14,13 +14,13 @@ useWheel(
 ): void
 ```
 
-#### Parameters
+### Parameters
 | Name   | Type | Description
 | :-----     | :----      | :----
 | Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | The element(s) or window to listen to for wheel movement.
 |Callback (required)|`(event:WheelEvent) => void`| Called on every scroll frame and gesture end.
 
-#### WheelEvent Signature
+### WheelEvent Signature
 ``` tsx
 type WheelEvent = {
   index: number;
@@ -31,3 +31,14 @@ type WheelEvent = {
   cancel?: () => void;                // Cancels pending gesture end timeout
 };
 ```
+## Example 
+import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useWheel/BasicSetup"
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicSetup
+}}
+/>

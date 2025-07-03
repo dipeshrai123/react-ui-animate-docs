@@ -6,7 +6,7 @@ title: useScroll
 
 The `useScroll` hook captures scroll activity on any DOM element or the window. It reports how far you scrolled, how fast, and gives access to the native scroll event.
 
-### Syntax
+## Syntax
 ```jsx
 useScroll(
   refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
@@ -14,13 +14,13 @@ useScroll(
 ): void
 ```
 
-#### Parameters
+### Parameters
 | Name   | Type | Description
 | :-----     | :----      | :----
 | Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | The scrollable target(s). You can pass a single ref, a list, or window.
 |Callback (required)|`(event:ScrollEvent) => void`| Gets called on scroll change and scroll end. index maps to ref position.
 
-#### ScrollEvent Signature
+### ScrollEvent Signature
 ``` tsx
 type ScrollEvent = {
   index: number
@@ -31,3 +31,15 @@ type ScrollEvent = {
   cancel?: () => void;                 // Optional cancel gesture cleanup
 };
 ```
+
+## Example
+import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useScroll/BasicSetup"
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicSetup
+}}
+/>

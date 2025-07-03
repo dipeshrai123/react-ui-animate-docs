@@ -3,13 +3,6 @@ sidebar_position: 1
 id: use-value
 title: useValue
 ---
-{/* // import SandPack from "@site/src/components/SandPack.tsx"
-// import PreviewWithCode from '@site/src/components/Blocks/PreviewWithCode';
-// import AnimateOffset from '@site/src/components/useValue/primitive/AnimateOffset';
-// import AnimateColor from '@site/src/components/react-ui-animate-4.0.0-examples/AnimateColor';
-// import AnimateOffsetCode from '!!raw-loader!@site/src/components/useValue/primitive/AnimateOffset';
-// import AnimateColorCode from '!!raw-loader!@site/src/components/useValue/primitive/AnimateColor'; */}
-
 The `useValue()` function is a powerful hook designed to manage and animate values within your React components without triggering unnecessary re-renders. It behaves similarly to a [ref](https://react.dev/reference/react/useRef), holding the current animation state internally.
 
 This hook returns a tuple: `[value, setValue]`.
@@ -20,12 +13,22 @@ This hook returns a tuple: `[value, setValue]`.
 
 The primary use case for `useValue()` is to animate properties. For instance, to animate an element's offset:
 
-{/* <SandPack files={{
-  "App.tsx":AnimateColorCode
+import PrimitveExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/PrimitiveExample"
+import ArrayExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/ArrayExample"
+import ObjectExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/ObjectExample"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
 }}
-/> */}
+files={{
+  "App.tsx": PrimitveExample
+}}
+/>
+
 :::info Immediate vs. Animated Updates
-When you assign a raw value (e.g., `setOffset(200)`), the property changes **immediately** without animation. To achieve a smooth transition, you must wrap the target value in a [animation modifier](../animation-modifier/overview) like ([withTiming](../animation-modifier/withTiming) or [withSpring](../animation-modifier/withSpring)).
+When you assign a raw value (e.g., `setBg('blue')`), the property changes **immediately** without animation. To achieve a smooth transition, you must wrap the target value in a [animation modifier](../animation-modifier/overview) like ([withTiming](../animation-modifier/withTiming) or [withSpring](../animation-modifier/withSpring)).
 :::
 
 ***
@@ -37,10 +40,16 @@ For primitive data types such as numbers or strings, `useValue` manages a single
 ```jsx
 const [value, setValue] = useValue(initialValue: number | string);
 ```
-{/* <details>
+<details>
   <summary>View example</summary>
-  <PreviewWithCode title="App.tsx" preview={<AnimateOffset />} code={AnimateOffsetCode} language="jsx"/>
-</details> */}
+  <SandPack version={{
+    reactAnimate: '5.0.0-rc.9'
+  }}
+  files={{
+    "App.tsx": PrimitveExample
+  }}
+  />
+</details>
 
 ### 2. Array of Primitives
 You can also animate an array of values. The hook stores the array and you update it similarly:
@@ -48,10 +57,16 @@ You can also animate an array of values. The hook stores the array and you updat
 ```jsx
 const [arr, setArr] = useValue(initialArray: number[]);
 ```
-{/* <details>
+<details>
   <summary>View example</summary>
-  <PreviewWithCode title="App.tsx" preview={<AnimateOffset />} code={AnimateOffsetCode} language="jsx"/>
-  </details> */}
+  <SandPack version={{
+    reactAnimate: '5.0.0-rc.9'
+  }}
+  files={{
+    "App.tsx": ArrayExample
+  }}
+  />
+</details>
 
 ### 3. Object of Primitives
 You can also initialize useValue with an object whose fields are numbers or strings. The hook returns a matching object
@@ -59,25 +74,13 @@ You can also initialize useValue with an object whose fields are numbers or stri
 ```jsx
 const [obj, setObj] = useValue(initialObject: { [key: string]: number | string });
 ```
-{/* <details>
+<details>
   <summary>View example</summary>
-  <PreviewWithCode title="App.tsx" preview={<AnimateOffset />} code={AnimateOffsetCode} language="jsx"/>
-  </details> */}
-
-{/* ##### Syntax
-```jsx
-const [value, setValue] = useValue(initialValue: number | string);
-```
-
-#### Example 1: Animating a Number (`useValue(0)`)
-
-This example demonstrates how to animate a numerical offset.
-
-<PreviewWithCode title="App.tsx" preview={<AnimateOffset />} code={AnimateOffsetCode} language="jsx"/>
-
-
-### Example: Animating a Color (`useValue('red')`)
-
-This example shows how `useValue` can handle string-based animations, specifically for colors.
-
-<PreviewWithCode title="App.tsx" preview={<AnimateColor />} code={AnimateColorCode} language="jsx"/> */}
+   <SandPack version={{
+    reactAnimate: '5.0.0-rc.9'
+  }}
+  files={{
+    "App.tsx": ObjectExample
+  }}
+  />
+</details>

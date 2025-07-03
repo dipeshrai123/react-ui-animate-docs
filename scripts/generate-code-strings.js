@@ -40,7 +40,7 @@ fs.readdirSync(BASE_INPUT_DIR).forEach((versionFolder) => {
 
         fs.mkdirSync(outputDir, { recursive: true });
 
-        fs.writeFileSync(outputPath, `const ${exportName} = \`${code}\`;\nexport default ${exportName};\n`);
+        fs.writeFileSync(outputPath, `const ${exportName} = \`${code?.toString()}\`;\nexport default ${exportName};\n`);
         console.log(`✅ Generated: ${path.relative(BASE_OUTPUT_DIR, outputPath)}`);
     });
 });

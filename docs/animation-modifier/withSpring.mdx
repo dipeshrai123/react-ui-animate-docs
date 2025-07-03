@@ -6,12 +6,12 @@ title: withSpring
 
 The `withSpring` modifier animates a value using spring physics, creating natural motion with realistic bounce and overshoot effects.
 
-### Syntax
+## Syntax
 ```jsx
 withSpring(toValue, options?) => Descriptor
 ```
 
-#### Parameters
+### Parameters
 - **toValue**: The target value for the animation. This can be a number, string, object, or array.
 - **Options (optional)**: An object to configure the spring animation.
 
@@ -24,26 +24,16 @@ withSpring(toValue, options?) => Descriptor
 | `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
 | `onComplete`  |A callback function invoked when the animation finishes. | function()| - |
 
-### Usage Example
-#### Animating translateX
-Here's how you can use `withSpring` to animate a **translateX** property, including custom configuration and callback functions:
+##  Example
+import BasicExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/ObjectExample"
 
-```jsx
-const [x, setX] = useValue(0);
+import SandPack from "@site/src/components/SandPack"
 
-// Animate x to 100 with a custom spring config:
-setX(
-  withSpring(100, { 
-    damping: 20, 
-    stiffness: 150,
-    onStart: () => console.log('Spring animation started'),
-    onChange: (v) => console.log('Current value:', v),
-    onComplete: () => console.log('Spring animation complete'),
-  })
-);
-```
-
-This code animates the x value to 100 using `withSpring`. It customizes the spring's damping and stiffness. Callbacks **(onStart, onChange, onComplete)** are used to log the animation's progress at its beginning, during each frame, and upon completion.
-
-
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
 

@@ -3,21 +3,20 @@ sidebar_position: 3
 id: interpolate
 title: Interpolate
 ---
-`interpolate` is a utility function that maps a numeric input value from one range (inRange) to another (outRange), supporting not only numbers but also strings with units, CSS functions, and even CSS color literals like rgb, hsl, and named colors.\
-This is particularly useful for animations, transitions, and styling transformations.
+`to` is a universal interpolation function that maps a numeric value from one range to another, supporting numbers, units, CSS functions, and colors.
 
 ## Syntax
-
 ```jsx
+import {to} from "react-ui-animate"
 to(
-  input: number,
-  inRange: number[],
-  outRange: (number | string)[],
-  config?: ExtrapolateConfig
+input: number,
+inRange: number[],
+outRange: (number | string)[],
+config?: ExtrapolateConfig
 ): number | string
 ```
 
-### Parameters
+## Parameters
 
 | Name   | Type | Description
 | :-----     | :----      | :----
@@ -26,7 +25,7 @@ to(
 |outRange|`(number or string)[]`| The output values mapped to each entry in inRange. Supports numbers, units, functions, or colors.
 |config|`ExtrapolateConfig (optional)`| Optional interpolation config:
 
-#### ExtrapolateConfig Signature
+## ExtrapolateConfig Signature
 
 | Property   | Type | Default | Description
 | :-----     | :----      | :---- | :----
@@ -35,7 +34,7 @@ to(
 |extrapolateRight|`clamp` or `extend` or `identity` | Inherits from `extrapolate` | How to handle input < first inRange
 |easing| `(t: number) => number` | `undefined` | Easing function applied to normalized range t
 
-### Supported Output Formats
+## Supported Output Formats
 1. **Numbers**\
     `to(x, [0, 1], [10, 20]) → 15`
 2. **Strings with units**\

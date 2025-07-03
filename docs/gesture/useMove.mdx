@@ -6,7 +6,7 @@ title: useMove
 
 The `useMove` hook listens to pointer movements(without needing a press or drag) and provides real-time feedback like movement delta, velocity, and cursor offset. It supports both HTML elements and the window object.
 
-### Syntax
+## Syntax
 ```jsx
 useMove(
   refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
@@ -14,13 +14,13 @@ useMove(
 ): void
 ```
 
-#### Parameters
+### Parameters
 | Name   | Type | Description
 | :-----     | :----      | :----
 | Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | Element(s) or window to track pointer movement over.
 |Callback (required)|`(event:MoveEvent) => void`| Called on every move event and when the pointer leaves.
 
-#### MouseEvent Signature
+### MouseEvent Signature
 ``` tsx
 type MoveEvent = {
   index: number;
@@ -31,3 +31,35 @@ type MoveEvent = {
   cancel?: () => void;                 // Cancels the gesture (optional)
 };
 ```
+
+## Example 
+
+import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useMove/BasicSetup"
+import MultipleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/MultipleElements"
+import SingleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/SingleElements"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicSetup
+}}
+/>
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": SingleElements
+}}
+/>
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": MultipleElements
+}}
+/>

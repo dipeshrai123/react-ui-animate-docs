@@ -6,7 +6,7 @@ title: useDrag
 
 The `useDrag` hook allows to add drag gesture recognition to any DOM element in a React component. It handles pointer events under the hood, calculates movement, offset, velocity, and exposes a powerful callback-based API for interacting with drag state in real-time.
 
-### Syntax
+## Syntax
 ```jsx
 useDrag(
   refs: RefObject<HTMLElement> | RefObject<HTMLElement>[],
@@ -16,14 +16,14 @@ useDrag(
 
 ```
 
-#### Parameters
+### Parameters
 | Name   | Type | Description
 | :-----     | :----      | :----
 | Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[]`  |  Single or array of refs to DOM elements to make draggable.
 |Callback (required)|`(event:DragEvent) => void`| Called during drag and when drag ends
 |Config (required)|`DragConfig`| Optional config to customize drag behaviour
 
-#### Callback Signature
+### Callback Signature
 ``` tsx
 type DragEvent = {
   index: number;
@@ -35,7 +35,7 @@ type DragEvent = {
   cancel: () => void;                    // Cancel pointer capture
 };
 ```
-#### DragConfig Options
+### DragConfig Options
 ``` tsx
 type DragConfig = {
   threshold?: number;                  // Min distance before triggering drag
@@ -44,6 +44,26 @@ type DragConfig = {
 };
 ```
 
+## Example
+
+import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useDrag/BasicSetup"
+import MultipleElements from "@site/src/examples/strings/v4.x.x/gesture/useDrag/MultipleElements"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicSetup
+}}
+/>
 
 
-
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": MultipleElements
+}}
+/>

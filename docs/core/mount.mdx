@@ -1,0 +1,46 @@
+---
+sidebar_position: 2
+id: use-mount
+title: Mount
+---
+
+The `<Mount>` component provides a declarative, animated mounting and unmounting experience for your React components. It smoothly animates values when the component enters or leaves, ideal for transitions, popups, modals, or expandable panels.
+
+---
+
+## Usage
+```jsx
+  <Mount state={isOpen} from={0} enter={1} exit={0}>
+    {(animation) => <div style={{ opacity: animation.get() }}>Hello</div>}
+  </Mount>
+```
+
+## Props
+| Name   | Type | Description
+| :-----     | :----      | :----
+| state (required)| `boolean`  |  Whether the component is mounted. true triggers mounting and enter animation; false triggers exit.
+|children (required)|`(animation, isOpen:boolean) => ReactNode`| Render function receiving animated value(s). You must return a ReactNode here.
+|from|`Primitive or Record<string, Primitive>`| Initial value(s) when mounting. Defaults to 0 for single animations.
+|enter|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on mount. Defaults to 1 for single animations.
+|exit|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on unmount. Defaults to 0 for single animations.
+
+## Example 
+import BasicExample from "@site/src/examples/strings/v4.x.x/core/mount/BasicExample"
+import MultiValuedExample from "@site/src/examples/strings/v4.x.x/core/mount/MultiValuedExample"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": MultiValuedExample
+}}
+/>

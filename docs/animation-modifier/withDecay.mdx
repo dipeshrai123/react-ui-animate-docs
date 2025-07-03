@@ -6,12 +6,12 @@ title: withDecay
 
 The `withDecay` modifier animates a value by simulating momentum with friction. You typically provide an initial velocity, and the value will coast and gradually slow to a stop. This is particularly useful for implementing flick or throw gestures, or any scenario where you want a natural slowdown effect, similar to a thrown ball gradually losing speed.
 
-### Syntax
+## Syntax
 ```jsx
 withDecay(velocity, options?) => Descriptor
 ```
 
-#### Parameters
+### Parameters
 - **velocity**: The initial velocity of the animation, measured in units per millisecond.
     - Default: 0.997 per frame
 - **Options (optional)**:
@@ -22,20 +22,16 @@ withDecay(velocity, options?) => Descriptor
 | `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
 | `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
 
-### Usage Example
+## Usage Example
+import BasicExample from "@site/src/examples/strings/v4.x.x/modifier/withDecay/BasicExample"
 
-```jsx
-const [pos, setPos] = useValue(0);
+import SandPack from "@site/src/components/SandPack"
 
-// Start a decay animation with an initial velocity of 1.5:
-setPos(
-  withDecay(1.5, {
-    onStart: () => console.log('Decay started'),
-    onComplete: () => console.log('Decay finished'),
-  })
-);
-
-
-```
-This code snippet initiates a decay animation for the pos value with an initial velocity of 1.5. The onStart callback logs a message when the decay animation begins, and the onComplete callback logs a message once the animation has come to a stop.
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
 
