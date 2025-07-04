@@ -44,12 +44,16 @@ type DragConfig = {
 };
 ```
 
-## Example
-
+## Examples
 import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useDrag/BasicSetup"
 import MultipleElements from "@site/src/examples/strings/v4.x.x/gesture/useDrag/MultipleElements"
 
 import SandPack from "@site/src/components/SandPack"
+
+
+### 1. Basic Dragging of a Single Box
+This example demonstrates dragging a single element along both axes.\
+The element resets to its original position when the drag ends.
 
 <SandPack version={{
    reactAnimate: '5.0.0-rc.9'
@@ -58,6 +62,10 @@ files={{
   "App.tsx": BasicSetup
 }}
 />
+
+### 2. Dragging Multiple Boxes Independently
+Here, multiple boxes are draggable independently on the X-axis.\
+Each box remembers its drag position while dragging, and springs back to its original position when released.
 
 
 <SandPack version={{

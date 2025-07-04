@@ -32,13 +32,16 @@ type MoveEvent = {
 };
 ```
 
-## Example 
+## Examples
 
 import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useMove/BasicSetup"
 import MultipleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/MultipleElements"
 import SingleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/SingleElements"
 
 import SandPack from "@site/src/components/SandPack"
+
+### 1. Track Pointer Across Entire Window
+This example creates a custom teal-colored cursor that follows the pointer anywhere on the page.
 
 <SandPack version={{
    reactAnimate: '5.0.0-rc.9'
@@ -48,6 +51,9 @@ files={{
 }}
 />
 
+### 2. Track Pointer Within a Specific Element
+This example tracks pointer movements **only inside a target element** (the gray box).\
+The teal "cursor" still moves globally but updates its position only when the pointer is inside the target box.
 <SandPack version={{
    reactAnimate: '5.0.0-rc.9'
 }}
@@ -55,6 +61,10 @@ files={{
   "App.tsx": SingleElements
 }}
 />
+
+### 3. Tracking Pointer Movement Across Multiple Elements
+This example demonstrates how to use useMove with **multiple DOM elements** (using refs) to track pointer movements.
+It updates the position of a floating teal circle based on pointer events inside any of the target boxes.
 
 <SandPack version={{
    reactAnimate: '5.0.0-rc.9'

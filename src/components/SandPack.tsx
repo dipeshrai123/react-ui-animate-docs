@@ -13,24 +13,23 @@ export default function SandPack({
   version = { reactAnimate: '5.0.0-rc.9' },
 }: ISandPack) {
   return (
-    <div style={{ paddingBottom: 15 }}>
-      <Sandpack
-        files={files}
-        theme="auto"
-        template="react-ts"
-        options={{
-          showConsoleButton: false,
-          showInlineErrors: true,
-          showNavigator: false,
-          showLineNumbers: true,
-          showTabs: true,
-        }}
-        customSetup={{
-          dependencies: {
-            'react-ui-animate': version?.reactAnimate,
-          },
-        }}
-      />
-    </div>
+    <Sandpack
+      files={files}
+      theme="auto"
+      template="react-ts"
+      options={{
+        showConsoleButton: false,
+        showInlineErrors: true,
+        showNavigator: false,
+        showLineNumbers: true,
+        showTabs: true,
+        editorHeight: 500,
+      }}
+      customSetup={{
+        dependencies: {
+          'react-ui-animate': version?.reactAnimate,
+        },
+      }}
+    />
   );
 }

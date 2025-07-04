@@ -22,7 +22,9 @@ withDecay(velocity, options?) => Descriptor
 | `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
 | `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
 
-## Usage Example
+## Example: Animate with withDecay (Decay-Based Animation)
+This example showcases how to use decay-based animation with `withDecay` utility, simulating inertia-like.
+
 import BasicExample from "@site/src/examples/strings/v4.x.x/modifier/withDecay/BasicExample"
 
 import SandPack from "@site/src/components/SandPack"
@@ -35,3 +37,9 @@ files={{
 }}
 />
 
+### Key Highlights:
+- Uses `useValue` to handle multiple animated values `(x, y, width, height)`.
+- Animates using `decay`, which gradually reduces the velocity over time—no fixed destination.
+- Animates all numeric properties using decay.
+- Includes `onStart` and `onComplete` callbacks to observe animation progress.
+- Renders the animated object via `<animate.div>` with styles directly tied to the values.

@@ -26,6 +26,8 @@ withLoop(animation,iterations?, options?) => Descriptor
 
 
 ##  Example
+This example demonstrates how to repeat a sequence of animations multiple times using the powerful `withLoop` utility. This is exactly what you need when you want looping behaviors, like **bouncing**, **oscillating**, or **infinite motion**.
+
 import BasicExample from "@site/src/examples/strings/v4.x.x/modifier/withLoop/BasicExample"
 
 import SandPack from "@site/src/components/SandPack"
@@ -37,3 +39,14 @@ files={{
   "App.tsx": BasicExample
 }}
 />
+
+### What’s Happening Here:
+1. A simple box starts at position (0, 0) with width 100.
+2. On clicking Start:
+    - A sequence begins that:
+        - Moves horizontally to x: 100 → right.
+        - Moves vertically to y: 100 → down.
+        - Moves back horizontally to x: 0 → left.
+        - Moves back vertically to y: 0 → up.
+3. This sequence loops 5 times continuously.
+
