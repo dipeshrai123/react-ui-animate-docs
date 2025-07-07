@@ -59,6 +59,13 @@ const config = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          lastVersion: "current",
+          versions: {
+            current: {
+              label: '5.x',
+              path: '5.x',
+            },
+          },
           sidebarPath: require.resolve('./sidebars.js'),
           sidebarCollapsed: true,
           editUrl:
@@ -82,16 +89,11 @@ const config = {
         src: 'img/react-ui-animate-logo.png',
       },
       items: [
-        // {
-        //   type: 'doc',
-        //   docId: 'getting-started',
-        //   position: 'left',
-        //   label: 'Docs',
-        // },
         {
           type: 'docsVersionDropdown',
           dropdownActiveClassDisabled: true,
           position: 'right',
+          disableNextVersion: true
         },
         {
           href: 'https://github.com/dipeshrai123/react-ui-animate',
