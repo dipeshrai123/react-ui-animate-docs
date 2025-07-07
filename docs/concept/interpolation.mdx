@@ -3,24 +3,34 @@ sidebar_position: 2
 id: interpolation
 title: Interpolation
 ---
-`to` is a universal interpolation function that maps a numeric value from one range to another, supporting numbers, units, CSS functions, and colors.
+Interpolation is the process of mapping one range of values to another.\
+In animation, it’s commonly used to convert a normalized value (like 0 to 1) into a target range (like 0 to 100).\
 
-## Syntax
-```jsx
-import {to} from "react-ui-animate"
-to(
-input: number,
-inRange: number[],
-outRange: (number | string)[],
-config?: ExtrapolateConfig
-): number | string
-```
+**In simple terms:**\
+An interpolation takes an input value and returns a mapped output value.\
+For example, you can map the range **0 → 1** to **0 → 100** to smoothly animate between these numbers.\
+This technique is essential for scaling, translating, opacity transitions, and more.
+
+
+## Basic Usage
+
+### Extending the useValue
+
+import BasicExample from "@site/src/examples/strings/v4.x.x/core/interpolation/BasicExample"
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0-rc.9'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
 
 ## Parameters
 
 | Name   | Type | Description
 | :-----     | :----      | :----
-|input | `number` | The current value you want to interpolate.
 |inRange | `number[]` | The input range (must be ascending). Must contain at least 2 values.
 |outRange|`(number or string)[]`| The output values mapped to each entry in inRange. Supports numbers, units, functions, or colors.
 |config|`ExtrapolateConfig (optional)`| Optional interpolation config:
@@ -36,14 +46,14 @@ config?: ExtrapolateConfig
 
 ## Supported Output Formats
 1. **Numbers**\
-    `to(x, [0, 1], [10, 20]) → 15`
+    `value.to([0, 1], [10, 20]) → 15`
 2. **Strings with units**\
-    `to(x, [0, 1], ['10px', '20px']) → '15.000px'`
+    `value.to([0, 1], ['10px', '20px']) → '15.000px'`
 3. **CSS functions**\
-    `to(x, [0, 1], ['rotate(0deg)', 'rotate(180deg)']) → 'rotate(90.000deg)'`
+    `value.to([0, 1], ['rotate(0deg)', 'rotate(180deg)']) → 'rotate(90.000deg)'`
 4. **Colors**
-    - Named: `to(x, [0, 1], ['red', 'blue'])`
-    - HEX: `to(x, [0, 1], ['#000', '#fff'])`
-    - RGBA: `to(x, [0, 1], ['rgba(0,0,0,0)', 'rgba(255,255,255,1)'])`
-    - HSL: `to(x, [0, 1], ['hsl(0, 100%, 50%)', 'hsl(120, 100%, 50%)'])`
+    - Named: `value.to([0, 1], ['red', 'blue'])`
+    - HEX: `value.to([0, 1], ['#000', '#fff'])`
+    - RGBA: `value.to([0, 1], ['rgba(0,0,0,0)', 'rgba(255,255,255,1)'])`
+    - HSL: `value.to([0, 1], ['hsl(0, 100%, 50%)', 'hsl(120, 100%, 50%)'])`
 

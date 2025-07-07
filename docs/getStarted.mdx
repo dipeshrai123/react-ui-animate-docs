@@ -1,73 +1,162 @@
 ---
 sidebar_position: 1
 id: start
-title: Get Started
+title: Getting started
 ---
 
-The `<Mount>` component provides a declarative, animated mounting and unmounting experience for your React components. It smoothly animates values when the component enters or leaves, ideal for transitions, popups, modals, or expandable panels.
+React UI Animate makes it simple to create smooth, performant animations and interactive gestures in React applications.\
+This guide walks you through the core concepts, helping you build powerful animations quickly.
 
----
 
-## Usage
-```jsx
-  <Mount state={isOpen} from={0} enter={1} exit={0}>
-    {(animation) => <div style={{ opacity: animation.get() }}>Hello</div>}
-  </Mount>
+## Prerequisites
+Before you begin, you should have a basic understanding of:
+1. JavaScript
+2. React
+
+If you're new to these, we recommend learning their fundamentals first.
+
+## Installation
+React UI Animate works with React 16.8+ (hooks required).
+
+Install via npm or yarn:
+```bash
+npm install react-ui-animate
+```
+or
+```bash
+yarn add react-ui-animate
 ```
 
-## Props
-| Name   | Type | Description
-| :-----     | :----      | :----
-| state (required)| `boolean`  |  Whether the component is mounted. true triggers mounting and enter animation; false triggers exit.
-|children (required)|`(animation, isOpen:boolean) => ReactNode`| Render function receiving animated value(s). You must return a ReactNode here.
-|from|`Primitive or Record<string, Primitive>`| Initial value(s) when mounting. Defaults to 0 for single animations.
-|enter|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on mount. Defaults to 1 for single animations.
-|exit|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on unmount. Defaults to 0 for single animations.
+## Animated Elements
+The main component for animations is `<animate>`. It acts like a normal HTML element but handles animated values under the hood.
 
-## Examples
-import BasicExample from "@site/src/examples/strings/v4.x.x/core/mount/BasicExample"
-import MultiValuedExample from "@site/src/examples/strings/v4.x.x/core/mount/MultiValuedExample"
+### Example
+```jsx
+import { animate } from 'react-ui-animate';
 
-import SandPack from "@site/src/components/SandPack"
+export default function MyComponent() {
+  return (
+    <animate.div
+      style={{
+        width: 80,
+        height: 80,
+        background: '#ff6d6d',
+        borderRadius: 8,
+      }}
+    />
+  );
+}
+```
 
-### 1. Basic Mounting with Fade Animation
-In this example, a simple square box smoothly fades in and out based on a toggle state.\
-The `<Mount>` component handles the mounting and unmounting animation automatically by animating the opacity value from **0 to 1 on mount**, and back to **0 on unmount**.\
-When the button is clicked, the component toggles between showing and hiding the box, triggering the fade animation seamlessly.
+## The `useValue` Hook
+[useValue](./concept/useValue) is your starting point for animating values in React.\
+It tracks and updates values without causing React re-renders.
 
-<SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
-/>
+### Example:
 
-### 2. Complex Mounting with Sequential Animations
-This example demonstrates a more advanced usage of `<Mount>` with multiple animated properties and sequential animations.
-<SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
-}}
-files={{
-  "App.tsx": MultiValuedExample
-}}
-/>
+```jsx
+import { animate, useValue } from 'react-ui-animate';
 
-#### How It Works:
+export default function MyComponent() {
+  const [width, setWidth] = useValue(80);
 
-1. The box starts from a collapsed state with:
-    - **width: 200**
-    - **opacity: 0**
-    - **translateX: 0**
-    - **rotate: 0**
+  return (
+    <animate.div
+      style={{
+        width,
+        height: 80,
+        background: '#ff6d6d',
+        borderRadius: 8,
+      }}
+    />
+  );
+}
+```
 
-2. On **mount** (enter):
-    - First, it slides right to translateX: 100 and fades in (opacity: 1) using withTiming for a smooth start.
-    - Then, it **expands its width to 300** using `withSpring` for a bouncy, natural finish.
-    - This entire sequence runs automatically via `withSequence`.
+## Animation Modifiers
+Animation Modifiers are functions that apply animations to values controlled by [useValue](./concept/useValue).\
+Here’s an example using [withSpring](./animation-modifier/withSpring) for a spring-like animation:
+```jsx
+import { animate, useValue, withSpring } from 'react-ui-animate';
 
-3. On **unmount** (exit):
-    - It springs back to its original position with:
-        - **translateX: 0**
-        - **width: 200**
-4. The button toggles the mount/unmount state, triggering the full entrance or exit animation flow.
+const App = () => {
+  const [bg, setBg] = useValue('teal');
+
+  return (
+    <>
+      <button onClick={() => setBg(withSpring('blue'))}>
+        Spring to Blue
+      </button>
+
+      <animate.div
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: bg,
+          borderRadius: 4,
+        }}
+      />
+    </>
+  );
+};
+```
+
+## Your First Full Animation
+
+Here’s a complete example that animates multiple properties (position & size) together:
+
+```jsx
+import { animate, useValue, withSpring } from 'react-ui-animate';
+
+export default function App() {
+  const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
+
+  return (
+    <>
+      <button
+        onClick={() =>
+          setObj(
+            withSpring(
+              { x: 100, y: 100, width: 200, height: 200 },
+              {
+                onStart: () => console.log('START'),
+                onComplete: () => console.log('Animation complete'),
+              }
+            )
+          )
+        }
+      >
+        Start
+      </button>
+
+      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+        Reset
+      </button>
+
+      <animate.div
+        style={{
+          width: obj.width,
+          height: 100,
+          backgroundColor: 'teal',
+          translateX: obj.x,
+          translateY: obj.y,
+          borderRadius: 4,
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Key Takeaways
+
+In this quick start guide, you learned:
+
+- How to use the `<animate>` component for animated elements.
+- How to control values with useValue.
+- How to animate those values using animation modifiers like [withSpring](./animation-modifier/withSpring).
+
+## Next Steps:
+- Explore more animation modifiers like [withTiming](./animation-modifier/withTiming), [withDecay](./animation-modifier/withDecay), and [withSequence](./animation-modifier/withSequence.mdx).
+- Learn advanced hooks for gestures and scroll-based animations.
+- Dive into complex animations with Mount animations and sequences.
