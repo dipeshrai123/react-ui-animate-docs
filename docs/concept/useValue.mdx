@@ -13,14 +13,14 @@ This hook returns a tuple: `[value, setValue]`.
 
 The primary use case for `useValue()` is to animate properties. For instance, to animate an element's offset:
 
-import PrimitveExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/PrimitiveExample"
-import ArrayExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/ArrayExample"
-import ObjectExample from "@site/src/examples/strings/v4.x.x/modifier/withSpring/ObjectExample"
+import PrimitveExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/PrimitiveExample"
+import ArrayExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ArrayExample"
+import ObjectExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ObjectExample"
 
 import SandPack from "@site/src/components/SandPack"
 
 <SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
+   reactAnimate: '5.0.0'
 }}
 files={{
   "App.tsx": PrimitveExample
@@ -43,7 +43,7 @@ const [value, setValue] = useValue(initialValue: number | string);
 <details>
   <summary>View example</summary>
   <SandPack version={{
-    reactAnimate: '5.0.0-rc.9'
+    reactAnimate: '5.0.0'
   }}
   files={{
     "App.tsx": PrimitveExample
@@ -60,7 +60,7 @@ const [arr, setArr] = useValue(initialArray: number[]);
 <details>
   <summary>View example</summary>
   <SandPack version={{
-    reactAnimate: '5.0.0-rc.9'
+    reactAnimate: '5.0.0'
   }}
   files={{
     "App.tsx": ArrayExample
@@ -77,7 +77,7 @@ const [obj, setObj] = useValue(initialObject: { [key: string]: number | string }
 <details>
   <summary>View example</summary>
    <SandPack version={{
-    reactAnimate: '5.0.0-rc.9'
+    reactAnimate: '5.0.0'
   }}
   files={{
     "App.tsx": ObjectExample

@@ -4,13 +4,13 @@ import { Sandpack } from '@codesandbox/sandpack-react';
 interface ISandPack {
   files: Record<string, string>;
   version?: {
-    reactAnimate: '5.0.0-rc.9' | '^3.3.0';
+    reactAnimate: '5.0.0' | '^3.3.0';
   };
 }
 
 export default function SandPack({
   files,
-  version = { reactAnimate: '5.0.0-rc.9' },
+  version = { reactAnimate: '5.0.0' },
 }: ISandPack) {
   return (
     <Sandpack

@@ -34,9 +34,9 @@ type MoveEvent = {
 
 ## Examples
 
-import BasicSetup from "@site/src/examples/strings/v4.x.x/gesture/useMove/BasicSetup"
-import MultipleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/MultipleElements"
-import SingleElements from "@site/src/examples/strings/v4.x.x/gesture/useMove/SingleElements"
+import BasicSetup from "@site/src/examples/strings/v5.x.x/gesture/useMove/BasicSetup"
+import MultipleElements from "@site/src/examples/strings/v5.x.x/gesture/useMove/MultipleElements"
+import SingleElements from "@site/src/examples/strings/v5.x.x/gesture/useMove/SingleElements"
 
 import SandPack from "@site/src/components/SandPack"
 
@@ -44,7 +44,7 @@ import SandPack from "@site/src/components/SandPack"
 This example creates a custom teal-colored cursor that follows the pointer anywhere on the page.
 
 <SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
+   reactAnimate: '5.0.0'
 }}
 files={{
   "App.tsx": BasicSetup
@@ -55,7 +55,7 @@ files={{
 This example tracks pointer movements **only inside a target element** (the gray box).\
 The teal "cursor" still moves globally but updates its position only when the pointer is inside the target box.
 <SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
+   reactAnimate: '5.0.0'
 }}
 files={{
   "App.tsx": SingleElements
@@ -67,7 +67,7 @@ This example demonstrates how to use useMove with **multiple DOM elements** (usi
 It updates the position of a floating teal circle based on pointer events inside any of the target boxes.
 
 <SandPack version={{
-   reactAnimate: '5.0.0-rc.9'
+   reactAnimate: '5.0.0'
 }}
 files={{
   "App.tsx": MultipleElements

@@ -11,7 +11,7 @@ Examples are organized by version to ensure compatibility with different version
 ```jsx
 src/examples/raw/
     v3.x.x ← Examples for react-ui-animate v3.x.x
-    v4.x.x ← Examples for react-ui-animate v4.x.x
+    v5.x.x ← Examples for react-ui-animate v5.x.x
 ```
 
 ✅ **Tip:** Keep your examples scoped properly within their respective version folders to avoid confusion or compatibility issues.
