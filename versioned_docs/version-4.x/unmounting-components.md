@@ -6,17 +6,18 @@ title: Unmounting components
 
 When animating React components in and out of the DOM, the `useMount()` hook and `MountedBlock` HOC in React UI Animate offer a simple, declarative way to orchestrate entry and exit transitions.
 
-import { Unmounting } from '/src/components/Unmounting';
+import Unmounting from '@site/src/examples/strings/v3.3.0/Unmounting/Unmounting';
+import SandPack from "/src/components/SandPack"
 
-<Unmounting />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Unmounting}}/>
 
 ## Using `useMount()`
 
 The `useMount(open)` hook returns a function that drives mount and unmount animations based on a boolean state (`open`). It takes **no config argument**, defaulting to a smooth ease animation.
 
 ```jsx
-import React from "react";
-import { animate, bInterpolate, useMount } from "react-ui-animate";
+import React from 'react';
+import { animate, bInterpolate, useMount } from 'react-ui-animate';
 
 export const UseMount: React.FC = () => {
   const [open, setOpen] = React.useState(true);
@@ -36,8 +37,8 @@ export const UseMount: React.FC = () => {
                   height: bInterpolate(animation.value, 100, 200),
                   backgroundColor: bInterpolate(
                     animation.value,
-                    "red",
-                    "#3399ff"
+                    'red',
+                    '#3399ff'
                   ),
                   translateX: 45,
                 }}
@@ -46,11 +47,11 @@ export const UseMount: React.FC = () => {
                 style={{
                   width: bInterpolate(animation.value, 100, 400),
                   height: bInterpolate(animation.value, 100, 50),
-                  border: "1px solid black",
+                  border: '1px solid black',
                   backgroundColor: bInterpolate(
                     animation.value,
-                    "red",
-                    "#3399ff"
+                    'red',
+                    '#3399ff'
                   ),
                   translateX: 45,
                 }}
@@ -61,8 +62,8 @@ export const UseMount: React.FC = () => {
                   height: 100,
                   backgroundColor: bInterpolate(
                     animation.value,
-                    "red",
-                    "#3399ff"
+                    'red',
+                    '#3399ff'
                   ),
                   translateX: 45,
                 }}
@@ -89,14 +90,14 @@ export const UseMount: React.FC = () => {
 For a more concise API, wrap your JSX in `MountedBlock`. Pass the `state` prop and an optional `enter` modifier (e.g. `withSpring(1)`) for the mount animation.
 
 ```jsx
-import React from "react";
+import React from 'react';
 import {
   MountedBlock,
   animate,
   bInterpolate,
   interpolate,
   withSpring,
-} from "react-ui-animate";
+} from 'react-ui-animate';
 
 export const Mounted: React.FC = () => {
   const [open, setOpen] = React.useState(false);
@@ -109,13 +110,13 @@ export const Mounted: React.FC = () => {
             style={{
               width: 100,
               height: 100,
-              backgroundColor: "#3399ff",
+              backgroundColor: '#3399ff',
               translateX: bInterpolate(animation.value, 0, 500),
               borderRadius: interpolate(
                 animation.value,
                 [0.5, 1],
-                ["0%", "100%"],
-                { extrapolateLeft: "clamp" }
+                ['0%', '100%'],
+                { extrapolateLeft: 'clamp' }
               ),
             }}
           />

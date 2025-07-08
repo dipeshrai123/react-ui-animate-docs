@@ -11,7 +11,7 @@ In this section, you'll learn how to create your first animation using React UI 
 The first step is to initialize an animated value using the `useValue()` hook from React UI Animate. This value controls the property you want to animate.
 
 ```jsx
-import { useValue } from "react-ui-animate";
+import { useValue } from 'react-ui-animate';
 
 export const Example = () => {
   // Initialize an animated value starting at 0
@@ -26,7 +26,7 @@ export const Example = () => {
 Use the `animate.div` component to apply the animated value to a node's style. The `.value` property of the animated value is read by `animate.div`.
 
 ```jsx
-import { animate, useValue } from "react-ui-animate";
+import { animate, useValue } from 'react-ui-animate';
 
 export const Example = () => {
   const left = useValue(0);
@@ -36,8 +36,8 @@ export const Example = () => {
       style={{
         width: 100,
         height: 100,
-        background: "#39F",
-        position: "relative",
+        background: '#39F',
+        position: 'relative',
         left: left.value, // Apply the animated value
       }}
     />
@@ -50,7 +50,7 @@ export const Example = () => {
 Update the animated value by assigning to its `.value` property. By default, updates the value instantly. Use modifiers like `withSpring` or `withTiming` for applying animation.
 
 ```jsx
-import { animate, useValue, withSpring } from "react-ui-animate";
+import { animate, useValue, withSpring } from 'react-ui-animate';
 
 export const Example = () => {
   const left = useValue(0);
@@ -61,8 +61,8 @@ export const Example = () => {
         style={{
           width: 100,
           height: 100,
-          background: "#39F",
-          position: "relative",
+          background: '#39F',
+          position: 'relative',
           left: left.value,
         }}
       />
@@ -77,9 +77,10 @@ export const Example = () => {
 
 ## Example
 
-import GettingStartedExamples from '/src/components/GettingStartedExamples';
+import GettingStartedExamples from '@site/src/examples/strings/v3.3.0/GettingStartedExamples';
+import SandPack from "/src/components/SandPack"
 
-<GettingStartedExamples />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": GettingStartedExamples}}/>
 
 This example demonstrates how easy it is to create animations with React UI Animate—initialize animated values, apply them to components, and update them to produce interactive transitions. Once you're comfortable with these basics, you're ready to explore more advanced animations and interactions in your projects.
 

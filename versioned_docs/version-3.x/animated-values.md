@@ -80,9 +80,10 @@ The `AnimatedBlock` component is used instead of a regular HTML element because 
 respond to Animated Values. The `AnimatedBlock` HOC (Higher-Order Component) acts as a div element
 that can also interpret Animated Values.
 
-import AnimatedValues from '/src/components/AnimatedValues';
+import AnimatedValues from '@site/src/examples/strings/v3.3.0/AnimatedValues';
+import SandPack from "/src/components/SandPack"
 
-<AnimatedValues />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": AnimatedValues}}/>
 
 ## Higher Order Components
 

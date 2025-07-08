@@ -1,0 +1,56 @@
+---
+sidebar_position: 2
+id: withSpring
+title: withSpring
+---
+
+The `withSpring` modifier animates a value using spring physics, creating natural motion with realistic bounce and overshoot effects.
+
+## Syntax
+```jsx
+withSpring(toValue, options?) => Descriptor
+```
+
+### Parameters
+- **toValue**: The target value for the animation. This can be a `number`, `string`, `object`, or `array`.
+- **Options (optional)**: An object to configure the spring animation.
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `stiffness`| Determines the spring's stiffness, affecting its resistance to displacement.   |   number | 158
+| `damping`  | Controls the damping ratio, influencing how quickly the spring loses energy. | number| 20 |
+| `mass`  | Represents the mass of the spring, affecting its inertia. | number| 1 |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
+| `onComplete`  |A callback function invoked when the animation finishes. | function()| - |
+
+##  Example: Animating Multiple Values with `useValue` + `withSpring`
+This example shows how to animate multiple numeric properties together using `useValue`, `withSpring`, and `animate` components.
+
+import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ObjectExample"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
+
+### Key Highlights:
+
+- `useValue` manages multiple animated values as an object `(x, y, width, height)`.
+- `withSpring` smoothly animates the values with a spring physics-based transition.
+- You can attach callbacks like `onStart` and `onComplete` to the animation lifecycle.
+- The `<animate.div>` component directly binds the animated values to styles for rendering.
+
+### How it Works:
+1. Initially, the box starts at position `(0, 0)` with width & height `100`.
+2. Clicking Start triggers an animation to: 
+    - Move to (x: 100, y: 100)
+    - Resize to width: 200, height: 200
+3. Once complete, it logs "Animation complete".
+4. Clicking Reset snaps it back to the initial state without animation.
+

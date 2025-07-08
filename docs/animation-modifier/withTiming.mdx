@@ -1,0 +1,55 @@
+---
+sidebar_position: 3
+id: withTiming
+title: withTiming
+---
+
+The `withTiming` modifier animates a value linearly or with a specified easing function to a given target over a fixed duration. It's ideal for simple, predictable transitions like fades or scales, where precise control over the animation's timing is crucial.
+
+## Syntax
+```jsx
+withTiming(toValue, options?) => Descriptor
+```
+
+### Parameters
+- **toValue**: The target value to reach. This can be a number, string, object, or array.
+- **Options (optional)**: An object containing timing-specific settings.
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `duration`| How long the animation lasts (in milliseconds).  |   number | 300
+| `easing`  | The easing function controls the animation's acceleration and deceleration.  | function| TODO: |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
+| `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
+
+## Example: Animate with withTiming
+This example demonstrates how to animate multiple values using `useValue` with timing-based animation via `withTiming`.
+
+import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withTiming/BasicExample"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
+
+### Key Highlights:
+- Uses `useValue` to handle multiple animated properties `(x, y, width, height)`.
+- Animates to new values over a fixed duration (400ms) using `withTiming`.
+- Includes `onStart` and `onComplete` callbacks for monitoring the animation lifecycle.
+- Uses the `<animate.div>` component to automatically bind animated values to styles.
+
+### How it Works:
+1. The initial state has:
+    - Position (0, 0)
+    - Width 100, Height 100
+2. Clicking Start:
+    - Animates width from 100 to 300 over 400 milliseconds.
+    - Other values remain the same (x, y stay at 0, height stays at 100).
+    - Logs "START" at the beginning and "Animation complete" after finishing.
+3. Clicking Reset instantly snaps it back to the initial state.

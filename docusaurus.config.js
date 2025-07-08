@@ -1,3 +1,5 @@
+const { themes } = require('prism-react-renderer');
+
 const config = {
   title: 'React UI Animate',
   tagline:
@@ -10,21 +12,69 @@ const config = {
   organizationName: 'dipeshrai123',
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
+  headTags: [
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preload",
+        href: "static/fonts/Inter_18pt-Bold.ttf",
+        as: "font",
+        type: "font/ttf",
+        crossorigin: "anonymous",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preload",
+        href: "static/fonts/Inter_18pt-Medium.ttf",
+        as: "font",
+        type: "font/ttf",
+        crossorigin: "anonymous",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preload",
+        href: "static/fonts/Inter_18pt-Regular.ttf",
+        as: "font",
+        type: "font/ttf",
+        crossorigin: "anonymous",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preload",
+        href: "static/fonts/Inter_18pt-SemiBold.ttf",
+        as: "font",
+        type: "font/ttf",
+        crossorigin: "anonymous",
+      },
+    },
+  ],
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: './sidebars.js',
-          sidebarCollapsed: false,
+          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsed: true,
+          editUrl:
+            'https://github.com/dipeshrai123/react-ui-animate-docs/edit/main/',
         },
         theme: {
-          customCss: ['./src/css/custom.css'],
+          customCss: require.resolve('./src/css/custom.css'),
         },
       },
     ],
   ],
   themeConfig: {
+    prism: {
+      theme: themes.vsLight,
+      darkTheme: themes.vsDark,
+    },
     navbar: {
       title: 'React UI Animate',
       logo: {
@@ -33,15 +83,10 @@ const config = {
       },
       items: [
         {
-          type: 'doc',
-          docId: 'getting-started',
-          position: 'left',
-          label: 'Docs',
-        },
-        {
           type: 'docsVersionDropdown',
           dropdownActiveClassDisabled: true,
           position: 'right',
+          disableNextVersion: true
         },
         {
           href: 'https://github.com/dipeshrai123/react-ui-animate',
@@ -50,31 +95,8 @@ const config = {
         },
       ],
     },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Learn',
-          items: [
-            {
-              label: 'Getting Started',
-              to: '/docs/getting-started',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/dipeshrai123/react-ui-animate',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()}, React UI Animate`,
-    },
   },
+  themes: ['@docusaurus/theme-live-codeblock'],
 };
 
 module.exports = config;
