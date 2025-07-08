@@ -10,10 +10,15 @@ The `<Mount>` component provides a declarative, animated mounting and unmounting
 
 ## Usage
 ```jsx
-  <Mount state={isOpen} from={0} enter={1} exit={0}>
-    {(animation) => <div style={{ opacity: animation.get() }}>Hello</div>}
+  <Mount state={isOpen}>
+    {(animation) => <div style={{ opacity: animation }}>Hello</div>}
   </Mount>
 ```
+
+:::info  What is animation here?
+- `animation` is a number value passed by the Mount component.
+- It represents the progress of the animation, typically ranging from: 0 -> 1
+:::
 
 ## Props
 | Name   | Type | Description

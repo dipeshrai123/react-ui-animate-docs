@@ -9,7 +9,7 @@ function Community() {
   return (
     <div className={styles?.communityLinks}>
       <a
-        href="https://discord.gg/your-invite"
+        href="https://discord.gg/qPqsD8pv"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -19,7 +19,7 @@ function Community() {
         Join Discord
       </a>
       <a
-        href="https://github.com/your-org/react-ui-animate"
+        href="https://github.com/dipeshrai123/react-ui-animate-docs"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -52,12 +52,12 @@ function HomepageHeader() {
           >
             Get Started
           </Link>
-          <Link
+          {/* <Link
             className="button button--secondary button--lg"
             to="https://github.com/dipeshrai123/react-ui-animate"
           >
             Try It
-          </Link>
+          </Link> */}
         </div>
         <Community />
       </div>

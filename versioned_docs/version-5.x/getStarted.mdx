@@ -79,20 +79,20 @@ Here’s an example using [withSpring](./animation-modifier/withSpring) for a sp
 ```jsx
 import { animate, useValue, withSpring } from 'react-ui-animate';
 
-const App = () => {
-  const [bg, setBg] = useValue('teal');
+export default function App() {
+  const [width, setWidth] = useValue(100);
 
   return (
     <>
-      <button onClick={() => setBg(withSpring('blue'))}>
-        Spring to Blue
+      <button onClick={() => setWidth(withSpring(200))}>
+        Animate
       </button>
 
       <animate.div
         style={{
-          width: 100,
+          width,
           height: 100,
-          backgroundColor: bg,
+          backgroundColor: "teal",
           borderRadius: 4,
         }}
       />
@@ -103,9 +103,9 @@ const App = () => {
 
 ## Your First Full Animation
 
-Here’s a complete example that animates multiple properties (position & size) together:
+Here’s a complete example that animates width property of an element:
 
-import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ObjectExample"
+import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/GetStartedExample"
 
 import SandPack from "@site/src/components/SandPack"
 
@@ -122,10 +122,10 @@ files={{
 In this quick start guide, you learned:
 
 - How to use the `<animate>` component for animated elements.
-- How to control values with useValue.
+- How to control values with [useValue](./concept/useValue).
 - How to animate those values using animation modifiers like [withSpring](./animation-modifier/withSpring).
 
 ## Next Steps:
 - Explore more animation modifiers like [withTiming](./animation-modifier/withTiming), [withDecay](./animation-modifier/withDecay), and [withSequence](./animation-modifier/withSequence.mdx).
-- Learn advanced hooks for gestures and scroll-based animations.
-- Dive into complex animations with Mount animations and sequences.
+- Learn advanced hooks for [gestures](./gesture/overview) and [scroll-based animations](./gesture/useScroll).
+- Dive into complex animations with [Mount animations](./concept/use-mount) and [sequences](./animation-modifier/withSequence).

@@ -5,7 +5,6 @@ const App = () => {
   const [wheelPosition, setWheelPosition] = useState({ x: 0, y: 0 });
 
   useWheel(window, function (event) {
-    console.log('Wheel event:', event);
     setWheelPosition({ x: event.offset.x, y: event.offset.y });
   });
 

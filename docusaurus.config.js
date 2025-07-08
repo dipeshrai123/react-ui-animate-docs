@@ -59,13 +59,6 @@ const config = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          lastVersion: "current",
-          versions: {
-            current: {
-              label: '5.x',
-              path: '5.x',
-            },
-          },
           sidebarPath: require.resolve('./sidebars.js'),
           sidebarCollapsed: true,
           editUrl:

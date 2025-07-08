@@ -5,7 +5,6 @@ const App = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useScroll(window, function (event) {
-    console.log('Scroll', event);
     setScrollPosition(event.offset.y);
   });
 

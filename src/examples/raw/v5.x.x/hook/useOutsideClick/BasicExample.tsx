@@ -1,37 +1,52 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useOutsideClick } from 'react-ui-animate';
 
-export default function BasicExample() {
-  const [isOpen, setOpen] = useState(true);
+export default function App() {
   const ref = useRef(null);
+
   useOutsideClick(ref, () => {
-    setOpen(false);
+    alert('You clicked outside box');
   });
+
   return (
     <>
-      <button onClick={() => setOpen(true)}>Reset</button>
-
       <div
-        ref={ref}
         style={{
-          height: 70,
-          width: 70,
+          display: 'flex',
+          justifyContent: 'center',
+          height: '100vh',
+          alignItems: 'center',
         }}
       >
-        {isOpen && (
-          <div
-            style={{
-              width: 70,
-              height: 70,
-              backgroundColor: 'teal',
-              borderRadius: 4,
-              pointerEvents: 'none',
-              color: 'white',
-            }}
-          >
-            Open
-          </div>
-        )}
+        <div
+          style={{
+            padding: 100,
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            color: '#a1a1a1',
+          }}
+        >
+          CLICK OUTSIDE
+        </div>
+
+        <div
+          ref={ref}
+          style={{
+            width: 200,
+            height: 200,
+            border: '1px solid #e1e1e1',
+            borderRadius: 8,
+            backgroundColor: '#f1f1f1',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#a1a1a1',
+            zIndex: 1,
+          }}
+        >
+          CLICK INSIDE ME
+        </div>
       </div>
     </>
   );
