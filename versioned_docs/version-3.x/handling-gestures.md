@@ -6,9 +6,13 @@ title: Handling Gestures
 
 React UI Animate provides a powerful set of gesture hooks that enable you to easily bind mouse and touch events to any node. This allows for the creation of complex interactions, such as dragging and scrolling, with just a few lines of code.
 
-import { Gesture } from '/src/components/HomepageExamples';
+import Gesture from '@site/src/examples/strings/v3.3.0/HomepageExamples/Gesture';
 
-<Gesture />
+import DragGesture from '@site/src/examples/strings/v3.3.0/Gestures/index';
+
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Gesture}}/>
 
 ## Defining a gesture
 
@@ -79,9 +83,7 @@ export default function () {
 
 In this example, `left` is an animated value. The `state` object includes `down`, which represents whether the mouse button is pressed, and `movementX`, which tracks the movement along the x-axis starting from 0.
 
-import { DragGesture } from '/src/components/Gestures';
-
-<DragGesture />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": DragGesture}}/>
 
 ## Available gesture hooks
 

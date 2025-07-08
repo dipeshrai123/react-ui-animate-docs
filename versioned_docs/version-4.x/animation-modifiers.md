@@ -11,7 +11,7 @@ To achieve dynamic animations with precise control, React UI Animate provides mo
 Spring animations simulate physical motion. Use `withSpring(target, config?)`:
 
 ```jsx
-import { useValue, animate, withSpring } from "react-ui-animate";
+import { useValue, animate, withSpring } from 'react-ui-animate';
 
 export const WithSpringModifier = () => {
   const x = useValue(0);
@@ -22,7 +22,7 @@ export const WithSpringModifier = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button
@@ -46,7 +46,7 @@ export const WithSpringModifier = () => {
 Timing animations interpolate over a duration. Use `withTiming(target, { duration, easing? })`:
 
 ```jsx
-import { useValue, animate, withTiming } from "react-ui-animate";
+import { useValue, animate, withTiming } from 'react-ui-animate';
 
 export const WithTimingModifier = () => {
   const x = useValue(0);
@@ -57,7 +57,7 @@ export const WithTimingModifier = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button onClick={() => (x.value = withTiming(100, { duration: 500 }))}>
@@ -76,7 +76,7 @@ export const WithTimingModifier = () => {
 Use `withEase(target, config?)` for an ease curve or custom easing:
 
 ```jsx
-import { useValue, animate, withEase } from "react-ui-animate";
+import { useValue, animate, withEase } from 'react-ui-animate';
 
 export const WithEaseModifier = () => {
   const x = useValue(0);
@@ -87,7 +87,7 @@ export const WithEaseModifier = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button onClick={() => (x.value = withEase(100))}>Ease to 100</button>
@@ -107,7 +107,7 @@ import {
   withSequence,
   withSpring,
   withTiming,
-} from "react-ui-animate";
+} from 'react-ui-animate';
 
 export const WithSequenceModifier = () => {
   const x = useValue(0);
@@ -118,7 +118,7 @@ export const WithSequenceModifier = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
       <button
@@ -147,7 +147,7 @@ import {
   withTiming,
   withSpring,
   AnimationConfig,
-} from "react-ui-animate";
+} from 'react-ui-animate';
 
 export const PresetExample = () => {
   const x = useValue(0);
@@ -158,7 +158,7 @@ export const PresetExample = () => {
           translateX: x.value,
           width: 50,
           height: 50,
-          backgroundColor: "#39F",
+          backgroundColor: '#39F',
         }}
       />
 
@@ -181,14 +181,14 @@ export const PresetExample = () => {
       {/* Spring Presets */}
       <button
         onClick={() =>
-          (x.value = withSpring(100, AnimationConfig.Spring.ELASTIC))
+          (x.value = withSpring(100, AnimationConfig?.Spring?.ELASTIC))
         }
       >
         Elastic Spring
       </button>
       <button
         onClick={() =>
-          (x.value = withSpring(100, AnimationConfig.Spring.WOBBLE))
+          (x.value = withSpring(100, AnimationConfig?.Spring?.WOBBLE))
         }
       >
         Wobble Spring

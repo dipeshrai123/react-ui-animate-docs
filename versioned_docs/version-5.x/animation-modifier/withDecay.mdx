@@ -1,0 +1,45 @@
+---
+sidebar_position: 4
+id: withDecay
+title: withDecay
+---
+
+The `withDecay` modifier animates a value by simulating momentum with friction. You typically provide an initial velocity, and the value will coast and gradually slow to a stop. This is particularly useful for implementing flick or throw gestures, or any scenario where you want a natural slowdown effect, similar to a thrown ball gradually losing speed.
+
+## Syntax
+```jsx
+withDecay(velocity, options?) => Descriptor
+```
+
+### Parameters
+- **velocity**: The initial velocity of the animation, measured in units per millisecond.
+    - Default: 0.997 per frame
+- **Options (optional)**:
+
+| Options   | Descrptions | Type | Default |
+| :-----     | :----      | :----|:----   |
+| `onStart`  | A callback function invoked when the animation begins. | function()| - |
+| `onChange`  | A callback function invoked on every frame of the animation, providing the current value. | function()| - |
+| `onComplete`  | A callback function invoked when the animation finishes. | function() | - |
+
+## Example: Animate with withDecay (Decay-Based Animation)
+This example showcases how to use decay-based animation with `withDecay` utility, simulating inertia-like.
+
+import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withDecay/BasicExample"
+
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0'
+}}
+files={{
+  "App.tsx": BasicExample
+}}
+/>
+
+### Key Highlights:
+- Uses `useValue` to handle multiple animated values `(x, y, width, height)`.
+- Animates using `decay`, which gradually reduces the velocity over time—no fixed destination.
+- Animates all numeric properties using decay.
+- Includes `onStart` and `onComplete` callbacks to observe animation progress.
+- Renders the animated object via `<animate.div>` with styles directly tied to the values.

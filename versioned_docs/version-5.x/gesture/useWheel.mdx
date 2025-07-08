@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+id: useWheel
+title: useWheel
+---
+
+The `useWheel` hook listens to wheel gestures on a DOM element or the window, giving you scroll-like movement data with access to deltas, velocity, and raw events — perfect for zooming, panning, and gesture-driven UIs.
+
+## Syntax
+```jsx
+useWheel(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | window,
+  callback: (event: WheelEvent & { index: number }) => void
+): void
+```
+
+### Parameters
+| Name   | Type | Description
+| :-----     | :----      | :----
+| Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[] or Window`  | The element(s) or window to listen to for wheel movement.
+|Callback (required)|`(event:WheelEvent) => void`| Called on every scroll frame and gesture end.
+
+### WheelEvent Signature
+``` tsx
+type WheelEvent = {
+  index: number;
+  movement: { x: number; y: number };  // Delta from this event
+  offset: { x: number; y: number };    // Accumulated wheel movement
+  velocity: { x: number; y: number };  // Smoothed pixels/ms
+  event: globalThis.WheelEvent;       // Raw native wheel event
+  cancel?: () => void;                // Cancels pending gesture end timeout
+};
+```
+## Example:  Tracking Wheel (Scroll Wheel) Events
+This React example shows how to use the `useWheel` hook to listen to mouse wheel events on the `window` and track the horizontal and vertical wheel offset in real-time.
+
+import BasicSetup from "@site/src/examples/strings/v5.x.x/gesture/useWheel/BasicSetup"
+import SandPack from "@site/src/components/SandPack"
+
+<SandPack version={{
+   reactAnimate: '5.0.0'
+}}
+files={{
+  "App.tsx": BasicSetup
+}}
+/>

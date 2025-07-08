@@ -8,9 +8,11 @@ When working with animations in React, especially when mounting and unmounting c
 transitions, `useMountedValue()` hook or `MountedBlock` HOC from React UI Animate is a powerful tool. It facilitates smooth
 transitions for components entering and leaving the DOM.
 
-import { Unmounting } from '/src/components/Unmounting';
+import Unmounting from '@site/src/examples/strings/v3.3.0/Unmounting/Unmounting';
 
-<Unmounting />
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Unmounting}}/>
 
 :::tip
 
@@ -130,9 +132,9 @@ interpolate(animation.value, [0, 1], [0, 200]),
 
 Here is the full example about configuring animations for `useMountedValue()`:
 
-import { ConfigureUnmounting } from '/src/components/Unmounting';
+import ConfigureUnmounting from '@site/src/examples/strings/v3.3.0/Unmounting/ConfigureUnmounting';
 
-<ConfigureUnmounting />
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": ConfigureUnmounting}}/>
 
 ```jsx
 import { useState } from 'react';

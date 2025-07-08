@@ -6,16 +6,18 @@ title: Handling Gestures
 
 React UI Animate provides a set of gesture hooks that bind native pointer and scroll events to Animated Values. With just a few lines of code, you can create draggable, scroll-responsive, and gesture-driven interfaces.
 
-import { Gesture } from '/src/components/HomepageExamples';
+import Gesture from '@site/src/examples/strings/v3.3.0/HomepageExamples/Gesture';
 
-<Gesture />
+import SandPack from "/src/components/SandPack"
+
+<SandPack version={{reactAnimate:"^3.3.0"}} files={{"App.tsx": Gesture}}/>
 
 ## Defining a Gesture
 
 Import the gesture hook you need and define it inside your component. Gesture hooks return a `bind` function supplying the necessary event handlers.
 
 ```jsx
-import { useDrag } from "react-ui-animate";
+import { useDrag } from 'react-ui-animate';
 
 export const DraggableBox = () => {
   const bind = useDrag((state) => {
@@ -26,7 +28,7 @@ export const DraggableBox = () => {
   return (
     <div
       {...bind()}
-      style={{ width: 60, height: 60, backgroundColor: "#3399ff" }}
+      style={{ width: 60, height: 60, backgroundColor: '#3399ff' }}
     />
   );
 };
@@ -37,7 +39,7 @@ export const DraggableBox = () => {
 Combine `useDrag` with an Animated Value (`useValue`) to move an element:
 
 ```jsx
-import { animate, useValue, useDrag, withSpring } from "react-ui-animate";
+import { animate, useValue, useDrag, withSpring } from 'react-ui-animate';
 
 export const DragGesture = () => {
   const x = useValue(0);
@@ -53,7 +55,7 @@ export const DragGesture = () => {
       style={{
         width: 80,
         height: 80,
-        backgroundColor: "#f5533d",
+        backgroundColor: '#f5533d',
         borderRadius: 4,
         translateX: x.value,
         translateY: y.value,
@@ -76,7 +78,7 @@ import {
   useScroll,
   useWheel,
   useMouseMove,
-} from "react-ui-animate";
+} from 'react-ui-animate';
 
 export const ScrollColor = () => {
   const progress = useValue(0);
@@ -93,7 +95,7 @@ export const ScrollColor = () => {
 You can use any Animated Value modifiers with gesture-driven updates:
 
 ```jsx
-import { animate, useValue, useWheel, withSpring } from "react-ui-animate";
+import { animate, useValue, useWheel, withSpring } from 'react-ui-animate';
 
 export const PinchZoom = () => {
   const scale = useValue(1);
@@ -108,7 +110,7 @@ export const PinchZoom = () => {
       style={{
         width: 150,
         height: 150,
-        backgroundColor: "#39F",
+        backgroundColor: '#39F',
         scale: scale.value,
       }}
     />
@@ -121,7 +123,7 @@ export const PinchZoom = () => {
 Use `useGesture` to combine multiple gesture types on one element:
 
 ```jsx
-import { animate, useValue, useGesture, withSpring } from "react-ui-animate";
+import { animate, useValue, useGesture, withSpring } from 'react-ui-animate';
 
 export const CombinedGesture = () => {
   const x = useValue(0);
@@ -143,7 +145,7 @@ export const CombinedGesture = () => {
       style={{
         width: 100,
         height: 100,
-        backgroundColor: "#39F",
+        backgroundColor: '#39F',
         translateX: x.value,
         translateY: y.value,
       }}
