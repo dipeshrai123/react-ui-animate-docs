@@ -11,9 +11,9 @@ This hook returns a tuple: `[value, setValue]`.
 
 ## Basic Usage
 
-The primary use case for `useValue()` is to animate properties. For instance, to animate an element's offset:
+The primary use case for `useValue()` is to animate properties. For instance, to animate an element's width:
 
-import PrimitveExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/PrimitiveExample"
+import PrimitveExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/GetStartedExample"
 import ArrayExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ArrayExample"
 import ObjectExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ObjectExample"
 
@@ -27,8 +27,10 @@ files={{
 }}
 />
 
+### 
+
 :::info Immediate vs. Animated Updates
-When you assign a raw value (e.g., `setBg('blue')`), the property changes **immediately** without animation. To achieve a smooth transition, you must wrap the target value in a [animation modifier](../animation-modifier/overview) like ([withTiming](../animation-modifier/withTiming) or [withSpring](../animation-modifier/withSpring)).
+When you assign a raw value (e.g., `setWidth(200)`), the property changes **immediately** without animation. To achieve a smooth transition, you must wrap the target value in a [animation modifier](../animation-modifier/overview) like ([withTiming](../animation-modifier/withTiming) or [withSpring](../animation-modifier/withSpring)).
 :::
 
 ***
