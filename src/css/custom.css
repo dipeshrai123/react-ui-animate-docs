@@ -130,6 +130,20 @@ code {
   padding-bottom: 0.125rem;
 }
 
+.homecards-container {
+  margin-top: 30px;
+  margin-bottom: 60px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(420px, 1fr));
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .homecards-container {
+    grid-template-columns: repeat(1, minmax(420px, 1fr));
+  }
+}
+
 .btn {
   font-size: 16px;
   font-weight: 600;

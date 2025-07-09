@@ -25,7 +25,7 @@ const Menu = styled(animate.ul)`
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: 0;
   z-index: 100;
   padding-left: 0px;
 `;
@@ -83,7 +83,7 @@ interface DropdownMenuProps {
 }
 
 const DropdownMenu = ({ items, children }: DropdownMenuProps) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <MenuContainer>
@@ -112,7 +112,6 @@ const DropdownMenu = ({ items, children }: DropdownMenuProps) => {
           <Menu
             style={{
               opacity: a,
-              translateX: '-50%',
               translateY: a.to([0, 1], [-10, 8]),
               scale: a.to([0, 1], [0.8, 1]),
             }}

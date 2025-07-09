@@ -9,6 +9,7 @@ import {
   Cursor,
   Dropdown,
   LinkedInReact,
+  Slider,
   Toast,
 } from '../components/homeExamples';
 import styles from './index.module.css';
@@ -135,25 +136,21 @@ export default function Home() {
           gestures.
         </div>
 
-        <div
-          style={{
-            marginTop: 30,
-            marginBottom: 60,
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gap: 20,
-          }}
-        >
-          <HomeCard title="Toast">
-            <Toast />
+        <div className="homecards-container">
+          <HomeCard title="Dropdown Toggle">
+            <Dropdown />
           </HomeCard>
 
           <HomeCard title="LinkedIn Reaction">
             <LinkedInReact />
           </HomeCard>
 
-          <HomeCard title="Dropdown Toggle">
-            <Dropdown />
+          <HomeCard title="Slider">
+            <Slider />
+          </HomeCard>
+
+          <HomeCard title="Toast">
+            <Toast />
           </HomeCard>
 
           <HomeCard title="Magnetic Cursor">
