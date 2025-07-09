@@ -14,7 +14,7 @@ const App = () => {
     if (down) {
       const newPositions = [...items.current];
       newPositions[index] = movement.x;
-      setPositions(withSpring(newPositions));
+      setPositions(newPositions);
     } else {
       setPositions(withSpring(items.current));
     }

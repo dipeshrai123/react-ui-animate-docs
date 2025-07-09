@@ -1,7 +1,7 @@
 import React from 'react';
 import { animate, Mount } from 'react-ui-animate';
 
-const App: React.FC = () => {
+const App = () => {
   const [open, setOpen] = React.useState(true);
 
   return (
@@ -15,6 +15,7 @@ const App: React.FC = () => {
               backgroundColor: 'teal',
               opacity: animation,
               borderRadius: 4,
+              marginBottom: 10,
             }}
           />
         )}
