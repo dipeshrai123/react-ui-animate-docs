@@ -113,6 +113,12 @@ h1 {
   display: none !important;
 }
 
+.hero__subtitle {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+}
+
 code {
   border-radius: 0.375rem;
   border-color: rgba(0, 0, 0, 0.05);
@@ -122,4 +128,25 @@ code {
   padding-right: 0.25em;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
+}
+
+.btn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: white;
+  background-color: var(--ifm-color-primary);
+  font-family: monospace;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.btn:active {
+  background-color: var(--ifm-color-primary-darker);
 }
