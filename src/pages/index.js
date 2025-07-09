@@ -5,15 +5,9 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MdContentCopy } from 'react-icons/md';
 
-import {
-  Cursor,
-  Dropdown,
-  LinkedInReact,
-  Slider,
-  Toast,
-} from '../components/homeExamples';
 import styles from './index.module.css';
 import HomeCard from '../components/HomeCard';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 function Community() {
   return (
@@ -138,23 +132,48 @@ export default function Home() {
 
         <div className="homecards-container">
           <HomeCard title="Dropdown Toggle">
-            <Dropdown />
+            <BrowserOnly>
+              {() => {
+                const { Dropdown } = require('../components/homeExamples');
+                return <Dropdown />;
+              }}
+            </BrowserOnly>
           </HomeCard>
 
           <HomeCard title="LinkedIn Reaction">
-            <LinkedInReact />
+            <BrowserOnly>
+              {() => {
+                const { LinkedInReact } = require('../components/homeExamples');
+                return <LinkedInReact />;
+              }}
+            </BrowserOnly>
           </HomeCard>
 
           <HomeCard title="Slider">
-            <Slider />
+            <BrowserOnly>
+              {() => {
+                const { Slider } = require('../components/homeExamples');
+                return <Slider />;
+              }}
+            </BrowserOnly>
           </HomeCard>
 
           <HomeCard title="Toast">
-            <Toast />
+            <BrowserOnly>
+              {() => {
+                const { Toast } = require('../components/homeExamples');
+                return <Toast />;
+              }}
+            </BrowserOnly>
           </HomeCard>
 
           <HomeCard title="Magnetic Cursor">
-            <Cursor />
+            <BrowserOnly>
+              {() => {
+                const { Cursor } = require('../components/homeExamples');
+                return <Cursor />;
+              }}
+            </BrowserOnly>
           </HomeCard>
         </div>
       </section>
