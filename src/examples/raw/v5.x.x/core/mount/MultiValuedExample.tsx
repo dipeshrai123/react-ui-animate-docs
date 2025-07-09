@@ -7,7 +7,7 @@ import {
   Mount,
 } from 'react-ui-animate';
 
-const App: React.FC = () => {
+const App = () => {
   const [open, setOpen] = React.useState(true);
 
   return (
@@ -34,13 +34,13 @@ const App: React.FC = () => {
               backgroundColor: 'teal',
               rotate,
               borderRadius: 4,
+              marginBottom: 10,
             }}
           />
         )}
       </Mount>
 
       <button
-        className="mt"
         onClick={() => {
           setOpen((prev) => !prev);
         }}

@@ -1,5 +1,5 @@
 const modifier_withSpring_GetStartedExample = `import React from 'react';
-import { animate, useValue, withSpring } from 'react-ui-animate';
+import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
 
 export default function App() {
   const [width, setWidth] = useValue(100);
@@ -7,10 +7,11 @@ export default function App() {
   return (
     <>
       <button onClick={() => setWidth(withSpring(200))}>Animate</button>
-      <button onClick={() => setWidth(withSpring(100))}>Reset</button>
+      <button onClick={() => setWidth(withTiming(100))}>Reset</button>
       <animate.div
         style={{
           width,
+          marginTop: 10,
           height: 100,
           backgroundColor: 'teal',
           borderRadius: 4,
