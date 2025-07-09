@@ -40,6 +40,7 @@ const MenuItem = styled.li`
     padding: 8px 10px;
     cursor: pointer;
     user-select: none;
+    color: #000;
 
     &.danger {
       color: red;

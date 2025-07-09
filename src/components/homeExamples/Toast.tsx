@@ -58,7 +58,7 @@ const ToastItem = ({ id, text, type, onEnd }) => {
           }}
         >
           <div>{ICONS[type]}</div>
-          <div style={{ color: '#000', flex: 1 }}>{text}</div>
+          <div style={{ color: 'var(--ifm-text-color)', flex: 1 }}>{text}</div>
           <div
             onClick={() => {
               if (timerRef.current) {
