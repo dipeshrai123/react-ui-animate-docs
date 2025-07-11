@@ -4,11 +4,10 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MdContentCopy } from 'react-icons/md';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import styles from './index.module.css';
 import HomeCard from '../components/HomeCard';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-import AnimatedCard from '../components/AnimatedCard';
 
 function Community() {
   return (
@@ -72,14 +71,21 @@ function HomepageHeader() {
           />
         </div>
         <div className={styles.buttons}>
-          <AnimatedCard>
-            <Link
-              className="button button--secondary button--lg"
-              to="/docs/getting-started"
-            >
-              Get Started
-            </Link>
-          </AnimatedCard>
+          <BrowserOnly>
+            {() => {
+              const { AnimatedCard } = require('../components/AnimatedCard');
+              return (
+                <AnimatedCard>
+                  <Link
+                    className="button button--secondary button--lg"
+                    to="/docs/getting-started"
+                  >
+                    Get Started
+                  </Link>
+                </AnimatedCard>
+              );
+            }}
+          </BrowserOnly>
         </div>
         <Community />
       </div>
@@ -96,29 +102,40 @@ export default function Home() {
     >
       <HomepageHeader />
 
-      <section className={styles?.features}>
-        <h2>Why React UI Animate?</h2>
-        <div className={styles?.featureList}>
-          <AnimatedCard>
-            <div className={styles?.featureCard}>
-              <h3>⚡ Simple API</h3>
-              <p>Designed to be minimal & intuitive for React developers.</p>
-            </div>
-          </AnimatedCard>
-          <AnimatedCard>
-            <div className={styles?.featureCard}>
-              <h3>🎨 High Performance</h3>
-              <p>Optimized for smooth animations with minimal overhead.</p>
-            </div>
-          </AnimatedCard>
-          <AnimatedCard>
-            <div className={styles?.featureCard}>
-              <h3>🔥 Interactive Gestures</h3>
-              <p>Drag, scroll, and more—handled with ease.</p>
-            </div>
-          </AnimatedCard>
-        </div>
-      </section>
+      <BrowserOnly>
+        {() => {
+          const { AnimatedCard } = require('../components/AnimatedCard');
+          return (
+            <section className={styles?.features}>
+              <h2>Why React UI Animate?</h2>
+              <div className={styles?.featureList}>
+                <AnimatedCard>
+                  <div className={styles?.featureCard}>
+                    <h3>⚡ Simple API</h3>
+                    <p>
+                      Designed to be minimal & intuitive for React developers.
+                    </p>
+                  </div>
+                </AnimatedCard>
+                <AnimatedCard>
+                  <div className={styles?.featureCard}>
+                    <h3>🎨 High Performance</h3>
+                    <p>
+                      Optimized for smooth animations with minimal overhead.
+                    </p>
+                  </div>
+                </AnimatedCard>
+                <AnimatedCard>
+                  <div className={styles?.featureCard}>
+                    <h3>🔥 Interactive Gestures</h3>
+                    <p>Drag, scroll, and more—handled with ease.</p>
+                  </div>
+                </AnimatedCard>
+              </div>
+            </section>
+          );
+        }}
+      </BrowserOnly>
 
       <section
         style={{
