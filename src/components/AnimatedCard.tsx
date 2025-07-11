@@ -1,11 +1,7 @@
 import React, { useRef } from 'react';
 import { animate, useValue, useMove, withSpring } from 'react-ui-animate';
 
-export default function AnimatedCard({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function AnimatedCard({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const [props, setProps] = useValue({ rotateX: 0, rotateY: 0, scale: 1 });
 
