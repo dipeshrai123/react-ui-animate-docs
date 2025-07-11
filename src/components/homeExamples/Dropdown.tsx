@@ -100,9 +100,8 @@ const DropdownMenu = ({ items, children }: DropdownMenuProps) => {
   });
 
   return (
-    <MenuContainer>
+    <MenuContainer ref={ref}>
       <MenuChildren
-        ref={ref}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -157,7 +156,11 @@ export function Dropdown() {
     <Wrapper>
       <DropdownMenu
         items={[
-          { title: 'About', icon: <FaInfoCircle /> },
+          {
+            title: 'About',
+            icon: <FaInfoCircle />,
+            onClick: () => alert('About clicked'),
+          },
           { title: 'Profile', icon: <FaUser /> },
           { title: 'Settings', icon: <IoMdSettings /> },
           { isSeparator: true },
