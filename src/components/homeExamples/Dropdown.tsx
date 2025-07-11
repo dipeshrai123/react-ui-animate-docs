@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { animate, Easing, Mount, withTiming } from 'react-ui-animate';
+import {
+  animate,
+  Easing,
+  Mount,
+  useOutsideClick,
+  withTiming,
+} from 'react-ui-animate';
 import { FaUser, FaInfoCircle } from 'react-icons/fa';
 import { IoMdSettings } from 'react-icons/io';
 import { IoLogOut } from 'react-icons/io5';
@@ -85,10 +91,18 @@ interface DropdownMenuProps {
 
 const DropdownMenu = ({ items, children }: DropdownMenuProps) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(ref, () => {
+    if (open) {
+      setOpen(false);
+    }
+  });
 
   return (
     <MenuContainer>
       <MenuChildren
+        ref={ref}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
