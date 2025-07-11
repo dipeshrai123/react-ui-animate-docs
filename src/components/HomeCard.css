@@ -1,11 +1,11 @@
 .home-card {
     height: 320px;
-    border: 1px solid #e1e1e1;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    border: 1px solid #f1f1f1;
 }
 
 .home-card-title {

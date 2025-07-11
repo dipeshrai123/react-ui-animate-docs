@@ -159,7 +159,6 @@ export function Dropdown() {
           {
             title: 'About',
             icon: <FaInfoCircle />,
-            onClick: () => alert('About clicked'),
           },
           { title: 'Profile', icon: <FaUser /> },
           { title: 'Settings', icon: <IoMdSettings /> },
