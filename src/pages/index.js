@@ -118,10 +118,10 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        <h2>Powerful animation examples</h2>
+        <h2 style={{ textAlign: 'center' }}>Powerful animation examples</h2>
         <div
           style={{
-            width: 500,
+            maxWidth: 500,
             textAlign: 'center',
           }}
         >
