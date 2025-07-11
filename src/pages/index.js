@@ -8,6 +8,7 @@ import { MdContentCopy } from 'react-icons/md';
 import styles from './index.module.css';
 import HomeCard from '../components/HomeCard';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import AnimatedCard from '../components/AnimatedCard';
 
 function Community() {
   return (
@@ -71,12 +72,14 @@ function HomepageHeader() {
           />
         </div>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/getting-started"
-          >
-            Get Started
-          </Link>
+          <AnimatedCard>
+            <Link
+              className="button button--secondary button--lg"
+              to="/docs/getting-started"
+            >
+              Get Started
+            </Link>
+          </AnimatedCard>
         </div>
         <Community />
       </div>
@@ -96,18 +99,24 @@ export default function Home() {
       <section className={styles?.features}>
         <h2>Why React UI Animate?</h2>
         <div className={styles?.featureList}>
-          <div className={styles?.featureCard}>
-            <h3>⚡ Simple API</h3>
-            <p>Designed to be minimal & intuitive for React developers.</p>
-          </div>
-          <div className={styles?.featureCard}>
-            <h3>🎨 High Performance</h3>
-            <p>Optimized for smooth animations with minimal overhead.</p>
-          </div>
-          <div className={styles?.featureCard}>
-            <h3>🔥 Interactive Gestures</h3>
-            <p>Drag, scroll, and more—handled with ease.</p>
-          </div>
+          <AnimatedCard>
+            <div className={styles?.featureCard}>
+              <h3>⚡ Simple API</h3>
+              <p>Designed to be minimal & intuitive for React developers.</p>
+            </div>
+          </AnimatedCard>
+          <AnimatedCard>
+            <div className={styles?.featureCard}>
+              <h3>🎨 High Performance</h3>
+              <p>Optimized for smooth animations with minimal overhead.</p>
+            </div>
+          </AnimatedCard>
+          <AnimatedCard>
+            <div className={styles?.featureCard}>
+              <h3>🔥 Interactive Gestures</h3>
+              <p>Drag, scroll, and more—handled with ease.</p>
+            </div>
+          </AnimatedCard>
         </div>
       </section>
 
