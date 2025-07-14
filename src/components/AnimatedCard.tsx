@@ -14,8 +14,8 @@ export function AnimatedCard({ children }: { children: React.ReactNode }) {
 
     setProps(
       withSpring({
-        rotateX: -dy / 20,
-        rotateY: dx / 20,
+        rotateX: -dy / 8,
+        rotateY: dx / 8,
         scale: 1.1,
       })
     );
