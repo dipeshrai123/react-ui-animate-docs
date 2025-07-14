@@ -142,6 +142,7 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          marginBottom: '20vh',
         }}
       >
         <h2 style={{ textAlign: 'center' }}>Powerful animation examples</h2>
@@ -157,11 +158,47 @@ export default function Home() {
         </div>
 
         <div className="homecards-container">
-          <HomeCard title="Dropdown Toggle">
+          <HomeCard title="Sequence">
             <BrowserOnly>
               {() => {
-                const { Dropdown } = require('../components/homeExamples');
-                return <Dropdown />;
+                const { Sequence } = require('../components/homeExamples');
+                return <Sequence />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
+          <HomeCard title="Draggable">
+            <BrowserOnly>
+              {() => {
+                const { Draggable } = require('../components/homeExamples');
+                return <Draggable />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
+          <HomeCard title="Scroll">
+            <BrowserOnly>
+              {() => {
+                const { Scroll } = require('../components/homeExamples');
+                return <Scroll />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
+          <HomeCard title="Mouse Move">
+            <BrowserOnly>
+              {() => {
+                const { Cursor } = require('../components/homeExamples');
+                return <Cursor />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
+          <HomeCard title="Unmount Animation">
+            <BrowserOnly>
+              {() => {
+                const { MountUnmount } = require('../components/homeExamples');
+                return <MountUnmount />;
               }}
             </BrowserOnly>
           </HomeCard>
@@ -171,33 +208,6 @@ export default function Home() {
               {() => {
                 const { LinkedInReact } = require('../components/homeExamples');
                 return <LinkedInReact />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Slider">
-            <BrowserOnly>
-              {() => {
-                const { Slider } = require('../components/homeExamples');
-                return <Slider />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Toast">
-            <BrowserOnly>
-              {() => {
-                const { Toast } = require('../components/homeExamples');
-                return <Toast />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Magnetic Cursor">
-            <BrowserOnly>
-              {() => {
-                const { Cursor } = require('../components/homeExamples');
-                return <Cursor />;
               }}
             </BrowserOnly>
           </HomeCard>
