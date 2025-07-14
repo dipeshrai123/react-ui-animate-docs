@@ -10,13 +10,10 @@
 
 .target {
     display: inline-block;
+    background-color: #ffffff;
     padding: 10px 20px;
     border-radius: 4px;
     color: #3399ff;
     cursor: pointer;
     transition: color 0.3s ease;
-}
-
-.target:hover {
-    color: white;
 }

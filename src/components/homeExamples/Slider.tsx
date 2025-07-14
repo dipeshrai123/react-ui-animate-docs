@@ -90,6 +90,7 @@ export function Slider() {
               left: left,
               zIndex: 2,
               scale: isDown.to([0, 1], [1, 1.3]),
+              userSelect: 'none',
             }}
           />
 

@@ -46,12 +46,11 @@ const MagneticCursor = ({ containerRef }: { containerRef: any }) => {
         pointerEvents: 'none',
         width: position.width,
         height: position.height,
-        backgroundColor: '#3399ff',
+        border: '2px solid #3399ff',
         position: 'absolute',
         left: position.x,
         top: position.y,
         borderRadius: 4,
-        zIndex: -1,
       }}
     />
   );
