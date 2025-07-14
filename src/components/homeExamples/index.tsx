@@ -5,3 +5,4 @@ export { Dropdown } from './Dropdown';
 export { Slider } from './Slider';
 export { Sequence } from './Sequence';
 export { Draggable } from './Draggable';
+export { Scroll } from './Scroll';

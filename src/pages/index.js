@@ -175,6 +175,15 @@ export default function Home() {
             </BrowserOnly>
           </HomeCard>
 
+          <HomeCard title="Scroll-linked">
+            <BrowserOnly>
+              {() => {
+                const { Scroll } = require('../components/homeExamples');
+                return <Scroll />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
           <HomeCard title="Dropdown Toggle">
             <BrowserOnly>
               {() => {
