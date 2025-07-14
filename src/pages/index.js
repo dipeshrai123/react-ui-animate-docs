@@ -142,6 +142,7 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          marginBottom: '20vh',
         }}
       >
         <h2 style={{ textAlign: 'center' }}>Powerful animation examples</h2>
@@ -175,7 +176,7 @@ export default function Home() {
             </BrowserOnly>
           </HomeCard>
 
-          <HomeCard title="Scroll-linked">
+          <HomeCard title="Scroll">
             <BrowserOnly>
               {() => {
                 const { Scroll } = require('../components/homeExamples');
@@ -184,11 +185,20 @@ export default function Home() {
             </BrowserOnly>
           </HomeCard>
 
-          <HomeCard title="Dropdown Toggle">
+          <HomeCard title="Mouse Move">
             <BrowserOnly>
               {() => {
-                const { Dropdown } = require('../components/homeExamples');
-                return <Dropdown />;
+                const { Cursor } = require('../components/homeExamples');
+                return <Cursor />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
+          <HomeCard title="Unmount Animation">
+            <BrowserOnly>
+              {() => {
+                const { MountUnmount } = require('../components/homeExamples');
+                return <MountUnmount />;
               }}
             </BrowserOnly>
           </HomeCard>
@@ -198,33 +208,6 @@ export default function Home() {
               {() => {
                 const { LinkedInReact } = require('../components/homeExamples');
                 return <LinkedInReact />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Slider">
-            <BrowserOnly>
-              {() => {
-                const { Slider } = require('../components/homeExamples');
-                return <Slider />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Toast">
-            <BrowserOnly>
-              {() => {
-                const { Toast } = require('../components/homeExamples');
-                return <Toast />;
-              }}
-            </BrowserOnly>
-          </HomeCard>
-
-          <HomeCard title="Magnetic Cursor">
-            <BrowserOnly>
-              {() => {
-                const { Cursor } = require('../components/homeExamples');
-                return <Cursor />;
               }}
             </BrowserOnly>
           </HomeCard>
