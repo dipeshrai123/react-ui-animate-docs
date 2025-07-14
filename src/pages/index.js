@@ -157,6 +157,15 @@ export default function Home() {
         </div>
 
         <div className="homecards-container">
+          <HomeCard title="Sequence">
+            <BrowserOnly>
+              {() => {
+                const { Sequence } = require('../components/homeExamples');
+                return <Sequence />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
           <HomeCard title="Dropdown Toggle">
             <BrowserOnly>
               {() => {
