@@ -166,6 +166,15 @@ export default function Home() {
             </BrowserOnly>
           </HomeCard>
 
+          <HomeCard title="Draggable">
+            <BrowserOnly>
+              {() => {
+                const { Draggable } = require('../components/homeExamples');
+                return <Draggable />;
+              }}
+            </BrowserOnly>
+          </HomeCard>
+
           <HomeCard title="Dropdown Toggle">
             <BrowserOnly>
               {() => {

@@ -1,14 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import {
   animate,
   Easing,
-  Mount,
   useValue,
   withDelay,
   withLoop,
   withSequence,
-  withSpring,
   withTiming,
 } from 'react-ui-animate';
 
