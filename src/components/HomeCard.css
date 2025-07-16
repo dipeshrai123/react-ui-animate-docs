@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    border: 1px solid #f1f1f1;
-    background-color: #f8f8f8;
+    border: 1px solid var(--ifm-card-border-color);
+    background-color: var(--ifm-example-card-bg-color);
 }
 
 .home-card-title {

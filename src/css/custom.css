@@ -66,11 +66,14 @@ h1 {
   --ifm-navbar-height: 80px;
 
   --ifm-text-color: #000;
+  --ifm-card-bg-color: #ffffff;
+  --ifm-example-card-bg-color: #f8f8f8;
+  --ifm-card-border-color: #f1f1f1;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #66b2ff;
+  --ifm-color-primary: #242424;
   /* Lighter Blue */
   --ifm-color-primary-dark: #3399ff;
   /* Light Blue */
@@ -88,6 +91,9 @@ h1 {
   --ifm-menu-color: #999999;
 
   --ifm-text-color: #fff;
+  --ifm-card-bg-color:#242424;
+  --ifm-example-card-bg-color: #242424;
+  --ifm-card-border-color: #242424;
 }
 
 /* hide border right of side navigation */
@@ -117,10 +123,15 @@ h1 {
   display: none !important;
 }
 
+.hero__title {
+  color: white;
+}
+
 .hero__subtitle {
   max-width: 600px;
   text-align: center;
   margin: 0 auto;
+  color: white;
 }
 
 code {
