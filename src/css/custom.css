@@ -73,7 +73,7 @@ h1 {
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #007bff;
+  --ifm-color-primary: #242424;
   /* Lighter Blue */
   --ifm-color-primary-dark: #3399ff;
   /* Light Blue */
@@ -123,10 +123,15 @@ h1 {
   display: none !important;
 }
 
+.hero__title {
+  color: white;
+}
+
 .hero__subtitle {
   max-width: 600px;
   text-align: center;
   margin: 0 auto;
+  color: white;
 }
 
 code {
