@@ -26,6 +26,7 @@
   cursor: grab;
   transition: box-shadow 0.2s ease;
   z-index: 10;
+  touch-action: none;
 `;function u(){const e=(0,r.useRef)(null),[t,n]=(0,i.h)(1),[o,a]=(0,i.h)({x:0,y:0});return(0,i.i3)(e,(({down:e,movement:{x:t,y:r}})=>{a(e?{x:t,y:r}:(0,i.ek)({x:0,y:0},{damping:10})),n((0,i.ek)(e?1.5:1))})),(0,s.jsx)(x,{ref:e,style:{translateX:o.x,translateY:o.y,scale:t},children:"Drag Me \ud83e\udd1a"})}const f=c.A.div`
   width: 100%;
   height: 100%;
