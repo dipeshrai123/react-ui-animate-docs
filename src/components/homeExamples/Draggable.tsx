@@ -16,6 +16,7 @@ const Card = styled(animate.div)`
   cursor: grab;
   transition: box-shadow 0.2s ease;
   z-index: 10;
+  touch-action: none;
 `;
 
 export function Draggable() {
