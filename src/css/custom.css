@@ -30,13 +30,22 @@
 }
 
 body {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
   font-weight: 500;
   font-size: 17px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
 }
 
 /* You can override the default Infima variables here. */
@@ -93,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
   --ifm-menu-color: #999999;
 
   --ifm-text-color: #fff;
-  --ifm-card-bg-color:#242424;
+  --ifm-card-bg-color: #242424;
   --ifm-example-card-bg-color: #242424;
   --ifm-card-border-color: #242424;
 }
@@ -149,16 +158,25 @@ code {
 
 .homecards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-  width: 80%;
-  margin: 30px auto 60px auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1024px) {
+  .homecards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
   .homecards-container {
     grid-template-columns: 1fr;
-    width: 90%;
+    gap: 1.5rem;
+    padding: 0 1rem;
   }
 }
 

@@ -5,18 +5,21 @@ import { animate, useDrag, useValue, withSpring } from 'react-ui-animate';
 const Card = styled(animate.div)`
   width: 160px;
   height: 100px;
-  background-color: white;
-  border-radius: 8px;
-  color: #3399ff;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  border-radius: 12px;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   user-select: none;
   cursor: grab;
-  transition: box-shadow 0.2s ease;
   z-index: 10;
   touch-action: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 `;
 
 export function Draggable() {
@@ -38,7 +41,7 @@ export function Draggable() {
         scale,
       }}
     >
-      Drag Me 🤚
+      Drag Me
     </Card>
   );
 }

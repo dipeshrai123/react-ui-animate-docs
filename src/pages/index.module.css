@@ -265,6 +265,7 @@
   font-size: 18px;
   display: inline-block;
   margin-left: 8px;
+  transition: transform 0.3s ease;
 }
 
 .primaryButton:hover .buttonIconRight {
@@ -610,7 +611,19 @@
 /* Examples Section */
 .examples {
   padding: 6rem 0;
-  background: var(--ifm-background-color);
+  background: linear-gradient(
+    to bottom,
+    var(--ifm-background-color) 0%,
+    #fafafa 100%
+  );
+}
+
+[data-theme='dark'] .examples {
+  background: linear-gradient(
+    to bottom,
+    var(--ifm-background-color) 0%,
+    #1a1a1a 100%
+  );
 }
 
 .examplesHeader {

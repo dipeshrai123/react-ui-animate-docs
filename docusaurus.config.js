@@ -89,12 +89,6 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-        stylesheets: [
-          {
-            href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap',
-            type: 'text/css',
-          },
-        ],
       },
     ],
   ],
@@ -122,6 +116,67 @@ const config = {
           position: 'right',
         },
       ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Documentation',
+          items: [
+            {
+              label: 'Get Started',
+              to: '/docs/getting-started',
+            },
+            {
+              label: 'Core Concepts',
+              to: '/docs/concept/animate-component',
+            },
+            {
+              label: 'Animation Modifiers',
+              to: '/docs/animation-modifier/overview',
+            },
+            {
+              label: 'Gestures',
+              to: '/docs/gesture/overview',
+            },
+          ],
+        },
+        {
+          title: 'Features',
+          items: [
+            {
+              label: 'Interactive Props',
+              to: '/docs/interactive/hover-animations',
+            },
+            {
+              label: 'Presence & Exit',
+              to: '/docs/presence/presence-basics',
+            },
+            {
+              label: 'Hooks',
+              to: '/docs/hooks/useInView',
+            },
+            {
+              label: 'View Animations',
+              to: '/docs/interactive/view-animations',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/dipeshrai123/react-ui-animate',
+            },
+            {
+              label: 'NPM',
+              href: 'https://www.npmjs.com/package/react-ui-animate',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} React UI Animate.`,
     },
   },
   themes: ['@docusaurus/theme-live-codeblock'],

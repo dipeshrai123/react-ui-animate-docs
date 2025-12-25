@@ -18,15 +18,16 @@ const Container = styled.div`
 const Card = styled(animate.div)`
   width: 100px;
   height: 40px;
-  background-color: #e1e1e1;
-  border-radius: 8px;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 12px;
 `;
 
 const AnimatedCard = styled(animate.div)`
   width: 100px;
-  border-radius: 8px;
-  background-color: #0069d9;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;
 
 export function MountUnmount() {
@@ -57,13 +58,19 @@ export function MountUnmount() {
       <Presence>
         {open && (
           <AnimatedCard
+            style={{
+              opacity: 0,
+              height: 0,
+              scale: 0.4,
+            }}
+            animate={{
+              opacity: withSpring(1),
+              height: withSpring(80),
+              scale: 1,
+            }}
             exit={{
               opacity: withTiming(0),
               height: withSpring(0),
-            }}
-            style={{
-              opacity: 1,
-              height: 80,
             }}
           />
         )}

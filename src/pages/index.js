@@ -337,19 +337,12 @@ function HomepageHeader() {
 
           <div className={styles.buttons}>
             <AnimatedButton
-              to="/docs/getStarted"
+              to="/docs/getting-started"
               className={styles.primaryButton}
               delay={400}
             >
               Get Started
               <MdArrowForward className={styles.buttonIconRight} />
-            </AnimatedButton>
-            <AnimatedButton
-              to="/docs/concept/animate"
-              className={styles.secondaryButton}
-              delay={500}
-            >
-              View Docs
             </AnimatedButton>
           </div>
 
@@ -488,7 +481,7 @@ function QuickStart() {
             )}
           </animate.div>
           <AnimatedButton
-            to="/docs/getStarted"
+            to="/docs/getting-started"
             className={styles.learnMoreButton}
             delay={200}
           >
@@ -569,7 +562,7 @@ export default function Home() {
             </BrowserOnly>
           </HomeCard>
 
-          <HomeCard title="Interactive Cards">
+          <HomeCard title="Interactive Card">
             <BrowserOnly>
               {() => {
                 const { Interaction } = require('../components/homeExamples');

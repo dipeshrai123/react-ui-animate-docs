@@ -3,65 +3,75 @@ import { useValue, animate, useMove, withSpring } from 'react-ui-animate';
 
 import './MagneticCursor.css';
 
-const CURSOR_SIZE = 8;
+const MAGNETIC_DISTANCE = 120;
+const MAGNETIC_STRENGTH = 0.4;
 
-const MagneticCursor = ({ containerRef }: { containerRef: any }) => {
-  const [position, setPosition] = useValue({
-    x: 0,
-    y: 0,
-    width: CURSOR_SIZE,
-    height: CURSOR_SIZE,
-  });
+const MagneticButton = ({
+  containerRef,
+  label,
+  buttonRef,
+}: {
+  containerRef: any;
+  label: string;
+  buttonRef: any;
+}) => {
+  const [offset, setOffset] = useValue({ x: 0, y: 0 });
 
   useMove(containerRef, ({ event }) => {
+    if (!buttonRef.current) return;
+
     const containerRect = containerRef.current!.getBoundingClientRect();
-    const element = document.elementFromPoint(event.clientX, event.clientY);
-    let x: number, y: number, width: number, height: number;
+    const buttonRect = buttonRef.current.getBoundingClientRect();
 
-    if (element?.closest('.target')) {
-      const {
-        left,
-        top,
-        width: w,
-        height: h,
-      } = element.getBoundingClientRect();
-      x = left - containerRect.left;
-      y = top - containerRect.top;
-      width = w;
-      height = h;
+    const cursorX = event.clientX - containerRect.left;
+    const cursorY = event.clientY - containerRect.top;
+
+    const buttonCenterX =
+      buttonRect.left - containerRect.left + buttonRect.width / 2;
+    const buttonCenterY =
+      buttonRect.top - containerRect.top + buttonRect.height / 2;
+
+    const dx = cursorX - buttonCenterX;
+    const dy = cursorY - buttonCenterY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < MAGNETIC_DISTANCE && distance > 0) {
+      const force = (1 - distance / MAGNETIC_DISTANCE) * MAGNETIC_STRENGTH;
+      const newX = dx * force;
+      const newY = dy * force;
+      setOffset(withSpring({ x: newX, y: newY }));
     } else {
-      x = event.clientX - containerRect.left - CURSOR_SIZE / 2;
-      y = event.clientY - containerRect.top - CURSOR_SIZE / 2;
-      width = CURSOR_SIZE;
-      height = CURSOR_SIZE;
+      setOffset(withSpring({ x: 0, y: 0 }));
     }
-
-    setPosition(withSpring({ x, y, width, height }));
   });
 
   return (
     <animate.div
+      ref={buttonRef}
+      className="magnetic-button"
       style={{
-        userSelect: 'none',
-        pointerEvents: 'none',
-        width: position.width,
-        height: position.height,
-        border: '2px solid #3399ff',
-        position: 'absolute',
-        left: position.x,
-        top: position.y,
-        borderRadius: 4,
+        translateX: offset.x,
+        translateY: offset.y,
       }}
-    />
+    >
+      {label}
+    </animate.div>
   );
 };
 
 export function Cursor() {
   const ref = useRef(null);
+  const buttonRef = useRef(null);
+
   return (
     <div ref={ref} className="ctr">
-      <div className="target">Target Button</div>
-      <MagneticCursor containerRef={ref} />
+      <div className="magnetic-buttons-container">
+        <MagneticButton
+          containerRef={ref}
+          label="Hover Me"
+          buttonRef={buttonRef}
+        />
+      </div>
     </div>
   );
 }
