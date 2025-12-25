@@ -3,6 +3,8 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter_18pt-Regular.ttf') format('truetype');
@@ -28,13 +30,13 @@
 }
 
 body {
-  font-family: 'Inter' !important;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   font-weight: 500;
   font-size: 17px;
 }
 
-h1 {
-  font-family: 'Inter' !important;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
 }
 
 /* You can override the default Infima variables here. */

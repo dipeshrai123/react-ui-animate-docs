@@ -14,43 +14,65 @@ const config = {
   trailingSlash: false,
   headTags: [
     {
-      tagName: "link",
+      tagName: 'link',
       attributes: {
-        rel: "preload",
-        href: "static/fonts/Inter_18pt-Bold.ttf",
-        as: "font",
-        type: "font/ttf",
-        crossorigin: "anonymous",
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
       },
     },
     {
-      tagName: "link",
+      tagName: 'link',
       attributes: {
-        rel: "preload",
-        href: "static/fonts/Inter_18pt-Medium.ttf",
-        as: "font",
-        type: "font/ttf",
-        crossorigin: "anonymous",
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossorigin: 'anonymous',
       },
     },
     {
-      tagName: "link",
+      tagName: 'link',
       attributes: {
-        rel: "preload",
-        href: "static/fonts/Inter_18pt-Regular.ttf",
-        as: "font",
-        type: "font/ttf",
-        crossorigin: "anonymous",
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap',
       },
     },
     {
-      tagName: "link",
+      tagName: 'link',
       attributes: {
-        rel: "preload",
-        href: "static/fonts/Inter_18pt-SemiBold.ttf",
-        as: "font",
-        type: "font/ttf",
-        crossorigin: "anonymous",
+        rel: 'preload',
+        href: 'static/fonts/Inter_18pt-Bold.ttf',
+        as: 'font',
+        type: 'font/ttf',
+        crossorigin: 'anonymous',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preload',
+        href: 'static/fonts/Inter_18pt-Medium.ttf',
+        as: 'font',
+        type: 'font/ttf',
+        crossorigin: 'anonymous',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preload',
+        href: 'static/fonts/Inter_18pt-Regular.ttf',
+        as: 'font',
+        type: 'font/ttf',
+        crossorigin: 'anonymous',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preload',
+        href: 'static/fonts/Inter_18pt-SemiBold.ttf',
+        as: 'font',
+        type: 'font/ttf',
+        crossorigin: 'anonymous',
       },
     },
   ],
@@ -67,6 +89,12 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        stylesheets: [
+          {
+            href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap',
+            type: 'text/css',
+          },
+        ],
       },
     ],
   ],
@@ -86,7 +114,7 @@ const config = {
           type: 'docsVersionDropdown',
           dropdownActiveClassDisabled: true,
           position: 'right',
-          disableNextVersion: true
+          disableNextVersion: true,
         },
         {
           href: 'https://github.com/dipeshrai123/react-ui-animate',

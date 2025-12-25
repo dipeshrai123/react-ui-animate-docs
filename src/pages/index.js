@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { MdContentCopy, MdCheckCircle } from 'react-icons/md';
+import { MdContentCopy, MdCheckCircle, MdArrowForward } from 'react-icons/md';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import {
   animate,
@@ -143,6 +143,12 @@ function HomepageHeader() {
   const [dotScale, setDotScale] = useValue(1);
   const [dotOpacity, setDotOpacity] = useValue(1);
   const [bgPosition, setBgPosition] = useValue(0);
+  const [orb1X, setOrb1X] = useValue(0);
+  const [orb1Y, setOrb1Y] = useValue(0);
+  const [orb2X, setOrb2X] = useValue(0);
+  const [orb2Y, setOrb2Y] = useValue(0);
+  const [orb3X, setOrb3X] = useValue(0);
+  const [orb3Y, setOrb3Y] = useValue(0);
   const headerRef = useRef(null);
 
   useEffect(() => {
@@ -163,14 +169,14 @@ function HomepageHeader() {
     setTimeout(() => {
       setInstallOpacity(withTiming(1, { duration: 600 }));
       setInstallY(withSpring(0));
-    }, 400);
+    }, 600);
 
     // Animate badge dot pulse
     setDotScale(
       withLoop(
         withSequence([
-          withTiming(1.1, { duration: 1000 }),
-          withTiming(1, { duration: 1000 }),
+          withTiming(1.2, { duration: 1200 }),
+          withTiming(1, { duration: 1200 }),
         ]),
         -1 // Infinite
       )
@@ -178,8 +184,8 @@ function HomepageHeader() {
     setDotOpacity(
       withLoop(
         withSequence([
-          withTiming(0.7, { duration: 1000 }),
-          withTiming(1, { duration: 1000 }),
+          withTiming(0.6, { duration: 1200 }),
+          withTiming(1, { duration: 1200 }),
         ]),
         -1 // Infinite
       )
@@ -189,10 +195,66 @@ function HomepageHeader() {
     setBgPosition(
       withLoop(
         withSequence([
-          withTiming(100, { duration: 7500 }),
-          withTiming(0, { duration: 7500 }),
+          withTiming(100, { duration: 8000 }),
+          withTiming(0, { duration: 8000 }),
         ]),
         -1 // Infinite
+      )
+    );
+
+    // Animate floating orbs
+    setOrb1X(
+      withLoop(
+        withSequence([
+          withTiming(30, { duration: 4000 }),
+          withTiming(0, { duration: 4000 }),
+        ]),
+        -1
+      )
+    );
+    setOrb1Y(
+      withLoop(
+        withSequence([
+          withTiming(20, { duration: 5000 }),
+          withTiming(0, { duration: 5000 }),
+        ]),
+        -1
+      )
+    );
+    setOrb2X(
+      withLoop(
+        withSequence([
+          withTiming(-25, { duration: 4500 }),
+          withTiming(0, { duration: 4500 }),
+        ]),
+        -1
+      )
+    );
+    setOrb2Y(
+      withLoop(
+        withSequence([
+          withTiming(-15, { duration: 5500 }),
+          withTiming(0, { duration: 5500 }),
+        ]),
+        -1
+      )
+    );
+    setOrb3X(
+      withLoop(
+        withSequence([
+          withTiming(20, { duration: 6000 }),
+          withTiming(0, { duration: 6000 }),
+        ]),
+        -1
+      )
+    );
+    setOrb3Y(
+      withLoop(
+        withSequence([
+          withTiming(-25, { duration: 4800 }),
+          withTiming(0, { duration: 4800 }),
+        ]),
+        -1
       )
     );
   }, []);
@@ -211,6 +273,29 @@ function HomepageHeader() {
         backgroundPosition: bgPosition.to((v) => `${v}% 50%`),
       }}
     >
+      {/* Animated background orbs */}
+      <animate.div
+        className={styles.orb1}
+        style={{
+          translateX: orb1X.to((v) => `${v}px`),
+          translateY: orb1Y.to((v) => `${v}px`),
+        }}
+      />
+      <animate.div
+        className={styles.orb2}
+        style={{
+          translateX: orb2X.to((v) => `${v}px`),
+          translateY: orb2Y.to((v) => `${v}px`),
+        }}
+      />
+      <animate.div
+        className={styles.orb3}
+        style={{
+          translateX: orb3X.to((v) => `${v}px`),
+          translateY: orb3Y.to((v) => `${v}px`),
+        }}
+      />
+
       <div className="container">
         <div className={styles.heroContent}>
           <animate.div
@@ -221,7 +306,7 @@ function HomepageHeader() {
             }}
           >
             <div className={styles.badge}>
-              <span className={styles.badgeText}>v5.3.0-next.1</span>
+              <span className={styles.badgeText}>v5.2.0</span>
               <animate.span
                 className={styles.badgeDot}
                 style={{
@@ -233,14 +318,7 @@ function HomepageHeader() {
             </div>
           </animate.div>
 
-          <animate.h1
-            ref={titleRef}
-            className="hero__title"
-            style={{
-              opacity: titleOpacity,
-              translateY: titleY,
-            }}
-          >
+          <animate.h1 ref={titleRef} className="hero__title">
             {siteConfig.title}
           </animate.h1>
 
@@ -257,58 +335,29 @@ function HomepageHeader() {
             power users alike.
           </animate.p>
 
-          <animate.div
-            ref={installRef}
-            className={styles.installation}
-            style={{
-              opacity: installOpacity,
-              translateY: installY,
-            }}
-            hover={{
-              translateY: withSpring(-2),
-              scale: withSpring(1.01),
-            }}
-          >
-            <code>npm i react-ui-animate@5.3.0-next.1</code>
-            <animate.button
-              onClick={handleCopy}
-              className={styles.copyButton}
-              aria-label="Copy installation command"
-              hover={{
-                scale: withSpring(1.1),
-              }}
-              press={{
-                scale: withSpring(0.95),
-              }}
-            >
-              {copied ? (
-                <MdCheckCircle className={styles.copyIcon} />
-              ) : (
-                <MdContentCopy className={styles.copyIcon} />
-              )}
-            </animate.button>
-          </animate.div>
-
           <div className={styles.buttons}>
             <AnimatedButton
               to="/docs/getStarted"
               className={styles.primaryButton}
-              delay={600}
+              delay={400}
             >
-              🚀 Get Started
+              Get Started
+              <MdArrowForward className={styles.buttonIconRight} />
             </AnimatedButton>
             <AnimatedButton
               to="/docs/concept/animate"
               className={styles.secondaryButton}
-              delay={700}
+              delay={500}
             >
-              📚 View Docs
+              View Docs
             </AnimatedButton>
           </div>
+
           <Community />
         </div>
       </div>
       <div className={styles.heroGradient}></div>
+      <div className={styles.heroPattern}></div>
     </animate.header>
   );
 }
