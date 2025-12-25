@@ -388,18 +388,6 @@ function Features() {
       description:
         'Full TypeScript support with excellent autocomplete and type safety.',
     },
-    {
-      icon: '🎯',
-      title: 'Zero Dependencies',
-      description:
-        'Lightweight library with no external dependencies. Bundle size optimized.',
-    },
-    {
-      icon: '🚀',
-      title: 'Beginner Friendly',
-      description:
-        'Clear documentation, examples, and a gentle learning curve for all skill levels.',
-    },
   ];
 
   return (
@@ -449,59 +437,63 @@ function FeatureCard({ feature }) {
 }
 
 function QuickStart() {
+  const [copied, setCopied] = React.useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText('npm i react-ui-animate@5.2.0');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <section className={styles.quickStart}>
       <AnimatedSection delay={0}>
         <div className={styles.quickStartContent}>
-          <h2>Get Started in Seconds</h2>
-          <p>Install the package and start animating immediately</p>
+          <h2>Ready to Get Started?</h2>
+          <p>
+            Install React UI Animate in seconds and start building beautiful
+            animations
+          </p>
           <animate.div
-            className={styles.codeBlock}
+            className={styles.installCommand}
             hover={{
               translateY: withSpring(-2),
               scale: withSpring(1.01),
             }}
           >
-            <div className={styles.codeBlockHeader}>
-              <span>Terminal</span>
+            <div className={styles.installCommandInner}>
+              <code className={styles.installCode}>
+                npm i react-ui-animate@5.2.0
+              </code>
+              <animate.button
+                onClick={handleCopy}
+                className={styles.copyInstallButton}
+                aria-label="Copy installation command"
+                hover={{
+                  scale: withSpring(1.1),
+                }}
+                press={{
+                  scale: withSpring(0.95),
+                }}
+              >
+                {copied ? (
+                  <MdCheckCircle className={styles.copyIcon} />
+                ) : (
+                  <MdContentCopy className={styles.copyIcon} />
+                )}
+              </animate.button>
             </div>
-            <pre className={styles.codeBlockContent}>
-              <code>{`npm i react-ui-animate@5.3.0-next.1`}</code>
-            </pre>
-          </animate.div>
-          <animate.div
-            className={styles.codeBlock}
-            hover={{
-              translateY: withSpring(-2),
-              scale: withSpring(1.01),
-            }}
-          >
-            <div className={styles.codeBlockHeader}>
-              <span>Example</span>
-            </div>
-            <pre className={styles.codeBlockContent}>
-              <code>{`import { animate, useValue, withSpring } from 'react-ui-animate';
-
-function App() {
-  const [scale, setScale] = useValue(1);
-  
-  return (
-    <animate.div
-      hover={{ scale: withSpring(1.1) }}
-      press={{ scale: withSpring(0.95) }}
-      style={{ scale, width: 100, height: 100, background: 'teal' }}
-      onClick={() => setScale(withSpring(scale.get() === 1 ? 1.5 : 1))}
-    />
-  );
-}`}</code>
-            </pre>
+            {copied && (
+              <span className={styles.copiedMessage}>Copied to clipboard!</span>
+            )}
           </animate.div>
           <AnimatedButton
             to="/docs/getStarted"
             className={styles.learnMoreButton}
             delay={200}
           >
-            Learn More →
+            View Documentation
+            <MdArrowForward className={styles.buttonIconRight} />
           </AnimatedButton>
         </div>
       </AnimatedSection>

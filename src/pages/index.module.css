@@ -157,12 +157,10 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
 }
 
 .badgeText {
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .badgeDot {
@@ -267,7 +265,6 @@
   font-size: 18px;
   display: inline-block;
   margin-left: 8px;
-  transition: transform 0.2s ease;
 }
 
 .primaryButton:hover .buttonIconRight {
@@ -340,7 +337,6 @@
   font-size: 15px;
   color: #ffffff;
   cursor: pointer;
-  transition: all 0.2s ease;
   border: 1px solid rgba(255, 255, 255, 0.15);
   display: inline-block;
   margin: 0 4px;
@@ -424,48 +420,67 @@
 
 .featuresHeader h2 {
   font-size: 2.75rem;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 1.25rem;
   color: var(--ifm-heading-color);
-  letter-spacing: -0.02em;
 }
 
 .featuresHeader p {
-  font-size: 1.25rem;
+  font-size: 18px;
   color: var(--ifm-color-content-secondary);
   line-height: 1.7;
+  font-weight: 400;
 }
 
 .featureList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  max-width: 1300px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
 .featureCard {
   background: var(--ifm-card-bg-color);
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid var(--ifm-color-emphasis-200);
   cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  opacity: 0;
+}
+
+.featureCard:hover::before {
+  opacity: 1;
 }
 
 .featureIcon {
-  font-size: 3.5rem;
-  margin-bottom: 1.25rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
   display: block;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+  line-height: 1;
 }
 
 .featureCard h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.875rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
   color: var(--ifm-heading-color);
+  font-family: 'Outfit', sans-serif;
 }
 
 .featureCard p {
@@ -473,16 +488,22 @@
   line-height: 1.7;
   margin: 0;
   font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
 }
 
 @media screen and (max-width: 768px) {
   .featureList {
     grid-template-columns: 1fr;
+    gap: 2rem;
     padding: 0 1rem;
   }
 
   .featuresHeader h2 {
     font-size: 2.25rem;
+  }
+
+  .featureCard {
+    padding: 2.5rem 2rem;
   }
 }
 
@@ -505,7 +526,7 @@
 }
 
 .quickStartContent {
-  max-width: 950px;
+  max-width: 750px;
   margin: 0 auto;
   text-align: center;
   padding: 0 2rem;
@@ -513,53 +534,77 @@
 
 .quickStartContent h2 {
   font-size: 2.75rem;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 1.25rem;
   color: var(--ifm-heading-color);
-  letter-spacing: -0.02em;
 }
 
 .quickStartContent > p {
-  font-size: 1.25rem;
+  font-size: 18px;
   color: var(--ifm-color-content-secondary);
   margin-bottom: 3rem;
   line-height: 1.7;
+  font-weight: 400;
 }
 
-.codeBlock {
+.installCommand {
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.installCommandInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   background: var(--ifm-code-background);
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
   border: 1px solid var(--ifm-color-emphasis-300);
-  text-align: left;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-.codeBlockHeader {
-  background: var(--ifm-color-emphasis-200);
-  padding: 10px 18px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ifm-color-content-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-
-.codeBlockContent {
-  padding: 1.75rem;
-  margin: 0;
-  overflow-x: auto;
-  background: var(--ifm-code-background);
-}
-
-.codeBlockContent code {
+.installCode {
+  flex: 1;
   font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 15px;
   color: var(--ifm-code-color);
   background: transparent;
   padding: 0;
+  margin: 0;
+  border: none;
+  overflow-x: auto;
+}
+
+.copyInstallButton {
+  background: var(--ifm-color-emphasis-200);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--ifm-color-content);
+  flex-shrink: 0;
+}
+
+.copyInstallButton:hover {
+  background: var(--ifm-color-emphasis-300);
+}
+
+.copyIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.copiedMessage {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #4ade80;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Examples Section */
@@ -571,22 +616,22 @@
 .examplesHeader {
   text-align: center;
   max-width: 750px;
-  margin: 0 auto 3.5rem;
+  margin: 0 auto 4.5rem;
   padding: 0 2rem;
 }
 
 .examplesHeader h2 {
   font-size: 2.75rem;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 1.25rem;
   color: var(--ifm-heading-color);
-  letter-spacing: -0.02em;
 }
 
 .examplesHeader p {
-  font-size: 1.25rem;
+  font-size: 18px;
   color: var(--ifm-color-content-secondary);
   line-height: 1.7;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 768px) {
