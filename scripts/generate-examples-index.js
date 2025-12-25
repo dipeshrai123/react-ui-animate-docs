@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_INPUT_DIR = path.join(__dirname, '../src/examples/raw');
+const BASE_INPUT_DIR = path.join(__dirname, '../src/examples');
 const OUTPUT_FILE = path.join(__dirname, '../src/examples/index.ts');
 
 /**

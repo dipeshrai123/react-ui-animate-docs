@@ -5,7 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "generate:examples": "node scripts/generate-examples-index.js",
-    "watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:examples\"",
+    "watch:examples": "npx chokidar 'src/examples/**/*.tsx' --initial -c \"npm run generate:examples\"",
     "start": "concurrently -k \"npm:watch:examples\" \"docusaurus start\"",
     "build": "npm run generate:examples && docusaurus build",
     "swizzle": "docusaurus swizzle",

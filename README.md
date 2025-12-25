@@ -4,13 +4,12 @@ This document explains the structure and workflow for writing, managing, and int
 
 ## 📂 Example Structure & Versioning
 
-All example files are located inside the `src/examples/raw` directory.
+All example files are located inside the `src/examples` directory.
 
 Examples are organized by version to ensure compatibility with different versions of **react-ui-animate**.
 
 ```jsx
-src/examples/raw/
-    v3.x.x ← Examples for react-ui-animate v3.x.x
+src/examples/
     v5.x.x ← Examples for react-ui-animate v5.x.x
 ```
 
@@ -24,7 +23,7 @@ We use an **industry-standard approach** for managing code examples in documenta
 
 ### How It Works
 
-1. **Example files** are stored in `src/examples/raw/` organized by version
+1. **Example files** are stored in `src/examples/` organized by version
 2. **Auto-generated index** (`src/examples/index.ts`) exports all examples as string constants
 3. **CodeExample component** reads from the index and displays examples in Sandpack
 
@@ -40,7 +39,7 @@ import CodeExample from "@site/src/components/CodeExample"
 ```
 
 The `example` key is auto-generated from the file path:
-- File: `src/examples/raw/v5.x.x/core/mount/BasicExample.tsx`
+- File: `src/examples/v5.x.x/core/mount/BasicExample.tsx`
 - Key: `v5_x_x_core_mount_BasicExample`
 
 ### Build Process
@@ -49,7 +48,7 @@ The example index is automatically generated via:
 
 ```bash
 "generate:examples": "node scripts/generate-examples-index.js",
-"watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:examples\"",
+"watch:examples": "npx chokidar 'src/examples/**/*.tsx' --initial -c \"npm run generate:examples\"",
 "start": "concurrently -k \"npm:watch:examples\" \"docusaurus start\"",
 "build": "npm run generate:examples && docusaurus build",
 ```
@@ -76,7 +75,7 @@ This means:
 
 ✅ Summary Checklist
 
-- Add example code under the correct version folder in `src/examples/raw/`.
+- Add example code under the correct version folder in `src/examples/`.
 
 - Confirm examples render correctly in docs via SandPack.
 
