@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { animate, Mount, useScroll, withSpring } from 'react-ui-animate';
+import { animate, Presence, withSpring, withTiming } from 'react-ui-animate';
 
 const Container = styled.div`
   width: 100%;
@@ -12,14 +12,21 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
 `;
 
 const Card = styled(animate.div)`
   width: 100px;
   height: 40px;
-  background-color: #0069d9;
+  background-color: #e1e1e1;
   border-radius: 8px;
-  margin-bottom: 4px;
+`;
+
+const AnimatedCard = styled(animate.div)`
+  width: 100px;
+  border-radius: 8px;
+  background-color: #0069d9;
+  overflow: hidden;
 `;
 
 export function MountUnmount() {
@@ -37,26 +44,31 @@ export function MountUnmount() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) {
+      const timeout = setTimeout(() => setOpen(true), 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [open]);
+
   return (
     <Container>
-      <Card style={{ backgroundColor: '#e1e1e1' }} />
-      <Mount
-        state={open}
-        enter={withSpring(1, { damping: 10 })}
-        exit={withSpring(0, {
-          onComplete: () => setTimeout(() => setOpen(true), 1000),
-        })}
-      >
-        {(a) => (
-          <Card
+      <Card />
+      <Presence>
+        {open && (
+          <AnimatedCard
+            exit={{
+              opacity: withTiming(0),
+              height: withSpring(0),
+            }}
             style={{
-              opacity: a,
-              height: a.to([0, 1], [0, 80]),
+              opacity: 1,
+              height: 80,
             }}
           />
         )}
-      </Mount>
-      <Card style={{ backgroundColor: '#e1e1e1' }} />
+      </Presence>
+      <Card />
     </Container>
   );
 }
