@@ -371,6 +371,153 @@ const App = () => {
 export default App;
 `;
 
+export const v5_x_x_hook_useInView_BasicExample = `import React, { useRef, useEffect } from 'react';
+import { useInView, useValue, animate, withSpring } from 'react-ui-animate';
+
+export default function App() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.3 });
+  const [opacity, setOpacity] = useValue(0);
+  const [translateY, setTranslateY] = useValue(50);
+  const [scale, setScale] = useValue(0.8);
+
+  useEffect(() => {
+    if (isInView) {
+      setOpacity(withSpring(1));
+      setTranslateY(withSpring(0));
+      setScale(withSpring(1));
+    } else {
+      setOpacity(withSpring(0));
+      setTranslateY(withSpring(50));
+      setScale(withSpring(0.8));
+    }
+  }, [isInView]);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div style={{ padding: 40, height: 800 }}>
+        <h1>Scroll down to see the animation</h1>
+        <p>The box below will animate when it enters the viewport</p>
+      </div>
+
+      <animate.div
+        ref={ref}
+        style={{
+          padding: 40,
+          background: isInView ? 'teal' : '#e1e1e1',
+          borderRadius: 8,
+          opacity,
+          translateY,
+          scale,
+          color: 'white',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          transition: 'background 0.3s',
+        }}
+      >
+        <h2>{isInView ? 'I am in view!' : 'Scroll to see me'}</h2>
+        <p>Status: {isInView ? 'Visible' : 'Not Visible'}</p>
+      </animate.div>
+
+      <div style={{ height: 800, padding: 40 }}>
+        <p>Keep scrolling...</p>
+      </div>
+    </div>
+  );
+}
+
+`;
+
+export const v5_x_x_hook_useInView_LazyLoadExample = `import React, { useRef, useEffect, useState } from 'react';
+import { useInView } from 'react-ui-animate';
+
+export default function App() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.1 });
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isInView && !imageSrc) {
+      // Simulate loading delay
+      setTimeout(() => {
+        setImageSrc('https://picsum.photos/800/400');
+      }, 500);
+    }
+  }, [isInView, imageSrc]);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div style={{ padding: 40, height: 800 }}>
+        <h1>Lazy Loading Example</h1>
+        <p>Scroll down to see the image load when it enters the viewport</p>
+      </div>
+
+      <div
+        ref={ref}
+        style={{
+          minHeight: 400,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#f0f0f0',
+          borderRadius: 8,
+          margin: 40,
+        }}
+      >
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt="Lazy loaded"
+            style={{
+              width: '100%',
+              maxWidth: 800,
+              height: 'auto',
+              borderRadius: 8,
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              padding: 40,
+              textAlign: 'center',
+              color: '#666',
+            }}
+          >
+            <div
+              style={{
+                width: 50,
+                height: 50,
+                border: '4px solid #e1e1e1',
+                borderTop: '4px solid #667eea',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                margin: '0 auto 20px',
+              }}
+            />
+            <p>Loading image...</p>
+            <p style={{ fontSize: 12, marginTop: 10 }}>
+              {isInView ? 'Image is in view, loading...' : 'Scroll to load'}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div style={{ height: 800, padding: 40 }}>
+        <p>Image loaded: {imageSrc ? 'Yes' : 'No'}</p>
+      </div>
+
+      <style>{\`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      \`}</style>
+    </div>
+  );
+}
+
+`;
+
 export const v5_x_x_hook_useOutsideClick_BasicExample = `import React, { useRef } from 'react';
 import { useOutsideClick } from 'react-ui-animate';
 
@@ -424,6 +571,125 @@ export default function App() {
     </>
   );
 }
+`;
+
+export const v5_x_x_hook_useScrollProgress_BasicExample = `import React, { useRef } from 'react';
+import { useScroll, animate } from 'react-ui-animate';
+
+export default function App() {
+  const { scrollYProgress } = useScroll(window);
+
+  return (
+    <div style={{ height: 3000 }}>
+      <h1 style={{ padding: 40 }}>Scroll down to see progress</h1>
+      
+      {/* Progress Bar */}
+      <animate.div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: scrollYProgress.to([0, 1], ['0%', '100%']),
+          height: 4,
+          background: 'linear-gradient(90deg, #667eea, #764ba2)',
+          zIndex: 1000,
+        }}
+      />
+
+      {/* Animated Box */}
+      <animate.div
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          translateX: -50,
+          translateY: -50,
+          width: 150,
+          height: 150,
+          scale: scrollYProgress.to([0, 1], [1, 1.5]),
+          opacity: scrollYProgress.to([0, 0.5, 1], [1, 0.5, 1]),
+          backgroundColor: scrollYProgress.to(
+            [0, 1],
+            ['#0069d9', '#ff5733']
+          ),
+          borderRadius: 8,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontWeight: 'bold',
+        }}
+      >
+        {Math.round(scrollYProgress.get() * 100)}%
+      </animate.div>
+
+      <div style={{ height: 2000, padding: 40 }}>
+        <p>Keep scrolling to see the progress change</p>
+      </div>
+    </div>
+  );
+}
+
+`;
+
+export const v5_x_x_hook_useScrollProgress_ElementProgress = `import React, { useRef } from 'react';
+import { useScroll, animate } from 'react-ui-animate';
+
+export default function App() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll(window, {
+    target: containerRef,
+    offset: ['start end', 'start start'],
+  });
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div style={{ padding: 40, height: 600 }}>
+        <h1>Element-Specific Progress</h1>
+        <p>Scroll to see this element animate as it enters the viewport</p>
+      </div>
+
+      <animate.div
+        ref={containerRef}
+        style={{
+          margin: 40,
+          padding: 40,
+          background: 'teal',
+          borderRadius: 8,
+          opacity: scrollYProgress.to([0, 1], [0, 1]),
+          translateY: scrollYProgress.to([0, 1], [50, 0]),
+          scale: scrollYProgress.to([0, 1], [0.9, 1]),
+          color: 'white',
+        }}
+      >
+        <h2>This element animates as you scroll</h2>
+        <p>Progress: {Math.round(scrollYProgress.get() * 100)}%</p>
+        <div
+          style={{
+            marginTop: 20,
+            height: 4,
+            background: 'rgba(255,255,255,0.3)',
+            borderRadius: 2,
+            overflow: 'hidden',
+          }}
+        >
+          <animate.div
+            style={{
+              width: scrollYProgress.to([0, 1], ['0%', '100%']),
+              height: '100%',
+              background: 'white',
+            }}
+          />
+        </div>
+      </animate.div>
+
+      <div style={{ height: 800, padding: 40 }}>
+        <p>Keep scrolling...</p>
+      </div>
+    </div>
+  );
+}
+
 `;
 
 export const v5_x_x_modifier_withDecay_BasicExample = `import React from 'react';

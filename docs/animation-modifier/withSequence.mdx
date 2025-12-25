@@ -4,30 +4,341 @@ id: withSequence
 title: withSequence
 ---
 
-The `withSequence` modifier allows you to chain multiple animations together, executing them one after another in the order they are defined. This is useful for creating complex, multi-step animations where each step needs to be completed before the next begins.
+import CodeExample from "@site/src/components/CodeExample"
 
-## Syntax
+The `withSequence` modifier chains multiple animations together, executing them one after another in order. Perfect for creating complex, multi-step animations where each step must complete before the next begins.
+
+## Why Use withSequence?
+
+Sequence animations are ideal for:
+- **Multi-step transitions** - Complex animations with multiple phases
+- **Choreographed motion** - Coordinated movements
+- **Storytelling** - Guide users through a sequence of events
+- **Complex interactions** - Combine different animation types
+
+## Basic Syntax
+
 ```jsx
-withSequence(...animations: Animation[]) => Descriptor
+withSequence(...animations, options?)
 ```
 
 ### Parameters
-- **...animations**: A series of animation descriptors ([withSpring](./withSpring), [withTiming](./withTiming), [withDecay](./withDecay), etc.) that will be executed sequentially.
 
-##  Example
+- **...animations** (required): Array of animation descriptors to execute sequentially
+- **options** (optional): Configuration object with callbacks
 
-This example shows how to chain multiple animations together using `withSequence`. It demonstrates how different types of animations— `spring`, `timing`, `delay`, and `decay`—can be stitched together into one continuous flow.
+## Simple Example
 
-import CodeExample from "@site/src/components/CodeExample"
+Chain multiple animations:
+
+```jsx
+import { useValue, withSequence, withSpring, withTiming, animate } from 'react-ui-animate';
+
+function MyComponent() {
+  const [x, setX] = useValue(0);
+
+  const animateSequence = () => {
+    setX(withSequence([
+      withSpring(100),  // Step 1: Spring to 100
+      withTiming(200, { duration: 500 }), // Step 2: Time to 200
+      withSpring(0),    // Step 3: Spring back to 0
+    ]));
+  };
+
+  return (
+    <>
+      <button onClick={animateSequence}>Animate Sequence</button>
+      <animate.div
+        style={{
+          translateX: x,
+          width: 100,
+          height: 100,
+          background: 'teal',
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Real-World Examples
+
+### Example 1: Card Reveal Animation
+
+Multi-step card entrance:
+
+```jsx
+function CardReveal() {
+  const [style, setStyle] = useValue({
+    opacity: 0,
+    scale: 0.8,
+    translateY: 50,
+  });
+
+  const reveal = () => {
+    setStyle(withSequence([
+      // Step 1: Fade and slide in
+      withTiming({ opacity: 1, translateY: 0 }, { duration: 300 }),
+      // Step 2: Scale up with bounce
+      withSpring({ scale: 1 }, { stiffness: 200 }),
+    ]));
+  };
+
+  return (
+    <>
+      <button onClick={reveal}>Reveal Card</button>
+      <animate.div
+        style={{
+          ...style,
+          width: 200,
+          height: 200,
+          background: 'white',
+          borderRadius: 8,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}
+      >
+        Card Content
+      </animate.div>
+    </>
+  );
+}
+```
+
+### Example 2: Notification Animation
+
+Slide in, pause, slide out:
+
+```jsx
+function Notification({ message, isVisible }) {
+  const [translateX, setTranslateX] = useValue(400);
+
+  useEffect(() => {
+    if (isVisible) {
+      setTranslateX(withSequence([
+        // Slide in
+        withSpring(0),
+        // Wait
+        withDelay(2000),
+        // Slide out
+        withSpring(400),
+      ]));
+    }
+  }, [isVisible]);
+
+  return (
+    <animate.div
+      style={{
+        translateX,
+        position: 'fixed',
+        top: 20,
+        right: 20,
+        background: '#333',
+        color: 'white',
+        padding: '12px 24px',
+        borderRadius: 8,
+      }}
+    >
+      {message}
+    </animate.div>
+  );
+}
+```
+
+### Example 3: Complex Multi-Property Animation
+
+Animate different properties at different times:
+
+```jsx
+function ComplexAnimation() {
+  const [style, setStyle] = useValue({
+    x: 0,
+    y: 0,
+    scale: 1,
+    rotate: 0,
+  });
+
+  const animate = () => {
+    setStyle(withSequence([
+      // Step 1: Move right and rotate
+      withSpring({ x: 100, rotate: 90 }),
+      // Step 2: Move down
+      withSpring({ y: 100 }),
+      // Step 3: Scale up
+      withTiming({ scale: 1.5 }, { duration: 300 }),
+      // Step 4: Rotate back
+      withSpring({ rotate: 0 }),
+      // Step 5: Return to start
+      withSpring({ x: 0, y: 0, scale: 1 }),
+    ]));
+  };
+
+  return (
+    <>
+      <button onClick={animate}>Animate</button>
+      <animate.div
+        style={{
+          translateX: style.x,
+          translateY: style.y,
+          scale: style.scale,
+          rotate: style.rotate,
+          width: 100,
+          height: 100,
+          background: 'teal',
+        }}
+      />
+    </>
+  );
+}
+```
 
 <CodeExample 
   example="v5_x_x_modifier_withSequence_BasicExample"
-  version={{ reactAnimate: '5.0.0' }}
+  version={{ reactAnimate: '5.3.0-next.1' }}
 />
 
-### What Happens Here:
-1. Springs to position **(100, 100)** smoothly (`withSpring`).
-2. Then resizes its **width** & **height** to **(200, 200)** with a linear timing (`withTiming`).
-3. Then it waits for **1000ms** (`withDelay`).
-4. Then moves back to the starting position **(0, 0)** over **3000ms** (`withTiming`).
-5. Finally, it applies decay animation on all properties (`withDecay`), causing them to slow down naturally based on momentum.
+## Combining Different Modifiers
+
+Mix and match different animation types in a sequence:
+
+```jsx
+setX(withSequence([
+  withSpring(50),                    // Physics-based
+  withTiming(100, { duration: 300 }), // Time-based
+  withDelay(500),                     // Pause
+  withSpring(150),                    // Physics-based again
+  withDecay(0.3),                     // Momentum
+]));
+```
+
+## Using Callbacks
+
+Track the entire sequence lifecycle:
+
+```jsx
+function SequenceWithCallbacks() {
+  const [x, setX] = useValue(0);
+
+  const animate = () => {
+    setX(withSequence([
+      withSpring(100),
+      withTiming(200, { duration: 500 }),
+      withSpring(0),
+    ], {
+      onStart: () => {
+        console.log('Sequence started');
+      },
+      onComplete: () => {
+        console.log('Sequence complete');
+      },
+    }));
+  };
+
+  return (
+    <>
+      <button onClick={animate}>Animate</button>
+      <animate.div style={{ translateX: x, width: 100, height: 100, background: 'teal' }} />
+    </>
+  );
+}
+```
+
+## Common Patterns
+
+### Pattern 1: Entrance Animation
+
+```jsx
+const [style, setStyle] = useValue({ opacity: 0, scale: 0.8, translateY: 20 });
+
+const enter = () => {
+  setStyle(withSequence([
+    withTiming({ opacity: 1, translateY: 0 }, { duration: 300 }),
+    withSpring({ scale: 1 }),
+  ]));
+};
+```
+
+### Pattern 2: Exit Animation
+
+```jsx
+const [style, setStyle] = useValue({ opacity: 1, scale: 1, translateY: 0 });
+
+const exit = () => {
+  setStyle(withSequence([
+    withSpring({ scale: 0.9 }),
+    withTiming({ opacity: 0, translateY: 20 }, { duration: 200 }),
+  ]));
+};
+```
+
+### Pattern 3: Bounce Effect
+
+```jsx
+const [scale, setScale] = useValue(1);
+
+const bounce = () => {
+  setScale(withSequence([
+    withSpring(1.2, { stiffness: 400 }),
+    withSpring(0.9, { stiffness: 300 }),
+    withSpring(1, { stiffness: 200 }),
+  ]));
+};
+```
+
+### Pattern 4: Staggered Properties
+
+```jsx
+const [style, setStyle] = useValue({ x: 0, y: 0, scale: 1 });
+
+const animate = () => {
+  setStyle(withSequence([
+    withSpring({ x: 100 }),      // Move right first
+    withSpring({ y: 100 }),      // Then move down
+    withSpring({ scale: 1.5 }),  // Then scale up
+    withSpring({ x: 0, y: 0, scale: 1 }), // Return
+  ]));
+};
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use sequences for complex, multi-step animations
+- Combine different modifier types for variety
+- Use callbacks to coordinate with other animations
+- Keep sequences reasonable in length (3-5 steps is ideal)
+
+### ❌ Don't
+
+- Don't create sequences that are too long (>10 steps) - can feel slow
+- Don't forget that each step waits for the previous to complete
+- Don't use sequences for simple animations (use single modifiers)
+- Don't mix unrelated properties in sequences unnecessarily
+
+## Performance Tips
+
+1. **Sequences are efficient** - Each animation completes before the next starts
+2. **Use appropriate modifiers** - `withSpring` for natural, `withTiming` for precise
+3. **Keep steps focused** - Each step should have a clear purpose
+4. **Consider total duration** - Long sequences can feel slow
+
+## Troubleshooting
+
+**Animation seems stuck:**
+- Check that all animations in the sequence are valid
+- Verify callbacks aren't blocking execution
+
+**Sequence feels too slow:**
+- Reduce durations in `withTiming` steps
+- Use `withSpring` for faster, natural motion
+- Remove unnecessary `withDelay` steps
+
+**Animation doesn't complete:**
+- Ensure all steps in the sequence are properly configured
+- Check for errors in callbacks
+
+## Next Steps
+
+- Learn about [withDelay](./withDelay) for adding pauses in sequences
+- Explore [withLoop](./withLoop) to repeat sequences
+- Check out [withSpring](./withSpring) and [withTiming](./withTiming) for sequence steps

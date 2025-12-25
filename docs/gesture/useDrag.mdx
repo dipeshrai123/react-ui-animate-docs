@@ -4,65 +4,458 @@ id: useDrag
 title: useDrag
 ---
 
-The `useDrag` hook allows to add drag gesture recognition to any DOM element in a React component. It handles pointer events under the hood, calculates movement, offset, velocity, and exposes a powerful callback-based API for interacting with drag state in real-time.
+import CodeExample from '@site/src/components/CodeExample';
 
-## Syntax
+The `useDrag` hook enables drag gesture recognition on any DOM element. It handles pointer events, calculates movement, offset, and velocity, providing a clean callback-based API for building draggable interfaces.
+
+## Why Use useDrag?
+
+`useDrag` simplifies drag interactions by:
+
+- **Handling all pointer events** - Mouse, touch, and pen support
+- **Calculating movement** - Automatic delta and offset tracking
+- **Providing velocity** - Perfect for momentum-based animations
+- **Cross-browser support** - Works consistently across browsers
+- **Multiple elements** - Support for dragging multiple items
+
+## Basic Syntax
+
 ```jsx
 useDrag(
   refs: RefObject<HTMLElement> | RefObject<HTMLElement>[],
   callback: (event: DragEvent) => void,
   config?: DragConfig
 ): void
-
 ```
 
 ### Parameters
-| Name   | Type | Description
-| :-----     | :----      | :----
-| Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[]`  |  Single or array of refs to DOM elements to make draggable.
-|Callback (required)|`(event:DragEvent) => void`| Called during drag and when drag ends
-|Config (required)|`DragConfig`| Optional config to customize drag behaviour
 
-### Callback Signature
-``` tsx
+- **refs** (required): Single ref or array of refs to make draggable
+- **callback** (required): Function called during drag with event data
+- **config** (optional): Configuration object for customizing drag behavior
+
+## Simple Example
+
+The simplest drag interaction:
+
+```jsx
+import { useRef } from 'react';
+import { useDrag, useValue, withSpring, animate } from 'react-ui-animate';
+
+function DraggableBox() {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [y, setY] = useValue(0);
+
+  useDrag(ref, ({ down, movement }) => {
+    if (down) {
+      setX(movement.x);
+      setY(movement.y);
+    } else {
+      // Spring back to center when released
+      setX(withSpring(0));
+      setY(withSpring(0));
+    }
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        translateX: x,
+        translateY: y,
+        width: 100,
+        height: 100,
+        background: 'teal',
+        cursor: 'grab',
+      }}
+    />
+  );
+}
+```
+
+<CodeExample
+  example="v5_x_x_gesture_useDrag_BasicSetup"
+  version={{ reactAnimate: '5.3.0-next.1' }}
+/>
+
+## Drag Event Data
+
+The callback receives a `DragEvent` object with rich information:
+
+```tsx
 type DragEvent = {
-  index: number;
-  down: boolean;                         // True when dragging
-  movement: { x: number; y: number };    // Delta from start of drag
-  offset: { x: number; y: number };      // Total offset (absolute)
-  velocity: { x: number; y: number };    // Velocity in px/ms
-  event: PointerEvent;                   // Native pointer event
-  cancel: () => void;                    // Cancel pointer capture
+  index: number; // Index of the element being dragged (for arrays)
+  down: boolean; // True when actively dragging
+  movement: { x: number; y: number }; // Delta from drag start
+  offset: { x: number; y: number }; // Absolute offset from element's position
+  velocity: { x: number; y: number }; // Velocity in pixels per millisecond
+  event: PointerEvent; // Native pointer event
+  cancel: () => void; // Cancel pointer capture
 };
 ```
-### DragConfig Options
-``` tsx
+
+## Real-World Examples
+
+### Example 1: Draggable Card with Snap Back
+
+Card that can be dragged and springs back when released:
+
+```jsx
+function DraggableCard() {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [y, setY] = useValue(0);
+
+  useDrag(ref, ({ down, movement }) => {
+    if (down) {
+      setX(movement.x);
+      setY(movement.y);
+    } else {
+      // Spring back to original position
+      setX(withSpring(0));
+      setY(withSpring(0));
+    }
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        translateX: x,
+        translateY: y,
+        width: 200,
+        height: 200,
+        background: 'white',
+        borderRadius: 8,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        cursor: 'grab',
+      }}
+    >
+      <h3>Drag me</h3>
+      <p>Release to snap back</p>
+    </animate.div>
+  );
+}
+```
+
+### Example 2: Horizontal Slider
+
+Drag to scroll horizontally:
+
+```jsx
+function HorizontalSlider({ children }) {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [startX, setStartX] = useState(0);
+
+  useDrag(ref, ({ down, movement }) => {
+    if (down) {
+      setX(startX + movement.x);
+    } else {
+      setStartX(x);
+    }
+  });
+
+  return (
+    <div style={{ overflow: 'hidden', width: '100%' }}>
+      <animate.div
+        ref={ref}
+        style={{
+          translateX: x,
+          display: 'flex',
+          gap: 20,
+          cursor: 'grab',
+        }}
+      >
+        {children}
+      </animate.div>
+    </div>
+  );
+}
+```
+
+### Example 3: Drag to Dismiss
+
+Swipe a card away to dismiss it:
+
+```jsx
+function DismissibleCard({ onDismiss }) {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [opacity, setOpacity] = useValue(1);
+
+  useDrag(ref, ({ down, movement, velocity }) => {
+    if (down) {
+      setX(movement.x);
+      // Fade out as it moves
+      setOpacity(1 - Math.abs(movement.x) / 300);
+    } else {
+      // If dragged far enough or fast enough, dismiss
+      if (Math.abs(movement.x) > 200 || Math.abs(velocity.x) > 0.5) {
+        onDismiss();
+      } else {
+        // Otherwise, snap back
+        setX(withSpring(0));
+        setOpacity(withSpring(1));
+      }
+    }
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        translateX: x,
+        opacity,
+        width: 300,
+        height: 200,
+        background: 'white',
+        borderRadius: 8,
+        cursor: 'grab',
+      }}
+    >
+      Swipe to dismiss
+    </animate.div>
+  );
+}
+```
+
+### Example 4: Multiple Draggable Items
+
+Drag multiple items independently:
+
+```jsx
+function DraggableList({ items }) {
+  const refs = useRef(items.map(() => createRef()));
+  const [positions, setPositions] = useValue(items.map(() => 0));
+
+  useDrag(refs.current, ({ down, movement, index }) => {
+    if (down) {
+      const newPositions = [...positions];
+      newPositions[index] = movement.x;
+      setPositions(newPositions);
+    } else {
+      // Spring back to original position
+      setPositions(withSpring(items.map(() => 0)));
+    }
+  });
+
+  return (
+    <div>
+      {items.map((item, i) => (
+        <animate.div
+          key={item.id}
+          ref={refs.current[i]}
+          style={{
+            translateX: positions[i],
+            padding: 20,
+            marginBottom: 10,
+            background: 'white',
+            borderRadius: 8,
+            cursor: 'grab',
+          }}
+        >
+          {item.name}
+        </animate.div>
+      ))}
+    </div>
+  );
+}
+```
+
+<CodeExample
+  example="v5_x_x_gesture_useDrag_MultipleElements"
+  version={{ reactAnimate: '5.3.0-next.1' }}
+/>
+
+## Configuration Options
+
+Customize drag behavior with the `config` parameter:
+
+```tsx
 type DragConfig = {
-  threshold?: number;                  // Min distance before triggering drag
-  axis?: 'x' | 'y';                    // Lock movement to single axis
+  threshold?: number; // Minimum distance (px) before drag starts
+  axis?: 'x' | 'y'; // Lock movement to single axis
   initial?: () => { x: number; y: number }; // Custom initial offset
 };
 ```
 
-## Examples
-import CodeExample from "@site/src/components/CodeExample"
+### Example: Horizontal-Only Drag
 
+```jsx
+useDrag(
+  ref,
+  ({ down, movement }) => {
+    // Only x movement is tracked
+    if (down) {
+      setX(movement.x);
+    } else {
+      setX(withSpring(0));
+    }
+  },
+  {
+    axis: 'x', // Lock to horizontal movement
+  }
+);
+```
 
-### 1. Basic Dragging of a Single Box
-This example demonstrates dragging a single element along both axes.\
-The element resets to its original position when the drag ends.
+### Example: Drag with Threshold
 
-<CodeExample 
-  example="v5_x_x_gesture_useDrag_BasicSetup"
-  version={{ reactAnimate: '5.0.0' }}
-/>
+```jsx
+useDrag(
+  ref,
+  ({ down, movement }) => {
+    // Drag only starts after 10px movement
+    if (down && (Math.abs(movement.x) > 10 || Math.abs(movement.y) > 10)) {
+      setX(movement.x);
+      setY(movement.y);
+    }
+  },
+  {
+    threshold: 10, // 10px threshold
+  }
+);
+```
 
-### 2. Dragging Multiple Boxes Independently
-Here, multiple boxes are draggable independently on the X-axis.\
-Each box remembers its drag position while dragging, and springs back to its original position when released.
+## Using Velocity for Momentum
 
+Velocity is perfect for creating momentum-based animations:
 
-<CodeExample 
-  example="v5_x_x_gesture_useDrag_MultipleElements"
-  version={{ reactAnimate: '5.0.0' }}
-/>
+```jsx
+function MomentumDrag() {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [velocity, setVelocity] = useValue(0);
+
+  useDrag(ref, ({ down, movement, velocity: dragVelocity }) => {
+    if (down) {
+      setX(movement.x);
+      setVelocity(dragVelocity.x);
+    } else {
+      // Continue with momentum
+      if (Math.abs(velocity) > 0.1) {
+        setX(withDecay(velocity * 0.1));
+      } else {
+        setX(withSpring(0));
+      }
+    }
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        translateX: x,
+        width: 100,
+        height: 100,
+        background: 'teal',
+        cursor: 'grab',
+      }}
+    />
+  );
+}
+```
+
+## Common Patterns
+
+### Pattern 1: Drag with Boundaries
+
+```jsx
+useDrag(ref, ({ down, movement }) => {
+  if (down) {
+    // Constrain to boundaries
+    const constrainedX = Math.max(-100, Math.min(100, movement.x));
+    const constrainedY = Math.max(-100, Math.min(100, movement.y));
+    setX(constrainedX);
+    setY(constrainedY);
+  } else {
+    setX(withSpring(0));
+    setY(withSpring(0));
+  }
+});
+```
+
+### Pattern 2: Drag with Rotation
+
+```jsx
+useDrag(ref, ({ down, movement }) => {
+  if (down) {
+    setX(movement.x);
+    setY(movement.y);
+    // Rotate based on horizontal movement
+    setRotation(movement.x * 0.1);
+  } else {
+    setX(withSpring(0));
+    setY(withSpring(0));
+    setRotation(withSpring(0));
+  }
+});
+```
+
+### Pattern 3: Drag to Scale
+
+```jsx
+useDrag(ref, ({ down, movement }) => {
+  if (down) {
+    setX(movement.x);
+    setY(movement.y);
+    // Scale up while dragging
+    setScale(1.1);
+  } else {
+    setX(withSpring(0));
+    setY(withSpring(0));
+    setScale(withSpring(1));
+  }
+});
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Always handle both `down` and release states
+- Use `withSpring` for natural release animations
+- Provide visual feedback (cursor: 'grab' when not dragging, 'grabbing' when dragging)
+- Use transforms (`translateX`, `translateY`) instead of layout properties
+- Consider using velocity for momentum-based interactions
+
+### ❌ Don't
+
+- Don't forget to handle the release state (users expect feedback)
+- Don't use layout properties (`left`, `top`) - causes reflows
+- Don't make drag too sensitive - use thresholds when needed
+- Don't forget accessibility - provide keyboard alternatives when possible
+
+## Performance Tips
+
+1. **Use transforms** - `translateX`, `translateY` are GPU-accelerated
+2. **Batch updates** - Update multiple values together when possible
+3. **Use refs correctly** - Pass stable refs, not inline refs
+4. **Debounce expensive operations** - If doing heavy calculations in callbacks
+
+## Troubleshooting
+
+**Drag doesn't work:**
+
+- Make sure the ref is attached to the element
+- Check that the element is visible and not covered by another element
+- Verify the callback is being called (add console.log)
+
+**Drag feels laggy:**
+
+- Use transforms instead of layout properties
+- Check for other heavy operations in your component
+- Ensure you're not causing unnecessary re-renders
+
+**Multiple drags don't work:**
+
+- Make sure you're passing an array of refs
+- Verify each ref is unique and stable
+- Check the `index` in the callback to identify which element
+
+## Next Steps
+
+- Learn about [useMove](./useMove) for pointer tracking without dragging
+- Explore [useScroll](./useScroll) for scroll-based interactions
+- Check out [withDecay](../animation-modifier/withDecay) for momentum animations
