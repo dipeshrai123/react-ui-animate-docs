@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "generate:strings": "node scripts/generate-code-strings.js",
-    "watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:strings\"",
+    "generate:examples": "node scripts/generate-examples-index.js",
+    "watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:examples\"",
     "start": "concurrently -k \"npm:watch:examples\" \"docusaurus start\"",
-    "build": "npm run generate:strings && docusaurus build",
+    "build": "npm run generate:examples && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

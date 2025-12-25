@@ -30,32 +30,24 @@ The `<Mount>` component provides a declarative, animated mounting and unmounting
 |exit|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on unmount. Defaults to 0 for single animations.
 
 ## Examples
-import BasicExample from "@site/src/examples/strings/v5.x.x/core/mount/BasicExample"
-import MultiValuedExample from "@site/src/examples/strings/v5.x.x/core/mount/MultiValuedExample"
 
-import SandPack from "@site/src/components/SandPack"
+
 
 ### 1. Basic Mounting with Fade Animation
 In this example, a simple square box smoothly fades in and out based on a toggle state.\
 The `<Mount>` component handles the mounting and unmounting animation automatically by animating the opacity value from **0 to 1 on mount**, and back to **0 on unmount**.\
 When the button is clicked, the component toggles between showing and hiding the box, triggering the fade animation seamlessly.
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
+<CodeExample 
+  example="v5_x_x_core_mount_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ### 2. Complex Mounting with Sequential Animations
 This example demonstrates a more advanced usage of `<Mount>` with multiple animated properties and sequential animations.
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": MultiValuedExample
-}}
+<CodeExample 
+  example="v5_x_x_core_mount_MultiValuedExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 #### How It Works:

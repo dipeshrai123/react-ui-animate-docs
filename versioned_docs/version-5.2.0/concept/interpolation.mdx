@@ -3,6 +3,8 @@ sidebar_position: 2
 id: interpolation
 title: Interpolation
 ---
+import CodeExample from "@site/src/components/CodeExample"
+
 Interpolation is the process of mapping one range of values to another.\
 In animation, it’s commonly used to convert a normalized value (like 0 to 1) into a target range (like 0 to 100).
 
@@ -16,15 +18,11 @@ This technique is essential for scaling, translating, opacity transitions, and m
 
 ### Extending the useValue
 
-import BasicExample from "@site/src/examples/strings/v5.x.x/core/interpolation/BasicExample"
-import SandPack from "@site/src/components/SandPack"
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
+
+<CodeExample 
+  example="v5_x_x_core_interpolation_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ## Parameters

@@ -3,6 +3,7 @@ sidebar_position: 7
 id: withLoop
 title: withLoop
 ---
+import CodeExample from "@site/src/components/CodeExample"
 
 
 The `withLoop` modifier allows you to repeat (loop) an animation a specified number of times or indefinitely. You wrap an existing animation descriptor with withLoop, and it will restart automatically based on the configured options.
@@ -28,16 +29,12 @@ withLoop(animation,iterations?, options?) => Descriptor
 ##  Example
 This example demonstrates how to repeat a sequence of animations multiple times using the powerful `withLoop` utility. This is exactly what you need when you want looping behaviors, like **bouncing**, **oscillating**, or **infinite motion**.
 
-import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withLoop/BasicExample"
 
-import SandPack from "@site/src/components/SandPack"
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
+
+<CodeExample 
+  example="v5_x_x_modifier_withLoop_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ### What’s Happening Here:

@@ -20,28 +20,45 @@ src/examples/raw/
 
 ## ⚙️ Example Integration in Documentation
 
-We do **not** import example files directly in the documentation. This is because we only have the **latest version** of `react-ui-animate` installed in `package.json`. Direct imports from older versions would cause build failures.
+We use an **industry-standard approach** for managing code examples in documentation. Example files are automatically indexed and can be used directly in MDX files via the `CodeExample` component.
 
-### Solution: Auto-Generate Stringified Examples
+### How It Works
 
-We convert example files into **stringified** code snippets for safe usage in docs. This process is fully automated via the following commands:
+1. **Example files** are stored in `src/examples/raw/` organized by version
+2. **Auto-generated index** (`src/examples/index.ts`) exports all examples as string constants
+3. **CodeExample component** reads from the index and displays examples in Sandpack
 
-```bash
-"generate:strings": "node scripts/generate-code-strings.js",
-"watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:strings\"",
-"start": "concurrently -k \"npm:watch:examples\" \"docusaurus start\"",
-"build": "npm run generate:strings && docusaurus build",
+### Usage in MDX Files
+
+```jsx
+import CodeExample from "@site/src/components/CodeExample"
+
+<CodeExample 
+  example="v5_x_x_core_mount_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
+/>
 ```
 
-✅ Explanation:
+The `example` key is auto-generated from the file path:
+- File: `src/examples/raw/v5.x.x/core/mount/BasicExample.tsx`
+- Key: `v5_x_x_core_mount_BasicExample`
 
-`generate:strings`: Converts examples from `src/examples/raw` into strings in `src/examples/strings`.
+### Build Process
 
-`watch:examples`: Watches for changes in raw examples and regenerates strings automatically during development.
+The example index is automatically generated via:
 
-`start`: Runs both the watcher and Docusaurus dev server concurrently.
+```bash
+"generate:examples": "node scripts/generate-examples-index.js",
+"watch:examples": "npx chokidar 'src/examples/raw/**/*.tsx' --initial -c \"npm run generate:examples\"",
+"start": "concurrently -k \"npm:watch:examples\" \"docusaurus start\"",
+"build": "npm run generate:examples && docusaurus build",
+```
 
-`build`: Ensures code strings are generated before the production build.
+✅ **Benefits:**
+- Clean, maintainable code structure
+- No manual string conversion needed
+- Type-safe example references
+- Automatic regeneration on file changes
 
 ---
 

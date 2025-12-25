@@ -3,6 +3,7 @@ sidebar_position: 5
 id: withSequence
 title: withSequence
 ---
+import CodeExample from "@site/src/components/CodeExample"
 
 The `withSequence` modifier allows you to chain multiple animations together, executing them one after another in the order they are defined. This is useful for creating complex, multi-step animations where each step needs to be completed before the next begins.
 
@@ -18,16 +19,12 @@ withSequence(...animations: Animation[]) => Descriptor
 
 This example shows how to chain multiple animations together using `withSequence`. It demonstrates how different types of animations— `spring`, `timing`, `delay`, and `decay`—can be stitched together into one continuous flow.
 
-import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withSequence/BasicExample"
 
-import SandPack from "@site/src/components/SandPack"
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
+
+<CodeExample 
+  example="v5_x_x_modifier_withSequence_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ### What Happens Here:

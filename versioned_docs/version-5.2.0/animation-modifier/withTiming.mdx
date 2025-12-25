@@ -3,6 +3,7 @@ sidebar_position: 3
 id: withTiming
 title: withTiming
 ---
+import CodeExample from "@site/src/components/CodeExample"
 
 The `withTiming` modifier animates a value linearly or with a specified easing function to a given target over a fixed duration. It's ideal for simple, predictable transitions like fades or scales, where precise control over the animation's timing is crucial.
 
@@ -26,16 +27,12 @@ withTiming(toValue, options?) => Descriptor
 ## Example: Animate with withTiming
 This example demonstrates how to animate multiple values using `useValue` with timing-based animation via `withTiming`.
 
-import BasicExample from "@site/src/examples/strings/v5.x.x/modifier/withTiming/BasicExample"
 
-import SandPack from "@site/src/components/SandPack"
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicExample
-}}
+
+<CodeExample 
+  example="v5_x_x_modifier_withTiming_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ### Key Highlights:

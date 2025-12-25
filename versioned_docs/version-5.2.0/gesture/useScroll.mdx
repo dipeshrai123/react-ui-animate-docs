@@ -3,6 +3,7 @@ sidebar_position: 4
 id: useScroll
 title: useScroll
 ---
+import CodeExample from "@site/src/components/CodeExample"
 
 The `useScroll` hook captures scroll activity on any DOM element or the window. It reports how far you scrolled, how fast, and gives access to the native scroll event.
 
@@ -35,13 +36,9 @@ type ScrollEvent = {
 ## Example: Track Scroll Position Using `useScroll`
 This example demonstrates how to use the `useScroll` hook to track the scroll position of the window in real-time.
 
-import BasicSetup from "@site/src/examples/strings/v5.x.x/gesture/useScroll/BasicSetup"
-import SandPack from "@site/src/components/SandPack"
 
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": BasicSetup
-}}
+
+<CodeExample 
+  example="v5_x_x_gesture_useScroll_BasicSetup"
+  version={{ reactAnimate: '5.0.0' }}
 />

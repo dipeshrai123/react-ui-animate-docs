@@ -13,18 +13,11 @@ This hook returns a tuple: `[value, setValue]`.
 
 The primary use case for `useValue()` is to animate properties. For instance, to animate an element's width:
 
-import PrimitveExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/GetStartedExample"
-import ArrayExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ArrayExample"
-import ObjectExample from "@site/src/examples/strings/v5.x.x/modifier/withSpring/ObjectExample"
+import CodeExample from "@site/src/components/CodeExample"
 
-import SandPack from "@site/src/components/SandPack"
-
-<SandPack version={{
-   reactAnimate: '5.0.0'
-}}
-files={{
-  "App.tsx": PrimitveExample
-}}
+<CodeExample 
+  example="v5_x_x_modifier_withSpring_GetStartedExample"
+  version={{ reactAnimate: '5.0.0' }}
 />
 
 ### 
@@ -44,12 +37,9 @@ const [value, setValue] = useValue(initialValue: number | string);
 ```
 <details>
   <summary>View example</summary>
-  <SandPack version={{
-    reactAnimate: '5.0.0'
-  }}
-  files={{
-    "App.tsx": PrimitveExample
-  }}
+  <CodeExample 
+    example="v5_x_x_modifier_withSpring_GetStartedExample"
+    version={{ reactAnimate: '5.0.0' }}
   />
 </details>
 
@@ -61,12 +51,9 @@ const [arr, setArr] = useValue(initialArray: number[]);
 ```
 <details>
   <summary>View example</summary>
-  <SandPack version={{
-    reactAnimate: '5.0.0'
-  }}
-  files={{
-    "App.tsx": ArrayExample
-  }}
+  <CodeExample 
+    example="v5_x_x_modifier_withSpring_ArrayExample"
+    version={{ reactAnimate: '5.0.0' }}
   />
 </details>
 
@@ -78,11 +65,8 @@ const [obj, setObj] = useValue(initialObject: { [key: string]: number | string }
 ```
 <details>
   <summary>View example</summary>
-   <SandPack version={{
-    reactAnimate: '5.0.0'
-  }}
-  files={{
-    "App.tsx": ObjectExample
-  }}
+  <CodeExample 
+    example="v5_x_x_modifier_withSpring_ObjectExample"
+    version={{ reactAnimate: '5.0.0' }}
   />
 </details>
