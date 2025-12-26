@@ -1,22 +1,33 @@
 import React from 'react';
-import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
+import { animate, useValue, withSpring } from 'react-ui-animate';
+import './styles.css';
 
 export default function App() {
   const [width, setWidth] = useValue(100);
 
   return (
-    <>
-      <button onClick={() => setWidth(withSpring(200))}>Animate</button>
-      <button onClick={() => setWidth(withTiming(100))}>Reset</button>
+    <div className="container">
+      <button
+        className="button buttonPrimary"
+        onClick={() => setWidth(withSpring(200))}
+      >
+        Expand
+      </button>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setWidth(withSpring(100))}
+      >
+        Reset
+      </button>
       <animate.div
         style={{
           width,
-          marginTop: 10,
           height: 100,
           backgroundColor: 'teal',
-          borderRadius: 4,
+          borderRadius: '8px',
+          margin: '20px auto 0',
         }}
       />
-    </>
+    </div>
   );
 }

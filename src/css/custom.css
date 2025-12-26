@@ -575,6 +575,7 @@ code .token.operator,
 /* Custom Tabs - Modern Enhanced Design with Rounded Tabs */
 .sandpack-custom-tabs {
   display: flex;
+  justify-content: flex-end;
   background: #f8f9fa;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 0;

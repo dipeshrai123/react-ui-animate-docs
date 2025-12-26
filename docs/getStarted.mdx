@@ -142,7 +142,7 @@ We've organized the documentation to guide you from basics to advanced:
 
 ## Your First Animation
 
-Let's build a complete, interactive example:
+Let's build a simple, interactive example:
 
 import CodeExample from '@site/src/components/CodeExample';
 
@@ -153,8 +153,15 @@ import CodeExample from '@site/src/components/CodeExample';
 
 **Try it yourself:**
 
-- Click "Animate" to see a smooth spring animation
-- Click "Reset" to see a timing-based transition back
+- Click "Expand" to see the box grow wider with a smooth spring animation
+- Click "Reset" to see it smoothly return to its original size
+
+**What's happening:**
+
+1. We use `useValue` to create an animated value starting at `100`
+2. The `animate.div` component uses this value for its `width` style
+3. When you click the button, `setWidth(withSpring(200))` animates the width to `200`
+4. The `withSpring` modifier creates a natural, bouncy animation
 
 ## Next Steps
 

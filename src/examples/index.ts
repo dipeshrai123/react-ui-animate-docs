@@ -4,25 +4,31 @@
 
 export const v5_x_x_core_interpolation_BasicExample = `import React from 'react';
 import { useValue, animate, withSpring } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function App() {
   const [x, setX] = useValue(0);
 
   return (
-    <>
-      <button onClick={() => setX(withSpring(200))}>Animate</button>
+    <div className="container">
+      <button
+        className="button buttonPrimary"
+        onClick={() => setX(withSpring(200))}
+      >
+        Animate
+      </button>
 
       <animate.div
         style={{
-          marginTop: 10,
+          marginTop: 20,
           width: 100,
           height: 100,
           background: x.to([0, 200], ['teal', 'red']),
           translateX: x,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
 `;
@@ -694,13 +700,15 @@ export default function App() {
 
 export const v5_x_x_modifier_withDecay_BasicExample = `import React from 'react';
 import { useValue, animate, withDecay } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withDecay(0.3, {
@@ -712,7 +720,10 @@ export default function BasicExample() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -721,14 +732,13 @@ export default function BasicExample() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
 `;
@@ -744,13 +754,15 @@ import {
   withDecay,
   withLoop,
 } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withLoop(
@@ -775,7 +787,10 @@ export default function BasicExample() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -784,14 +799,13 @@ export default function BasicExample() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
 `;
@@ -806,13 +820,15 @@ import {
   withDelay,
   withDecay,
 } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withSequence(
@@ -837,7 +853,10 @@ export default function BasicExample() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -846,83 +865,104 @@ export default function BasicExample() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
 `;
 
 export const v5_x_x_modifier_withSpring_ArrayExample = `import React from 'react';
 import { useValue, withSpring, animate } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function App() {
   const [values, setValues] = useValue([0, 0, 0]);
 
   return (
-    <>
-      <button onClick={() => setValues(withSpring([10, 100, 200]))}>
+    <div className="container">
+      <button
+        className="button buttonPrimary"
+        onClick={() => setValues(withSpring([10, 100, 200]))}
+      >
         Start
       </button>
-      <button onClick={() => setValues([0, 0, 0])}>Reset</button>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setValues([0, 0, 0])}
+      >
+        Reset
+      </button>
 
-      {values.map((value, index) => (
-        <animate.div
-          key={index}
-          style={{
-            width: 100,
-            height: 100,
-            backgroundColor: 'teal',
-            left: 0,
-            top: 0,
-            translateX: value,
-            borderRadius: 4,
-          }}
-        />
-      ))}
-    </>
+      <div style={{ marginTop: 20, display: 'flex', gap: 10, justifyContent: 'center' }}>
+        {values.map((value, index) => (
+          <animate.div
+            key={index}
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: 'teal',
+              translateX: value,
+              borderRadius: 8,
+            }}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 `;
 
 export const v5_x_x_modifier_withSpring_GetStartedExample = `import React from 'react';
-import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
+import { animate, useValue, withSpring } from 'react-ui-animate';
+import './styles.css';
 
 export default function App() {
   const [width, setWidth] = useValue(100);
 
   return (
-    <>
-      <button onClick={() => setWidth(withSpring(200))}>Animate</button>
-      <button onClick={() => setWidth(withTiming(100))}>Reset</button>
+    <div className="container">
+      <button
+        className="button buttonPrimary"
+        onClick={() => setWidth(withSpring(200))}
+      >
+        Expand
+      </button>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setWidth(withSpring(100))}
+      >
+        Reset
+      </button>
       <animate.div
         style={{
           width,
-          marginTop: 10,
           height: 100,
           backgroundColor: 'teal',
-          borderRadius: 4,
+          borderRadius: '8px',
+          margin: '20px auto 0',
         }}
       />
-    </>
+    </div>
   );
 }
 `;
 
 export const v5_x_x_modifier_withSpring_ObjectExample = `import React from 'react';
 import { useValue, withSpring, animate } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function App() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withSpring(
@@ -937,7 +977,10 @@ export default function App() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -946,46 +989,61 @@ export default function App() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
 `;
 
 export const v5_x_x_modifier_withSpring_PrimitiveExample = `import React from 'react';
 import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
+import '../../styles.css';
 
 const App: React.FC = () => {
   const [bg, setBg] = useValue('teal');
 
   return (
-    <>
-      <button onClick={() => setBg(withSpring('blue'))}>Spring to Blue</button>
-      <button onClick={() => setBg(withSpring('purple'))}>
+    <div className="container">
+      <button
+        className="button buttonPrimary"
+        onClick={() => setBg(withSpring('blue'))}
+      >
+        Spring to Blue
+      </button>
+      <button
+        className="button buttonPrimary"
+        onClick={() => setBg(withSpring('purple'))}
+      >
         Spring to Purple
       </button>
-      <button onClick={() => setBg(withTiming('red', { duration: 2000 }))}>
+      <button
+        className="button buttonPrimary"
+        onClick={() => setBg(withTiming('red', { duration: 2000 }))}
+      >
         Timing Red
       </button>
-      <button onClick={() => setBg('teal')}>Immediate to Teal</button>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setBg('teal')}
+      >
+        Immediate to Teal
+      </button>
 
       <animate.div
         style={{
           width: 100,
           height: 100,
           backgroundColor: bg,
-          left: 0,
-          top: 0,
-          borderRadius: 4,
+          margin: '20px auto 0',
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 };
 
@@ -994,13 +1052,15 @@ export default App;
 
 export const v5_x_x_modifier_withTiming_BasicExample = `import React from 'react';
 import { useValue, animate, withTiming } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withTiming(
@@ -1016,7 +1076,10 @@ export default function BasicExample() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -1025,14 +1088,88 @@ export default function BasicExample() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }
+`;
+
+
+export const sharedStyles = `/* Shared styles for all examples */
+
+.container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.button {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.buttonPrimary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.buttonPrimary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+}
+
+.buttonSecondary {
+  background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+}
+
+.buttonSecondary:hover {
+  background: linear-gradient(135deg, #545b62 0%, #3d4146 100%);
+}
+
 `;

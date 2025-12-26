@@ -9,13 +9,15 @@ import {
   withDecay,
   withLoop,
 } from 'react-ui-animate';
+import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });
 
   return (
-    <>
+    <div className="container">
       <button
+        className="button buttonPrimary"
         onClick={() =>
           setObj(
             withLoop(
@@ -40,7 +42,10 @@ export default function BasicExample() {
       >
         Start
       </button>
-      <button onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}>
+      <button
+        className="button buttonSecondary"
+        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
+      >
         Reset
       </button>
 
@@ -49,13 +54,12 @@ export default function BasicExample() {
           width: obj.width,
           height: 100,
           backgroundColor: 'teal',
-          left: 0,
-          top: 0,
+          margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,
-          borderRadius: 4,
+          borderRadius: 8,
         }}
       />
-    </>
+    </div>
   );
 }

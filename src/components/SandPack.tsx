@@ -9,7 +9,7 @@ interface ISandPack {
   };
 }
 
-type TabType = 'preview' | 'js' | 'ts';
+type TabType = 'preview' | 'js' | 'ts' | 'css';
 
 export default function SandPack({
   files,
@@ -18,19 +18,21 @@ export default function SandPack({
   const { colorMode } = useColorMode();
   const [activeTab, setActiveTab] = useState<TabType>('preview');
 
-  // Find JS and TS files
+  // Find JS, TS, and CSS files
   const jsFile = Object.keys(files).find(
     (f) => f.endsWith('.js') || f.endsWith('.jsx')
   );
   const tsFile = Object.keys(files).find(
     (f) => f.endsWith('.ts') || f.endsWith('.tsx')
   );
+  const cssFile = Object.keys(files).find((f) => f.endsWith('.css'));
   const defaultFile = tsFile || jsFile || Object.keys(files)[0];
 
   // Determine which file to show based on active tab
   const getActiveFile = (): string | undefined => {
     if (activeTab === 'js' && jsFile) return jsFile;
     if (activeTab === 'ts' && tsFile) return tsFile;
+    if (activeTab === 'css' && cssFile) return cssFile;
     if (activeTab === 'preview') return undefined; // Show preview only
     // Fallback: if no specific file found, use default
     return defaultFile;
@@ -98,6 +100,14 @@ export default function SandPack({
             onClick={() => setActiveTab('ts')}
           >
             TS
+          </button>
+        )}
+        {cssFile && (
+          <button
+            className={`sandpack-tab ${activeTab === 'css' ? 'active' : ''}`}
+            onClick={() => setActiveTab('css')}
+          >
+            CSS
           </button>
         )}
       </div>
