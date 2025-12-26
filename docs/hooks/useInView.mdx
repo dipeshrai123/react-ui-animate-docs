@@ -1,0 +1,448 @@
+---
+sidebar_position: 3
+id: useInView
+title: useInView
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+
+The `useInView` hook detects when an element enters or leaves the viewport using the Intersection Observer API. It's perfect for scroll-triggered animations, lazy loading, analytics tracking, and performance optimizations.
+
+## Why Use useInView?
+
+`useInView` simplifies viewport detection by:
+
+- **Intersection Observer** - Uses native browser API for efficient detection
+- **Automatic tracking** - Monitors element visibility automatically
+- **Configurable thresholds** - Control when the callback fires
+- **Multiple elements** - Track multiple elements with a single hook
+- **Performance optimized** - Only fires when visibility changes
+
+## Basic Syntax
+
+```jsx
+const isInView = useInView(
+  ref: RefObject<HTMLElement>,
+  options?: InViewOptions
+): boolean
+```
+
+### Parameters
+
+- **ref** (required): React ref to the element to observe
+- **options** (optional): Configuration object for Intersection Observer
+
+### Return Value
+
+Returns a boolean indicating whether the element is currently in the viewport.
+
+### Options
+
+```tsx
+type InViewOptions = {
+  threshold?: number | number[]; // Visibility threshold (0-1)
+  root?: Element | null; // Root element for intersection
+  rootMargin?: string; // Margin around root (e.g., '100px')
+  once?: boolean; // Only trigger once when entering viewport
+};
+```
+
+## Simple Example
+
+Detect when an element enters the viewport:
+
+```jsx
+import { useInView } from 'react-ui-animate';
+import { useRef } from 'react';
+
+function ScrollReveal() {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div
+        ref={ref}
+        style={{
+          marginTop: 800,
+          padding: 40,
+          background: isInView ? 'teal' : 'gray',
+          borderRadius: 8,
+        }}
+      >
+        {isInView ? 'I am in view!' : 'Scroll to see me'}
+      </div>
+    </div>
+  );
+}
+```
+
+<CodeExample
+  example="v5_x_x_hook_useInView_BasicExample"
+  version={{ reactAnimate: '5.3.0-next.1' }}
+/>
+
+## Understanding Threshold
+
+The `threshold` option controls when the element is considered "in view":
+
+- **0** (default) - Element is in view when any part is visible
+- **0.5** - Element is in view when 50% is visible
+- **1** - Element is in view when 100% is visible
+- **[0, 0.5, 1]** - Callback fires at multiple thresholds
+
+## Real-World Examples
+
+### Example 1: Scroll-Triggered Animation
+
+Animate element when it enters viewport:
+
+```jsx
+import { useInView, useValue, animate, withSpring } from 'react-ui-animate';
+
+function AnimatedCard() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.3 });
+  const [opacity, setOpacity] = useValue(0);
+  const [translateY, setTranslateY] = useValue(50);
+
+  useEffect(() => {
+    if (isInView) {
+      setOpacity(withSpring(1));
+      setTranslateY(withSpring(0));
+    }
+  }, [isInView]);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <animate.div
+        ref={ref}
+        style={{
+          marginTop: 800,
+          padding: 40,
+          background: 'teal',
+          borderRadius: 8,
+          opacity,
+          translateY,
+        }}
+      >
+        <h2>Scroll to reveal</h2>
+        <p>I animate when I enter the viewport</p>
+      </animate.div>
+    </div>
+  );
+}
+```
+
+### Example 2: Lazy Loading Images
+
+Load images only when they enter viewport:
+
+```jsx
+function LazyImage({ src, alt }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.1 });
+  const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    if (isInView && !imageSrc) {
+      setImageSrc(src);
+    }
+  }, [isInView, src, imageSrc]);
+
+  return (
+    <div ref={ref} style={{ minHeight: 200, background: '#f0f0f0' }}>
+      {imageSrc ? (
+        <img src={imageSrc} alt={alt} style={{ width: '100%' }} />
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+}
+```
+
+### Example 3: Analytics Tracking
+
+Track when elements are viewed:
+
+```jsx
+function TrackedSection({ id, children }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.5, once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      // Track view event
+      analytics.track('section_viewed', { sectionId: id });
+    }
+  }, [isInView, id]);
+
+  return (
+    <section ref={ref} id={id}>
+      {children}
+    </section>
+  );
+}
+```
+
+### Example 4: Staggered Reveal
+
+Animate multiple elements as they enter viewport:
+
+```jsx
+function StaggeredReveal({ items }) {
+  return (
+    <div>
+      {items.map((item, index) => (
+        <RevealItem key={item.id} item={item} delay={index * 100} />
+      ))}
+    </div>
+  );
+}
+
+function RevealItem({ item, delay }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.2 });
+  const [opacity, setOpacity] = useValue(0);
+  const [translateY, setTranslateY] = useValue(30);
+
+  useEffect(() => {
+    if (isInView) {
+      setTimeout(() => {
+        setOpacity(withSpring(1));
+        setTranslateY(withSpring(0));
+      }, delay);
+    }
+  }, [isInView, delay]);
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        opacity,
+        translateY,
+        padding: 20,
+        marginBottom: 20,
+        background: 'teal',
+        borderRadius: 8,
+      }}
+    >
+      {item.content}
+    </animate.div>
+  );
+}
+```
+
+### Example 5: Progress Indicator
+
+Show progress based on sections in view:
+
+```jsx
+function SectionProgress({ sections }) {
+  const refs = sections.map(() => useRef(null));
+  const inViewStates = refs.map((ref) => useInView(ref, { threshold: 0.5 }));
+
+  const viewedCount = inViewStates.filter(Boolean).length;
+  const progress = (viewedCount / sections.length) * 100;
+
+  return (
+    <>
+      <div style={{ position: 'fixed', top: 20, right: 20 }}>
+        Progress: {Math.round(progress)}%
+      </div>
+      {sections.map((section, index) => (
+        <section
+          key={section.id}
+          ref={refs[index]}
+          style={{
+            minHeight: '100vh',
+            padding: 40,
+            background: inViewStates[index] ? '#e8f5e9' : '#fff',
+          }}
+        >
+          <h2>{section.title}</h2>
+          <p>{section.content}</p>
+        </section>
+      ))}
+    </>
+  );
+}
+```
+
+### Example 6: Trigger Animation Once
+
+Animate only once when element first enters viewport:
+
+```jsx
+function OneTimeReveal() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.3, once: true });
+  const [animated, setAnimated] = useState(false);
+  const [scale, setScale] = useValue(0.8);
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    if (isInView && !animated) {
+      setAnimated(true);
+      setScale(withSpring(1));
+      setOpacity(withSpring(1));
+    }
+  }, [isInView, animated]);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <animate.div
+        ref={ref}
+        style={{
+          marginTop: 800,
+          padding: 40,
+          background: 'teal',
+          borderRadius: 8,
+          scale,
+          opacity,
+        }}
+      >
+        I animate once when I enter the viewport
+      </animate.div>
+    </div>
+  );
+}
+```
+
+### Example 7: Root Margin for Early Trigger
+
+Trigger animation before element fully enters viewport:
+
+```jsx
+function EarlyReveal() {
+  const ref = useRef(null);
+  // Trigger when element is 100px away from viewport
+  const isInView = useInView(ref, {
+    threshold: 0,
+    rootMargin: '100px',
+  });
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    setOpacity(isInView ? withSpring(1) : withSpring(0));
+  }, [isInView]);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <animate.div
+        ref={ref}
+        style={{
+          marginTop: 800,
+          padding: 40,
+          background: 'teal',
+          borderRadius: 8,
+          opacity,
+        }}
+      >
+        I start animating 100px before I enter the viewport
+      </animate.div>
+    </div>
+  );
+}
+```
+
+## Common Patterns
+
+### Pattern 1: Fade In on View
+
+```jsx
+const ref = useRef(null);
+const isInView = useInView(ref);
+const [opacity, setOpacity] = useValue(0);
+
+useEffect(() => {
+  setOpacity(isInView ? withSpring(1) : withSpring(0));
+}, [isInView]);
+```
+
+### Pattern 2: Slide In on View
+
+```jsx
+const ref = useRef(null);
+const isInView = useInView(ref, { threshold: 0.2 });
+const [translateY, setTranslateY] = useValue(50);
+
+useEffect(() => {
+  setTranslateY(isInView ? withSpring(0) : withSpring(50));
+}, [isInView]);
+```
+
+### Pattern 3: Scale on View
+
+```jsx
+const ref = useRef(null);
+const isInView = useInView(ref);
+const [scale, setScale] = useValue(0.8);
+
+useEffect(() => {
+  setScale(isInView ? withSpring(1) : withSpring(0.8));
+}, [isInView]);
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use `threshold` to control when detection fires
+- Use `once: true` for one-time animations
+- Use `rootMargin` to trigger animations early
+- Combine with `useValue` and animation modifiers for smooth effects
+- Use for lazy loading to improve performance
+
+### ❌ Don't
+
+- Don't use for elements that are always visible
+- Don't set threshold too high (users might miss animations)
+- Don't forget to handle cleanup if needed
+- Don't use for real-time position tracking (use `useScroll` instead)
+
+## Performance Tips
+
+1. **Use `once: true`** - Prevents unnecessary re-triggering
+2. **Set appropriate threshold** - Lower threshold = more frequent checks
+3. **Lazy load content** - Load images/content only when in view
+4. **Combine with animations** - Use for scroll-triggered animations
+
+## Troubleshooting
+
+**Hook doesn't trigger:**
+
+- Make sure the ref is attached to the element
+- Check that the element is actually scrollable into view
+- Verify threshold is set appropriately
+- Ensure the element has dimensions (width/height)
+
+**Triggers too early/late:**
+
+- Adjust `threshold` value
+- Use `rootMargin` to control trigger point
+- Check element positioning and layout
+
+**Multiple triggers:**
+
+- Use `once: true` to trigger only once
+- Check if element is leaving and re-entering viewport
+- Verify threshold configuration
+
+## Comparison with View Prop
+
+| Feature | `useInView` | `view` prop |
+|---------|-------------|-------------|
+| **Usage** | Hook-based | Declarative prop |
+| **Control** | Full programmatic control | Simple declarative |
+| **Multiple thresholds** | Yes | No |
+| **Custom logic** | Easy | Limited |
+| **Best for** | Complex logic, lazy loading | Simple scroll reveals |
+
+## Next Steps
+
+- Learn about [View Animations](../interactive/view) for declarative scroll-triggered animations
+- Explore [useScroll](../gesture/useScroll) for scroll position tracking
+- Check out [Presence](../presence/basics) for enter/exit animations
+

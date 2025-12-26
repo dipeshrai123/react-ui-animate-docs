@@ -1,0 +1,135 @@
+---
+sidebar_position: 1
+id: getting-started
+title: Getting started
+---
+
+React UI Animate makes it simple to create smooth, performant animations and interactive gestures in React applications.\
+This guide walks you through the core concepts, helping you build powerful animations quickly.
+
+## Prerequisites
+
+Before you begin, you should have a basic understanding of:
+
+1. JavaScript
+2. React
+
+If you're new to these, we recommend learning their fundamentals first.
+
+## Installation
+
+React UI Animate works with React 16.8+ (hooks required).
+
+Install via npm or yarn:
+
+```bash
+npm install react-ui-animate
+```
+
+or
+
+```bash
+yarn add react-ui-animate
+```
+
+## Animated Elements
+
+The main component for animations is `<animate>`. It acts like a normal HTML element but handles animated values under the hood.
+
+### Example
+
+```jsx
+import { animate } from 'react-ui-animate';
+
+export default function MyComponent() {
+  return (
+    <animate.div
+      style={{
+        width: 80,
+        height: 80,
+        background: '#ff6d6d',
+        borderRadius: 8,
+      }}
+    />
+  );
+}
+```
+
+## The `useValue` Hook
+
+[useValue](./concept/useValue) is your starting point for animating values in React.\
+It tracks and updates values without causing React re-renders.
+
+### Example:
+
+```jsx
+import { animate, useValue } from 'react-ui-animate';
+
+export default function MyComponent() {
+  const [width, setWidth] = useValue(80);
+
+  return (
+    <animate.div
+      style={{
+        width,
+        height: 80,
+        background: '#ff6d6d',
+        borderRadius: 8,
+      }}
+    />
+  );
+}
+```
+
+## Animation Modifiers
+
+Animation Modifiers are functions that apply animations to values controlled by [useValue](./concept/useValue).\
+Here’s an example using [withSpring](./animation-modifier/withSpring) for a spring-like animation:
+
+```jsx
+import { animate, useValue, withSpring } from 'react-ui-animate';
+
+export default function App() {
+  const [width, setWidth] = useValue(100);
+
+  return (
+    <>
+      <button onClick={() => setWidth(withSpring(200))}>Animate</button>
+
+      <animate.div
+        style={{
+          width,
+          height: 100,
+          backgroundColor: 'teal',
+          borderRadius: 4,
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Your First Full Animation
+
+Here’s a complete example that animates width property of an element:
+
+import CodeExample from '@site/src/components/CodeExample';
+
+<CodeExample
+  example="v5_x_x_modifier_withSpring_GetStartedExample"
+  version={{ reactAnimate: '5.0.0' }}
+/>
+
+## Key Takeaways
+
+In this quick start guide, you learned:
+
+- How to use the `<animate>` component for animated elements.
+- How to control values with [useValue](./concept/useValue).
+- How to animate those values using animation modifiers like [withSpring](./animation-modifier/withSpring).
+
+## Next Steps:
+
+- Explore more animation modifiers like [withTiming](./animation-modifier/withTiming), [withDecay](./animation-modifier/withDecay), and [withSequence](./animation-modifier/withSequence.mdx).
+- Learn advanced hooks for [gestures](./gesture/overview) and [scroll-based animations](./gesture/useScroll).
+- Dive into complex animations with [Mount animations](./concept/use-mount) and [sequences](./animation-modifier/withSequence).

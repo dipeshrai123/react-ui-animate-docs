@@ -1,0 +1,72 @@
+---
+sidebar_position: 3
+id: use-mount
+title: Mount
+---
+
+The `<Mount>` component provides a declarative, animated mounting and unmounting experience for your React components. It smoothly animates values when the component enters or leaves, ideal for transitions, popups, modals, or expandable panels.
+
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+
+## Usage
+```jsx
+  <Mount state={isOpen}>
+    {(animation) => <div style={{ opacity: animation }}>Hello</div>}
+  </Mount>
+```
+
+:::info  What is animation here?
+- `animation` is a number value passed by the Mount component.
+- It represents the progress of the animation, typically ranging from: 0 -> 1
+:::
+
+## Props
+| Name   | Type | Description
+| :-----     | :----      | :----
+| state (required)| `boolean`  |  Whether the component is mounted. true triggers mounting and enter animation; false triggers exit.
+|children (required)|`(animation, isOpen:boolean) => ReactNode`| Render function receiving animated value(s). You must return a ReactNode here.
+|from|`Primitive or Record<string, Primitive>`| Initial value(s) when mounting. Defaults to 0 for single animations.
+|enter|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on mount. Defaults to 1 for single animations.
+|exit|`Primitive or Record<string, Primitive>`| Target value(s) to animate toward on unmount. Defaults to 0 for single animations.
+
+## Examples
+
+
+
+### 1. Basic Mounting with Fade Animation
+In this example, a simple square box smoothly fades in and out based on a toggle state.\
+The `<Mount>` component handles the mounting and unmounting animation automatically by animating the opacity value from **0 to 1 on mount**, and back to **0 on unmount**.\
+When the button is clicked, the component toggles between showing and hiding the box, triggering the fade animation seamlessly.
+
+<CodeExample 
+  example="v5_x_x_core_mount_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
+/>
+
+### 2. Complex Mounting with Sequential Animations
+This example demonstrates a more advanced usage of `<Mount>` with multiple animated properties and sequential animations.
+<CodeExample 
+  example="v5_x_x_core_mount_MultiValuedExample"
+  version={{ reactAnimate: '5.0.0' }}
+/>
+
+#### How It Works:
+
+1. The box starts from a collapsed state with:
+    - **width: 200**
+    - **opacity: 0**
+    - **translateX: 0**
+    - **rotate: 0**
+
+2. On **mount** (enter):
+    - First, it slides right to translateX: 100 and fades in (opacity: 1) using withTiming for a smooth start.
+    - Then, it **expands its width to 300** using `withSpring` for a bouncy, natural finish.
+    - This entire sequence runs automatically via `withSequence`.
+
+3. On **unmount** (exit):
+    - It springs back to its original position with:
+        - **translateX: 0**
+        - **width: 200**
+4. The button toggles the mount/unmount state, triggering the full entrance or exit animation flow.

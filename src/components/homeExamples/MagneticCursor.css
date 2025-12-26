@@ -6,14 +6,34 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding: 2rem;
 }
 
-.target {
-    display: inline-block;
-    background-color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 4px;
-    color: #3399ff;
+.magnetic-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.magnetic-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    transition: color 0.3s ease;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    min-width: 160px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
 }
