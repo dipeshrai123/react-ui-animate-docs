@@ -127,10 +127,10 @@ const config = {
               label: 'Get Started',
               to: '/docs/getting-started',
             },
-            {
-              label: 'Core Concepts',
-              to: '/docs/concept/animate-component',
-            },
+            // {
+            //   label: 'Core Concepts',
+            //   to: '/docs/concept/animate-component',
+            // },
             {
               label: 'Animation Modifiers',
               to: '/docs/animation-modifier/overview',
@@ -141,27 +141,27 @@ const config = {
             },
           ],
         },
-        {
-          title: 'Features',
-          items: [
-            {
-              label: 'Interactive Props',
-              to: '/docs/interactive/hover-animations',
-            },
-            {
-              label: 'Presence & Exit',
-              to: '/docs/presence/presence-basics',
-            },
-            {
-              label: 'Hooks',
-              to: '/docs/hooks/useInView',
-            },
-            {
-              label: 'View Animations',
-              to: '/docs/interactive/view-animations',
-            },
-          ],
-        },
+        // {
+        //   title: 'Features',
+        //   items: [
+        //     {
+        //       label: 'Interactive Props',
+        //       to: '/docs/interactive/hover-animations',
+        //     },
+        //     {
+        //       label: 'Presence & Exit',
+        //       to: '/docs/presence/presence-basics',
+        //     },
+        //     {
+        //       label: 'Hooks',
+        //       to: '/docs/hooks/useInView',
+        //     },
+        //     {
+        //       label: 'View Animations',
+        //       to: '/docs/interactive/view-animations',
+        //     },
+        //   ],
+        // },
         {
           title: 'Resources',
           items: [
@@ -176,7 +176,7 @@ const config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} React UI Animate.`,
+      copyright: `Copyright © ${new Date().getFullYear()} React UI Animate. Built with ❤️ by Dipesh Rai.`,
     },
   },
   themes: ['@docusaurus/theme-live-codeblock'],
