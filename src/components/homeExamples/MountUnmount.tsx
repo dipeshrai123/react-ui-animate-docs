@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { animate, Mount, useScroll, withSpring } from 'react-ui-animate';
+import { animate, Presence, withSpring, withTiming } from 'react-ui-animate';
 
 const Container = styled.div`
   width: 100%;
@@ -12,14 +12,22 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
 `;
 
 const Card = styled(animate.div)`
   width: 100px;
   height: 40px;
-  background-color: #0069d9;
-  border-radius: 8px;
-  margin-bottom: 4px;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+`;
+
+const AnimatedCard = styled(animate.div)`
+  width: 100px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;
 
 export function MountUnmount() {
@@ -37,26 +45,37 @@ export function MountUnmount() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) {
+      const timeout = setTimeout(() => setOpen(true), 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [open]);
+
   return (
     <Container>
-      <Card style={{ backgroundColor: '#e1e1e1' }} />
-      <Mount
-        state={open}
-        enter={withSpring(1, { damping: 10 })}
-        exit={withSpring(0, {
-          onComplete: () => setTimeout(() => setOpen(true), 1000),
-        })}
-      >
-        {(a) => (
-          <Card
+      <Card />
+      <Presence>
+        {open && (
+          <AnimatedCard
             style={{
-              opacity: a,
-              height: a.to([0, 1], [0, 80]),
+              opacity: 0,
+              height: 0,
+              scale: 0.4,
+            }}
+            animate={{
+              opacity: withSpring(1),
+              height: withSpring(80),
+              scale: 1,
+            }}
+            exit={{
+              opacity: withTiming(0),
+              height: withSpring(0),
             }}
           />
         )}
-      </Mount>
-      <Card style={{ backgroundColor: '#e1e1e1' }} />
+      </Presence>
+      <Card />
     </Container>
   );
 }

@@ -16,8 +16,9 @@ const Container = styled.div`
 const Card = styled(animate.div)`
   width: 100px;
   height: 100px;
-  background-color: #0069d9;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;
 
 export function Scroll() {
@@ -33,7 +34,13 @@ export function Scroll() {
       <Card
         style={{
           scale: scrollYProgress.to([0, 1], [1, 2]),
-          backgroundColor: scrollYProgress.to([0, 1], ['#0069d9', '#ff5733']),
+          background: scrollYProgress.to(
+            [0, 1],
+            [
+              'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            ]
+          ),
         }}
       />
     </Container>

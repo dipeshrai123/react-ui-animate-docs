@@ -1,4 +1,5 @@
 import React from 'react';
+import { animate, withSpring } from 'react-ui-animate';
 
 import './HomeCard.css';
 
@@ -9,10 +10,9 @@ interface HomeCardProps {
 
 export default function HomeCard({ title, children }: HomeCardProps) {
   return (
-    <div className="home-card">
-      {children}
-
+    <animate.div className="home-card">
+      <div className="home-card-content">{children}</div>
       <div className="home-card-title">{title}</div>
-    </div>
+    </animate.div>
   );
 }

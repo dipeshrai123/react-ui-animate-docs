@@ -1,0 +1,35 @@
+---
+sidebar_position: 5
+id: withSequence
+title: withSequence
+---
+import CodeExample from "@site/src/components/CodeExample"
+
+The `withSequence` modifier allows you to chain multiple animations together, executing them one after another in the order they are defined. This is useful for creating complex, multi-step animations where each step needs to be completed before the next begins.
+
+## Syntax
+```jsx
+withSequence(...animations: Animation[]) => Descriptor
+```
+
+### Parameters
+- **...animations**: A series of animation descriptors ([withSpring](./withSpring), [withTiming](./withTiming), [withDecay](./withDecay), etc.) that will be executed sequentially.
+
+##  Example
+
+This example shows how to chain multiple animations together using `withSequence`. It demonstrates how different types of animations— `spring`, `timing`, `delay`, and `decay`—can be stitched together into one continuous flow.
+
+
+
+
+<CodeExample 
+  example="v5_x_x_modifier_withSequence_BasicExample"
+  version={{ reactAnimate: '5.0.0' }}
+/>
+
+### What Happens Here:
+1. Springs to position **(100, 100)** smoothly (`withSpring`).
+2. Then resizes its **width** & **height** to **(200, 200)** with a linear timing (`withTiming`).
+3. Then it waits for **1000ms** (`withDelay`).
+4. Then moves back to the starting position **(0, 0)** over **3000ms** (`withTiming`).
+5. Finally, it applies decay animation on all properties (`withDecay`), causing them to slow down naturally based on momentum.

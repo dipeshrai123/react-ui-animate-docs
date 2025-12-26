@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+id: useDrag
+title: useDrag
+---
+import CodeExample from "@site/src/components/CodeExample"
+
+The `useDrag` hook allows to add drag gesture recognition to any DOM element in a React component. It handles pointer events under the hood, calculates movement, offset, velocity, and exposes a powerful callback-based API for interacting with drag state in real-time.
+
+## Syntax
+```jsx
+useDrag(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[],
+  callback: (event: DragEvent) => void,
+  config?: DragConfig
+): void
+
+```
+
+### Parameters
+| Name   | Type | Description
+| :-----     | :----      | :----
+| Refs (required)| `RefObject<HTMLElement> or RefObject<HTMLElement>[]`  |  Single or array of refs to DOM elements to make draggable.
+|Callback (required)|`(event:DragEvent) => void`| Called during drag and when drag ends
+|Config (required)|`DragConfig`| Optional config to customize drag behaviour
+
+### Callback Signature
+``` tsx
+type DragEvent = {
+  index: number;
+  down: boolean;                         // True when dragging
+  movement: { x: number; y: number };    // Delta from start of drag
+  offset: { x: number; y: number };      // Total offset (absolute)
+  velocity: { x: number; y: number };    // Velocity in px/ms
+  event: PointerEvent;                   // Native pointer event
+  cancel: () => void;                    // Cancel pointer capture
+};
+```
+### DragConfig Options
+``` tsx
+type DragConfig = {
+  threshold?: number;                  // Min distance before triggering drag
+  axis?: 'x' | 'y';                    // Lock movement to single axis
+  initial?: () => { x: number; y: number }; // Custom initial offset
+};
+```
+
+## Examples
+
+
+
+
+### 1. Basic Dragging of a Single Box
+This example demonstrates dragging a single element along both axes.\
+The element resets to its original position when the drag ends.
+
+<CodeExample 
+  example="v5_x_x_gesture_useDrag_BasicSetup"
+  version={{ reactAnimate: '5.0.0' }}
+/>
+
+### 2. Dragging Multiple Boxes Independently
+Here, multiple boxes are draggable independently on the X-axis.\
+Each box remembers its drag position while dragging, and springs back to its original position when released.
+
+
+<CodeExample 
+  example="v5_x_x_gesture_useDrag_MultipleElements"
+  version={{ reactAnimate: '5.0.0' }}
+/>
