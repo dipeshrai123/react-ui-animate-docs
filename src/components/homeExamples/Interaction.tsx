@@ -1,66 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { animate, withSpring } from 'react-ui-animate';
+import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 4px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem;
-`;
-
-const Card = styled(animate.div)`
-  width: 280px;
-  height: 180px;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 24px;
+  gap: 22px;
+`;
+
+const Track = styled(animate.div)`
+  width: 68px;
+  height: 38px;
+  padding: 4px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 `;
 
-const Title = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  font-family: 'Outfit', sans-serif;
-  color: #1a1a1a;
-  text-align: center;
+const Knob = styled(animate.div)`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 `;
 
-const Subtitle = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  font-family: 'Outfit', sans-serif;
-  color: #666;
-  text-align: center;
+const Label = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ifm-color-content-secondary);
+  letter-spacing: 0.01em;
 `;
 
 export function Interaction() {
+  const [on, setOn] = useState(true);
+  const [x, setX] = useValue(30);
+  const [t, setT] = useValue(1);
+
+  const toggle = () => {
+    const next = !on;
+    setOn(next);
+    setX(withSpring(next ? 30 : 0, { damping: 15, stiffness: 220 }));
+    setT(withTiming(next ? 1 : 0, { duration: 240 }));
+  };
+
   return (
     <Container>
-      <Card
-        hover={{
-          scale: withSpring(1.05),
-          rotateZ: withSpring(2),
-          boxShadow: withSpring('0 30px 80px rgba(0, 0, 0, 0.4)'),
-        }}
-        press={{
-          scale: withSpring(0.98),
+      <Track
+        onClick={toggle}
+        style={{
+          backgroundColor: t.to(
+            [0, 1],
+            ['rgba(255,255,255,0.08)', '#6366f1']
+          ),
         }}
       >
-        <Title>Hover Me</Title>
-        <Subtitle>See smooth animations in action</Subtitle>
-      </Card>
+        <Knob style={{ translateX: x }} />
+      </Track>
+      <Label>{on ? 'Enabled' : 'Disabled'} · tap to toggle</Label>
     </Container>
   );
 }

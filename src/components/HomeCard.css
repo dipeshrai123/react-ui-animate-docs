@@ -1,14 +1,20 @@
 .home-card {
-    height: 380px;
-    border-radius: 20px;
+    height: 340px;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     position: relative;
-    border: 1px solid var(--ifm-color-emphasis-200);
-    background-color: var(--ifm-card-bg-color);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.025);
     overflow: hidden;
     cursor: default;
+    will-change: transform;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.home-card:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 .home-card-content {
@@ -16,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 1.5rem 1rem;
+    padding: 1.5rem;
     min-height: 0;
     overflow: hidden;
     width: 100%;
@@ -33,13 +39,14 @@
 }
 
 .home-card-title {
-    color: var(--ifm-heading-color);
+    color: var(--ifm-color-content-secondary);
     text-align: center;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    padding: 1.25rem 1.5rem;
-    background: var(--ifm-card-bg-color);
-    border-top: 1px solid var(--ifm-color-emphasis-200);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     margin: 0;
 }

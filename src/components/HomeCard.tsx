@@ -10,7 +10,7 @@ interface HomeCardProps {
 
 export default function HomeCard({ title, children }: HomeCardProps) {
   return (
-    <animate.div className="home-card">
+    <animate.div className="home-card" hover={{ translateY: withSpring(-4) }}>
       <div className="home-card-content">{children}</div>
       <div className="home-card-title">{title}</div>
     </animate.div>

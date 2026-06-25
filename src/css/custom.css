@@ -3,38 +3,48 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+:root {
+  --site-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Helvetica Neue', Arial, sans-serif;
+  --site-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', ui-monospace,
+    'Roboto Mono', monospace;
+  --ifm-font-family-base: var(--site-font);
+  --ifm-heading-font-family: var(--site-font);
+  --ifm-font-family-monospace: var(--site-mono);
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter_18pt-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
+  /* 8px spacing scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter_18pt-Medium.ttf') format('truetype');
-  font-weight: 500;
-}
+  /* Corner radii */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter_18pt-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter_18pt-Bold.ttf') format('truetype');
-  font-weight: 700;
+  /* Brand palette */
+  --brand-bg: #08090d;
+  --brand-indigo: #6366f1;
+  --brand-indigo-strong: #4f46e5;
+  --brand-violet: #a855f7;
+  --brand-cyan: #22d3ee;
 }
 
 body {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif !important;
-  font-weight: 500;
-  font-size: 17px;
+  font-family: var(--site-font);
+  font-weight: 400;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -43,9 +53,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif !important;
+  font-family: var(--site-font);
+  font-weight: 700;
+  letter-spacing: -0.018em;
 }
 
 /* You can override the default Infima variables here. */
@@ -73,8 +83,8 @@ h6 {
   --ifm-menu-color: #0d0d0d;
   --docusaurus-highlighted-code-line-bg: rgb(255 251 221 / 1);
 
-  --ifm-navbar-padding-horizontal: 40px;
-  --ifm-navbar-height: 80px;
+  --ifm-navbar-padding-horizontal: 32px;
+  --ifm-navbar-height: 64px;
 
   --ifm-text-color: #000;
   --ifm-card-bg-color: #ffffff;
@@ -102,10 +112,12 @@ h6 {
   --ifm-menu-color: #999999;
 
   --ifm-text-color: #fff;
-  --ifm-card-bg-color: #242424;
-  --ifm-example-card-bg-color: #242424;
-  --ifm-card-border-color: #242424;
-  
+  --ifm-background-color: #08090d;
+  --ifm-background-surface-color: #0c0d12;
+  --ifm-card-bg-color: #101117;
+  --ifm-example-card-bg-color: #101117;
+  --ifm-card-border-color: rgba(255, 255, 255, 0.08);
+
   /* Link color for better visibility */
   --ifm-link-color: #60a5fa;
   --ifm-link-hover-color: #93c5fd;
@@ -130,8 +142,110 @@ h6 {
   opacity: 1;
 }
 
+/* ===== Navbar ===== */
 .navbar {
   box-shadow: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(8, 9, 13, 0.72);
+}
+
+/* Homepage: navbar floats over the dark hero so it blends seamlessly,
+   then condenses into a solid bar once the user scrolls past the hero. */
+body.nav-overlay .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body.nav-overlay.nav-scrolled .navbar {
+  background: rgba(8, 9, 13, 0.8);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+/* Homepage navbar sits on a dark surface in both states: keep content light */
+body.nav-overlay .navbar__title,
+body.nav-overlay .navbar__link,
+body.nav-overlay .navbar__item a,
+body.nav-overlay .navbar .dropdown > .navbar__link,
+body.nav-overlay .clean-btn {
+  color: #ffffff !important;
+}
+
+body.nav-overlay .navbar__link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+body.nav-overlay .navbar .dropdown > .navbar__link {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.navbar__brand {
+  margin-right: 1.5rem;
+}
+
+.navbar__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.navbar__logo {
+  height: 28px;
+  margin-right: 8px;
+}
+
+.navbar__items {
+  gap: 4px;
+}
+
+.navbar__link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar__link:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme='dark'] .navbar__link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* GitHub icon link in navbar */
+.navbar__items--right > .navbar__item.navbar__link[href*='github'] {
+  position: relative;
+}
+
+/* Version dropdown pill */
+.navbar .dropdown > .navbar__link {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+[data-theme='dark'] .navbar .dropdown > .navbar__link {
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 /* Navbar Links - White in dark mode */

@@ -54,14 +54,14 @@ const CardText = styled.div`
 const CardTitle = styled.div`
   font-size: 15px;
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   letter-spacing: 0.3px;
 `;
 
 const CardSubtitle = styled.div`
   font-size: 12px;
   opacity: 0.85;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
 `;
 
@@ -76,7 +76,7 @@ const StepNumber = styled(animate.div)`
   justify-content: center;
   font-size: 14px;
   font-weight: 700;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   border: 1px solid rgba(255, 255, 255, 0.3);
 `;
 

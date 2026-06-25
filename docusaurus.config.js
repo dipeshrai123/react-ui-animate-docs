@@ -12,6 +12,9 @@ const config = {
   organizationName: 'dipeshrai123',
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
+  customFields: {
+    version: '5.3.0',
+  },
   headTags: [
     {
       tagName: 'link',
@@ -32,47 +35,7 @@ const config = {
       tagName: 'link',
       attributes: {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preload',
-        href: 'static/fonts/Inter_18pt-Bold.ttf',
-        as: 'font',
-        type: 'font/ttf',
-        crossorigin: 'anonymous',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preload',
-        href: 'static/fonts/Inter_18pt-Medium.ttf',
-        as: 'font',
-        type: 'font/ttf',
-        crossorigin: 'anonymous',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preload',
-        href: 'static/fonts/Inter_18pt-Regular.ttf',
-        as: 'font',
-        type: 'font/ttf',
-        crossorigin: 'anonymous',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preload',
-        href: 'static/fonts/Inter_18pt-SemiBold.ttf',
-        as: 'font',
-        type: 'font/ttf',
-        crossorigin: 'anonymous',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700;800&display=swap',
       },
     },
   ],
@@ -93,8 +56,13 @@ const config = {
     ],
   ],
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     prism: {
-      theme: themes.vsLight,
+      theme: themes.vsDark,
       darkTheme: themes.vsDark,
     },
     navbar: {
