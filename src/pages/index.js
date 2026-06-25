@@ -286,12 +286,12 @@ function Features() {
 }
 
 const EXAMPLES = [
-  { title: 'Sequence Animations', key: 'Sequence' },
-  { title: 'Draggable Elements', key: 'Draggable' },
-  { title: 'Scroll Progress', key: 'Scroll' },
-  { title: 'Magnetic Cursor', key: 'Cursor' },
-  { title: 'Presence & Exit', key: 'MountUnmount' },
-  { title: 'Interactive Card', key: 'Interaction' },
+  { title: 'Toast Notifications', key: 'ToastDemo' },
+  { title: 'Modal Dialog', key: 'ModalDemo' },
+  { title: 'Accordion / FAQ', key: 'AccordionDemo' },
+  { title: 'Animated Tabs', key: 'TabsDemo' },
+  { title: 'Like Button', key: 'LikeButtonDemo' },
+  { title: 'Swipe to Delete', key: 'SwipeListDemo' },
 ];
 
 function Examples() {
@@ -300,10 +300,10 @@ function Examples() {
       <div className="container">
         <ViewReveal className={styles.sectionHeader}>
           <span className={styles.eyebrow}>Live examples</span>
-          <h2 className={styles.sectionTitle}>See it in action</h2>
+          <h2 className={styles.sectionTitle}>Real components, real motion</h2>
           <p className={styles.sectionLede}>
-            Interactive demos built with React UI Animate. Hover, drag, and
-            scroll to feel how the API works.
+            The interactions you actually ship — toasts, modals, tabs, and more,
+            built with React UI Animate. Click, drag, and swipe to try them.
           </p>
         </ViewReveal>
 
