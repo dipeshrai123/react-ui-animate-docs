@@ -1,0 +1,186 @@
+---
+sidebar_position: 1
+id: overview
+title: Gestures Overview
+---
+
+Gesture hooks in React UI Animate provide a powerful, declarative way to handle user interactions. Whether you're building draggable cards, scroll-based animations, or custom cursor effects, these hooks simplify complex gesture handling.
+
+## What Are Gesture Hooks?
+
+Gesture hooks are React hooks that listen to user input events (mouse, touch, scroll, wheel) and provide clean, React-friendly APIs for handling interactions. They abstract away the complexity of pointer events, touch handling, and cross-browser differences.
+
+## Why Use Gesture Hooks?
+
+- ✅ **Declarative** - Write interactions in a React-friendly way
+- ✅ **Cross-platform** - Works with mouse, touch, and pen input
+- ✅ **Rich data** - Get movement, velocity, offset, and more
+- ✅ **Performant** - Optimized event handling
+- ✅ **Flexible** - Works with single elements, multiple elements, or the window
+
+## Available Gesture Hooks
+
+### [useDrag](./useDrag)
+Detects drag gestures with full control over movement, velocity, and direction. Perfect for draggable cards, sliders, and interactive elements.
+
+**Use cases:**
+- Draggable cards and panels
+- Sliders and carousels
+- Sortable lists
+- Drag-to-dismiss interactions
+
+### [useMove](./useMove)
+Tracks pointer movement without needing a press. Great for hover effects, custom cursors, and interactive elements that respond to mouse position.
+
+**Use cases:**
+- Custom cursor effects
+- Hover interactions
+- Magnetic effects
+- Interactive cards that follow the cursor
+
+### [useScroll](./useScroll)
+Listens to native scroll events and provides detailed scroll dynamics. Perfect for scroll-triggered animations and parallax effects.
+
+**Use cases:**
+- Scroll-triggered animations
+- Parallax effects
+- Progress indicators
+- Scroll-based reveals
+
+### [useWheel](./useWheel)
+Captures wheel/touchpad gestures with full delta, velocity, and offset tracking. Ideal for zoom interactions and custom scroll behavior.
+
+**Use cases:**
+- Zoom controls
+- Custom scroll behavior
+- Horizontal scrolling with wheel
+- Gesture-driven navigation
+
+## Common Patterns
+
+### Pattern 1: Drag with Spring Back
+
+```jsx
+import { useDrag, useValue, withSpring } from 'react-ui-animate';
+
+function DraggableCard() {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [y, setY] = useValue(0);
+
+  useDrag(ref, ({ down, movement }) => {
+    if (down) {
+      setX(movement.x);
+      setY(movement.y);
+    } else {
+      // Spring back to center
+      setX(withSpring(0));
+      setY(withSpring(0));
+    }
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        translateX: x,
+        translateY: y,
+        cursor: 'grab',
+      }}
+    >
+      Drag me
+    </animate.div>
+  );
+}
+```
+
+### Pattern 2: Scroll Progress
+
+```jsx
+import { useScroll, useValue } from 'react-ui-animate';
+
+function ScrollProgress() {
+  const [progress, setProgress] = useValue(0);
+
+  useScroll(window, ({ offset }) => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    setProgress(offset.y / maxScroll);
+  });
+
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: `${progress * 100}%`,
+        height: 4,
+        background: 'teal',
+      }}
+    />
+  );
+}
+```
+
+### Pattern 3: Custom Cursor
+
+```jsx
+import { useMove, useValue } from 'react-ui-animate';
+
+function CustomCursor() {
+  const [pos, setPos] = useValue({ x: 0, y: 0 });
+
+  useMove(window, ({ offset }) => {
+    setPos({ x: offset.x, y: offset.y });
+  });
+
+  return (
+    <animate.div
+      style={{
+        position: 'fixed',
+        left: pos.x,
+        top: pos.y,
+        width: 20,
+        height: 20,
+        borderRadius: '50%',
+        background: 'teal',
+        pointerEvents: 'none',
+        translateX: -10,
+        translateY: -10,
+      }}
+    />
+  );
+}
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Combine gesture hooks with `useValue` for smooth animations
+- Use `withSpring` for natural release animations
+- Handle both `down` and release states in drag callbacks
+- Use transforms (`translateX`, `translateY`) instead of layout properties
+- Provide visual feedback (cursor changes, hover states)
+
+### ❌ Don't
+
+- Don't forget to handle cleanup when components unmount
+- Don't use layout properties (`left`, `top`) - use transforms
+- Don't forget to provide accessibility alternatives
+- Don't make gestures too sensitive (use thresholds when needed)
+
+## Performance Tips
+
+1. **Use transforms** - `translateX`, `translateY` are GPU-accelerated
+2. **Debounce when needed** - For expensive operations in callbacks
+3. **Use refs correctly** - Pass stable refs to gesture hooks
+4. **Batch updates** - Update multiple values together when possible
+
+## Next Steps
+
+Explore each gesture hook in detail:
+- **[useDrag](./useDrag)** - Drag interactions
+- **[useMove](./useMove)** - Pointer tracking
+- **[useScroll](./useScroll)** - Scroll handling
+- **[useWheel](./useWheel)** - Wheel gestures

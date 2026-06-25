@@ -1,0 +1,321 @@
+---
+sidebar_position: 6
+id: withDelay
+title: withDelay
+---
+
+The `withDelay` modifier adds a pause before an animation starts. Perfect for creating staggered animations, sequential reveals, and timed sequences where you need precise control over when animations begin.
+
+## Why Use withDelay?
+
+Delay is essential for:
+- **Staggered animations** - Reveal items one after another
+- **Sequential reveals** - Guide users through content
+- **Timed sequences** - Coordinate multiple animations
+- **Pacing control** - Add breathing room between animations
+
+## Basic Syntax
+
+```jsx
+withDelay(ms, animation)
+```
+
+### Parameters
+
+- **ms** (required): Delay time in milliseconds
+- **animation** (required): The animation descriptor to run after the delay
+
+## Simple Example
+
+Add a delay before an animation:
+
+```jsx
+import { useValue, withDelay, withSpring, animate } from 'react-ui-animate';
+
+function MyComponent() {
+  const [x, setX] = useValue(0);
+
+  const animateWithDelay = () => {
+    setX(withDelay(500, withSpring(200)));
+  };
+
+  return (
+    <>
+      <button onClick={animateWithDelay}>Animate (with 500ms delay)</button>
+      <animate.div
+        style={{
+          translateX: x,
+          width: 100,
+          height: 100,
+          background: 'teal',
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Real-World Examples
+
+### Example 1: Staggered List Items
+
+Reveal items one by one:
+
+```jsx
+function StaggeredList({ items }) {
+  const [heights, setHeights] = useValue(items.map(() => 0));
+
+  const reveal = () => {
+    setHeights(withSequence(
+      items.map((_, i) =>
+        withDelay(i * 100, withSpring(100))
+      )
+    ));
+  };
+
+  return (
+    <>
+      <button onClick={reveal}>Reveal Items</button>
+      {items.map((item, i) => (
+        <animate.div
+          key={item.id}
+          style={{
+            height: heights[i],
+            background: 'teal',
+            marginBottom: 10,
+            padding: 10,
+          }}
+        >
+          {item.name}
+        </animate.div>
+      ))}
+    </>
+  );
+}
+```
+
+### Example 2: Sequential Card Reveal
+
+Cards appear one after another:
+
+```jsx
+function CardGrid({ cards }) {
+  const [opacities, setOpacities] = useValue(cards.map(() => 0));
+
+  useEffect(() => {
+    setOpacities(withSequence(
+      cards.map((_, i) =>
+        withDelay(i * 150, withTiming(1, { duration: 400 }))
+      )
+    ));
+  }, []);
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+      {cards.map((card, i) => (
+        <animate.div
+          key={card.id}
+          style={{
+            opacity: opacities[i],
+            translateY: (1 - opacities[i]) * 20,
+            background: 'white',
+            padding: 20,
+            borderRadius: 8,
+          }}
+        >
+          {card.title}
+        </animate.div>
+      ))}
+    </div>
+  );
+}
+```
+
+### Example 3: Notification with Delay
+
+Show notification, wait, then hide:
+
+```jsx
+function DelayedNotification({ message, isVisible }) {
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    if (isVisible) {
+      setOpacity(withSequence([
+        // Show immediately
+        withTiming(1, { duration: 300 }),
+        // Wait 3 seconds
+        withDelay(3000),
+        // Hide
+        withTiming(0, { duration: 300 }),
+      ]));
+    }
+  }, [isVisible]);
+
+  return (
+    <animate.div
+      style={{
+        opacity,
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+        background: '#333',
+        color: 'white',
+        padding: '12px 24px',
+        borderRadius: 8,
+      }}
+    >
+      {message}
+    </animate.div>
+  );
+}
+```
+
+### Example 4: Multi-Step Animation
+
+Chain animations with delays:
+
+```jsx
+function MultiStepAnimation() {
+  const [style, setStyle] = useValue({
+    x: 0,
+    y: 0,
+    scale: 1,
+  });
+
+  const animate = () => {
+    setStyle(withSequence([
+      // Step 1: Move right (immediate)
+      withSpring({ x: 100 }),
+      // Step 2: Wait, then move down
+      withDelay(500, withSpring({ y: 100 })),
+      // Step 3: Wait, then scale up
+      withDelay(500, withSpring({ scale: 1.5 })),
+      // Step 4: Wait, then return
+      withDelay(1000, withSpring({ x: 0, y: 0, scale: 1 })),
+    ]));
+  };
+
+  return (
+    <>
+      <button onClick={animate}>Animate</button>
+      <animate.div
+        style={{
+          translateX: style.x,
+          translateY: style.y,
+          scale: style.scale,
+          width: 100,
+          height: 100,
+          background: 'teal',
+        }}
+      />
+    </>
+  );
+}
+```
+
+## Using in Sequences
+
+`withDelay` is commonly used within `withSequence`:
+
+```jsx
+setX(withSequence([
+  withSpring(100),
+  withDelay(500),           // Pause for 500ms
+  withTiming(200, { duration: 300 }),
+  withDelay(1000),          // Pause for 1 second
+  withSpring(0),
+]));
+```
+
+## Common Patterns
+
+### Pattern 1: Staggered Reveal
+
+```jsx
+const [opacities, setOpacities] = useValue([0, 0, 0, 0]);
+
+const reveal = () => {
+  setOpacities(withSequence([
+    withDelay(0, withTiming([1, 0, 0, 0])),
+    withDelay(100, withTiming([1, 1, 0, 0])),
+    withDelay(200, withTiming([1, 1, 1, 0])),
+    withDelay(300, withTiming([1, 1, 1, 1])),
+  ]));
+};
+```
+
+### Pattern 2: Sequential Actions
+
+```jsx
+const [step, setStep] = useValue(0);
+
+const executeSteps = () => {
+  setStep(withSequence([
+    withTiming(1),      // Step 1
+    withDelay(500),
+    withTiming(2),      // Step 2
+    withDelay(500),
+    withTiming(3),      // Step 3
+  ]));
+};
+```
+
+### Pattern 3: Typing Effect
+
+```jsx
+const [text, setText] = useValue('');
+
+const typeText = (fullText) => {
+  const sequence = fullText.split('').map((_, i) =>
+    withDelay(i * 50, () => {
+      setText(fullText.slice(0, i + 1));
+    })
+  );
+  // Execute sequence
+};
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use delays for staggered animations (100-200ms between items)
+- Use delays in sequences for pacing
+- Keep delays reasonable (50-500ms for most cases)
+- Use delays to create breathing room between animations
+
+### ❌ Don't
+
+- Don't use delays that are too long (>2000ms) - users expect quick feedback
+- Don't delay user-triggered animations unnecessarily
+- Don't forget that delays add to total animation time
+- Don't use delays when immediate feedback is needed
+
+## Performance Tips
+
+1. **Delays are lightweight** - Very performant
+2. **Batch delays** - Use sequences to coordinate multiple delayed animations
+3. **Consider total time** - Long delays can make interfaces feel slow
+4. **Use for reveals** - Perfect for scroll-triggered or initial load animations
+
+## Troubleshooting
+
+**Animation doesn't start after delay:**
+- Check that the delay value is correct
+- Verify the animation descriptor is valid
+- Ensure the component is still mounted
+
+**Delay feels too long:**
+- Reduce delay time (try 50-200ms for staggered)
+- Consider if delay is necessary
+
+**Multiple delays feel janky:**
+- Use `withSequence` to coordinate delays
+- Ensure delays are consistent (same interval)
+
+## Next Steps
+
+- Learn about [withSequence](./withSequence) to chain delayed animations
+- Explore [withSpring](./withSpring) and [withTiming](./withTiming) for delayed animations
+- Check out [View Animations](../interactive/view-animations) for scroll-triggered reveals

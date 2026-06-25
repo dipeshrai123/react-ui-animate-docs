@@ -1,0 +1,321 @@
+---
+sidebar_position: 5
+id: useWheel
+title: useWheel
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+
+The `useWheel` hook listens to wheel/touchpad gestures and provides detailed information about wheel movement, velocity, and accumulated offset. Perfect for zoom interactions, custom scroll behavior, and gesture-driven UIs.
+
+## Why Use useWheel?
+
+`useWheel` is ideal for:
+- **Zoom controls** - Pinch-to-zoom or wheel-based zoom
+- **Custom scroll behavior** - Horizontal scrolling with vertical wheel
+- **Gesture navigation** - Wheel-based navigation
+- **Precise control** - Fine-grained wheel movement tracking
+- **Touchpad support** - Works with both mouse wheels and touchpads
+
+## Basic Syntax
+
+```jsx
+useWheel(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | Window,
+  callback: (event: WheelEvent & { index: number }) => void
+): void
+```
+
+### Parameters
+
+- **refs** (required): Element(s) or `window` to listen for wheel events
+- **callback** (required): Function called on wheel events with event data
+
+## Simple Example
+
+Track wheel movement:
+
+```jsx
+import { useWheel, useState } from 'react-ui-animate';
+
+function WheelTracker() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  useWheel(window, ({ offset }) => {
+    setPosition({ x: offset.x, y: offset.y });
+  });
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div style={{ position: 'fixed', top: 20, left: 20 }}>
+        Wheel X: {Math.round(position.x)}
+        <br />
+        Wheel Y: {Math.round(position.y)}
+      </div>
+    </div>
+  );
+}
+```
+
+<CodeExample 
+  example="v5_x_x_gesture_useWheel_BasicSetup"
+  version={{ reactAnimate: '5.3.0-next.1' }}
+/>
+
+## Wheel Event Data
+
+The callback receives a `WheelEvent` object:
+
+```tsx
+type WheelEvent = {
+  index: number;                    // Index of element (for arrays)
+  movement: { x: number; y: number }; // Delta from this event
+  offset: { x: number; y: number };  // Accumulated wheel movement
+  velocity: { x: number; y: number }; // Smoothed velocity in px/ms
+  event: globalThis.WheelEvent;     // Raw native wheel event
+  cancel?: () => void;               // Cancel gesture (optional)
+};
+```
+
+## Real-World Examples
+
+### Example 1: Horizontal Scroll with Vertical Wheel
+
+Scroll horizontally using vertical wheel movement:
+
+```jsx
+function HorizontalScroll() {
+  const ref = useRef(null);
+  const [scrollX, setScrollX] = useValue(0);
+
+  useWheel(ref, ({ movement }) => {
+    // Use vertical wheel movement for horizontal scrolling
+    setScrollX(scrollX + movement.y);
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: '100%',
+        height: 300,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+      }}
+    >
+      <div style={{ width: 2000, height: 300, display: 'flex', gap: 20 }}>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              width: 200,
+              height: 300,
+              background: 'teal',
+              borderRadius: 8,
+              flexShrink: 0,
+            }}
+          >
+            Item {i + 1}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Example 2: Zoom Control
+
+Zoom in/out with wheel:
+
+```jsx
+function ZoomableImage({ src }) {
+  const ref = useRef(null);
+  const [scale, setScale] = useValue(1);
+
+  useWheel(ref, ({ movement, event }) => {
+    event.preventDefault(); // Prevent default scroll
+    
+    // Zoom based on wheel delta
+    const zoomDelta = movement.y * 0.01;
+    const newScale = Math.max(0.5, Math.min(3, scale + zoomDelta));
+    setScale(withSpring(newScale));
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: '100%',
+        height: 400,
+        overflow: 'hidden',
+        cursor: 'zoom-in',
+      }}
+    >
+      <animate.img
+        src={src}
+        style={{
+          scale,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          transformOrigin: 'center',
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Example 3: Wheel-Based Navigation
+
+Navigate through items with wheel:
+
+```jsx
+function WheelNavigation({ items }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [offset, setOffset] = useValue(0);
+
+  useWheel(window, ({ movement }) => {
+    // Accumulate wheel movement
+    const newOffset = offset + movement.y;
+    setOffset(newOffset);
+    
+    // Change item every 100px of wheel movement
+    const newIndex = Math.floor(Math.abs(newOffset) / 100) % items.length;
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex);
+    }
+  });
+
+  return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div>
+        <h2>{items[currentIndex].title}</h2>
+        <p>{items[currentIndex].description}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+### Example 4: Smooth Wheel Scrolling
+
+Smooth scroll with momentum:
+
+```jsx
+function SmoothScroll() {
+  const [scrollY, setScrollY] = useValue(0);
+  const [velocity, setVelocity] = useValue(0);
+
+  useWheel(window, ({ movement, velocity: wheelVelocity }) => {
+    // Update scroll position
+    setScrollY(scrollY + movement.y);
+    setVelocity(wheelVelocity.y);
+  });
+
+  // Apply momentum when wheel stops
+  useEffect(() => {
+    if (Math.abs(velocity) < 0.01) return;
+    
+    const interval = setInterval(() => {
+      if (Math.abs(velocity) < 0.01) {
+        clearInterval(interval);
+        return;
+      }
+      setScrollY(scrollY + velocity * 16); // 16ms frame
+      setVelocity(velocity * 0.95); // Friction
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, [velocity]);
+
+  return (
+    <animate.div
+      style={{
+        translateY: -scrollY,
+      }}
+    >
+      {/* Content */}
+    </animate.div>
+  );
+}
+```
+
+## Common Patterns
+
+### Pattern 1: Prevent Default Scroll
+
+```jsx
+useWheel(ref, ({ event }) => {
+  event.preventDefault(); // Prevent default scroll
+  // Custom behavior
+});
+```
+
+### Pattern 2: Accumulate Wheel Movement
+
+```jsx
+const [accumulated, setAccumulated] = useValue(0);
+
+useWheel(ref, ({ movement }) => {
+  setAccumulated(accumulated + movement.y);
+});
+```
+
+### Pattern 3: Threshold-Based Actions
+
+```jsx
+const [wheelOffset, setWheelOffset] = useValue(0);
+
+useWheel(ref, ({ offset }) => {
+  setWheelOffset(offset.y);
+  
+  // Action when threshold reached
+  if (Math.abs(offset.y) > 500) {
+    // Do something
+  }
+});
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use `useWheel` for custom scroll behavior and zoom controls
+- Prevent default scroll when implementing custom behavior
+- Use `offset` for accumulated wheel movement
+- Use `movement` for per-event deltas
+- Consider touchpad users (smooth scrolling)
+
+### ❌ Don't
+
+- Don't prevent default scroll unnecessarily (breaks accessibility)
+- Don't ignore touchpad gestures (they work differently than mouse wheels)
+- Don't make wheel interactions too sensitive
+- Don't forget to handle edge cases (very fast scrolling)
+
+## Performance Tips
+
+1. **Debounce if needed** - Wheel events can fire very frequently
+2. **Use transforms** - For scroll-based animations
+3. **Throttle calculations** - Don't recalculate on every wheel event
+4. **Consider touchpad** - Touchpad gestures are smoother than mouse wheels
+
+## Troubleshooting
+
+**Wheel doesn't trigger:**
+- Make sure the element is focused or visible
+- Check that wheel events aren't being prevented elsewhere
+- Verify the ref is attached correctly
+
+**Too sensitive/not sensitive enough:**
+- Adjust the multiplier for `movement` values
+- Use thresholds to filter small movements
+- Consider the device (touchpad vs mouse wheel)
+
+## Next Steps
+
+- Learn about [useScroll](./useScroll) for scroll position tracking
+- Explore [useDrag](./useDrag) for drag interactions
+- Check out [withDecay](../animation-modifier/withDecay) for momentum effects
