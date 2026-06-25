@@ -66,28 +66,25 @@ function AnimatedButton({ children, to, href, variant = 'primary' }) {
     styles.button,
     variant === 'primary' ? styles.buttonPrimary : styles.buttonGhost
   );
-  const motion = {
-    className,
-    hover: { translateY: withSpring(-2) },
-    press: { scale: withSpring(0.97) },
-  };
 
   if (href) {
     return (
-      <animate.a
-        {...motion}
+      <a
+        className={className}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {children}
-      </animate.a>
+        <span className={styles.buttonShine} aria-hidden="true" />
+        <span className={styles.buttonContent}>{children}</span>
+      </a>
     );
   }
 
   return (
-    <Link to={to} className={styles.buttonLink}>
-      <animate.span {...motion}>{children}</animate.span>
+    <Link to={to} className={clsx(styles.buttonLink, className)}>
+      <span className={styles.buttonShine} aria-hidden="true" />
+      <span className={styles.buttonContent}>{children}</span>
     </Link>
   );
 }
@@ -102,14 +99,15 @@ function InstallCommand({ tone = 'dark' }) {
   };
 
   return (
-    <animate.button
+    <button
       type="button"
       onClick={handleCopy}
       className={clsx(styles.install, tone === 'light' && styles.installLight)}
       aria-label="Copy install command"
-      hover={{ translateY: withSpring(-2) }}
-      press={{ scale: withSpring(0.99) }}
     >
+      {tone !== 'light' && (
+        <span className={styles.buttonShine} aria-hidden="true" />
+      )}
       <span className={styles.installPrompt}>$</span>
       <code className={styles.installCode}>{INSTALL_COMMAND}</code>
       <span className={styles.installCopy}>
@@ -119,7 +117,7 @@ function InstallCommand({ tone = 'dark' }) {
           <MdContentCopy className={styles.installCopyIcon} />
         )}
       </span>
-    </animate.button>
+    </button>
   );
 }
 
