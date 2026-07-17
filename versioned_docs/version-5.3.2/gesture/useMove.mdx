@@ -1,0 +1,400 @@
+---
+sidebar_position: 3
+id: useMove
+title: useMove
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_gesture_useMove_BasicSetup from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/BasicSetup.tsx';
+import Code_gesture_useMove_SingleElements from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/SingleElements.tsx';
+import Code_gesture_useMove_MultipleElements from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/MultipleElements.tsx';
+import { STABLE_VERSION } from '@site/src/constants/versions';
+
+The `useMove` hook tracks pointer movement without requiring a press or drag. It provides real-time feedback about cursor position, movement, and velocity - perfect for hover effects, custom cursors, and interactive elements that respond to mouse position.
+
+## Why Use useMove?
+
+`useMove` is ideal for:
+- **Hover interactions** - Elements that respond to cursor position
+- **Custom cursors** - Create custom cursor effects
+- **Magnetic effects** - Elements that follow or are attracted to the cursor
+- **Interactive cards** - Cards that tilt or scale based on cursor position
+- **Window tracking** - Track cursor anywhere on the page
+
+## Basic Syntax
+
+```jsx
+useMove(
+  refs: RefObject<HTMLElement> | RefObject<HTMLElement>[] | Window,
+  callback: (event: MoveEvent) => void
+): void
+```
+
+### Parameters
+
+- **refs** (required): Element(s) or `window` to track pointer movement over
+- **callback** (required): Function called on every move event
+
+## Simple Example
+
+Track cursor position across the entire window:
+
+```jsx
+import { useMove, useValue, animate } from 'react-ui-animate';
+
+function CustomCursor() {
+  const [pos, setPos] = useValue({ x: 0, y: 0 });
+
+  useMove(window, ({ offset }) => {
+    setPos({ x: offset.x, y: offset.y });
+  });
+
+  return (
+    <animate.div
+      style={{
+        position: 'fixed',
+        left: pos.x,
+        top: pos.y,
+        width: 20,
+        height: 20,
+        borderRadius: '50%',
+        background: 'teal',
+        pointerEvents: 'none',
+        translateX: -10,
+        translateY: -10,
+      }}
+    />
+  );
+}
+```
+
+<CodeExample
+  code={Code_gesture_useMove_BasicSetup}
+  version={{ reactAnimate: STABLE_VERSION }}
+/>
+
+## Move Event Data
+
+The callback receives a `MoveEvent` object:
+
+```tsx
+type MoveEvent = {
+  index: number;                    // Index of element (for arrays)
+  movement: { x: number; y: number }; // Movement from start
+  offset: { x: number; y: number };  // Pointer offset inside element
+  velocity: { x: number; y: number }; // Velocity in px/ms
+  event: PointerEvent;              // Native pointer event
+  cancel?: () => void;               // Cancel gesture (optional)
+};
+```
+
+## Real-World Examples
+
+### Example 1: Interactive Card with Tilt
+
+Card that tilts based on cursor position:
+
+```jsx
+function InteractiveCard() {
+  const ref = useRef(null);
+  const [rotateX, setRotateX] = useValue(0);
+  const [rotateY, setRotateY] = useValue(0);
+
+  useMove(ref, ({ offset }) => {
+    if (!ref.current) return;
+    
+    const { width, height } = ref.current.getBoundingClientRect();
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Calculate rotation based on cursor position
+    const rotateYValue = ((offset.x - centerX) / centerX) * 15;
+    const rotateXValue = ((offset.y - centerY) / centerY) * -15;
+    
+    setRotateY(withSpring(rotateYValue));
+    setRotateX(withSpring(rotateXValue));
+  });
+
+  return (
+    <animate.div
+      ref={ref}
+      onMouseLeave={() => {
+        setRotateX(withSpring(0));
+        setRotateY(withSpring(0));
+      }}
+      style={{
+        rotateX,
+        rotateY,
+        width: 300,
+        height: 200,
+        background: 'white',
+        borderRadius: 8,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+      }}
+    >
+      <h3>Hover to tilt</h3>
+      <p>Move your cursor over this card</p>
+    </animate.div>
+  );
+}
+```
+
+### Example 2: Magnetic Cursor Effect
+
+Element that's attracted to the cursor:
+
+```jsx
+function MagneticButton() {
+  const ref = useRef(null);
+  const [x, setX] = useValue(0);
+  const [y, setY] = useValue(0);
+
+  useMove(ref, ({ offset }) => {
+    if (!ref.current) return;
+    
+    const { width, height, left, top } = ref.current.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    
+    // Calculate distance from center
+    const dx = offset.x - centerX;
+    const dy = offset.y - centerY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // Magnetic effect - stronger when closer
+    if (distance < 100) {
+      const strength = (100 - distance) / 100;
+      setX(withSpring(dx * strength * 0.3));
+      setY(withSpring(dy * strength * 0.3));
+    } else {
+      setX(withSpring(0));
+      setY(withSpring(0));
+    }
+  });
+
+  return (
+    <animate.button
+      ref={ref}
+      onMouseLeave={() => {
+        setX(withSpring(0));
+        setY(withSpring(0));
+      }}
+      style={{
+        translateX: x,
+        translateY: y,
+        padding: '12px 24px',
+        background: 'teal',
+        color: 'white',
+        border: 'none',
+        borderRadius: 8,
+      }}
+    >
+      Magnetic Button
+    </animate.button>
+  );
+}
+```
+
+### Example 3: Track Within Specific Element
+
+Track cursor only when inside an element:
+
+```jsx
+function TrackedArea() {
+  const ref = useRef(null);
+  const [cursor, setCursor] = useValue({ x: 0, y: 0 });
+
+  useMove(ref, ({ offset }) => {
+    setCursor({ x: offset.x, y: offset.y });
+  });
+
+  return (
+    <div>
+      <animate.div
+        ref={ref}
+        style={{
+          width: 400,
+          height: 300,
+          background: '#f0f0f0',
+          borderRadius: 8,
+          position: 'relative',
+        }}
+      >
+        <animate.div
+          style={{
+            position: 'absolute',
+            left: cursor.x,
+            top: cursor.y,
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            background: 'teal',
+            pointerEvents: 'none',
+            translateX: -10,
+            translateY: -10,
+          }}
+        />
+        <p style={{ padding: 20 }}>Move cursor here</p>
+      </animate.div>
+    </div>
+  );
+}
+```
+
+<CodeExample
+  code={Code_gesture_useMove_SingleElements}
+  version={{ reactAnimate: STABLE_VERSION }}
+/>
+
+### Example 4: Multiple Tracked Elements
+
+Track cursor across multiple elements:
+
+```jsx
+function MultiTrackArea() {
+  const refs = useRef([
+    useRef(null),
+    useRef(null),
+    useRef(null),
+  ]);
+  const [cursor, setCursor] = useValue({ x: 0, y: 0 });
+
+  useMove(refs.current, ({ offset, index }) => {
+    // Track cursor in any of the areas
+    setCursor({ x: offset.x, y: offset.y });
+  });
+
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      {refs.current.map((ref, i) => (
+        <animate.div
+          key={i}
+          ref={ref}
+          style={{
+            width: 200,
+            height: 200,
+            background: '#f0f0f0',
+            borderRadius: 8,
+            position: 'relative',
+          }}
+        >
+          <animate.div
+            style={{
+              position: 'absolute',
+              left: cursor.x,
+              top: cursor.y,
+              width: 15,
+              height: 15,
+              borderRadius: '50%',
+              background: 'teal',
+              pointerEvents: 'none',
+              translateX: -7.5,
+              translateY: -7.5,
+            }}
+          />
+        </animate.div>
+      ))}
+    </div>
+  );
+}
+```
+
+<CodeExample
+  code={Code_gesture_useMove_MultipleElements}
+  version={{ reactAnimate: STABLE_VERSION }}
+/>
+
+## Common Patterns
+
+### Pattern 1: Scale on Hover
+
+```jsx
+const [scale, setScale] = useValue(1);
+
+useMove(ref, ({ offset }) => {
+  if (!ref.current) return;
+  const { width, height } = ref.current.getBoundingClientRect();
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const distance = Math.sqrt(
+    Math.pow(offset.x - centerX, 2) + Math.pow(offset.y - centerY, 2)
+  );
+  // Scale based on distance from center
+  const newScale = 1 + (1 - distance / 200) * 0.2;
+  setScale(withSpring(newScale));
+});
+```
+
+### Pattern 2: Glow Effect
+
+```jsx
+const [glow, setGlow] = useValue(0);
+
+useMove(ref, ({ offset }) => {
+  if (!ref.current) return;
+  const { width, height } = ref.current.getBoundingClientRect();
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const distance = Math.sqrt(
+    Math.pow(offset.x - centerX, 2) + Math.pow(offset.y - centerY, 2)
+  );
+  // Stronger glow when closer to center
+  const intensity = Math.max(0, 1 - distance / 150);
+  setGlow(withSpring(intensity));
+});
+```
+
+### Pattern 3: Parallax Effect
+
+```jsx
+const [parallax, setParallax] = useValue({ x: 0, y: 0 });
+
+useMove(window, ({ offset }) => {
+  // Parallax based on cursor position
+  const x = (offset.x / window.innerWidth - 0.5) * 50;
+  const y = (offset.y / window.innerHeight - 0.5) * 50;
+  setParallax(withSpring({ x, y }));
+});
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use `useMove` for hover effects and cursor tracking
+- Combine with `withSpring` for smooth following animations
+- Reset values on `onMouseLeave` for better UX
+- Use `offset` for element-relative positioning
+- Use `window` for global cursor tracking
+
+### ❌ Don't
+
+- Don't use `useMove` for drag interactions (use `useDrag` instead)
+- Don't forget to handle mouse leave events
+- Don't do expensive calculations in the callback (debounce if needed)
+- Don't track on every element unnecessarily (can impact performance)
+
+## Performance Tips
+
+1. **Debounce if needed** - For expensive calculations in callbacks
+2. **Use transforms** - `translateX`, `translateY` are GPU-accelerated
+3. **Limit tracked elements** - Don't track on too many elements at once
+4. **Use `window` sparingly** - Global tracking can be expensive
+
+## Troubleshooting
+
+**Move doesn't trigger:**
+- Make sure the ref is attached to a visible element
+- Check that the element isn't covered by another element
+- Verify you're using the correct ref type
+
+**Performance issues:**
+- Debounce expensive operations in callbacks
+- Limit the number of elements being tracked
+- Use transforms instead of layout properties
+
+## Next Steps
+
+- Learn about [useDrag](./useDrag) for drag interactions
+- Explore [useScroll](./useScroll) for scroll-based animations
+- Check out [Interactive Animations](../interactive/hover-animations) for declarative hover effects

@@ -5,6 +5,8 @@ title: withTiming
 ---
 
 import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withTiming_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withTiming/BasicExample.tsx';
+import { NEXT_VERSION } from '@site/src/constants/versions';
 
 The `withTiming` modifier creates precise, time-based animations with exact durations. Unlike `withSpring` which uses physics, `withTiming` gives you complete control over how long an animation takes and how it accelerates/decelerates.
 
@@ -166,9 +168,9 @@ function ProgressBar() {
 }
 ```
 
-<CodeExample 
-  example="v5_x_x_modifier_withTiming_BasicExample"
-  version={{ reactAnimate: '5.3.0-next.1' }}
+<CodeExample
+  code={Code_modifier_withTiming_BasicExample}
+  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Easing Functions

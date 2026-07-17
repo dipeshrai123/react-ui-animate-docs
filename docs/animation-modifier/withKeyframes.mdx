@@ -1,0 +1,71 @@
+---
+sidebar_position: 9
+id: withKeyframes
+title: withKeyframes
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withKeyframes_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withKeyframes/BasicExample.tsx';
+import { NEXT_VERSION } from '@site/src/constants/versions';
+
+`withKeyframes` animates through a list of intermediate values in one call —
+a shorthand for `withSequence` of `withTiming` steps. Each stop gets an
+equal share of the total `duration` unless it specifies its own.
+
+## Signature
+
+```ts
+function withKeyframes(
+  steps: Array<Primitive | { to: Primitive; duration?: number; easing?: (t: number) => number }>,
+  options?: { duration?: number; easing?: (t: number) => number; onStart?: () => void; onChange?: (v: number) => void; onComplete?: () => void }
+): Descriptor;
+```
+
+- `duration` (options) — total duration across all steps, in ms. Default
+  `300`.
+- A step can be a plain value (gets an equal share of `duration`) or an
+  object `{ to, duration, easing }` to override the timing for that one
+  stop.
+
+## Usage
+
+```jsx
+import { useValue, withKeyframes, animate } from 'react-ui-animate';
+
+function Wiggle() {
+  const [x, setX] = useValue(0);
+
+  return (
+    <animate.div
+      style={{ translateX: x }}
+      onClick={() => setX(withKeyframes([0, 150, 50, 200, 0], { duration: 1200 }))}
+    />
+  );
+}
+```
+
+<CodeExample
+  code={Code_modifier_withKeyframes_BasicExample}
+  version={{ reactAnimate: NEXT_VERSION }}
+/>
+
+Per-step overrides:
+
+```jsx
+setX(
+  withKeyframes([
+    { to: 100, duration: 200 },
+    { to: 0, duration: 800, easing: Easing.bounce },
+  ])
+);
+```
+
+Since it's built on `withTiming` + `withSequence`, each stop starts from
+wherever the previous one left off — the same `from`-chaining behavior those
+have individually.
+
+## Next steps
+
+- [withSequence](./withSequence) — the more general multi-step primitive
+  `withKeyframes` is shorthand for.
+- [withTiming](./withTiming) — the driver used for each keyframe step.

@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+id: interpolation
+title: Interpolation
+---
+Interpolation is the process of mapping one range of values to another.\
+In animation, it’s commonly used to convert a normalized value (like 0 to 1) into a target range (like 0 to 100).
+
+**In simple terms:**\
+An interpolation takes an input value and returns a mapped output value.\
+For example, you can map the range **0 → 1** to **0 → 100** to smoothly animate between these numbers.\
+This technique is essential for scaling, translating, opacity transitions, and more.
+
+
+## Basic Usage
+
+### Extending the useValue
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_core_interpolation_BasicExample from '!!raw-loader!@site/src/examples/5.3.2/core/interpolation/BasicExample.tsx';
+import { STABLE_VERSION } from '@site/src/constants/versions';
+
+<CodeExample
+  code={Code_core_interpolation_BasicExample}
+  version={{ reactAnimate: STABLE_VERSION }}
+/>
+
+## Parameters
+
+| Name   | Type | Description
+| :-----     | :----      | :----
+|inRange | `number[]` | The input range (must be ascending). Must contain at least 2 values.
+|outRange|`(number or string)[]`| The output values mapped to each entry in inRange. Supports numbers, units, functions, or colors.
+|config|`ExtrapolateConfig (optional)`| Optional interpolation config:
+
+## ExtrapolateConfig Signature
+
+| Property   | Type | Default | Description
+| :-----     | :----      | :---- | :----
+|extrapolate| `clamp` or `extend` or `identity` | `extend` |Global fallback for left/right
+|extrapolateLeft|`clamp` or `extend` or `identity` | Inherits from `extrapolate` | How to handle input < first inRange
+|extrapolateRight|`clamp` or `extend` or `identity` | Inherits from `extrapolate` | How to handle input < first inRange
+|easing| `(t: number) => number` | `undefined` | Easing function applied to normalized range t
+
+## Supported Output Formats
+1. **Numbers**\
+    `value.to([0, 1], [10, 20]) → 15`
+2. **Strings with units**\
+    `value.to([0, 1], ['10px', '20px']) → '15.000px'`
+3. **CSS functions**\
+    `value.to([0, 1], ['rotate(0deg)', 'rotate(180deg)']) → 'rotate(90.000deg)'`
+4. **Colors**
+    - Named: `value.to([0, 1], ['red', 'blue'])`
+    - HEX: `value.to([0, 1], ['#000', '#fff'])`
+    - RGBA: `value.to([0, 1], ['rgba(0,0,0,0)', 'rgba(255,255,255,1)'])`
+    - HSL: `value.to([0, 1], ['hsl(0, 100%, 50%)', 'hsl(120, 100%, 50%)'])`
+

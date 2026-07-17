@@ -5,6 +5,8 @@ title: withSequence
 ---
 
 import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withSequence_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withSequence/BasicExample.tsx';
+import { NEXT_VERSION } from '@site/src/constants/versions';
 
 The `withSequence` modifier chains multiple animations together, executing them one after another in order. Perfect for creating complex, multi-step animations where each step must complete before the next begins.
 
@@ -191,9 +193,9 @@ function ComplexAnimation() {
 }
 ```
 
-<CodeExample 
-  example="v5_x_x_modifier_withSequence_BasicExample"
-  version={{ reactAnimate: '5.3.0-next.1' }}
+<CodeExample
+  code={Code_modifier_withSequence_BasicExample}
+  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Combining Different Modifiers

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import { useColorMode } from '@docusaurus/theme-common';
 
+import { STABLE_VERSION } from '../constants/versions';
+
 interface ISandPack {
   files: Record<string, string>;
   version?: {
-    reactAnimate: '5.0.0' | '^3.3.0';
+    reactAnimate: string;
   };
 }
 
@@ -13,7 +15,7 @@ type TabType = 'preview' | 'js' | 'ts' | 'css';
 
 export default function SandPack({
   files,
-  version = { reactAnimate: '5.0.0' },
+  version = { reactAnimate: STABLE_VERSION },
 }: ISandPack) {
   const { colorMode } = useColorMode();
   const [activeTab, setActiveTab] = useState<TabType>('preview');

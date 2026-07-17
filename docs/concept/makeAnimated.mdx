@@ -1,0 +1,47 @@
+---
+sidebar_position: 3
+id: makeAnimated
+title: makeAnimated
+---
+
+`makeAnimated(tag)` is the factory every `animate.*` component is built
+from. `animate` itself is just a proxy that calls `makeAnimated(tag)` for
+you the first time you access `animate.anyTag` and caches the result — so
+`animate.div`, `animate.circle`, `animate.whatever-valid-jsx-tag` all work
+out of the box with no setup.
+
+```ts
+function makeAnimated<Tag extends keyof JSX.IntrinsicElements>(
+  tag: Tag
+): ForwardRefExoticComponent<AnimateAttributes<HTMLElement>>;
+```
+
+## Usage
+
+In practice you'll reach for `animate.div` / `animate.svg` / etc. — not
+`makeAnimated` — since the proxy already covers every intrinsic HTML/SVG
+tag:
+
+```jsx
+import { animate } from 'react-ui-animate';
+
+// Equivalent to `const AnimatedCircle = makeAnimated('circle')`,
+// just already done for you:
+<animate.circle cx={50} cy={50} r={10} fill="teal" />;
+```
+
+Call `makeAnimated` directly only if you specifically want your own
+reference to the factory output rather than going through the `animate`
+proxy — e.g. building a small custom wrapper module that re-exports a
+curated subset of animated tags:
+
+```jsx
+import { makeAnimated } from 'react-ui-animate';
+
+export const AnimatedCircle = makeAnimated('circle');
+export const AnimatedPath = makeAnimated('path');
+```
+
+The component it returns accepts every `animate.*` prop —
+`style`/`animate`/`hover`/`press`/`focus`/`view` — plus all native
+attributes for that tag.

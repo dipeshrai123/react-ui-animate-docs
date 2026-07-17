@@ -13,7 +13,7 @@ const config = {
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
   customFields: {
-    version: '5.3.0',
+    version: '5.3.2',
   },
   headTags: [
     {
@@ -48,6 +48,16 @@ const config = {
           sidebarCollapsed: true,
           editUrl:
             'https://github.com/dipeshrai123/react-ui-animate-docs/edit/main/',
+          lastVersion: '5.3.2',
+          versions: {
+            current: {
+              label: '5.4.0-next.2',
+              path: 'next',
+            },
+            '5.3.2': {
+              label: '5.3.2',
+            },
+          },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -76,7 +86,6 @@ const config = {
           type: 'docsVersionDropdown',
           dropdownActiveClassDisabled: true,
           position: 'right',
-          disableNextVersion: true,
         },
         {
           href: 'https://github.com/dipeshrai123/react-ui-animate',

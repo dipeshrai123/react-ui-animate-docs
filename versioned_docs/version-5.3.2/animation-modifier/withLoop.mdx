@@ -1,0 +1,379 @@
+---
+sidebar_position: 7
+id: withLoop
+title: withLoop
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withLoop_BasicExample from '!!raw-loader!@site/src/examples/5.3.2/modifier/withLoop/BasicExample.tsx';
+import { STABLE_VERSION } from '@site/src/constants/versions';
+
+The `withLoop` modifier repeats an animation a specified number of times or infinitely. Perfect for loading indicators, pulsing effects, continuous animations, and any animation that needs to repeat.
+
+## Why Use withLoop?
+
+Loop animations are essential for:
+- **Loading indicators** - Continuous spinning, pulsing
+- **Attention-grabbing** - Subtle animations that draw the eye
+- **Ambient effects** - Background animations that add life
+- **Status indicators** - Pulsing, breathing effects
+
+## Basic Syntax
+
+```jsx
+withLoop(animation, iterations?, options?)
+```
+
+### Parameters
+
+- **animation** (required): The animation descriptor to repeat
+- **iterations** (optional): Number of times to repeat. Omit or use `-1` for infinite
+- **options** (optional): Configuration object with callbacks
+
+## Simple Example
+
+Loop an animation infinitely:
+
+```jsx
+import { useValue, withLoop, withSpring, animate } from 'react-ui-animate';
+
+function MyComponent() {
+  const [rotation, setRotation] = useValue(0);
+
+  useEffect(() => {
+    // Infinite rotation
+    setRotation(withLoop(
+      withSpring(360),
+      -1 // Infinite
+    ));
+  }, []);
+
+  return (
+    <animate.div
+      style={{
+        rotate: rotation,
+        width: 50,
+        height: 50,
+        background: 'teal',
+      }}
+    />
+  );
+}
+```
+
+## Real-World Examples
+
+### Example 1: Loading Spinner
+
+Continuous rotation:
+
+```jsx
+function LoadingSpinner() {
+  const [rotation, setRotation] = useValue(0);
+
+  useEffect(() => {
+    setRotation(withLoop(
+      withSpring(360, { stiffness: 200, damping: 0 }),
+      -1 // Infinite
+    ));
+  }, []);
+
+  return (
+    <animate.div
+      style={{
+        rotate: rotation,
+        width: 40,
+        height: 40,
+        border: '4px solid #e1e1e1',
+        borderTop: '4px solid #3399ff',
+        borderRadius: '50%',
+      }}
+    />
+  );
+}
+```
+
+### Example 2: Pulsing Button
+
+Draw attention with a pulsing effect:
+
+```jsx
+function PulsingButton() {
+  const [scale, setScale] = useValue(1);
+
+  useEffect(() => {
+    setScale(withLoop(
+      withSequence([
+        withSpring(1.1, { stiffness: 200 }),
+        withSpring(1, { stiffness: 200 }),
+      ]),
+      -1 // Infinite
+    ));
+  }, []);
+
+  return (
+    <animate.button
+      style={{
+        scale,
+        padding: '12px 24px',
+        backgroundColor: '#3399ff',
+        color: 'white',
+        border: 'none',
+        borderRadius: 8,
+      }}
+    >
+      Click me
+    </animate.button>
+  );
+}
+```
+
+### Example 3: Breathing Animation
+
+Subtle scale animation:
+
+```jsx
+function BreathingCard() {
+  const [scale, setScale] = useValue(1);
+
+  useEffect(() => {
+    setScale(withLoop(
+      withSequence([
+        withTiming(1.05, { duration: 2000 }),
+        withTiming(1, { duration: 2000 }),
+      ]),
+      -1 // Infinite
+    ));
+  }, []);
+
+  return (
+    <animate.div
+      style={{
+        scale,
+        width: 200,
+        height: 200,
+        background: 'teal',
+        borderRadius: 8,
+      }}
+    >
+      Breathing card
+    </animate.div>
+  );
+}
+```
+
+### Example 4: Finite Loop
+
+Repeat a specific number of times:
+
+```jsx
+function BounceAnimation() {
+  const [y, setY] = useValue(0);
+
+  const bounce = () => {
+    setY(withLoop(
+      withSequence([
+        withSpring(50),
+        withSpring(0),
+      ]),
+      3 // Repeat 3 times
+    ));
+  };
+
+  return (
+    <>
+      <button onClick={bounce}>Bounce 3 Times</button>
+      <animate.div
+        style={{
+          translateY: y,
+          width: 100,
+          height: 100,
+          background: 'teal',
+        }}
+      />
+    </>
+  );
+}
+```
+
+<CodeExample
+  code={Code_modifier_withLoop_BasicExample}
+  version={{ reactAnimate: STABLE_VERSION }}
+/>
+
+## Looping Different Animation Types
+
+You can loop any animation type:
+
+```jsx
+// Loop a spring animation
+setX(withLoop(withSpring(100), 5));
+
+// Loop a timing animation
+setX(withLoop(withTiming(100, { duration: 300 }), -1));
+
+// Loop a sequence
+setX(withLoop(
+  withSequence([
+    withSpring(50),
+    withTiming(100),
+    withSpring(150),
+  ]),
+  3
+));
+
+// Loop a decay (creates continuous motion)
+setX(withLoop(withDecay(0.5), -1));
+```
+
+## Using Callbacks
+
+Track loop progress:
+
+```jsx
+function LoopWithCallbacks() {
+  const [scale, setScale] = useValue(1);
+
+  useEffect(() => {
+    setScale(withLoop(
+      withSequence([
+        withSpring(1.1),
+        withSpring(1),
+      ]),
+      5, // 5 iterations
+      {
+        onStart: () => {
+          console.log('Loop started');
+        },
+        onComplete: () => {
+          console.log('Loop completed (5 times)');
+        },
+      }
+    ));
+  }, []);
+
+  return (
+    <animate.div
+      style={{
+        scale,
+        width: 100,
+        height: 100,
+        background: 'teal',
+      }}
+    />
+  );
+}
+```
+
+## Common Patterns
+
+### Pattern 1: Infinite Rotation
+
+```jsx
+const [rotation, setRotation] = useValue(0);
+
+useEffect(() => {
+  setRotation(withLoop(
+    withSpring(360, { stiffness: 200, damping: 0 }),
+    -1
+  ));
+}, []);
+```
+
+### Pattern 2: Pulsing Scale
+
+```jsx
+const [scale, setScale] = useValue(1);
+
+useEffect(() => {
+  setScale(withLoop(
+    withSequence([
+      withTiming(1.1, { duration: 1000 }),
+      withTiming(1, { duration: 1000 }),
+    ]),
+    -1
+  ));
+}, []);
+```
+
+### Pattern 3: Bouncing Animation
+
+```jsx
+const [y, setY] = useValue(0);
+
+const bounce = () => {
+  setY(withLoop(
+    withSequence([
+      withSpring(30, { stiffness: 300 }),
+      withSpring(0, { stiffness: 300 }),
+    ]),
+    3 // Bounce 3 times
+  ));
+};
+```
+
+### Pattern 4: Color Pulse
+
+```jsx
+const [brightness, setBrightness] = useValue(1);
+
+useEffect(() => {
+  setBrightness(withLoop(
+    withSequence([
+      withTiming(1.2, { duration: 1000 }),
+      withTiming(1, { duration: 1000 }),
+    ]),
+    -1
+  ));
+}, []);
+
+// Use in style
+style={{
+  filter: `brightness(${brightness})`,
+}}
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use infinite loops for loading indicators and ambient effects
+- Use finite loops for attention-grabbing animations (3-5 times)
+- Keep looped animations subtle - they're always visible
+- Use `withSequence` inside loops for complex repeating patterns
+
+### ❌ Don't
+
+- Don't loop animations that are too fast or jarring
+- Don't use infinite loops for user-triggered actions
+- Don't forget to provide a way to stop infinite loops when needed
+- Don't loop layout properties - use transforms instead
+
+## Performance Tips
+
+1. **Loops are efficient** - Optimized for continuous animations
+2. **Use transforms** - `rotate`, `scale` are GPU-accelerated
+3. **Keep it simple** - Simple looped animations perform better
+4. **Consider stopping** - Provide a way to stop infinite loops
+
+## Troubleshooting
+
+**Animation doesn't loop:**
+- Check that `iterations` is set correctly (-1 for infinite)
+- Verify the animation completes before looping
+
+**Loop feels janky:**
+- Use transforms instead of layout properties
+- Simplify the animation inside the loop
+- Check for other heavy operations
+
+**Can't stop the loop:**
+- Store the animation reference
+- Use a state variable to control when to loop
+- Consider using `useEffect` cleanup
+
+## Next Steps
+
+- Learn about [withSequence](./withSequence) to create complex looped patterns
+- Explore [withSpring](./withSpring) for natural looped motion
+- Check out [withTiming](./withTiming) for precise looped timing

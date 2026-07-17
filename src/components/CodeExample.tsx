@@ -1,22 +1,24 @@
 import React from 'react';
 import SandPack from './SandPack';
-// Import all examples directly
-import * as Examples from '../examples';
+import { STABLE_VERSION } from '../constants/versions';
+import sharedStyles from '!!raw-loader!../examples/styles.css';
 
 interface CodeExampleProps {
   /**
-   * Key of the example to display (auto-generated from file path)
-   * Example: "v5_x_x_modifier_withSpring_GetStartedExample"
-   *
-   * The key is generated from the file path:
-   * - "v5.x.x/modifier/withSpring/GetStartedExample.tsx" -> "v5_x_x_modifier_withSpring_GetStartedExample"
+   * Example source, imported at build time via raw-loader, e.g.:
+   * import Code from '!!raw-loader!@site/src/examples/next/presence/Basic.tsx';
    */
-  example: string;
+  code: string;
   /**
-   * Version of react-ui-animate to use in Sandpack
+   * Optional example-specific CSS, imported the same way as `code`.
+   */
+  css?: string;
+  /**
+   * Version of react-ui-animate to install in the Sandpack sandbox.
+   * Defaults to STABLE_VERSION; pass NEXT_VERSION for `next`-docs examples.
    */
   version?: {
-    reactAnimate: '5.0.0' | '^3.3.0';
+    reactAnimate: string;
   };
   /**
    * Additional files to include in Sandpack (optional)
@@ -29,83 +31,35 @@ interface CodeExampleProps {
 }
 
 /**
- * CodeExample component that displays example code in Sandpack.
+ * Renders a runnable Sandpack example from raw-loader-imported source.
  *
  * Usage in MDX:
  * ```jsx
- * <CodeExample example="v5_x_x_modifier_withSpring_GetStartedExample" />
+ * import Code from '!!raw-loader!@site/src/examples/next/presence/Basic.tsx';
+ * import { NEXT_VERSION } from '@site/src/constants/versions';
+ *
+ * <CodeExample code={Code} version={{ reactAnimate: NEXT_VERSION }} />
  * ```
  */
 export default function CodeExample({
-  example,
-  version = { reactAnimate: '5.0.0' },
+  code,
+  css,
+  version = { reactAnimate: STABLE_VERSION },
   additionalFiles = {},
   fileName = 'App.tsx',
 }: CodeExampleProps) {
-  const ExampleCode = Examples[example as keyof typeof Examples];
-  const cssKey = `${example}_CSS` as keyof typeof Examples;
-  const cssContent = Examples[cssKey] as string | undefined;
-
-  if (!ExampleCode) {
-    console.error(
-      `Example "${example}" not found. Available examples:`,
-      Object.keys(Examples).slice(0, 10)
-    );
-    return (
-      <div
-        style={{
-          padding: '1rem',
-          background: '#fee',
-          border: '1px solid #fcc',
-          borderRadius: '8px',
-        }}
-      >
-        <strong>Error:</strong> Example "{example}" not found.
-        <br />
-        <small>
-          Available examples: {Object.keys(Examples).slice(0, 5).join(', ')}...
-        </small>
-        <br />
-        <small>
-          Please run "npm run generate:examples" to update the index.
-        </small>
-      </div>
-    );
-  }
-
-  // ExampleCode is already a string constant from the generated index
-  const codeContent = ExampleCode as string;
-
-  // Get shared styles from the generated index
-  const sharedStyles = (Examples as any).sharedStyles as string | undefined;
-
-  // Build files object - always include shared styles.css
   const files: Record<string, string> = {
-    [fileName]: codeContent,
+    [fileName]: code,
+    'styles.css': sharedStyles,
     ...additionalFiles,
   };
 
-  // Add shared styles.css if available
-  if (sharedStyles) {
-    files['styles.css'] = sharedStyles;
-  }
-
-  // Add example-specific CSS file if it exists
-  if (cssContent) {
-    // Extract the CSS filename from the import statement in the code
-    // Look for: import './GetStartedExample.css';
-    const cssImportMatch = codeContent.match(
-      /import\s+['"](\.\/)?([^'"]+\.css)['"]/
-    );
-    if (cssImportMatch) {
-      // Use the filename from the import statement
-      const cssFileName = cssImportMatch[2].replace(/^\.\//, ''); // Remove leading ./
-      files[cssFileName] = cssContent;
-    } else {
-      // Fallback: extract from example key
-      const cssFileName = example.split('_').pop() + '.css';
-      files[cssFileName] = cssContent;
-    }
+  if (css) {
+    const cssImportMatch = code.match(/import\s+['"](\.\/)?([^'"]+\.css)['"]/);
+    const cssFileName = cssImportMatch
+      ? cssImportMatch[2].replace(/^\.\//, '')
+      : `${fileName.replace(/\.tsx?$/, '')}.css`;
+    files[cssFileName] = css;
   }
 
   return <SandPack version={version} files={files} />;

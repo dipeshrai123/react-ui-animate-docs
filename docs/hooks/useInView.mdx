@@ -5,6 +5,8 @@ title: useInView
 ---
 
 import CodeExample from '@site/src/components/CodeExample';
+import Code_hook_useInView_BasicExample from '!!raw-loader!@site/src/examples/next/hook/useInView/BasicExample.tsx';
+import { NEXT_VERSION } from '@site/src/constants/versions';
 
 The `useInView` hook detects when an element enters or leaves the viewport using the Intersection Observer API. It's perfect for scroll-triggered animations, lazy loading, analytics tracking, and performance optimizations.
 
@@ -78,8 +80,8 @@ function ScrollReveal() {
 ```
 
 <CodeExample
-  example="v5_x_x_hook_useInView_BasicExample"
-  version={{ reactAnimate: '5.3.0-next.1' }}
+  code={Code_hook_useInView_BasicExample}
+  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Understanding Threshold
@@ -400,7 +402,7 @@ useEffect(() => {
 - Don't use for elements that are always visible
 - Don't set threshold too high (users might miss animations)
 - Don't forget to handle cleanup if needed
-- Don't use for real-time position tracking (use `useScroll` instead)
+- Don't use for real-time position tracking (use [useScrollProgress](./useScrollProgress) or [Gesture.Scroll()](../gesture/useGesture#gesturescroll) instead)
 
 ## Performance Tips
 
@@ -443,6 +445,6 @@ useEffect(() => {
 ## Next Steps
 
 - Learn about [View Animations](../interactive/view-animations) for declarative scroll-triggered animations
-- Explore [useScroll](../gesture/useScroll) for scroll position tracking
+- Explore [useScrollProgress](./useScrollProgress) for scroll position tracking
 - Check out [Presence](../presence/presence-basics) for enter/exit animations
 

@@ -1,0 +1,93 @@
+---
+sidebar_position: 1
+id: overview
+title: Recipes
+---
+
+`recipes` is a namespace object of ready-made `AnimateProp` values —
+common transitions you'd otherwise write by hand as `{ opacity: withSpring(1) }`
+and friends. Spread one straight into `animate` (as the target of `set`,
+`animate`, or `exit`) instead of hand-writing the descriptor.
+
+```jsx
+import { animate, useValue, recipes } from 'react-ui-animate';
+
+function FadeInCard() {
+  const [style, setStyle] = useValue({ opacity: 0, translateY: 20 });
+
+  return (
+    <animate.div
+      style={style}
+      onMouseEnter={() => setStyle(recipes.fadeInUp)}
+    />
+  );
+}
+```
+
+Recipes compose with [Presence](../presence/presence-basics) too — pass one as
+`animate` or `exit`:
+
+```jsx
+<animate.div
+  key="card"
+  animate={recipes.scaleIn}
+  exit={recipes.scaleOut}
+/>
+```
+
+## Available recipes
+
+### Fade
+
+`fadeIn`, `fadeOut`, `fadeInUp`, `fadeInDown`, `fadeInLeft`, `fadeInRight`
+
+### Slide
+
+`slideInUp`, `slideInDown`, `slideInLeft`, `slideInRight`, `slideOutUp`,
+`slideOutDown`, `slideOutLeft`, `slideOutRight`
+
+### Scale
+
+`scaleIn`, `scaleOut`, `scaleUp`, `scaleDown`
+
+### Bounce
+
+`bounceIn`, `bounceOut`
+
+### Rotate
+
+`rotateIn`, `rotateOut`, `spin`
+
+### Zoom
+
+`zoomIn`, `zoomOut`
+
+### Flip
+
+`flipX`, `flipY`
+
+### Slide + fade / scale + fade
+
+`slideFadeIn`, `slideFadeOut`, `scaleFadeIn`, `scaleFadeOut`
+
+### Hover
+
+`hoverScale`, `hoverLift`, `hoverGlow` — designed for `onMouseEnter`/
+`onMouseLeave`, or as the `hover` prop's target.
+
+### Press
+
+`pressScale`, `pressDown` — designed for `onPointerDown`/`onPointerUp`, or
+as the `press` prop's target.
+
+### Exit
+
+`exitFade`, `exitSlideUp`, `exitSlideDown`, `exitScale` — meant for
+`Presence`'s `exit` prop.
+
+## Why not the old flat exports?
+
+Earlier versions exported each of these directly (`import { fadeIn } from
+'react-ui-animate'`). They're now grouped under the single `recipes` object
+to keep the top-level export surface small — swap `fadeIn` for
+`recipes.fadeIn` and everything else is unchanged.
