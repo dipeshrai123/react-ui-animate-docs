@@ -44,7 +44,7 @@ const Particle = styled(animate.div)`
 `;
 
 const Count = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: #9ca3af;
 `;

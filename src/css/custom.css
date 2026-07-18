@@ -240,6 +240,11 @@ h6 {
   font-weight: 600;
 }
 
+.theme-doc-sidebar-item-link-level-1 > .menu__link--active .menu__category-icon,
+.theme-doc-sidebar-item-link-level-1 > .menu__link:hover .menu__category-icon {
+  color: var(--sidebar-icon-active);
+}
+
 .menu__list-item-collapsible > .menu__link.menu__link--active .menu__category-icon,
 .menu__list-item-collapsible:hover > .menu__link .menu__category-icon {
   color: var(--sidebar-icon-active);

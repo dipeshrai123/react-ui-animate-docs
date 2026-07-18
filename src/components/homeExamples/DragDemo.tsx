@@ -10,8 +10,8 @@ const Stage = styled.div`
 `;
 
 const Card = styled(animate.div)`
-  width: 132px;
-  height: 132px;
+  width: 148px;
+  height: 148px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,6 +24,8 @@ const Card = styled(animate.div)`
   color: #ffffff;
   background: #3b82f6;
   border: 1px solid #2563eb;
+  font-size: 15px;
+  font-weight: 600;
 
   &:active {
     cursor: grabbing;
@@ -32,7 +34,7 @@ const Card = styled(animate.div)`
 
 const Caption = styled.div`
   font-family: var(--site-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: #6b7280;

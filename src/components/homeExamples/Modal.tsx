@@ -21,10 +21,10 @@ const Stage = styled.div`
 `;
 
 const Trigger = styled.button`
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: 8px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: #e5e7eb;
   cursor: pointer;
@@ -43,9 +43,9 @@ const Backdrop = styled(animate.div)`
 
 const Dialog = styled(animate.div)`
   position: relative;
-  width: 86%;
-  max-width: 260px;
-  padding: 20px 18px 18px;
+  width: 88%;
+  max-width: 320px;
+  padding: 22px 20px 20px;
   border-radius: 12px;
   background: #15171e;
   border: 1px solid #2a2e38;
@@ -59,8 +59,8 @@ const CloseBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 8px;
   color: #9ca3af;
   cursor: pointer;
@@ -69,16 +69,17 @@ const CloseBtn = styled.button`
 `;
 
 const DialogTitle = styled.h3`
-  margin: 0 0 6px;
-  font-size: 16px;
+  margin: 0 0 8px;
+  font-size: 1.15rem;
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: #e5e7eb;
 `;
 
 const DialogText = styled.p`
-  margin: 0 0 18px;
-  font-size: 13px;
-  line-height: 1.5;
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.55;
   color: #9ca3af;
 `;
 
@@ -89,9 +90,9 @@ const Actions = styled.div`
 
 const Ghost = styled.button`
   flex: 1;
-  padding: 8px 0;
+  padding: 10px 0;
   border-radius: 9px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   color: #e5e7eb;
@@ -101,9 +102,9 @@ const Ghost = styled.button`
 
 const Solid = styled.button`
   flex: 1;
-  padding: 8px 0;
+  padding: 10px 0;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   color: #eff6ff;

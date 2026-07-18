@@ -14,14 +14,14 @@ import {
 
 const Stage = styled.div`
   width: 100%;
-  max-width: 300px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 `;
 
 const Hint = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: #6b7280;
@@ -31,7 +31,7 @@ const Hint = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 188px;
+  min-height: 220px;
 `;
 
 const RowWrap = styled(animate.div)`
@@ -49,7 +49,7 @@ const DeleteBg = styled.div`
   justify-content: flex-end;
   gap: 8px;
   padding-right: 18px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: #ffffff;
@@ -62,7 +62,7 @@ const Fore = styled(animate.div)`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 12px 0 14px;
+  padding: 0 14px 0 16px;
   background: #1a1d24;
   border: 1px solid #2a2e38;
   border-radius: 10px;
@@ -79,12 +79,12 @@ const Avatar = styled.div<{ $color: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
   border-radius: 9px;
   background: ${(p) => p.$color};
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #ffffff;
@@ -99,7 +99,7 @@ const Meta = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.3;
@@ -107,7 +107,7 @@ const Name = styled.div`
 `;
 
 const Detail = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.35;
   color: #9ca3af;
   white-space: nowrap;
@@ -117,12 +117,12 @@ const Detail = styled.div`
 
 const Time = styled.div`
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   color: #6b7280;
 `;
 
-const ROW_H = 56;
+const ROW_H = 64;
 const THRESHOLD = 88;
 
 type ItemData = {

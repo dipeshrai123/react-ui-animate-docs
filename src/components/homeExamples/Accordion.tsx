@@ -5,14 +5,14 @@ import { animate, useValue, withSpring } from 'react-ui-animate';
 
 const Stage = styled.div`
   width: 100%;
-  max-width: 300px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 `;
 
 const Eyebrow = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: #6b7280;
@@ -34,10 +34,10 @@ const Item = styled.div<{ $last: boolean; $open: boolean }>`
 const Header = styled.button`
   width: 100%;
   display: grid;
-  grid-template-columns: 20px minmax(0, 1fr) 20px;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
   align-items: center;
   column-gap: 10px;
-  padding: 11px 12px;
+  padding: 14px 14px;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -46,7 +46,7 @@ const Header = styled.button`
 `;
 
 const Index = styled.span<{ $open: boolean }>`
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
@@ -55,10 +55,10 @@ const Index = styled.span<{ $open: boolean }>`
 `;
 
 const Question = styled.span<{ $open: boolean }>`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.015em;
-  line-height: 1.3;
+  line-height: 1.35;
   color: ${(p) => (p.$open ? '#e5e7eb' : '#d1d5db')};
   transition: color 0.15s ease;
 `;
@@ -79,11 +79,11 @@ const Panel = styled(animate.div)`
 
 const Answer = styled.div`
   display: grid;
-  grid-template-columns: 20px minmax(0, 1fr) 20px;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
   column-gap: 10px;
-  padding: 0 12px 11px;
-  font-size: 12px;
-  line-height: 1.45;
+  padding: 0 14px 14px;
+  font-size: 14px;
+  line-height: 1.5;
   letter-spacing: -0.01em;
   color: #9ca3af;
 
@@ -163,7 +163,7 @@ function AccordionItem({
             color: open ? '#60a5fa' : '#6b7280',
           }}
         >
-          <FiChevronDown size={14} strokeWidth={2.25} />
+          <FiChevronDown size={16} strokeWidth={2.25} />
         </Chevron>
       </Header>
       <Panel style={{ height, opacity: progress }}>

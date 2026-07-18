@@ -18,7 +18,7 @@ const MESSAGES = [
 const Stage = styled.div`
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -27,10 +27,10 @@ const Stage = styled.div`
 
 const Trigger = styled.button`
   align-self: center;
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: 8px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: #e5e7eb;
@@ -47,12 +47,12 @@ const Trigger = styled.button`
 
 const Tray = styled.div`
   position: relative;
-  min-height: 176px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 8px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 12px;
   border: 1px solid #2a2e38;
   background: #12141a;
@@ -71,15 +71,15 @@ const Body = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 12px 12px 12px 14px;
+  padding: 14px 14px 14px 16px;
 `;
 
 const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   margin-top: 1px;
   border-radius: 8px;
@@ -94,7 +94,7 @@ const Copy = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.3;
@@ -102,9 +102,9 @@ const Title = styled.div`
 `;
 
 const Detail = styled.div`
-  margin-top: 2px;
-  font-size: 12px;
-  line-height: 1.4;
+  margin-top: 3px;
+  font-size: 14px;
+  line-height: 1.45;
   color: #9ca3af;
 `;
 
@@ -112,8 +112,8 @@ const Dismiss = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   margin: -2px -2px 0 0;
   padding: 0;
@@ -152,7 +152,7 @@ const EmptyHint = styled.div`
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: -0.01em;
   color: #6b7280;
   opacity: ${(p: { $visible: boolean }) => (p.$visible ? 1 : 0)};
@@ -178,7 +178,7 @@ function Toast({
     <ToastCard
       style={{ height: 0, opacity: 0, scale: 0.97, y: -6 }}
       animate={{
-        height: withSpring(68, { damping: 18, stiffness: 220 }),
+        height: withSpring(76, { damping: 18, stiffness: 220 }),
         opacity: withSpring(1, { damping: 18 }),
         scale: withSpring(1, { damping: 18 }),
         y: withSpring(0, { damping: 18 }),

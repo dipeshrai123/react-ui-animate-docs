@@ -27,11 +27,15 @@ import {
   FiLayout,
   FiTool,
   FiBookOpen,
+  FiLayers,
+  FiCode,
+  FiCpu,
 } from 'react-icons/fi';
 
-// Top-level category icons, matched by label — plain react-icons (Feather),
-// the same set used everywhere else on the site (toolbar, copy button).
+// Top-level category icons, matched by label — covers both current docs
+// and versioned 5.3.2 labels (which use slightly different names).
 const CATEGORY_ICONS: Record<string, React.ComponentType> = {
+  // Current (next)
   'Core Concepts': FiCompass,
   'Animation Modifiers': FiSliders,
   'Interactive Props': FiMousePointer,
@@ -40,6 +44,15 @@ const CATEGORY_ICONS: Record<string, React.ComponentType> = {
   'Presence & Layout': FiLayout,
   Utilities: FiTool,
   Recipes: FiBookOpen,
+  // 5.3.2
+  Concept: FiCompass,
+  'Animation Modifier': FiSliders,
+  'Interactive Animations': FiMousePointer,
+  Gesture: FiMove,
+  Hook: FiAnchor,
+  'Presence & Exit': FiLayers,
+  'Advanced Topics': FiCpu,
+  'Real-World Examples': FiCode,
 };
 
 // If we navigate to a category and it becomes active, it should automatically

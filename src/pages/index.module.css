@@ -426,6 +426,11 @@
   text-align: center;
 }
 
+.sectionHeader .showcaseDocsLink {
+  display: inline-flex;
+  margin-top: var(--space-2);
+}
+
 .eyebrow {
   display: inline-block;
   margin-bottom: var(--space-2);
@@ -513,42 +518,13 @@
   max-width: 1080px;
 }
 
-.showcaseHeader {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin: 0 0 var(--space-4);
-}
-
-.showcaseHeading {
-  min-width: 0;
-}
-
-.showcaseTitle {
-  font-size: var(--fs-h2);
-  line-height: 1.15;
-  font-weight: var(--fw-h2);
-  letter-spacing: -0.025em;
-  margin: 0 0 6px;
-  color: var(--ifm-heading-color);
-}
-
-.showcaseLede {
-  margin: 0;
-  font-size: var(--fs-lede);
-  font-weight: var(--fw-lede);
-  line-height: 1.6;
-  color: var(--ifm-color-content-secondary);
-}
-
 .showcaseDocsLink {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   flex-shrink: 0;
-  padding-bottom: 2px;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: #9ca3af !important;
   text-decoration: none !important;
@@ -560,12 +536,12 @@
 }
 
 .showcaseDocsIcon {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .showcaseFrame {
   display: grid;
-  grid-template-columns: 272px minmax(0, 1fr);
+  grid-template-columns: 280px minmax(0, 1fr);
   align-items: stretch;
   overflow: hidden;
   border: 1px solid #2a2e38;
@@ -589,7 +565,7 @@
   align-items: start;
   width: 100%;
   margin: 0;
-  padding: 11px 12px;
+  padding: 12px;
   border: none;
   border-radius: 9px;
   background: transparent;
@@ -608,12 +584,12 @@
 }
 
 .showcaseNavIndex {
-  padding-top: 1px;
-  font-size: 0.6875rem;
+  padding-top: 2px;
+  font-size: 0.75rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: #4b5563;
+  color: #6b7280;
   line-height: 1.4;
 }
 
@@ -629,11 +605,11 @@
 }
 
 .showcaseNavTitle {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: -0.015em;
   color: #9ca3af;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .showcaseNavItemActive .showcaseNavTitle {
@@ -641,8 +617,8 @@
 }
 
 .showcaseNavDesc {
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-size: 0.8125rem;
+  line-height: 1.45;
   color: #6b7280;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -671,7 +647,7 @@
 }
 
 .showcaseStageTitle {
-  font-size: 0.9375rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #e5e7eb;
@@ -679,9 +655,9 @@
 }
 
 .showcaseStageDesc {
-  margin-top: 3px;
-  font-size: 0.8125rem;
-  line-height: 1.45;
+  margin-top: 4px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
   color: #9ca3af;
 }
 
@@ -874,12 +850,6 @@
 
   .featureGrid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .showcaseHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
   }
 
   .showcaseFrame {

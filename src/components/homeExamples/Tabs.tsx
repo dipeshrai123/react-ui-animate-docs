@@ -11,7 +11,7 @@ import {
 
 const Stage = styled.div`
   width: 100%;
-  max-width: 280px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -29,12 +29,12 @@ const Tab = styled.button<{ active: boolean }>`
   position: relative;
   z-index: 1;
   flex: 1;
-  padding: 8px 0;
+  padding: 10px 0;
   border: none;
   background: transparent;
   cursor: pointer;
   font-family: inherit;
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: ${(p) => (p.active ? '#ffffff' : '#9ca3af')};
@@ -42,23 +42,23 @@ const Tab = styled.button<{ active: boolean }>`
 `;
 
 const Panel = styled(animate.div)`
-  min-height: 92px;
-  padding: 14px 16px;
+  min-height: 108px;
+  padding: 16px 18px;
   border-radius: 12px;
   background: #15171e;
   border: 1px solid #2a2e38;
 `;
 
 const PanelTitle = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.015em;
   color: #e5e7eb;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 `;
 
 const PanelText = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.55;
   color: #9ca3af;
 `;

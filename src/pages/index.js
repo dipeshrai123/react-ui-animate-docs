@@ -398,14 +398,13 @@ function Examples() {
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className={clsx('container', styles.showcaseWrap)}>
-        <ViewReveal className={styles.showcaseHeader}>
-          <div className={styles.showcaseHeading}>
-            <h2 className={styles.showcaseTitle}>Examples</h2>
-            <p className={styles.showcaseLede}>
-              Interactive patterns built with React UI Animate. Real source,
-              not a mockup.
-            </p>
-          </div>
+        <ViewReveal className={styles.sectionHeader}>
+          <span className={styles.eyebrow}>Live demos</span>
+          <h2 className={styles.sectionTitle}>Examples</h2>
+          <p className={styles.sectionLede}>
+            Interactive patterns built with React UI Animate. Real source, not a
+            mockup.
+          </p>
           <Link to="/docs/getting-started" className={styles.showcaseDocsLink}>
             Read the docs
             <MdArrowForward className={styles.showcaseDocsIcon} />
