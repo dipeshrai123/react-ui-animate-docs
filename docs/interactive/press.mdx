@@ -4,6 +4,10 @@ id: press-animations
 title: Press Animations
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_PressExample from '!!raw-loader!@site/src/examples/next/interactive/PressExample.tsx';
+import Demo_interactive_PressExample from '@site/src/examples/next/interactive/PressExample';
+
 The `press` prop animates on pointer down/up for immediate feedback that a
 tap or click registered.
 
@@ -30,6 +34,16 @@ import { animate, withSpring, recipes } from 'react-ui-animate';
 Hover and press compose: hovering scales to `1.1`, pressing scales from
 whatever the current value is (`1.1`) down to `0.95`, releasing returns to
 the hover state, and leaving returns to the base style.
+
+<CodeExample
+  demo={Demo_interactive_PressExample}
+  code={Code_interactive_PressExample}
+/>
+
+:::tip
+Use a slightly smaller press scale (`0.94`–`0.97`) than your hover scale so
+the press still reads clearly while the pointer is already hovering.
+:::
 
 ## Next steps
 

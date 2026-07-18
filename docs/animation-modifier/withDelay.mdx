@@ -4,6 +4,10 @@ id: withDelay
 title: withDelay
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_modifier_withDelay_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withDelay/BasicExample.tsx';
+import Demo_modifier_withDelay_BasicExample from '@site/src/examples/next/modifier/withDelay/BasicExample';
+
 `withDelay` is a pause, one step you place inside a
 [`withSequence`](./withSequence), not a wrapper around another animation.
 
@@ -32,8 +36,15 @@ function Delayed() {
 }
 ```
 
+<CodeExample
+  demo={Demo_modifier_withDelay_BasicExample}
+  code={Code_modifier_withDelay_BasicExample}
+/>
+
+:::note
 For staggering several items rather than delaying a single sequence, use
 [withStagger](./withStagger) instead. It wraps this same pattern per index.
+:::
 
 ## Next steps
 

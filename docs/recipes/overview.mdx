@@ -4,36 +4,38 @@ id: overview
 title: Recipes
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_recipes_BasicExample from '!!raw-loader!@site/src/examples/next/recipes/BasicExample.tsx';
+import Demo_recipes_BasicExample from '@site/src/examples/next/recipes/BasicExample';
+
 `recipes` is a namespace object of ready-made `AnimateProp` values for
 common transitions you'd otherwise write by hand as `{ opacity: withSpring(1) }`
-and friends. Spread one straight into `animate` (as the target of `set`,
-`animate`, or `exit`) instead of hand-writing the descriptor.
+and friends. Pass one straight into `animate`, `exit`, `hover`, `press`, or
+`set(...)` instead of hand-writing the descriptor.
 
 ```jsx
-import { animate, useValue, recipes } from 'react-ui-animate';
+import { animate, Presence, recipes } from 'react-ui-animate';
 
-function FadeInCard() {
-  const [style, setStyle] = useValue({ opacity: 0, translateY: 20 });
-
-  return (
+<Presence>
+  {open && (
     <animate.div
-      style={style}
-      onMouseEnter={() => setStyle(recipes.fadeInUp)}
+      key="card"
+      animate={recipes.scaleIn}
+      exit={recipes.scaleOut}
     />
-  );
-}
+  )}
+</Presence>
 ```
 
-Recipes compose with [Presence](../presence/presence-basics) too. Pass one as
-`animate` or `exit`:
-
-```jsx
-<animate.div
-  key="card"
-  animate={recipes.scaleIn}
-  exit={recipes.scaleOut}
+<CodeExample
+  demo={Demo_recipes_BasicExample}
+  code={Code_recipes_BasicExample}
 />
-```
+
+:::tip
+Use recipes for common enter/exit/hover/press motion; reach for
+`withSpring` / `withTiming` when you need custom targets or timing.
+:::
 
 ## Available recipes
 

@@ -4,6 +4,10 @@ id: view-animations
 title: View Animations
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_ViewExample from '!!raw-loader!@site/src/examples/next/interactive/ViewExample.tsx';
+import Demo_interactive_ViewExample from '@site/src/examples/next/interactive/ViewExample';
+
 The `view` prop animates an element when it enters the viewport, via
 `IntersectionObserver`: a declarative alternative to
 [useInView](../hooks/useInView) for the common "reveal on scroll" case.
@@ -24,6 +28,16 @@ import { animate, withTiming, withSpring } from 'react-ui-animate';
 </animate.div>
 // highlight-end
 ```
+
+<CodeExample
+  demo={Demo_interactive_ViewExample}
+  code={Code_interactive_ViewExample}
+/>
+
+:::tip
+Start from the hidden style (`opacity: 0`, `translateY: 50`) and animate
+*to* the visible target in `view`. Set `once: true` for one-shot reveals.
+:::
 
 ## viewOptions
 

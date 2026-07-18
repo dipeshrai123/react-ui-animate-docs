@@ -4,6 +4,10 @@ id: focus-animations
 title: Focus Animations
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_FocusExample from '!!raw-loader!@site/src/examples/next/interactive/FocusExample.tsx';
+import Demo_interactive_FocusExample from '@site/src/examples/next/interactive/FocusExample';
+
 The `focus` prop animates on focus/blur: the keyboard/assistive-tech
 equivalent of `hover`.
 
@@ -16,23 +20,33 @@ import { animate, withSpring } from 'react-ui-animate';
   type="text"
   focus={{
     scale: withSpring(1.02),
-    borderColor: withSpring('#3399ff'),
-    boxShadow: withSpring('0 0 0 3px rgba(51, 153, 255, 0.1)'),
+    borderColor: withSpring('#60a5fa'),
+    boxShadow: withSpring('0 0 0 3px rgba(96, 165, 250, 0.25)'),
   }}
-  style={{ border: '2px solid #e1e1e1', outline: 'none' }}
+  style={{ border: '1px solid rgba(255,255,255,0.14)', outline: 'none' }}
 />
 ```
 
-If you set `outline: 'none'` (as above, to replace the browser default with
-your own), the `focus` animation *is* the focus indicator. Don't remove
-one without providing the other, or keyboard users lose all focus feedback.
+<CodeExample
+  demo={Demo_interactive_FocusExample}
+  code={Code_interactive_FocusExample}
+/>
+
+:::caution
+If you set `outline: 'none'` to replace the browser default, the `focus`
+animation *is* the focus indicator. Don't remove one without providing the
+other, or keyboard users lose all focus feedback.
+:::
 
 ## Combining with hover
 
 ```jsx
 <animate.button
   hover={{ scale: withSpring(1.1) }}
-  focus={{ scale: withSpring(1.05), boxShadow: withSpring('0 0 0 3px rgba(51, 153, 255, 0.3)') }}
+  focus={{
+    scale: withSpring(1.05),
+    boxShadow: withSpring('0 0 0 3px rgba(96, 165, 250, 0.3)'),
+  }}
 >
   Accessible Button
 </animate.button>

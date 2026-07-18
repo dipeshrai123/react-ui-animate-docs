@@ -517,6 +517,75 @@ body.nav-overlay .navbar .dropdown > .navbar__link {
   padding: 0.25rem 0.65rem;
 }
 
+/* ===== Admonitions (Note / Tip / Info) ===== */
+.theme-admonition {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-left-width: 1px !important;
+  padding: 0.9rem 1rem !important;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.theme-admonition::before {
+  display: none !important;
+}
+
+.theme-admonition .admonition-heading {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.theme-admonition .admonition-heading h5 {
+  font-size: inherit;
+  margin: 0;
+}
+
+.theme-admonition .admonition-icon {
+  display: none;
+}
+
+.theme-admonition .admonition-content > :last-child {
+  margin-bottom: 0;
+}
+
+.theme-admonition-note,
+.theme-admonition-info {
+  --ifm-alert-background-color: rgba(96, 165, 250, 0.08);
+  --ifm-alert-border-color: rgba(96, 165, 250, 0.22);
+  --ifm-alert-foreground-color: rgba(232, 238, 245, 0.86);
+  background: var(--ifm-alert-background-color) !important;
+  border-color: var(--ifm-alert-border-color) !important;
+  color: var(--ifm-alert-foreground-color);
+}
+
+.theme-admonition-tip {
+  --ifm-alert-background-color: rgba(52, 211, 153, 0.08);
+  --ifm-alert-border-color: rgba(52, 211, 153, 0.22);
+  --ifm-alert-foreground-color: rgba(232, 238, 245, 0.86);
+  background: var(--ifm-alert-background-color) !important;
+  border-color: var(--ifm-alert-border-color) !important;
+  color: var(--ifm-alert-foreground-color);
+}
+
+.theme-admonition-caution,
+.theme-admonition-warning {
+  --ifm-alert-background-color: rgba(251, 191, 36, 0.08);
+  --ifm-alert-border-color: rgba(251, 191, 36, 0.22);
+  --ifm-alert-foreground-color: rgba(232, 238, 245, 0.86);
+  background: var(--ifm-alert-background-color) !important;
+  border-color: var(--ifm-alert-border-color) !important;
+  color: var(--ifm-alert-foreground-color);
+}
+
+.theme-admonition a {
+  color: #60a5fa !important;
+}
+
 /* ===== Doc prose: tighter vertical rhythm ===== */
 .markdown > h2 {
   margin-top: var(--space-6);

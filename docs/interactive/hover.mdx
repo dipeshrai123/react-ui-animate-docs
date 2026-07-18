@@ -4,6 +4,10 @@ id: hover-animations
 title: Hover Animations
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_HoverExample from '!!raw-loader!@site/src/examples/next/interactive/HoverExample.tsx';
+import Demo_interactive_HoverExample from '@site/src/examples/next/interactive/HoverExample';
+
 The `hover` prop animates on pointer enter/leave.
 
 ## Usage
@@ -16,14 +20,16 @@ import { animate, withSpring, recipes } from 'react-ui-animate';
 <animate.button hover={{ scale: withSpring(1.1) }}>Hover me</animate.button>
 // highlight-end
 
-<animate.div
-  hover={{ scale: withSpring(1.05), translateY: withSpring(-8) }}
-/>
 // highlight-start
 /* Or pass a ready-made recipe */
 <animate.button hover={recipes.hoverScale}>Preset</animate.button>
 // highlight-end
 ```
+
+<CodeExample
+  demo={Demo_interactive_HoverExample}
+  code={Code_interactive_HoverExample}
+/>
 
 ## Combining with other props
 
@@ -39,8 +45,10 @@ import { animate, withSpring, recipes } from 'react-ui-animate';
 // highlight-end
 ```
 
-Note `hover` fires from real pointer enter/leave. On touch devices, prefer
-[press](./press-animations) instead, since there's no true "hover" state.
+:::note
+`hover` only fires from real pointer enter/leave. On touch devices, prefer
+[press](./press-animations) instead: there is no lasting hover state.
+:::
 
 ## Next steps
 

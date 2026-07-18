@@ -55,6 +55,12 @@ Outside of a `Presence` tree, both hooks report present/mounted (`isPresent:
 true`), they're safe to call unconditionally even if a component is
 sometimes rendered without a surrounding `Presence`.
 
+:::note
+Prefer the declarative `exit` prop when you only need style animation. Use
+`usePresence` when exit must drive custom logic (child animations, timeouts,
+non-style cleanup) and you call `safeToRemove` yourself.
+:::
+
 ## Presence-level options
 
 A few `Presence` props worth knowing about alongside these hooks:

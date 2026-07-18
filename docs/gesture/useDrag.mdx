@@ -91,6 +91,11 @@ function DraggableBox() {
 `x` and `y` are `AnimateValue`s, so they can be read directly in `style` (as
 above) or combined/interpolated like any other animated value.
 
+:::tip
+Animate `translateX` / `translateY`, not `left` / `top`. Transforms stay on
+the GPU and avoid layout thrash while dragging.
+:::
+
 ## Bounds, elasticity, and momentum
 
 ```jsx

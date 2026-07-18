@@ -4,6 +4,12 @@ id: animate-component
 title: The animate Component
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/modifier/withSpring/GetStartedExample';
+import Code_interactive_PressExample from '!!raw-loader!@site/src/examples/next/interactive/PressExample.tsx';
+import Demo_interactive_PressExample from '@site/src/examples/next/interactive/PressExample';
+
 `animate.*` (e.g. `animate.div`, `animate.button`) is a drop-in replacement
 for any HTML/SVG tag that understands animated values and adds a handful of
 declarative animation props: the foundation everything else in the library
@@ -31,6 +37,11 @@ function AnimatedBox() {
 
 `width` is an `AnimateValue` from `useValue`. Passing it into `style`
 subscribes the element directly, so it updates outside React's render cycle.
+
+<CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
+  code={Code_modifier_withSpring_GetStartedExample}
+/>
 
 ## Declarative props
 
@@ -60,8 +71,15 @@ it on the matching trigger:
 // highlight-end
 ```
 
-Any of these can also take a ready-made [recipe](../recipes/overview) instead
-of writing the descriptor by hand: `hover={recipes.hoverScale}`.
+<CodeExample
+  demo={Demo_interactive_PressExample}
+  code={Code_interactive_PressExample}
+/>
+
+:::tip
+Any of these can also take a ready-made [recipe](../recipes/overview)
+instead of writing the descriptor by hand: `hover={recipes.hoverScale}`.
+:::
 
 ## Transform shorthands
 
@@ -76,8 +94,10 @@ regular CSS properties:
 // highlight-end
 ```
 
-Prefer these over animating `width`/`height`/`top`/`left`. Transforms are
-GPU-accelerated and don't trigger layout.
+:::note
+Prefer transforms over animating `width`/`height`/`top`/`left`. Transforms
+are GPU-accelerated and don't trigger layout.
+:::
 
 ## Next steps
 
