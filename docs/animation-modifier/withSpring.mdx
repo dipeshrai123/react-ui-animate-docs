@@ -40,10 +40,13 @@ function Expandable() {
   const [width, setWidth] = useValue(100);
 
   return (
+    // highlight-start
+    /* Spring feels responsive — physics instead of a fixed duration */
     <animate.div
-      style={{ width, height: 100, background: '#7d93b0' }}
+      style={{ width, height: 100, background: '#60a5fa' }}
       onClick={() => setWidth(withSpring(200))}
     />
+    // highlight-end
   );
 }
 ```
@@ -69,7 +72,10 @@ driver in one call:
 
 ```jsx
 const [position, setPosition] = useValue({ x: 0, y: 0 });
+// highlight-start
+/* One call springs every key together */
 setPosition(withSpring({ x: 100, y: 100 }));
+// highlight-end
 ```
 
 <CodeExample

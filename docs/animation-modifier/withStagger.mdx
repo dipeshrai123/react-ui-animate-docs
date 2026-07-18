@@ -38,11 +38,14 @@ function StaggeredBars() {
   const [heights, setHeights] = useValue([20, 20, 20, 20, 20]);
 
   const expand = () => {
+    // highlight-start
+    /* Delay each spring by index so bars rise one after another */
     setHeights(
       withParallel(
         heights.map((_, i) => withStagger(i, withSpring(100), { each: 60 }))
       )
     );
+    // highlight-end
   };
 
   // ...

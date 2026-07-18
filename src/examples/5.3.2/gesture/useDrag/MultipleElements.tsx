@@ -30,7 +30,7 @@ const App = () => {
             width: 100,
             height: 100,
             cursor: 'grab',
-            backgroundColor: '#7d93b0',
+            backgroundColor: '#60a5fa',
             borderRadius: 4,
             marginBottom: 10,
             translateX: positions[i],

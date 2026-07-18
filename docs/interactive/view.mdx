@@ -13,6 +13,8 @@ The `view` prop animates an element when it enters the viewport, via
 ```jsx
 import { animate, withTiming, withSpring } from 'react-ui-animate';
 
+// highlight-start
+/* Reveal when the element scrolls into view */
 <animate.div
   view={{ opacity: withTiming(1), translateY: withSpring(0) }}
   viewOptions={{ threshold: 0.3, once: true }}
@@ -20,6 +22,7 @@ import { animate, withTiming, withSpring } from 'react-ui-animate';
 >
   Scroll to see me
 </animate.div>
+// highlight-end
 ```
 
 ## viewOptions

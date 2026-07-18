@@ -2,31 +2,31 @@ import React from 'react';
 import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
 
 const App: React.FC = () => {
-  const [bg, setBg] = useValue('#7d93b0');
+  const [bg, setBg] = useValue('#60a5fa');
 
   return (
     <div className="container">
       <button
         className="button buttonPrimary"
-        onClick={() => setBg(withSpring('#6b8ab8'))}
+        onClick={() => setBg(withSpring('#3b82f6'))}
       >
-        Spring to Blue
+        Spring to Deep
       </button>
       <button
         className="button buttonPrimary"
-        onClick={() => setBg(withSpring('#8a8ab8'))}
+        onClick={() => setBg(withSpring('#93c5fd'))}
       >
-        Spring to Purple
+        Spring to Light
       </button>
       <button
         className="button buttonPrimary"
-        onClick={() => setBg(withTiming('#b89a8a', { duration: 2000 }))}
+        onClick={() => setBg(withTiming('#818cf8', { duration: 2000 }))}
       >
-        Timing Red
+        Timing Indigo
       </button>
       <button
         className="button buttonSecondary"
-        onClick={() => setBg('#7d93b0')}
+        onClick={() => setBg('#60a5fa')}
       >
         Reset
       </button>

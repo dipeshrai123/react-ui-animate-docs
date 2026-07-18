@@ -29,6 +29,8 @@ function Sequenced() {
   const [x, setX] = useValue(0);
 
   const run = () => {
+    // highlight-start
+    /* Each step waits for the previous one to finish */
     setX(
       withSequence([
         withSpring(100),
@@ -36,6 +38,7 @@ function Sequenced() {
         withSpring(0),
       ])
     );
+    // highlight-end
   };
 
   return <animate.div style={{ translateX: x }} onClick={run} />;

@@ -38,7 +38,12 @@ function Flingable() {
   return (
     <animate.div
       style={{ translateX: x }}
-      onClick={() => setX(withDecay(0.8, { clamp: [-200, 200] }))}
+      onClick={() =>
+        // highlight-start
+        /* Momentum from velocity — slows to a stop inside clamp */
+        setX(withDecay(0.8, { clamp: [-200, 200] }))
+        // highlight-end
+      }
     />
   );
 }

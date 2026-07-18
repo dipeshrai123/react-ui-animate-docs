@@ -13,8 +13,10 @@ const App = () => {
   };
 
   return (
-    <div>
-      <button onClick={expand}>Expand</button>
+    <div className="container">
+      <button className="button buttonPrimary" onClick={expand}>
+        Expand
+      </button>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, marginTop: 12 }}>
         {ITEMS.map((_, i) => (
           <animate.div
@@ -22,7 +24,7 @@ const App = () => {
             style={{
               width: 24,
               height: heights[i],
-              background: '#7d93b0',
+              background: '#60a5fa',
               borderRadius: 4,
             }}
           />

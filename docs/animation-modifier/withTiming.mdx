@@ -41,7 +41,15 @@ function FadeIn() {
     <animate.div
       style={{ opacity }}
       onClick={() =>
-        setOpacity(withTiming(1, { duration: 300, easing: Easing.inOut(Easing.quad) }))
+        // highlight-start
+        /* Exact duration + easing curve — unlike withSpring's physics */
+        setOpacity(
+          withTiming(1, {
+            duration: 300,
+            easing: Easing.inOut(Easing.quad),
+          })
+        )
+        // highlight-end
       }
     />
   );

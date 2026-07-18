@@ -22,7 +22,10 @@ function Delayed() {
   const [x, setX] = useValue(0);
 
   const run = () => {
+    // highlight-start
+    /* Pause 500ms, then spring — withDelay is a sequence step */
     setX(withSequence([withDelay(500), withSpring(200)]));
+    // highlight-end
   };
 
   return <animate.div style={{ translateX: x }} onClick={run} />;

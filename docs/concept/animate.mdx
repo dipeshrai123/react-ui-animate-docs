@@ -20,7 +20,10 @@ function AnimatedBox() {
   return (
     <>
       <button onClick={() => setWidth(withSpring(200))}>Expand</button>
-      <animate.div style={{ width, height: 100, background: '#7d93b0' }} />
+      // highlight-start
+      {/* Bind the AnimateValue directly — no React re-render on each frame */}
+      <animate.div style={{ width, height: 100, background: '#60a5fa' }} />
+      // highlight-end
     </>
   );
 }
@@ -44,6 +47,8 @@ it on the matching trigger:
 | `view` | entering the viewport (+ `viewOptions`) |
 
 ```jsx
+// highlight-start
+/* Declarative targets: mount, hover, and press each animate on their trigger */
 <animate.button
   animate={{ opacity: withSpring(1) }}
   hover={{ scale: withSpring(1.1) }}
@@ -52,6 +57,7 @@ it on the matching trigger:
 >
   Interactive Button
 </animate.button>
+// highlight-end
 ```
 
 Any of these can also take a ready-made [recipe](../recipes/overview) instead
@@ -64,7 +70,10 @@ manual `transform: translate(...) scale(...)` string-building) alongside
 regular CSS properties:
 
 ```jsx
+// highlight-start
+/* Prefer GPU transforms over animating layout properties */
 <animate.div style={{ width: 100, translateX: 100, scale: 1.2, rotate: 45 }} />
+// highlight-end
 ```
 
 Prefer these over animating `width`/`height`/`top`/`left`. Transforms are

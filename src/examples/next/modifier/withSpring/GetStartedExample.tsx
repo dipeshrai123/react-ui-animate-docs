@@ -16,7 +16,7 @@ export default function App() {
         style={{
           width,
           height: 100,
-          backgroundColor: '#7d93b0',
+          backgroundColor: '#60a5fa',
           borderRadius: '8px',
           margin: '20px auto 0',
         }}

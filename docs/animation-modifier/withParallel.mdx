@@ -34,12 +34,15 @@ function Card() {
   const [style, setStyle] = useValue({ x: 0, rotate: 0 });
 
   const run = () => {
+    // highlight-start
+    /* Different drivers per key, running at the same time */
     setStyle(
       withParallel({
-        x: withSpring(150),                       // bouncy
-        rotate: withTiming(180, { duration: 600 }), // linear-ish
+        x: withSpring(150),
+        rotate: withTiming(180, { duration: 600 }),
       })
     );
+    // highlight-end
   };
 
   return <animate.div style={{ translateX: style.x, rotate: style.rotate }} onClick={run} />;
@@ -58,9 +61,12 @@ also how per-item staggered animations work, since `withStagger` only wraps
 one item's delay:
 
 ```jsx
+// highlight-start
+/* One descriptor per index — stagger delays each spring */
 setHeights(
   withParallel(heights.map((_, i) => withStagger(i, withSpring(100), { each: 60 })))
 );
+// highlight-end
 ```
 
 ## Next steps

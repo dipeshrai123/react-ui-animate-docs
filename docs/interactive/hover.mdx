@@ -11,23 +11,32 @@ The `hover` prop animates on pointer enter/leave.
 ```jsx
 import { animate, withSpring, recipes } from 'react-ui-animate';
 
+// highlight-start
+/* hover animates on pointer enter / leave */
 <animate.button hover={{ scale: withSpring(1.1) }}>Hover me</animate.button>
+// highlight-end
 
 <animate.div
   hover={{ scale: withSpring(1.05), translateY: withSpring(-8) }}
 />
+// highlight-start
+/* Or pass a ready-made recipe */
 <animate.button hover={recipes.hoverScale}>Preset</animate.button>
+// highlight-end
 ```
 
 ## Combining with other props
 
 ```jsx
+// highlight-start
+/* hover + press compose — each trigger owns its target */
 <animate.button
   hover={{ scale: withSpring(1.1) }}
   press={{ scale: withSpring(0.95) }}
 >
   Interactive Button
 </animate.button>
+// highlight-end
 ```
 
 Note `hover` fires from real pointer enter/leave. On touch devices, prefer

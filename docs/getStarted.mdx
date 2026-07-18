@@ -26,13 +26,19 @@ npm install react-ui-animate@next
 import { animate, useValue, withSpring } from 'react-ui-animate';
 
 function MyComponent() {
+  // highlight-start
+  /* 1. Create an animated value (updates outside React render) */
   const [width, setWidth] = useValue(100);
+  // highlight-end
 
   return (
+    // highlight-start
+    /* 2. Spring the width on click — animate.div reads it directly */
     <animate.div
-      style={{ width, height: 100, backgroundColor: '#7d93b0', borderRadius: 4 }}
+      style={{ width, height: 100, backgroundColor: '#60a5fa', borderRadius: 4 }}
       onClick={() => setWidth(withSpring(200))}
     />
+    // highlight-end
   );
 }
 ```

@@ -57,7 +57,7 @@ export default function App() {
                 width: 50,
                 height: 50,
                 border: '4px solid #2a2e38',
-                borderTop: '4px solid #7d93b0',
+                borderTop: '4px solid #60a5fa',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
                 margin: '0 auto 20px',

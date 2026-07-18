@@ -9,15 +9,17 @@ const App = () => {
   };
 
   return (
-    <div>
-      <button onClick={run}>Run keyframes</button>
+    <div className="container">
+      <button className="button buttonPrimary" onClick={run}>
+        Run keyframes
+      </button>
       <animate.div
         style={{
           marginTop: 12,
           translateX: x,
           width: 60,
           height: 60,
-          background: '#7d93b0',
+          background: '#60a5fa',
           borderRadius: 8,
         }}
       />

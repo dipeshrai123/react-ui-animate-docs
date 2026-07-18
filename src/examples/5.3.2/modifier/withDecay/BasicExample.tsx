@@ -30,7 +30,7 @@ export default function BasicExample() {
         style={{
           width: obj.width,
           height: 100,
-          backgroundColor: '#7d93b0',
+          backgroundColor: '#60a5fa',
           margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,

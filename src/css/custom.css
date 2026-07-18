@@ -81,7 +81,7 @@ h6 {
   --ifm-menu-color-active: #007bff;
 
   --ifm-menu-color: #475569;
-  --docusaurus-highlighted-code-line-bg: rgb(255 251 221 / 1);
+  --docusaurus-highlighted-code-line-bg: rgba(125, 147, 176, 0.14);
 
   --ifm-navbar-padding-horizontal: 32px;
   --ifm-navbar-height: 64px;
@@ -121,6 +121,7 @@ h6 {
   /* Link color for better visibility */
   --ifm-link-color: #60a5fa;
   --ifm-link-hover-color: #93c5fd;
+  --docusaurus-highlighted-code-line-bg: rgba(125, 147, 176, 0.14);
 }
 
 /* ===== Sidebar =====
@@ -458,6 +459,64 @@ body.nav-overlay .navbar .dropdown > .navbar__link {
   display: none !important;
 }
 
+/* ===== Version banner (next / unmaintained) ===== */
+.theme-doc-version-banner.alert {
+  --ifm-alert-background-color: rgba(96, 165, 250, 0.08);
+  --ifm-alert-background-color-highlight: rgba(96, 165, 250, 0.12);
+  --ifm-alert-foreground-color: rgba(232, 238, 245, 0.82);
+  --ifm-alert-border-color: rgba(96, 165, 250, 0.28);
+  background: var(--ifm-alert-background-color);
+  border: 1px solid var(--ifm-alert-border-color);
+  border-radius: 10px;
+  box-shadow: none;
+  color: var(--ifm-alert-foreground-color);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  padding: 0.875rem 1rem;
+}
+
+.theme-doc-version-banner.alert::before {
+  display: none;
+}
+
+.theme-doc-version-banner.alert--warning {
+  --ifm-alert-background-color: rgba(96, 165, 250, 0.08);
+  --ifm-alert-border-color: rgba(96, 165, 250, 0.28);
+  --ifm-alert-foreground-color: rgba(232, 238, 245, 0.82);
+}
+
+.theme-doc-version-banner .margin-top--md {
+  margin-top: 0.4rem !important;
+}
+
+.theme-doc-version-banner b {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.theme-doc-version-banner a {
+  color: #60a5fa !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+
+.theme-doc-version-banner a:hover {
+  color: #93c5fd !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+.theme-doc-version-badge {
+  background: rgba(96, 165, 250, 0.12) !important;
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  color: #93c5fd !important;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+}
+
 /* ===== Doc prose: tighter vertical rhythm ===== */
 .markdown > h2 {
   margin-top: var(--space-6);
@@ -561,6 +620,20 @@ div[class*='codeBlock'] code {
   font-size: 0.875rem;
   line-height: 1.7;
   letter-spacing: 0.01em;
+}
+
+/* Highlighted teaching lines — soft slate band + left accent */
+.theme-code-block-highlighted-line {
+  background: var(--docusaurus-highlighted-code-line-bg);
+  box-shadow: inset 2px 0 0 0 rgba(125, 147, 176, 0.7);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.theme-code-block-highlighted-line .token.comment {
+  color: rgba(196, 210, 228, 0.78) !important;
+  font-style: normal !important;
 }
 
 /* Shared toolbar buttons — solid surfaces so they stay readable over code */

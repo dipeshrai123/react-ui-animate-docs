@@ -30,8 +30,15 @@ for the animation most recently started via `set`.
 ```jsx
 const [width, setWidth] = useValue(100);
 
+// highlight-start
+/* Snap instantly — no animation */
 setWidth(200);
+// highlight-end
+
+// highlight-start
+/* Animate with spring physics */
 setWidth(withSpring(200));
+// highlight-end
 ```
 
 Pass a bare value to snap instantly; wrap it in a modifier like `withSpring` to animate.
@@ -46,12 +53,15 @@ A single call animates every element/key together with one driver:
 
 ```jsx
 const [width, setWidth] = useValue(100);
-const [color, setColor] = useValue('teal');
+const [color, setColor] = useValue('#60a5fa');
 const [positions, setPositions] = useValue([0, 0, 0]);
 const [style, setStyle] = useValue({ x: 0, y: 0 });
 
+// highlight-start
+/* One spring drives every item / key together */
 setPositions(withSpring([100, 100, 100]));
 setStyle(withSpring({ x: 100, y: 100 }));
+// highlight-end
 ```
 
 <CodeExample

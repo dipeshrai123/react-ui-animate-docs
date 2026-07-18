@@ -33,12 +33,15 @@ function Panner() {
   const ref = useRef(null);
   const [x, setX] = useValue(0);
 
+  // highlight-start
+  /* Stream pan movement into an animated value */
   useGesture(
     ref,
     Gesture.Pan()
       .onChange(({ down, movement }) => setX(movement.x))
       .onEnd(() => setX(0))
   );
+  // highlight-end
 
   return <animate.div ref={ref} style={{ translateX: x }} />;
 }

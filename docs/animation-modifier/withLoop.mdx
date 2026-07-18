@@ -33,7 +33,10 @@ function Spinner() {
   const [rotation, setRotation] = useValue(0);
 
   useEffect(() => {
+    // highlight-start
+    /* Repeat forever — omit iterations (or pass Infinity) */
     setRotation(withLoop(withSpring(360, { stiffness: 200, damping: 0 })));
+    // highlight-end
   }, []);
 
   return <animate.div style={{ rotate: rotation }} />;
