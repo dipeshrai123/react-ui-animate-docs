@@ -4,223 +4,54 @@ id: overview
 title: Animation Modifiers Overview
 ---
 
-Animation modifiers are functions that tell `useValue` *how* to animate. Without a modifier, values change instantly. With modifiers, you get smooth, controlled transitions.
-
-## What Are Animation Modifiers?
-
-Think of modifiers as animation "recipes" that describe how a value should change over time:
+A modifier tells `useValue` *how* to get to a target. Without one, a value
+snaps instantly:
 
 ```jsx
-import { useValue, withSpring, withTiming } from 'react-ui-animate';
+import { useValue, withSpring } from 'react-ui-animate';
 
 const [x, setX] = useValue(0);
 
-// ❌ No modifier - instant change
 setX(100);
-
-// ✅ With modifier - smooth animation
 setX(withSpring(100));
-setX(withTiming(100, { duration: 300 }));
 ```
 
-## How They Work
+## Available modifiers
 
-1. **You call a modifier** with a target value (and optional configuration)
-2. **The modifier returns** an animation descriptor
-3. **useValue processes** the descriptor and animates smoothly
-4. **Your component updates** automatically as the value changes
+| Modifier | Motion | Best for |
+|---|---|---|
+| [withSpring](./withSpring) | Physics-based | Buttons, cards, modals, anything that should feel alive |
+| [withTiming](./withTiming) | Fixed duration | Tooltips, dropdowns, progress bars |
+| [withDecay](./withDecay) | Momentum/friction | Flicks, swipes, momentum scrolling |
+| [withSequence](./withSequence) | Multi-step, in order | Choreographed, multi-phase motion |
+| [withDelay](./withDelay) | Pause | A step inside `withSequence` |
+| [withStagger](./withStagger) | Per-item delay | Staggering a list (with `withParallel`) |
+| [withKeyframes](./withKeyframes) | Multiple stops, one call | Shorthand for a `withSequence` of `withTiming` steps |
+| [withParallel](./withParallel) | Different driver per key | Object/array values where keys need different timing |
+| [withLoop](./withLoop) | Repeats | Spinners, pulses, ambient motion |
 
-```jsx
-const [width, setWidth] = useValue(100);
-
-// withSpring returns an animation descriptor
-setWidth(withSpring(200));
-
-// The width smoothly animates from 100 → 200
-```
-
-## Available Modifiers
-
-React UI Animate provides several modifiers, each suited for different use cases:
-
-### [withSpring](./withSpring)
-**Physics-based motion** - Natural, bouncy animations that feel organic.
+## Composing modifiers
 
 ```jsx
-setX(withSpring(100)); // Bouncy, natural motion
-```
+setX(withSequence([withTiming(50, { duration: 200 }), withSpring(100), withDecay(0.3)]));
 
-**Best for:** UI elements, cards, modals, buttons, anything that should feel "alive"
-
-### [withTiming](./withTiming)
-**Time-based transitions** - Precise, predictable animations with exact durations.
-
-```jsx
-setX(withTiming(100, { duration: 300 })); // Exact 300ms animation
-```
-
-**Best for:** Tooltips, dropdowns, precise UI transitions, when you need exact timing
-
-### [withDecay](./withDecay)
-**Momentum-based motion** - Simulates natural deceleration, like friction.
-
-```jsx
-setX(withDecay(0.5)); // Slows down naturally
-```
-
-**Best for:** Scroll-based animations, drag interactions, momentum scrolling
-
-### [withDelay](./withDelay)
-**Pause before animation** - Waits before starting an animation.
-
-```jsx
-setX(withDelay(500, withSpring(100))); // Wait 500ms, then animate
-```
-
-**Best for:** Staggered animations, sequential reveals, timed sequences
-
-### [withSequence](./withSequence)
-**Chain animations** - Run multiple animations one after another.
-
-```jsx
-setX(withSequence([
-  withSpring(50),
-  withTiming(100),
-  withSpring(150)
-])); // Animates to 50, then 100, then 150
-```
-
-**Best for:** Complex animations, multi-step transitions, choreographed motion
-
-### [withLoop](./withLoop)
-**Repeat animations** - Loop an animation a specific number of times or infinitely.
-
-```jsx
-setX(withLoop(withSpring(100), 3)); // Repeat 3 times
-setX(withLoop(withSpring(100))); // Repeat infinitely
-```
-
-**Best for:** Loading indicators, pulsing effects, continuous animations
-
-## Choosing the Right Modifier
-
-| Use Case | Recommended Modifier | Why |
-|:---------|:---------------------|:----|
-| Button hover effects | `withSpring` | Natural, responsive feel |
-| Modal appearance | `withSpring` | Smooth, professional entrance |
-| Tooltip show/hide | `withTiming` | Precise, predictable timing |
-| Dropdown menu | `withTiming` | Quick, snappy transitions |
-| Drag interactions | `withDecay` | Natural momentum when released |
-| Scroll animations | `withDecay` | Realistic deceleration |
-| Staggered lists | `withDelay` | Sequential reveals |
-| Multi-step animations | `withSequence` | Choreographed motion |
-| Loading spinners | `withLoop` | Continuous animation |
-| Pulsing effects | `withLoop` | Repeating animations |
-
-## Combining Modifiers
-
-You can combine modifiers for complex effects:
-
-```jsx
-// Delay, then spring animation
-setX(withDelay(200, withSpring(100)));
-
-// Sequence of different modifiers
-setX(withSequence([
-  withTiming(50, { duration: 200 }),
-  withSpring(100),
-  withDecay(0.3)
-]));
-
-// Loop a sequence
-setX(withLoop(
-  withSequence([
-    withSpring(100),
-    withSpring(0)
-  ]),
-  3 // Repeat 3 times
-));
-```
-
-## Common Patterns
-
-### Pattern 1: Quick Spring Animation
-
-```jsx
-const [scale, setScale] = useValue(1);
-
-// Quick, snappy spring
-const handleClick = () => {
-  setScale(withSpring(1.2, { stiffness: 300, damping: 20 }));
-  setTimeout(() => setScale(withSpring(1)), 200);
-};
-```
-
-### Pattern 2: Precise Timing
-
-```jsx
-const [opacity, setOpacity] = useValue(0);
-
-// Fade in with exact timing
-const show = () => {
-  setOpacity(withTiming(1, { duration: 300 }));
-};
-
-// Fade out
-const hide = () => {
-  setOpacity(withTiming(0, { duration: 200 }));
-};
-```
-
-### Pattern 3: Staggered Animation
-
-```jsx
-const [items, setItems] = useValue([0, 0, 0, 0]);
-
-// Animate each item with a delay
-const animateItems = () => {
-  setItems(withSequence([
-    withDelay(0, withSpring([100, 0, 0, 0])),
-    withDelay(100, withSpring([100, 100, 0, 0])),
-    withDelay(200, withSpring([100, 100, 100, 0])),
-    withDelay(300, withSpring([100, 100, 100, 100])),
-  ]));
-};
+setX(withLoop(withSequence([withSpring(100), withSpring(0)]), 3));
 ```
 
 ## Callbacks
 
-All modifiers support lifecycle callbacks:
+Every modifier accepts `onStart`/`onChange`/`onComplete`:
 
 ```jsx
 setX(withSpring(100, {
-  onStart: () => console.log('Animation started'),
-  onChange: (value) => console.log('Current value:', value),
-  onComplete: () => console.log('Animation finished'),
+  onStart: () => {},
+  onChange: (value) => {},
+  onComplete: () => {},
 }));
 ```
 
-**Use cases:**
-- `onStart` - Trigger side effects when animation begins
-- `onChange` - Track progress, update other values
-- `onComplete` - Chain animations, update state, cleanup
+## Next steps
 
-## Performance Tips
-
-1. **Use `withSpring` for most UI animations** - It's optimized and feels natural
-2. **Use `withTiming` when you need exact timing** - Better for coordinated animations
-3. **Avoid too many nested modifiers** - Can impact performance
-4. **Batch updates** - Update multiple properties in one object rather than separate calls
-
-## Next Steps
-
-Explore each modifier in detail:
-- **[withSpring](./withSpring)** - Natural physics-based motion
-- **[withTiming](./withTiming)** - Precise time-based transitions
-- **[withDecay](./withDecay)** - Momentum and friction
-- **[withSequence](./withSequence)** - Chain multiple animations
-- **[withLoop](./withLoop)** - Repeat animations
-- **[withDelay](./withDelay)** - Add pauses to animations
-
-Then learn about:
-- **[Presence & Exit](../presence/presence-basics)** - Use these modifiers with Presence for exit animations
+Pick a modifier above, or continue to
+[Presence & Layout](../presence/presence-basics) to use these as exit
+animations.

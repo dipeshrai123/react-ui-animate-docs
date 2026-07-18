@@ -1,0 +1,318 @@
+---
+sidebar_position: 1
+id: presence-basics
+title: Presence Basics
+---
+
+The `Presence` component enables smooth exit animations when components leave the DOM. Unlike conditional rendering which removes elements instantly, `Presence` allows you to animate components out before they're removed.
+
+## Why Presence?
+
+When you conditionally render components in React, they appear and disappear instantly:
+
+```jsx
+// ❌ Without Presence - instant removal
+{isOpen && <div>Content</div>}
+
+// ✅ With Presence - smooth exit animation
+<Presence>
+  {isOpen && (
+    <animate.div exit={{ opacity: withTiming(0) }}>
+      Content
+    </animate.div>
+  )}
+</Presence>
+```
+
+## Basic Usage
+
+Wrap your conditionally rendered components with `Presence` and use the `exit` prop:
+
+```jsx
+import { Presence, animate, withTiming } from 'react-ui-animate';
+
+function MyComponent() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  return (
+    <>
+      <Presence>
+        {isVisible && (
+          <animate.div
+            exit={{
+              opacity: withTiming(0),
+            }}
+            style={{
+              width: 100,
+              height: 100,
+              background: '#60a5fa',
+            }}
+          >
+            Content
+          </animate.div>
+        )}
+      </Presence>
+      <button onClick={() => setIsVisible(!isVisible)}>
+        Toggle
+      </button>
+    </>
+  );
+}
+```
+
+## How It Works
+
+1. **Component mounts** → `Presence` tracks it
+2. **Condition becomes false** → `Presence` keeps the component mounted
+3. **Exit animation runs** → Component animates using the `exit` prop
+4. **Animation completes** → Component is removed from DOM
+
+## Fade Out Animation
+
+The simplest exit animation is a fade:
+
+```jsx
+<Presence>
+  {isVisible && (
+    <animate.div
+      exit={{
+        opacity: withTiming(0),
+      }}
+      style={{
+        opacity: 1,
+        width: 100,
+        height: 100,
+        background: '#60a5fa',
+      }}
+    >
+      Fading out...
+    </animate.div>
+  )}
+</Presence>
+```
+
+## Slide Out Animation
+
+Combine opacity with translation for a slide effect:
+
+```jsx
+<Presence>
+  {isVisible && (
+    <animate.div
+      exit={{
+        opacity: withTiming(0),
+        translateY: withSpring(50),
+      }}
+      style={{
+        opacity: 1,
+        translateY: 0,
+        width: 100,
+        height: 100,
+        background: '#60a5fa',
+      }}
+    >
+      Sliding out...
+    </animate.div>
+  )}
+</Presence>
+```
+
+## Scale Out Animation
+
+Shrink the component as it exits:
+
+```jsx
+<Presence>
+  {isVisible && (
+    <animate.div
+      exit={{
+        opacity: withTiming(0),
+        scale: withSpring(0.8),
+      }}
+      style={{
+        opacity: 1,
+        scale: 1,
+        width: 100,
+        height: 100,
+        background: '#60a5fa',
+      }}
+    >
+      Scaling out...
+    </animate.div>
+  )}
+</Presence>
+```
+
+## Real-World Examples
+
+### Example 1: Modal with Backdrop
+
+```jsx
+function Modal({ isOpen, onClose }) {
+  return (
+    <Presence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <animate.div
+            key="backdrop"
+            exit={{
+              opacity: withTiming(0),
+            }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.5)',
+              opacity: 1,
+            }}
+            onClick={onClose}
+          />
+
+          {/* Modal */}
+          <animate.div
+            key="modal"
+            exit={{
+              opacity: withTiming(0),
+              scale: withSpring(0.9),
+            }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: 1,
+              scale: 1,
+            }}
+          >
+            <div
+              style={{
+                background: 'white',
+                padding: 20,
+                borderRadius: 8,
+              }}
+            >
+              <h2>Modal Title</h2>
+              <p>Modal content</p>
+              <button onClick={onClose}>Close</button>
+            </div>
+          </animate.div>
+        </>
+      )}
+    </Presence>
+  );
+}
+```
+
+### Example 2: Toast Notification
+
+```jsx
+function Toast({ message, isVisible, onClose }) {
+  return (
+    <Presence>
+      {isVisible && (
+        <animate.div
+          exit={{
+            opacity: withTiming(0),
+            translateX: withSpring(400),
+          }}
+          style={{
+            position: 'fixed',
+            bottom: 20,
+            right: 20,
+            background: '#333',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: 8,
+            opacity: 1,
+            translateX: 0,
+          }}
+        >
+          {message}
+        </animate.div>
+      )}
+    </Presence>
+  );
+}
+```
+
+### Example 3: Expandable List Item
+
+```jsx
+function ExpandableItem({ isExpanded, children }) {
+  return (
+    <Presence>
+      {isExpanded && (
+        <animate.div
+          exit={{
+            opacity: withTiming(0),
+            height: withSpring(0),
+          }}
+          style={{
+            opacity: 1,
+            height: 'auto',
+            overflow: 'hidden',
+          }}
+        >
+          {children}
+        </animate.div>
+      )}
+    </Presence>
+  );
+}
+```
+
+## Combining Enter and Exit
+
+You can use both `animate` (enter) and `exit` props together:
+
+```jsx
+<Presence>
+  {isVisible && (
+    <animate.div
+      animate={{
+        opacity: withSpring(1),
+        scale: withSpring(1),
+      }}
+      exit={{
+        opacity: withTiming(0),
+        scale: withSpring(0.8),
+      }}
+      style={{
+        opacity: 0,
+        scale: 0.8,
+        width: 100,
+        height: 100,
+        background: '#60a5fa',
+      }}
+    />
+  )}
+</Presence>
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Always wrap conditionally rendered animated components with `Presence`
+- Use `exit` prop for smooth removal animations
+- Combine opacity with transforms for better effects
+- Use `withTiming` for predictable exit animations
+
+### ❌ Don't
+
+- Don't forget to wrap with `Presence` (exit animations won't work)
+- Don't use `Presence` for components that stay mounted
+- Don't animate layout properties in exit animations
+- Don't make exit animations too slow (users expect quick removal)
+
+## Performance Tips
+
+1. **Use transforms** - `translateX`, `translateY`, `scale` are GPU-accelerated
+2. **Keep exit animations short** - 200-300ms is usually enough
+3. **Use `withTiming`** - More predictable than `withSpring` for exits
+
+## Next Steps
+
+- Explore [Enter Animations](../concept/animate-component#animate-prop) for mount animations
+

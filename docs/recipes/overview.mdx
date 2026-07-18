@@ -1,0 +1,95 @@
+---
+sidebar_position: 1
+id: overview
+title: Recipes
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_recipes_BasicExample from '!!raw-loader!@site/src/examples/next/recipes/BasicExample.tsx';
+import Demo_recipes_BasicExample from '@site/src/examples/next/recipes/BasicExample';
+
+`recipes` is a namespace object of ready-made `AnimateProp` values for
+common transitions you'd otherwise write by hand as `{ opacity: withSpring(1) }`
+and friends. Pass one straight into `animate`, `exit`, `hover`, `press`, or
+`set(...)` instead of hand-writing the descriptor.
+
+```jsx
+import { animate, Presence, recipes } from 'react-ui-animate';
+
+<Presence>
+  {open && (
+    <animate.div
+      key="card"
+      animate={recipes.scaleIn}
+      exit={recipes.scaleOut}
+    />
+  )}
+</Presence>
+```
+
+<CodeExample
+  demo={Demo_recipes_BasicExample}
+  code={Code_recipes_BasicExample}
+/>
+
+:::tip
+Use recipes for common enter/exit/hover/press motion; reach for
+`withSpring` / `withTiming` when you need custom targets or timing.
+:::
+
+## Available recipes
+
+### Fade
+
+`fadeIn`, `fadeOut`, `fadeInUp`, `fadeInDown`, `fadeInLeft`, `fadeInRight`
+
+### Slide
+
+`slideInUp`, `slideInDown`, `slideInLeft`, `slideInRight`, `slideOutUp`,
+`slideOutDown`, `slideOutLeft`, `slideOutRight`
+
+### Scale
+
+`scaleIn`, `scaleOut`, `scaleUp`, `scaleDown`
+
+### Bounce
+
+`bounceIn`, `bounceOut`
+
+### Rotate
+
+`rotateIn`, `rotateOut`, `spin`
+
+### Zoom
+
+`zoomIn`, `zoomOut`
+
+### Flip
+
+`flipX`, `flipY`
+
+### Slide + fade / scale + fade
+
+`slideFadeIn`, `slideFadeOut`, `scaleFadeIn`, `scaleFadeOut`
+
+### Hover
+
+`hoverScale`, `hoverLift`, `hoverGlow`: designed for `onMouseEnter`/
+`onMouseLeave`, or as the `hover` prop's target.
+
+### Press
+
+`pressScale`, `pressDown`: designed for `onPointerDown`/`onPointerUp`, or
+as the `press` prop's target.
+
+### Exit
+
+`exitFade`, `exitSlideUp`, `exitSlideDown`, `exitScale`: meant for
+`Presence`'s `exit` prop.
+
+## Why not the old flat exports?
+
+Earlier versions exported each of these directly (`import { fadeIn } from
+'react-ui-animate'`). They're now grouped under the single `recipes` object
+to keep the top-level export surface small. Swap `fadeIn` for
+`recipes.fadeIn` and everything else is unchanged.

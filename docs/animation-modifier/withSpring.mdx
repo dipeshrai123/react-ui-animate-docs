@@ -5,328 +5,92 @@ title: withSpring
 ---
 
 import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/modifier/withSpring/GetStartedExample';
+import Code_modifier_withSpring_ObjectExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/ObjectExample.tsx';
+import Demo_modifier_withSpring_ObjectExample from '@site/src/examples/next/modifier/withSpring/ObjectExample';
 
-The `withSpring` modifier creates natural, physics-based animations using spring physics. It's perfect for UI elements that should feel alive and responsive, like buttons, cards, modals, and interactive components.
+`withSpring` animates using spring physics rather than a fixed duration.
+It's the default for most UI motion (buttons, cards, modals) since it feels
+responsive rather than mechanical.
 
-## Why Use withSpring?
+## Signature
 
-Spring animations feel natural because they simulate real-world physics:
-- **Bounce** - Natural overshoot and settle
-- **Responsive** - Adapts to different screen sizes and devices
-- **Smooth** - No jarring stops or starts
-- **Performant** - Optimized for 60fps animations
-
-## Basic Syntax
-
-```jsx
-withSpring(toValue, options?)
+```ts
+function withSpring(
+  to: number | string | object | array,
+  options?: {
+    stiffness?: number;
+    damping?: number;
+    mass?: number;
+    onStart?: () => void;
+    onChange?: (value: number) => void;
+    onComplete?: () => void;
+  }
+): Descriptor;
 ```
 
-### Parameters
+Defaults: `stiffness` 170, `damping` 14, `mass` 1.
 
-- **toValue** (required): The target value. Can be a `number`, `string`, `object`, or `array`.
-- **options** (optional): Configuration object for fine-tuning the spring behavior.
+:::tip
+Need an exact duration instead of physics? Use
+[withTiming](./withTiming). Reach for `withSpring` when motion should feel
+responsive and natural.
+:::
 
-## Simple Example
-
-The simplest spring animation:
+## Usage
 
 ```jsx
 import { useValue, withSpring, animate } from 'react-ui-animate';
 
-function MyComponent() {
+function Expandable() {
   const [width, setWidth] = useValue(100);
 
   return (
-    <>
-      <button onClick={() => setWidth(withSpring(200))}>
-        Expand
-      </button>
-      <animate.div style={{ width, height: 100, background: 'teal' }} />
-    </>
+    // highlight-start
+    /* Spring feels responsive — physics instead of a fixed duration */
+    <animate.div
+      style={{ width, height: 100, background: '#60a5fa' }}
+      onClick={() => setWidth(withSpring(200))}
+    />
+    // highlight-end
   );
 }
 ```
 
-<CodeExample 
-  example="v5_x_x_modifier_withSpring_GetStartedExample"
-  version={{ reactAnimate: '5.3.0-next.1' }}
+<CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
+  code={Code_modifier_withSpring_GetStartedExample}
 />
 
-## Configuration Options
+## Tuning stiffness/damping/mass
 
-Fine-tune your spring animations with these options:
+- **stiffness**: speed and bounce. Low (50–100): slow, gentle. High (300+):
+  fast, snappy.
+- **damping**: how much overshoot. Low (5–15): very bouncy. High (30+):
+  minimal bounce, controlled.
+- **mass**: inertia. Low (0.5–1, default): quick to respond. High (3+):
+  heavy, slow to start/stop.
 
-| Option | Type | Default | Description |
-|:-------|:-----|:--------|:------------|
-| `stiffness` | `number` | `158` | How "stiff" the spring is. Higher = faster, more bouncy |
-| `damping` | `number` | `20` | How quickly the spring loses energy. Higher = less bouncy, more controlled |
-| `mass` | `number` | `1` | The "weight" of the spring. Higher = slower, more inertia |
-| `onStart` | `() => void` | - | Called when animation starts |
-| `onChange` | `(value) => void` | - | Called on every frame with current value |
-| `onComplete` | `() => void` | - | Called when animation finishes |
+## Objects and arrays
 
-### Understanding Spring Parameters
-
-**Stiffness** - Controls speed and bounce
-- Low (50-100): Slow, gentle motion
-- Medium (150-200): Balanced, natural feel (default)
-- High (300+): Fast, snappy motion
-
-**Damping** - Controls bounce and overshoot
-- Low (5-15): Very bouncy, lots of overshoot
-- Medium (20-30): Balanced bounce (default)
-- High (40+): Minimal bounce, controlled motion
-
-**Mass** - Controls inertia
-- Low (0.5-1): Light, quick response (default)
-- Medium (1-2): Balanced
-- High (3+): Heavy, slow to start/stop
-
-## Real-World Examples
-
-### Example 1: Button Hover Effect
-
-Create a responsive button that springs on hover:
-
-```jsx
-function SpringButton() {
-  const [scale, setScale] = useValue(1);
-
-  return (
-    <animate.button
-      onMouseEnter={() => setScale(withSpring(1.1, { stiffness: 300 }))}
-      onMouseLeave={() => setScale(withSpring(1))}
-      style={{
-        scale,
-        padding: '10px 20px',
-        background: 'teal',
-        border: 'none',
-        borderRadius: 4,
-      }}
-    >
-      Hover me
-    </animate.button>
-  );
-}
-```
-
-### Example 2: Modal Animation
-
-Smooth modal entrance with spring:
-
-```jsx
-function Modal({ isOpen, onClose }) {
-  const [scale, setScale] = useValue(0);
-
-  useEffect(() => {
-    if (isOpen) {
-      setScale(withSpring(1, { stiffness: 200, damping: 25 }));
-    } else {
-      setScale(withSpring(0));
-    }
-  }, [isOpen]);
-
-  return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)' }}>
-      <animate.div
-        style={{
-          scale,
-          opacity: scale,
-          background: 'white',
-          padding: 20,
-          borderRadius: 8,
-        }}
-      >
-        Modal Content
-        <button onClick={onClose}>Close</button>
-      </animate.div>
-    </div>
-  );
-}
-```
-
-### Example 3: Card Flip Animation
-
-Animate multiple properties together:
-
-```jsx
-function FlipCard() {
-  const [rotation, setRotation] = useValue(0);
-  const [scale, setScale] = useValue(1);
-
-  const flip = () => {
-    setRotation(withSpring(rotation + 180));
-    setScale(withSpring(0.95, { stiffness: 300 }));
-    setTimeout(() => {
-      setScale(withSpring(1));
-    }, 200);
-  };
-
-  return (
-    <animate.div
-      onClick={flip}
-      style={{
-        rotate: rotation,
-        scale,
-        width: 200,
-        height: 200,
-        background: 'teal',
-        borderRadius: 8,
-      }}
-    >
-      Click to flip
-    </animate.div>
-  );
-}
-```
-
-## Animating Multiple Values
-
-Spring works great with objects and arrays:
+`withSpring` animates every key of an object/array `useValue` with the same
+driver in one call:
 
 ```jsx
 const [position, setPosition] = useValue({ x: 0, y: 0 });
-
-// Animate both x and y together
+// highlight-start
+/* One call springs every key together */
 setPosition(withSpring({ x: 100, y: 100 }));
+// highlight-end
 ```
 
-<CodeExample 
-  example="v5_x_x_modifier_withSpring_ObjectExample"
-  version={{ reactAnimate: '5.3.0-next.1' }}
+<CodeExample
+  demo={Demo_modifier_withSpring_ObjectExample}
+  code={Code_modifier_withSpring_ObjectExample}
 />
 
-## Using Callbacks
+## Next steps
 
-React to animation lifecycle events:
-
-```jsx
-function AnimatedCard() {
-  const [x, setX] = useValue(0);
-
-  const animate = () => {
-    setX(withSpring(200, {
-      onStart: () => {
-        console.log('Animation started');
-        // Disable button, show loading, etc.
-      },
-      onChange: (value) => {
-        // Track progress, update other values
-        console.log('Current position:', value);
-      },
-      onComplete: () => {
-        console.log('Animation finished');
-        // Re-enable button, hide loading, etc.
-      },
-    }));
-  };
-
-  return (
-    <>
-      <button onClick={animate}>Animate</button>
-      <animate.div style={{ translateX: x, width: 100, height: 100, background: 'teal' }} />
-    </>
-  );
-}
-```
-
-## Preset Configurations
-
-Common spring configurations for different use cases:
-
-```jsx
-// Gentle, smooth animation
-const gentle = { stiffness: 120, damping: 25 };
-
-// Snappy, quick animation
-const snappy = { stiffness: 300, damping: 30 };
-
-// Bouncy, playful animation
-const bouncy = { stiffness: 200, damping: 10 };
-
-// Controlled, minimal bounce
-const controlled = { stiffness: 180, damping: 35 };
-
-// Usage
-setX(withSpring(100, gentle));
-```
-
-## Best Practices
-
-### ✅ Do
-
-- Use `withSpring` for most UI animations - it feels natural
-- Adjust `stiffness` and `damping` to match your design language
-- Use objects/arrays for coordinated multi-property animations
-- Leverage callbacks for side effects and state management
-
-### ❌ Don't
-
-- Don't use `withSpring` when you need exact timing (use `withTiming` instead)
-- Don't set extremely high stiffness values (>500) - can cause jank
-- Don't forget to handle the animation lifecycle with callbacks when needed
-- Don't animate layout properties (width, height) - use transforms instead
-
-## Performance Tips
-
-1. **Spring is optimized** - It's one of the fastest modifiers
-2. **Use transforms** - `translateX`, `scale`, `rotate` are GPU-accelerated
-3. **Batch updates** - Animate multiple properties in one object
-4. **Avoid layout properties** - `width`, `height`, `top`, `left` cause reflows
-
-## Common Patterns
-
-### Pattern 1: Quick Bounce
-
-```jsx
-const [scale, setScale] = useValue(1);
-
-const bounce = () => {
-  setScale(withSpring(1.2, { stiffness: 400, damping: 15 }));
-  setTimeout(() => setScale(withSpring(1)), 150);
-};
-```
-
-### Pattern 2: Smooth Entrance
-
-```jsx
-const [opacity, setOpacity] = useValue(0);
-const [translateY, setTranslateY] = useValue(-20);
-
-useEffect(() => {
-  setOpacity(withSpring(1, { stiffness: 200, damping: 25 }));
-  setTranslateY(withSpring(0));
-}, []);
-```
-
-### Pattern 3: Interactive Feedback
-
-```jsx
-const [rotation, setRotation] = useValue(0);
-
-const handleClick = () => {
-  setRotation(withSpring(rotation + 360, { stiffness: 300 }));
-};
-```
-
-## Troubleshooting
-
-**Animation feels too slow:**
-- Increase `stiffness` (try 200-300)
-- Decrease `damping` slightly
-
-**Animation is too bouncy:**
-- Increase `damping` (try 25-35)
-- Decrease `stiffness` slightly
-
-**Animation doesn't feel smooth:**
-- Make sure you're using `animate.div` (or other `animate.*` components)
-- Check that you're not causing re-renders during animation
-- Use transforms instead of layout properties
-
-## Next Steps
-
-- Learn about [withTiming](./withTiming) for precise time-based animations
-- Explore [withSequence](./withSequence) to chain spring animations
-- Check out [useValue](../concept/useValue) for more animation patterns
+- [withTiming](./withTiming): exact-duration alternative.
+- [withSequence](./withSequence): chain springs with other drivers.

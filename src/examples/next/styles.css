@@ -1,0 +1,68 @@
+/* Demo controls — scoped under .example-preview so class names never leak. */
+
+.example-preview .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+/* All preview buttons share one look (classed or bare) */
+.example-preview button,
+.example-preview .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  margin: 0 4px 6px;
+  font-family: var(--site-font);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #eff6ff;
+  background: rgba(96, 165, 250, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.example-preview button:hover,
+.example-preview .button:hover,
+.example-preview .buttonPrimary:hover {
+  background: rgba(96, 165, 250, 0.28);
+  border-color: rgba(96, 165, 250, 0.48);
+  color: #fff;
+}
+
+.example-preview button:active,
+.example-preview .button:active {
+  background: rgba(96, 165, 250, 0.34);
+}
+
+.example-preview button:focus-visible,
+.example-preview .button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.4);
+}
+
+.example-preview .buttonPrimary {
+  background: rgba(96, 165, 250, 0.18);
+  border-color: rgba(96, 165, 250, 0.32);
+  color: #eff6ff;
+}
+
+.example-preview .buttonSecondary {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.example-preview .buttonSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}

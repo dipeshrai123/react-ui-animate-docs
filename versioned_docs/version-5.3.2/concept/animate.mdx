@@ -1,0 +1,356 @@
+---
+sidebar_position: 1
+id: animate-component
+title: The animate Component
+---
+
+The `<animate>` component is the foundation of React UI Animate. It works exactly like regular HTML elements (`div`, `span`, `button`, etc.) but understands animated values and provides powerful declarative animation props.
+
+## Basic Usage
+
+The `animate` component provides wrappers for all HTML elements:
+
+```jsx
+import { animate } from 'react-ui-animate';
+
+function MyComponent() {
+  return (
+    <animate.div
+      style={{
+        width: 100,
+        height: 100,
+        background: '#60a5fa',
+        borderRadius: 4,
+      }}
+    >
+      Hello World
+    </animate.div>
+  );
+}
+```
+
+## Available Elements
+
+You can use `animate` with any HTML element:
+
+```jsx
+<animate.div>Div element</animate.div>
+<animate.span>Span element</animate.span>
+<animate.button>Button element</animate.button>
+<animate.section>Section element</animate.section>
+<animate.img src="..." alt="..." />
+// ... and any other HTML element
+```
+
+## Using Animated Values
+
+The real power comes when you combine `animate` with `useValue`:
+
+```jsx
+import { animate, useValue, withSpring } from 'react-ui-animate';
+
+function AnimatedBox() {
+  const [width, setWidth] = useValue(100);
+
+  return (
+    <>
+      <button onClick={() => setWidth(withSpring(200))}>
+        Expand
+      </button>
+      <animate.div
+        style={{
+          width,  // Use animated value directly
+          height: 100,
+          background: '#60a5fa',
+        }}
+      />
+    </>
+  );
+}
+```
+
+The `width` value automatically animates when you call `setWidth` with an animation modifier.
+
+## Declarative Animation Props
+
+React UI Animate provides declarative props for common interactions. These props accept animation descriptors:
+
+### `animate` - Initial/Mount Animation
+
+Animate when the component mounts or when the prop changes:
+
+```jsx
+<animate.div
+  animate={{
+    opacity: withSpring(1),
+    scale: withSpring(1),
+  }}
+  style={{
+    opacity: 0,
+    scale: 0.8,
+  }}
+>
+  Content
+</animate.div>
+```
+
+### `exit` - Unmount Animation
+
+Animate when the component unmounts (requires `Presence` wrapper):
+
+```jsx
+import { Presence } from 'react-ui-animate';
+
+<Presence>
+  {isVisible && (
+    <animate.div
+      exit={{
+        opacity: withTiming(0),
+        scale: withSpring(0.8),
+      }}
+    >
+      Content
+    </animate.div>
+  )}
+</Presence>
+```
+
+### `hover` - Hover Animation
+
+Animate when the user hovers:
+
+```jsx
+<animate.button
+  hover={{
+    scale: withSpring(1.1),
+    backgroundColor: withSpring('#3399ff'),
+  }}
+>
+  Hover me
+</animate.button>
+```
+
+### `press` - Press Animation
+
+Animate when the user presses (mousedown/touchstart):
+
+```jsx
+<animate.button
+  press={{
+    scale: withSpring(0.95),
+  }}
+>
+  Press me
+</animate.button>
+```
+
+### `focus` - Focus Animation
+
+Animate when the element receives focus:
+
+```jsx
+<animate.input
+  focus={{
+    scale: withSpring(1.02),
+    borderColor: withSpring('#3399ff'),
+  }}
+/>
+```
+
+### `view` - Viewport Animation
+
+Animate when the element enters the viewport:
+
+```jsx
+<animate.div
+  view={{
+    opacity: withTiming(1),
+    translateY: withSpring(0),
+  }}
+  style={{
+    opacity: 0,
+    translateY: 50,
+  }}
+  viewOptions={{
+    threshold: 0.3,
+    once: true,
+  }}
+>
+  Scroll to see me
+</animate.div>
+```
+
+## Combining Props
+
+You can use multiple animation props together:
+
+```jsx
+<animate.button
+  animate={{
+    opacity: withSpring(1),
+  }}
+  hover={{
+    scale: withSpring(1.1),
+  }}
+  press={{
+    scale: withSpring(0.95),
+  }}
+>
+  Interactive Button
+</animate.button>
+```
+
+## Preset Animations
+
+React UI Animate includes preset animations for common use cases:
+
+```jsx
+import { hoverScale, pressScale } from 'react-ui-animate';
+
+<animate.button
+  hover={hoverScale}
+  press={pressScale}
+>
+  Button with presets
+</animate.button>
+```
+
+## Style Props
+
+The `animate` component accepts all standard React style props, plus animated transform properties:
+
+```jsx
+<animate.div
+  style={{
+    // Standard CSS properties
+    width: 100,
+    height: 100,
+    backgroundColor: '#60a5fa',
+    
+    // Animated transform properties (shorthand)
+    translateX: 100,
+    translateY: 50,
+    scale: 1.2,
+    rotate: 45,
+    opacity: 0.8,
+  }}
+/>
+```
+
+**Animated transform properties:**
+- `translateX` - Horizontal translation
+- `translateY` - Vertical translation
+- `scale` - Scale transformation
+- `rotate` - Rotation in degrees
+- `opacity` - Opacity (0-1)
+
+These properties work seamlessly with animated values from `useValue`.
+
+## Real-World Examples
+
+### Example 1: Interactive Card
+
+```jsx
+function InteractiveCard() {
+  return (
+    <animate.div
+      style={{
+        width: 200,
+        height: 200,
+        background: 'white',
+        borderRadius: 8,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      }}
+      hover={{
+        scale: withSpring(1.05),
+        boxShadow: withSpring('0 4px 16px rgba(0,0,0,0.2)'),
+      }}
+      press={{
+        scale: withSpring(0.98),
+      }}
+    >
+      <h3>Card Title</h3>
+      <p>Card content</p>
+    </animate.div>
+  );
+}
+```
+
+### Example 2: Animated Input
+
+```jsx
+function AnimatedInput() {
+  return (
+    <animate.input
+      type="text"
+      placeholder="Enter text"
+      style={{
+        padding: '10px',
+        border: '2px solid #e1e1e1',
+        borderRadius: 4,
+      }}
+      focus={{
+        borderColor: withSpring('#3399ff'),
+        scale: withSpring(1.02),
+      }}
+    />
+  );
+}
+```
+
+### Example 3: Scroll-Triggered Reveal
+
+```jsx
+function FeatureCard({ title, description }) {
+  return (
+    <animate.div
+      style={{
+        opacity: 0,
+        translateY: 50,
+      }}
+      view={{
+        opacity: withTiming(1, { duration: 600 }),
+        translateY: withSpring(0),
+      }}
+      viewOptions={{
+        threshold: 0.3,
+        once: true,
+      }}
+    >
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </animate.div>
+  );
+}
+```
+
+## Best Practices
+
+### ✅ Do
+
+- Use `animate` components for elements that need animation
+- Combine `useValue` with `animate` for programmatic animations
+- Use declarative props (`hover`, `press`, etc.) for simple interactions
+- Use transform properties (`translateX`, `scale`) instead of layout properties when possible
+
+### ❌ Don't
+
+- Don't use `animate` for static elements (use regular HTML elements)
+- Don't mix animated and non-animated styles unnecessarily
+- Don't animate layout properties (`width`, `height`, `top`, `left`) - use transforms instead
+- Don't forget to use `Presence` for exit animations
+
+## Performance Tips
+
+1. **Use transforms** - `translateX`, `translateY`, `scale`, `rotate` are GPU-accelerated
+2. **Avoid layout properties** - Animating `width`, `height`, `top`, `left` causes reflows
+3. **Batch updates** - Update multiple properties in one object
+4. **Use `viewOptions.once`** - For view animations that should only run once
+
+## Next Steps
+
+- Learn about [useValue](./useValue) for managing animated values
+- Explore [Animation Modifiers](../animation-modifier/overview) for controlling animations
+- See [Presence & Exit](../presence/presence-basics) for animating components entering/leaving the DOM
+- Check out [Interactive Animations](../interactive/hover-animations) for more on declarative props
+

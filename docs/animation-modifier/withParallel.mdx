@@ -1,0 +1,77 @@
+---
+sidebar_position: 10
+id: withParallel
+title: withParallel
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withParallel_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withParallel/BasicExample.tsx';
+import Demo_modifier_withParallel_BasicExample from '@site/src/examples/next/modifier/withParallel/BasicExample';
+
+An object/array `useValue` already animates every key at once when you pass
+it a single descriptor, but all keys share that one driver and options. Use
+`withParallel` when different keys need genuinely different
+drivers/options/timing, running concurrently.
+
+## Signature
+
+```ts
+function withParallel(
+  animations: Record<string, Descriptor> | Descriptor[],
+  options?: { onStart?: () => void; onComplete?: () => void }
+): Descriptor;
+```
+
+Pass an object keyed the same way as your `useValue` object, or an array
+aligned by index for an array `useValue`.
+
+## Usage
+
+```jsx
+import { useValue, withParallel, withSpring, withTiming, animate } from 'react-ui-animate';
+
+function Card() {
+  const [style, setStyle] = useValue({ x: 0, rotate: 0 });
+
+  const run = () => {
+    // highlight-start
+    /* Different drivers per key, running at the same time */
+    setStyle(
+      withParallel({
+        x: withSpring(150),
+        rotate: withTiming(180, { duration: 600 }),
+      })
+    );
+    // highlight-end
+  };
+
+  return <animate.div style={{ translateX: style.x, rotate: style.rotate }} onClick={run} />;
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withParallel_BasicExample}
+  code={Code_modifier_withParallel_BasicExample}
+/>
+
+## Array mode (with withStagger)
+
+For an array `useValue`, pass a `Descriptor[]` aligned by index. This is
+also how per-item staggered animations work, since `withStagger` only wraps
+one item's delay:
+
+```jsx
+// highlight-start
+/* One descriptor per index — stagger delays each spring */
+setHeights(
+  withParallel(heights.map((_, i) => withStagger(i, withSpring(100), { each: 60 })))
+);
+// highlight-end
+```
+
+## Next steps
+
+- [withStagger](./withStagger): per-item delay, typically combined with
+  `withParallel` for staggered lists.
+- [withSequence](./withSequence): for steps that should run one after
+  another instead of concurrently.

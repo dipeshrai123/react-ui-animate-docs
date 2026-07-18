@@ -4,156 +4,54 @@ id: focus-animations
 title: Focus Animations
 ---
 
-Focus animations provide visual feedback when users navigate with keyboards or assistive technologies. The `focus` prop triggers animations when elements receive focus, improving accessibility and user experience.
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_FocusExample from '!!raw-loader!@site/src/examples/next/interactive/FocusExample.tsx';
+import Demo_interactive_FocusExample from '@site/src/examples/next/interactive/FocusExample';
 
-## Basic Usage
+The `focus` prop animates on focus/blur: the keyboard/assistive-tech
+equivalent of `hover`.
 
-The `focus` prop accepts an animation descriptor that runs when the element receives focus:
+## Usage
 
 ```jsx
 import { animate, withSpring } from 'react-ui-animate';
 
-function FocusInput() {
-  return (
-    <animate.input
-      type="text"
-      placeholder="Click or tab to focus"
-      focus={{
-        scale: withSpring(1.02),
-        borderColor: withSpring('#3399ff'),
-      }}
-      style={{
-        padding: '10px',
-        border: '2px solid #e1e1e1',
-        borderRadius: 4,
-        outline: 'none',
-      }}
-    />
-  );
-}
+<animate.input
+  type="text"
+  focus={{
+    scale: withSpring(1.02),
+    borderColor: withSpring('#60a5fa'),
+    boxShadow: withSpring('0 0 0 3px rgba(96, 165, 250, 0.25)'),
+  }}
+  style={{ border: '1px solid rgba(255,255,255,0.14)', outline: 'none' }}
+/>
 ```
 
-## Real-World Examples
+<CodeExample
+  demo={Demo_interactive_FocusExample}
+  code={Code_interactive_FocusExample}
+/>
 
-### Example 1: Form Input
+:::caution
+If you set `outline: 'none'` to replace the browser default, the `focus`
+animation *is* the focus indicator. Don't remove one without providing the
+other, or keyboard users lose all focus feedback.
+:::
 
-```jsx
-function FormInput({ label, type = 'text' }) {
-  return (
-    <div>
-      <label>{label}</label>
-      <animate.input
-        type={type}
-        focus={{
-          scale: withSpring(1.02),
-          borderColor: withSpring('#3399ff'),
-          boxShadow: withSpring('0 0 0 3px rgba(51, 153, 255, 0.1)'),
-        }}
-        style={{
-          width: '100%',
-          padding: '10px',
-          border: '2px solid #e1e1e1',
-          borderRadius: 4,
-          outline: 'none',
-        }}
-      />
-    </div>
-  );
-}
-```
-
-### Example 2: Focusable Card
-
-```jsx
-function FocusableCard({ children }) {
-  return (
-    <animate.div
-      tabIndex={0}
-      focus={{
-        scale: withSpring(1.05),
-        borderColor: withSpring('#3399ff'),
-        boxShadow: withSpring('0 4px 12px rgba(51, 153, 255, 0.2)'),
-      }}
-      style={{
-        width: 200,
-        height: 200,
-        background: 'white',
-        border: '2px solid transparent',
-        borderRadius: 8,
-        padding: 20,
-        cursor: 'pointer',
-        outline: 'none',
-      }}
-    >
-      {children}
-    </animate.div>
-  );
-}
-```
-
-### Example 3: Button with Focus Ring
-
-```jsx
-function AccessibleButton({ children, onClick }) {
-  return (
-    <animate.button
-      onClick={onClick}
-      focus={{
-        scale: withSpring(1.05),
-        boxShadow: withSpring('0 0 0 3px rgba(51, 153, 255, 0.3)'),
-      }}
-      style={{
-        padding: '12px 24px',
-        backgroundColor: '#3399ff',
-        color: 'white',
-        border: 'none',
-        borderRadius: 8,
-        outline: 'none',
-      }}
-    >
-      {children}
-    </animate.button>
-  );
-}
-```
-
-## Accessibility Best Practices
-
-### ✅ Do
-
-- Always provide focus indicators for keyboard navigation
-- Use visible focus styles (don't rely on browser defaults)
-- Combine with `hover` for mouse users
-- Test with keyboard navigation (Tab key)
-
-### ❌ Don't
-
-- Don't remove focus styles (accessibility requirement)
-- Don't make focus animations too subtle
-- Don't use `outline: none` without providing alternative focus styles
-- Don't forget to test with screen readers
-
-## Combining with Other Props
-
-Combine `focus` with `hover` for complete interaction feedback:
+## Combining with hover
 
 ```jsx
 <animate.button
-  hover={{
-    scale: withSpring(1.1),
-  }}
+  hover={{ scale: withSpring(1.1) }}
   focus={{
     scale: withSpring(1.05),
-    boxShadow: withSpring('0 0 0 3px rgba(51, 153, 255, 0.3)'),
+    boxShadow: withSpring('0 0 0 3px rgba(96, 165, 250, 0.3)'),
   }}
 >
   Accessible Button
 </animate.button>
 ```
 
-## Next Steps
+## Next steps
 
-- Learn about [Hover Animations](./hover-animations) for mouse interactions
-- Explore [Press Animations](./press-animations) for click feedback
-- Check out [View Animations](./view-animations) for scroll-triggered effects
-
+- [Hover Animations](./hover-animations) / [Press Animations](./press-animations)

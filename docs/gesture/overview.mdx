@@ -4,89 +4,59 @@ id: overview
 title: Gestures Overview
 ---
 
-Gesture hooks in React UI Animate provide a powerful, declarative way to handle user interactions. Whether you're building draggable cards, scroll-based animations, or custom cursor effects, these hooks simplify complex gesture handling.
+React UI Animate has two layers for handling pointer/touch/wheel input:
 
-## What Are Gesture Hooks?
+- **`Gesture` + `useGesture`**: the low-level primitive. `Gesture.Pan()`,
+  `.Move()`, `.Wheel()`, `.Scroll()`, `.Swipe()`, `.Hover()`, `.Pinch()`, and
+  `.Rotate()` are chainable builders that describe a gesture; `useGesture`
+  attaches the built descriptor to a ref, an array of refs, or `window`.
+  Every gesture type is registered against the same shared per-element
+  tracker, so multiple `useGesture` calls on one node compose instead of
+  fighting each other.
+- **`useDrag`**: a high-level convenience hook built on top of
+  `Gesture.Pan()`. It returns ready-to-use `x`/`y` `AnimateValue`s with
+  momentum, bounds, and rubber-banding built in, so you don't have to wire
+  `withDecay`/`withSpring` yourself for the common drag-a-thing case.
 
-Gesture hooks are React hooks that listen to user input events (mouse, touch, scroll, wheel) and provide clean, React-friendly APIs for handling interactions. They abstract away the complexity of pointer events, touch handling, and cross-browser differences.
+Reach for `useDrag` first for draggable elements. Reach for `Gesture` +
+`useGesture` for anything else: scroll tracking, wheel/zoom controls, swipe
+detection, hover/cursor effects, or pinch-to-zoom and rotate.
 
-## Why Use Gesture Hooks?
+:::tip
+Start with [useDrag](./useDrag) for the common case. Drop down to
+[useGesture](./useGesture) when you need a gesture type that isn't drag.
+:::
 
-- ✅ **Declarative** - Write interactions in a React-friendly way
-- ✅ **Cross-platform** - Works with mouse, touch, and pen input
-- ✅ **Rich data** - Get movement, velocity, offset, and more
-- ✅ **Performant** - Optimized event handling
-- ✅ **Flexible** - Works with single elements, multiple elements, or the window
+## Available gesture types
 
-## Available Gesture Hooks
+| Builder | Fires | Use it for |
+|---|---|---|
+| `Gesture.Pan()` | `onStart` / `onChange` / `onEnd` / `onFinalize` | Custom drag logic (`useDrag` covers most of this already) |
+| `Gesture.Move()` | `onStart` / `onChange` / `onEnd` | Cursor-follow effects, hover-position tracking |
+| `Gesture.Wheel()` | `onStart` / `onChange` / `onEnd` | Trackpad/wheel-driven zoom or custom scroll |
+| `Gesture.Scroll()` | `onStart` / `onChange` / `onEnd` | Scroll-linked animation, parallax, progress bars |
+| `Gesture.Swipe()` | `onSwipe` (once, on release) | Flick-to-dismiss, carousels, swipe navigation |
+| `Gesture.Hover()` | `onStart` / `onChange` / `onEnd` | Hover-in/out state |
+| `Gesture.Pinch()` | `onStart` / `onChange` / `onEnd` / `onFinalize` | Two-finger zoom |
+| `Gesture.Rotate()` | `onStart` / `onChange` / `onEnd` / `onFinalize` | Two-finger rotation |
 
-### [useDrag](./useDrag)
-Detects drag gestures with full control over movement, velocity, and direction. Perfect for draggable cards, sliders, and interactive elements.
+See [useGesture](./useGesture) for the full API and one example per builder,
+and [useDrag](./useDrag) for the drag convenience hook.
 
-**Use cases:**
-- Draggable cards and panels
-- Sliders and carousels
-- Sortable lists
-- Drag-to-dismiss interactions
-
-### [useMove](./useMove)
-Tracks pointer movement without needing a press. Great for hover effects, custom cursors, and interactive elements that respond to mouse position.
-
-**Use cases:**
-- Custom cursor effects
-- Hover interactions
-- Magnetic effects
-- Interactive cards that follow the cursor
-
-### [useScroll](./useScroll)
-Listens to native scroll events and provides detailed scroll dynamics. Perfect for scroll-triggered animations and parallax effects.
-
-**Use cases:**
-- Scroll-triggered animations
-- Parallax effects
-- Progress indicators
-- Scroll-based reveals
-
-### [useWheel](./useWheel)
-Captures wheel/touchpad gestures with full delta, velocity, and offset tracking. Ideal for zoom interactions and custom scroll behavior.
-
-**Use cases:**
-- Zoom controls
-- Custom scroll behavior
-- Horizontal scrolling with wheel
-- Gesture-driven navigation
-
-## Common Patterns
-
-### Pattern 1: Drag with Spring Back
+## Common pattern: drag with a spring back
 
 ```jsx
-import { useDrag, useValue, withSpring } from 'react-ui-animate';
+import { useRef } from 'react';
+import { useDrag, animate } from 'react-ui-animate';
 
 function DraggableCard() {
   const ref = useRef(null);
-  const [x, setX] = useValue(0);
-  const [y, setY] = useValue(0);
-
-  useDrag(ref, ({ down, movement }) => {
-    if (down) {
-      setX(movement.x);
-      setY(movement.y);
-    } else {
-      // Spring back to center
-      setX(withSpring(0));
-      setY(withSpring(0));
-    }
-  });
+  const { x, y } = useDrag(ref);
 
   return (
     <animate.div
       ref={ref}
-      style={{
-        translateX: x,
-        translateY: y,
-        cursor: 'grab',
-      }}
+      style={{ translateX: x, translateY: y, cursor: 'grab' }}
     >
       Drag me
     </animate.div>
@@ -94,93 +64,26 @@ function DraggableCard() {
 }
 ```
 
-### Pattern 2: Scroll Progress
+`useDrag` springs back to bounds automatically when `bounds` is set, and
+flings with momentum on release by default. See [useDrag](./useDrag) for
+every option.
 
-```jsx
-import { useScroll, useValue } from 'react-ui-animate';
+## Best practices
 
-function ScrollProgress() {
-  const [progress, setProgress] = useValue(0);
+### Do
 
-  useScroll(window, ({ offset }) => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    setProgress(offset.y / maxScroll);
-  });
+- Animate `translateX`/`translateY` (GPU-accelerated transforms), not
+  `left`/`top`.
+- Let `useDrag`'s `momentum`/`elastic`/`bounds` options do the physics work
+  instead of hand-rolling `withDecay` for simple drag cases.
+- Pass a stable `ref`. Gesture registration happens once on mount and stays
+  live for config/handler changes, but the element itself isn't expected to
+  swap out from under it.
 
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: `${progress * 100}%`,
-        height: 4,
-        background: 'teal',
-      }}
-    />
-  );
-}
-```
+### Don't
 
-### Pattern 3: Custom Cursor
-
-```jsx
-import { useMove, useValue } from 'react-ui-animate';
-
-function CustomCursor() {
-  const [pos, setPos] = useValue({ x: 0, y: 0 });
-
-  useMove(window, ({ offset }) => {
-    setPos({ x: offset.x, y: offset.y });
-  });
-
-  return (
-    <animate.div
-      style={{
-        position: 'fixed',
-        left: pos.x,
-        top: pos.y,
-        width: 20,
-        height: 20,
-        borderRadius: '50%',
-        background: 'teal',
-        pointerEvents: 'none',
-        translateX: -10,
-        translateY: -10,
-      }}
-    />
-  );
-}
-```
-
-## Best Practices
-
-### ✅ Do
-
-- Combine gesture hooks with `useValue` for smooth animations
-- Use `withSpring` for natural release animations
-- Handle both `down` and release states in drag callbacks
-- Use transforms (`translateX`, `translateY`) instead of layout properties
-- Provide visual feedback (cursor changes, hover states)
-
-### ❌ Don't
-
-- Don't forget to handle cleanup when components unmount
-- Don't use layout properties (`left`, `top`) - use transforms
-- Don't forget to provide accessibility alternatives
-- Don't make gestures too sensitive (use thresholds when needed)
-
-## Performance Tips
-
-1. **Use transforms** - `translateX`, `translateY` are GPU-accelerated
-2. **Debounce when needed** - For expensive operations in callbacks
-3. **Use refs correctly** - Pass stable refs to gesture hooks
-4. **Batch updates** - Update multiple values together when possible
-
-## Next Steps
-
-Explore each gesture hook in detail:
-- **[useDrag](./useDrag)** - Drag interactions
-- **[useMove](./useMove)** - Pointer tracking
-- **[useScroll](./useScroll)** - Scroll handling
-- **[useWheel](./useWheel)** - Wheel gestures
+- Don't skip a fallback/keyboard interaction for anything gesture-driven.
+  Gestures should enhance an already-usable UI, not be the only way to
+  trigger an action.
+- Don't set overly small `minDistance`/`threshold` values. A little slop
+  avoids gestures firing on what was meant to be a click/tap.

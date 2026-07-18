@@ -1,0 +1,75 @@
+---
+sidebar_position: 2
+id: use-presence
+title: usePresence & useIsPresent
+---
+
+`usePresence` and `useIsPresent` read whether the component they're called
+in is currently exiting. Useful when the animation itself needs to be
+driven by something other than `animate`'s `exit` prop (e.g. animating a
+child, or running non-style side effects during exit).
+
+## useIsPresent
+
+```ts
+function useIsPresent(): boolean;
+```
+
+`true` for as long as the element is mounted and not exiting; flips to
+`false` the instant its parent removes it from `Presence`'s children.
+
+```jsx
+function ListItem() {
+  const isPresent = useIsPresent();
+  return <li style={{ opacity: isPresent ? 1 : 0.5 }}>...</li>;
+}
+```
+
+## usePresence
+
+```ts
+function usePresence(): [isPresent: boolean, safeToRemove: () => void];
+```
+
+Same `isPresent` flag, plus `safeToRemove`. Call it once your own exit
+animation is done to tell the surrounding `Presence` it can actually unmount
+the element. Use this when you're driving the exit animation manually
+instead of via the `exit` prop.
+
+```jsx
+function CustomExit() {
+  const [isPresent, safeToRemove] = usePresence();
+  const [opacity, setOpacity] = useValue(1);
+
+  useEffect(() => {
+    if (!isPresent) {
+      setOpacity(withTiming(0, { duration: 300, onComplete: safeToRemove }));
+    }
+  }, [isPresent]);
+
+  return <animate.div style={{ opacity }}>...</animate.div>;
+}
+```
+
+Outside of a `Presence` tree, both hooks report present/mounted (`isPresent:
+true`), they're safe to call unconditionally even if a component is
+sometimes rendered without a surrounding `Presence`.
+
+:::note
+Prefer the declarative `exit` prop when you only need style animation. Use
+`usePresence` when exit must drive custom logic (child animations, timeouts,
+non-style cleanup) and you call `safeToRemove` yourself.
+:::
+
+## Presence-level options
+
+A few `Presence` props worth knowing about alongside these hooks:
+
+- `mode`: `'sync'` (default, exiting and entering children animate
+  together), `'wait'` (entering children wait for exiting ones to finish),
+  or `'popLayout'` (exiting children are pulled out of layout flow
+  immediately, so siblings reflow around them right away instead of waiting
+  for the exit animation).
+- `initial={false}` skips the enter animation on first mount. Useful for
+  content that should already be in its "entered" state on page load.
+- `onExitComplete` fires once every currently-exiting child has finished.

@@ -1,0 +1,64 @@
+---
+sidebar_position: 6
+id: withStagger
+title: withStagger
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withStagger_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withStagger/BasicExample.tsx';
+import Demo_modifier_withStagger_BasicExample from '@site/src/examples/next/modifier/withStagger/BasicExample';
+
+`withStagger` delays a descriptor proportionally to an `index`, animating a
+list with increasing indices makes items start one after another instead of
+all at once. It's built on `withDelay` + `withSequence` under the hood.
+
+## Signature
+
+```ts
+function withStagger(
+  index: number,
+  descriptor: Descriptor,
+  options?: { each?: number; delay?: number }
+): Descriptor;
+```
+
+- `each`, delay step between consecutive items, in ms. Default `50`.
+- `delay`, base delay applied before staggering starts, in ms. Default `0`.
+
+## Usage
+
+`withStagger` only wraps *one* descriptor for *one* item's delay, animating
+several array items with different per-item delays needs
+[`withParallel`](./withParallel) to give each array key its own descriptor:
+
+```jsx
+import { useValue, withStagger, withParallel, withSpring } from 'react-ui-animate';
+
+function StaggeredBars() {
+  const [heights, setHeights] = useValue([20, 20, 20, 20, 20]);
+
+  const expand = () => {
+    // highlight-start
+    /* Delay each spring by index so bars rise one after another */
+    setHeights(
+      withParallel(
+        heights.map((_, i) => withStagger(i, withSpring(100), { each: 60 }))
+      )
+    );
+    // highlight-end
+  };
+
+  // ...
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withStagger_BasicExample}
+  code={Code_modifier_withStagger_BasicExample}
+/>
+
+## Next steps
+
+- [withParallel](./withParallel): run a different descriptor per key/index,
+  which `withStagger` needs for multi-item lists.
+- [withSequence](./withSequence): what `withStagger` builds on internally.
