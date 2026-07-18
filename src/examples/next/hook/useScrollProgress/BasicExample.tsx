@@ -30,7 +30,7 @@ export default function App() {
           left: 0,
           width: scrollYProgress.to([0, 1], ['0%', '100%']),
           height: 4,
-          background: 'linear-gradient(90deg, #667eea, #764ba2)',
+          background: 'linear-gradient(90deg, #7d93b0, #6b8ab8)',
         }}
       />
 
@@ -47,7 +47,7 @@ export default function App() {
           left: 16,
           width: 64,
           height: 64,
-          background: '#764ba2',
+          background: '#6b8ab8',
           borderRadius: 8,
           display: 'flex',
           alignItems: 'center',

@@ -18,7 +18,7 @@ export default function App() {
           marginTop: 20,
           width: 100,
           height: 100,
-          background: x.to([0, 200], ['teal', 'red']),
+          background: x.to([0, 200], ['#7d93b0', '#b89a8a']),
           translateX: x,
           borderRadius: 8,
         }}

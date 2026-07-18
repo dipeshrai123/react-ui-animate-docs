@@ -17,7 +17,7 @@ export default function BasicExample() {
         style={{
           width: obj.width,
           height: 100,
-          backgroundColor: 'teal',
+          backgroundColor: '#7d93b0',
           margin: '20px auto 0',
           translateX: obj.x,
           translateY: obj.y,

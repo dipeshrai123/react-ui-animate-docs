@@ -26,9 +26,9 @@ function DraggableBox({ color }: { color: string }) {
 const App = () => {
   return (
     <div style={{ display: 'flex', gap: 20 }}>
-      <DraggableBox color="teal" />
+      <DraggableBox color="#7d93b0" />
       <DraggableBox color="coral" />
-      <DraggableBox color="slateblue" />
+      <DraggableBox color="#8a9bb8" />
     </div>
   );
 };

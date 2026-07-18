@@ -76,8 +76,6 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           sidebarCollapsed: true,
-          editUrl:
-            'https://github.com/dipeshrai123/react-ui-animate-docs/edit/main/',
           lastVersion: '5.3.2',
           versions: {
             current: {

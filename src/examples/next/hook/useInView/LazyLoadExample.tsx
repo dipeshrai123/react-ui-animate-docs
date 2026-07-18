@@ -28,7 +28,7 @@ export default function App() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#f0f0f0',
+          background: '#1c1f28',
           borderRadius: 8,
           margin: 40,
         }}
@@ -56,8 +56,8 @@ export default function App() {
               style={{
                 width: 50,
                 height: 50,
-                border: '4px solid #e1e1e1',
-                borderTop: '4px solid #667eea',
+                border: '4px solid #2a2e38',
+                borderTop: '4px solid #7d93b0',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
                 margin: '0 auto 20px',

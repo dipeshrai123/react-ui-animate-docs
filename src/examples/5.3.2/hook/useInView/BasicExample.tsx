@@ -31,7 +31,7 @@ export default function App() {
         ref={ref}
         style={{
           padding: 40,
-          background: isInView ? 'teal' : '#e1e1e1',
+          background: isInView ? '#7d93b0' : '#2a2e38',
           borderRadius: 8,
           opacity,
           translateY,

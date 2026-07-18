@@ -14,7 +14,7 @@ const App = () => {
         translateY: y,
         width: 100,
         height: 100,
-        backgroundColor: 'teal',
+        backgroundColor: '#7d93b0',
         borderRadius: 4,
       }}
     />

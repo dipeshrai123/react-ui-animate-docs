@@ -19,7 +19,7 @@ const App = () => {
         style={{
           width: 50,
           height: 50,
-          backgroundColor: 'teal',
+          backgroundColor: '#7d93b0',
           borderRadius: 4,
           translateX: pos.x,
           translateY: pos.y,
@@ -37,9 +37,9 @@ const App = () => {
           style={{
             width: 400,
             height: 60,
-            backgroundColor: '#f1f1f1',
+            backgroundColor: '#1c1f28',
             borderRadius: 4,
-            border: '1px solid #e1e1e1',
+            border: '1px solid #2a2e38',
             marginBottom: 40,
           }}
         />

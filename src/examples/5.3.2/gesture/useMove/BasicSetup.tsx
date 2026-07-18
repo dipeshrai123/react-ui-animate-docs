@@ -13,7 +13,7 @@ const App = () => {
       style={{
         width: 50,
         height: 50,
-        backgroundColor: 'teal',
+        backgroundColor: '#7d93b0',
         borderRadius: 4,
         translateX: pos.x,
         translateY: pos.y,

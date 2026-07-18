@@ -23,7 +23,7 @@ const App = () => {
           rotate: style.rotate,
           width: 60,
           height: 60,
-          background: 'teal',
+          background: '#7d93b0',
           borderRadius: 8,
         }}
       />

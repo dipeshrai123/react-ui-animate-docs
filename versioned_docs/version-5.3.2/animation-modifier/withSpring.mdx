@@ -46,7 +46,7 @@ function MyComponent() {
       <button onClick={() => setWidth(withSpring(200))}>
         Expand
       </button>
-      <animate.div style={{ width, height: 100, background: 'teal' }} />
+      <animate.div style={{ width, height: 100, background: '#7d93b0' }} />
     </>
   );
 }
@@ -104,7 +104,7 @@ function SpringButton() {
       style={{
         scale,
         padding: '10px 20px',
-        background: 'teal',
+        background: '#7d93b0',
         border: 'none',
         borderRadius: 4,
       }}
@@ -175,7 +175,7 @@ function FlipCard() {
         scale,
         width: 200,
         height: 200,
-        background: 'teal',
+        background: '#7d93b0',
         borderRadius: 8,
       }}
     >
@@ -229,7 +229,7 @@ function AnimatedCard() {
   return (
     <>
       <button onClick={animate}>Animate</button>
-      <animate.div style={{ translateX: x, width: 100, height: 100, background: 'teal' }} />
+      <animate.div style={{ translateX: x, width: 100, height: 100, background: '#7d93b0' }} />
     </>
   );
 }

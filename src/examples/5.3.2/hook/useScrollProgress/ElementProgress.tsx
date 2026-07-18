@@ -38,7 +38,7 @@ export default function App() {
         style={{
           margin: '0 24px 24px',
           padding: 24,
-          background: 'teal',
+          background: '#7d93b0',
           borderRadius: 8,
           opacity: scrollYProgress.to([0, 1], [0, 1]),
           translateY: scrollYProgress.to([0, 1], [30, 0]),

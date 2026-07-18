@@ -35,9 +35,9 @@ export default function App() {
           style={{
             width: 200,
             height: 200,
-            border: '1px solid #e1e1e1',
+            border: '1px solid #2a2e38',
             borderRadius: 8,
-            backgroundColor: '#f1f1f1',
+            backgroundColor: '#1c1f28',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

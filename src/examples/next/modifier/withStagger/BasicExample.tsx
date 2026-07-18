@@ -22,7 +22,7 @@ const App = () => {
             style={{
               width: 24,
               height: heights[i],
-              background: 'teal',
+              background: '#7d93b0',
               borderRadius: 4,
             }}
           />
