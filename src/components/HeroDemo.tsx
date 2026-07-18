@@ -42,12 +42,6 @@ function FloatTag({
       );
     }, delay);
     return () => clearTimeout(timer);
-    // setOpacity/setTranslateY aren't included: useValue's setter isn't
-    // memoized, so a new reference on every render of a *parent* (e.g.
-    // HeroDemo re-rendering on drag start/end via setGrabbing) would
-    // otherwise re-trigger this effect and restart the float loop from
-    // scratch, which is exactly the "stuck and jumps" glitch this avoids.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delay, distance, duration]);
 
   return (
