@@ -21,16 +21,15 @@ const Stage = styled.div`
 `;
 
 const Trigger = styled.button`
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
   font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 20px -8px rgba(99, 102, 241, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 `;
 
 const Backdrop = styled(animate.div)`
@@ -47,12 +46,11 @@ const Dialog = styled(animate.div)`
   position: relative;
   width: 86%;
   max-width: 260px;
-  padding: 22px 20px 20px;
-  border-radius: 16px;
-  background: #14161f;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-  font-family: 'Inter', sans-serif;
+  padding: 20px 18px 18px;
+  border-radius: 12px;
+  background: #12141a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: inherit;
 `;
 
 const CloseBtn = styled.button`
@@ -105,13 +103,13 @@ const Ghost = styled.button`
 const Solid = styled.button`
   flex: 1;
   padding: 8px 0;
-  border-radius: 9px;
+  border-radius: 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 550;
   cursor: pointer;
-  color: #ffffff;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #eff6ff;
+  background: rgba(96, 165, 250, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.28);
 `;
 
 function Dialog_({ onClose }: { onClose: () => void }) {

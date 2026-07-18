@@ -24,9 +24,8 @@ const Indicator = styled(animate.div)`
   position: absolute;
   top: 5px;
   bottom: 5px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  box-shadow: 0 6px 16px -6px rgba(99, 102, 241, 0.9);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.1);
 `;
 
 const Tab = styled.button<{ active: boolean }>`

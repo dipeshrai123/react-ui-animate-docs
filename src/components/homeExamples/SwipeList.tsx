@@ -45,7 +45,7 @@ const DeleteBg = styled.div`
   font-size: 13px;
   font-weight: 600;
   color: #ffffff;
-  background: linear-gradient(90deg, #be123c, #f43f5e);
+  background: #ef4444;
 `;
 
 const Fore = styled(animate.div)`
@@ -72,12 +72,12 @@ const Grip = styled.div`
   font-size: 18px;
 `;
 
-const Avatar = styled.div<{ from: string; to: string }>`
+const Avatar = styled.div<{ color: string }>`
   width: 30px;
   height: 30px;
   flex-shrink: 0;
-  border-radius: 9px;
-  background: ${(p) => `linear-gradient(135deg, ${p.from}, ${p.to})`};
+  border-radius: 8px;
+  background: ${(p) => p.color};
 `;
 
 const Meta = styled.div`
@@ -104,14 +104,13 @@ interface ItemData {
   id: number;
   name: string;
   detail: string;
-  from: string;
-  to: string;
+  color: string;
 }
 
 const INITIAL: ItemData[] = [
-  { id: 1, name: 'Olivia Hart', detail: 'Sent you a file', from: '#6366f1', to: '#8b5cf6' },
-  { id: 2, name: 'Liam Chen', detail: 'Liked your post', from: '#06b6d4', to: '#3b82f6' },
-  { id: 3, name: 'Ava Patel', detail: 'New comment', from: '#a855f7', to: '#ec4899' },
+  { id: 1, name: 'Olivia Hart', detail: 'Sent you a file', color: '#60a5fa' },
+  { id: 2, name: 'Liam Chen', detail: 'Liked your post', color: '#64748b' },
+  { id: 3, name: 'Ava Patel', detail: 'New comment', color: '#94a3b8' },
 ];
 
 function Row({ item, onDelete }: { item: ItemData; onDelete: (id: number) => void }) {
@@ -152,7 +151,7 @@ function Row({ item, onDelete }: { item: ItemData; onDelete: (id: number) => voi
         <Grip>
           <MdDragIndicator />
         </Grip>
-        <Avatar from={item.from} to={item.to} />
+        <Avatar color={item.color} />
         <Meta>
           <Name>{item.name}</Name>
           <Detail>{item.detail}</Detail>

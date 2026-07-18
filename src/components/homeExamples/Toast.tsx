@@ -22,16 +22,15 @@ const Stage = styled.div`
 
 const Trigger = styled.button`
   flex-shrink: 0;
-  padding: 9px 16px;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: inherit;
   font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 20px -8px rgba(99, 102, 241, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 `;
 
 const Stack = styled.div`
@@ -47,11 +46,9 @@ const ToastCard = styled(animate.div)`
   width: 100%;
   max-width: 250px;
   overflow: hidden;
-  border-radius: 12px;
-  background: rgba(20, 22, 31, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const Row = styled.div`
@@ -96,8 +93,8 @@ const Progress = styled(animate.div)`
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  height: 2px;
+  background: #60a5fa;
 `;
 
 let uid = 0;

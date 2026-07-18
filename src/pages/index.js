@@ -17,7 +17,6 @@ import { FaGithub, FaDiscord, FaNpm } from 'react-icons/fa';
 import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
 
 import styles from './index.module.css';
-import HomeCard from '../components/HomeCard';
 
 const GITHUB_URL = 'https://github.com/dipeshrai123/react-ui-animate';
 const NPM_URL = 'https://www.npmjs.com/package/react-ui-animate';
@@ -284,41 +283,118 @@ function Features() {
 }
 
 const EXAMPLES = [
-  { title: 'Toast Notifications', key: 'ToastDemo' },
-  { title: 'Modal Dialog', key: 'ModalDemo' },
-  { title: 'Accordion / FAQ', key: 'AccordionDemo' },
-  { title: 'Animated Tabs', key: 'TabsDemo' },
-  { title: 'Like Button', key: 'LikeButtonDemo' },
-  { title: 'Swipe to Delete', key: 'SwipeListDemo' },
+  {
+    key: 'ToastDemo',
+    title: 'Toast',
+    description: 'Enter, hold, then exit with Presence.',
+  },
+  {
+    key: 'ModalDemo',
+    title: 'Modal',
+    description: 'Scale-in dialog with outside-click dismiss.',
+  },
+  {
+    key: 'AccordionDemo',
+    title: 'Accordion',
+    description: 'Height spring for expanding panels.',
+  },
+  {
+    key: 'TabsDemo',
+    title: 'Tabs',
+    description: 'Sliding indicator that follows the active tab.',
+  },
+  {
+    key: 'LikeButtonDemo',
+    title: 'Like button',
+    description: 'Press feedback with a spring pop.',
+  },
+  {
+    key: 'SwipeListDemo',
+    title: 'Swipe to delete',
+    description: 'Drag with snap-back and dismiss.',
+  },
 ];
 
 function Examples() {
+  const [active, setActive] = React.useState(0);
+  const current = EXAMPLES[active];
+
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
-      <div className="container">
-        <ViewReveal className={styles.sectionHeader}>
-          <span className={styles.eyebrow}>Live examples</span>
-          <h2 className={styles.sectionTitle}>Real components, real motion</h2>
-          <p className={styles.sectionLede}>
-            Toasts, modals, tabs, and more, built with React UI Animate.
-            Click, drag, and swipe to try them.
-          </p>
+      <div className={clsx('container', styles.showcaseWrap)}>
+        <ViewReveal className={styles.showcaseHeader}>
+          <div className={styles.showcaseHeading}>
+            <h2 className={styles.showcaseTitle}>Examples</h2>
+            <p className={styles.showcaseLede}>
+              Interactive patterns built with React UI Animate.
+            </p>
+          </div>
+          <Link to="/docs/getting-started" className={styles.showcaseDocsLink}>
+            Read the docs
+            <MdArrowForward className={styles.showcaseDocsIcon} />
+          </Link>
         </ViewReveal>
 
-        <div className={styles.exampleGrid}>
-          {EXAMPLES.map((example) => (
-            <HomeCard key={example.key} title={example.title}>
-              <BrowserOnly>
+        <ViewReveal className={styles.showcaseFrame}>
+          <nav className={styles.showcaseNav} aria-label="Examples">
+            {EXAMPLES.map((example, index) => {
+              const selected = index === active;
+              return (
+                <button
+                  key={example.key}
+                  type="button"
+                  className={clsx(
+                    styles.showcaseNavItem,
+                    selected && styles.showcaseNavItemActive
+                  )}
+                  onClick={() => setActive(index)}
+                  aria-current={selected ? 'true' : undefined}
+                >
+                  <span className={styles.showcaseNavIndex}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className={styles.showcaseNavCopy}>
+                    <span className={styles.showcaseNavTitle}>
+                      {example.title}
+                    </span>
+                    <span className={styles.showcaseNavDesc}>
+                      {example.description}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className={styles.showcaseStage}>
+            <div className={styles.showcaseStageHead}>
+              <div>
+                <div className={styles.showcaseStageTitle}>{current.title}</div>
+                <div className={styles.showcaseStageDesc}>
+                  {current.description}
+                </div>
+              </div>
+              <div className={styles.showcaseStageMeta} aria-hidden="true">
+                Preview
+              </div>
+            </div>
+
+            <div className={styles.showcaseCanvas} key={current.key}>
+              <BrowserOnly
+                fallback={
+                  <div className={styles.showcaseFallback} aria-hidden="true" />
+                }
+              >
                 {() => {
                   const Component = require('../components/homeExamples')[
-                    example.key
+                    current.key
                   ];
                   return <Component />;
                 }}
               </BrowserOnly>
-            </HomeCard>
-          ))}
-        </div>
+            </div>
+          </div>
+        </ViewReveal>
       </div>
     </section>
   );
@@ -329,7 +405,6 @@ function CallToAction() {
     <section className={styles.section}>
       <div className="container">
         <ViewReveal className={styles.cta}>
-          <div className={styles.ctaGlow} aria-hidden="true" />
           <h2 className={styles.ctaTitle}>Start animating in minutes</h2>
           <p className={styles.ctaLede}>
             Install React UI Animate and ship your first animation today.
