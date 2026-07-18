@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { MdDelete, MdDragIndicator } from 'react-icons/md';
-import { animate, Presence, useDrag, useValue, withSpring, withTiming } from 'react-ui-animate';
+import {
+  animate,
+  Presence,
+  Gesture,
+  useGesture,
+  useValue,
+  withSpring,
+  withTiming,
+} from 'react-ui-animate';
 
 const Stage = styled.div`
   width: 100%;
@@ -110,17 +118,22 @@ function Row({ item, onDelete }: { item: ItemData; onDelete: (id: number) => voi
   const ref = useRef<HTMLDivElement>(null);
   const [tx, setTx] = useValue(0);
 
-  useDrag(ref, ({ down, movement: { x } }) => {
-    const nx = Math.min(0, x);
-    if (down) {
-      setTx(nx);
-    } else if (nx < -THRESHOLD) {
-      setTx(withTiming(-320, { duration: 160 }));
-      onDelete(item.id);
-    } else {
-      setTx(withSpring(0, { damping: 18, stiffness: 240 }));
-    }
-  });
+  useGesture(
+    ref,
+    Gesture.Pan()
+      .onChange(({ movement }) => {
+        setTx(Math.min(0, movement.x));
+      })
+      .onEnd(({ movement }) => {
+        const nx = Math.min(0, movement.x);
+        if (nx < -THRESHOLD) {
+          setTx(withTiming(-320, { duration: 160 }));
+          onDelete(item.id);
+        } else {
+          setTx(withSpring(0, { damping: 18, stiffness: 240 }));
+        }
+      })
+  );
 
   return (
     <RowWrap

@@ -42,7 +42,13 @@ function FloatTag({
       );
     }, delay);
     return () => clearTimeout(timer);
-  }, [delay, distance, duration, setOpacity, setTranslateY]);
+    // setOpacity/setTranslateY aren't included: useValue's setter isn't
+    // memoized, so a new reference on every render of a *parent* (e.g.
+    // HeroDemo re-rendering on drag start/end via setGrabbing) would
+    // otherwise re-trigger this effect and restart the float loop from
+    // scratch, which is exactly the "stuck and jumps" glitch this avoids.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delay, distance, duration]);
 
   return (
     <animate.div
@@ -57,16 +63,25 @@ function FloatTag({
 
 export default function HeroDemo() {
   const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useValue({ x: 0, y: 0 });
   const [scale, setScale] = useValue(1);
   const [lift, setLift] = useValue(0);
   const [grabbing, setGrabbing] = useState(false);
 
-  useDrag(ref, ({ down, movement: { x, y } }) => {
-    setGrabbing(down);
-    setPos(down ? { x, y } : withSpring({ x: 0, y: 0 }, { damping: 12, stiffness: 130 }));
-    setScale(withSpring(down ? 1.1 : 1));
-    setLift(withSpring(down ? 1 : 0));
+  // bounds pinned to the origin means any drag is instantly "out of
+  // bounds" on release, so useDrag's own spring-back handles the "snaps
+  // right back to center" motion — no manual position tracking needed.
+  const { x, y } = useDrag(ref, {
+    bounds: { left: 0, right: 0, top: 0, bottom: 0 },
+    onStart: () => {
+      setGrabbing(true);
+      setScale(withSpring(1.1));
+      setLift(withSpring(1));
+    },
+    onEnd: () => {
+      setGrabbing(false);
+      setScale(withSpring(1));
+      setLift(withSpring(0));
+    },
   });
 
   return (
@@ -96,7 +111,7 @@ export default function HeroDemo() {
         <animate.div
           ref={ref}
           className={styles.card}
-          style={{ translateX: pos.x, translateY: pos.y, scale }}
+          style={{ translateX: x, translateY: y, scale }}
         >
           <span className={styles.cardGlyph} aria-hidden="true">
             <svg

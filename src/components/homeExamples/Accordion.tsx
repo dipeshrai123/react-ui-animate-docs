@@ -1,7 +1,9 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { MdExpandMore } from 'react-icons/md';
 import { animate, useValue, withSpring } from 'react-ui-animate';
+
+const PANEL_HEIGHT = 46;
 
 const Stage = styled.div`
   width: 100%;
@@ -79,13 +81,7 @@ function AccordionItem({
   open: boolean;
   onToggle: () => void;
 }) {
-  const innerRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
   const [progress, setProgress] = useValue(0);
-
-  useLayoutEffect(() => {
-    if (innerRef.current) setHeight(innerRef.current.scrollHeight);
-  }, []);
 
   useEffect(() => {
     setProgress(withSpring(open ? 1 : 0, { damping: 20, stiffness: 220 }));
@@ -101,11 +97,11 @@ function AccordionItem({
       </Header>
       <Panel
         style={{
-          height: progress.to([0, 1], [0, height]),
+          height: progress.to([0, 1], [0, PANEL_HEIGHT]),
           opacity: progress,
         }}
       >
-        <Answer ref={innerRef}>{a}</Answer>
+        <Answer>{a}</Answer>
       </Panel>
     </Item>
   );
