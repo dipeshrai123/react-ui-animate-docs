@@ -4,6 +4,24 @@ id: useGesture
 title: useGesture
 ---
 
+import CodeExample from '@site/src/components/CodeExample';
+import Code_gesture_useGesture_PanExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/PanExample.tsx';
+import Demo_gesture_useGesture_PanExample from '@site/src/examples/next/gesture/useGesture/PanExample';
+import Code_gesture_useGesture_MoveExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/MoveExample.tsx';
+import Demo_gesture_useGesture_MoveExample from '@site/src/examples/next/gesture/useGesture/MoveExample';
+import Code_gesture_useGesture_WheelExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/WheelExample.tsx';
+import Demo_gesture_useGesture_WheelExample from '@site/src/examples/next/gesture/useGesture/WheelExample';
+import Code_gesture_useGesture_ScrollExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/ScrollExample.tsx';
+import Demo_gesture_useGesture_ScrollExample from '@site/src/examples/next/gesture/useGesture/ScrollExample';
+import Code_gesture_useGesture_SwipeExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/SwipeExample.tsx';
+import Demo_gesture_useGesture_SwipeExample from '@site/src/examples/next/gesture/useGesture/SwipeExample';
+import Code_gesture_useGesture_HoverExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/HoverExample.tsx';
+import Demo_gesture_useGesture_HoverExample from '@site/src/examples/next/gesture/useGesture/HoverExample';
+import Code_gesture_useGesture_PinchExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/PinchExample.tsx';
+import Demo_gesture_useGesture_PinchExample from '@site/src/examples/next/gesture/useGesture/PinchExample';
+import Code_gesture_useGesture_RotateExample from '!!raw-loader!@site/src/examples/next/gesture/useGesture/RotateExample.tsx';
+import Demo_gesture_useGesture_RotateExample from '@site/src/examples/next/gesture/useGesture/RotateExample';
+
 `useGesture` attaches a `Gesture.*` descriptor to an element, `window`, or an
 array of elements. Config and handlers stay live across renders, so editing
 them after mount takes effect without re-attaching listeners.
@@ -50,6 +68,11 @@ function Panner() {
 Config: `.enabled(bool)`, `.minDistance(px)`, `.axis('x' | 'y')`.
 Event shape: `{ phase, down, movement, offset, velocity, event, target, cancel }`.
 
+<CodeExample
+  demo={Demo_gesture_useGesture_PanExample}
+  code={Code_gesture_useGesture_PanExample}
+/>
+
 ## Gesture.Move()
 
 Tracks pointer position with no press required: cursor-follow effects,
@@ -64,6 +87,11 @@ useGesture(
 
 Event shape: `{ movement, offset, velocity, event, cancel }`.
 
+<CodeExample
+  demo={Demo_gesture_useGesture_MoveExample}
+  code={Code_gesture_useGesture_MoveExample}
+/>
+
 ## Gesture.Wheel()
 
 Trackpad/mouse-wheel deltas, for custom zoom or horizontal scroll.
@@ -76,6 +104,11 @@ useGesture(
 ```
 
 Event shape: `{ movement, offset, velocity, event, cancel }`.
+
+<CodeExample
+  demo={Demo_gesture_useGesture_WheelExample}
+  code={Code_gesture_useGesture_WheelExample}
+/>
 
 ## Gesture.Scroll()
 
@@ -96,6 +129,11 @@ useGesture(
 ```
 
 Event shape: `{ movement, offset, velocity, event, cancel }`.
+
+<CodeExample
+  demo={Demo_gesture_useGesture_ScrollExample}
+  code={Code_gesture_useGesture_ScrollExample}
+/>
 
 ## Gesture.Swipe()
 
@@ -118,6 +156,11 @@ Config: `.enabled(bool)`, `.axis('x' | 'y')`, `.velocityThreshold(pxPerMs)`
 (default `0.5`), `.distanceThreshold(px)` (default `30`).
 Event shape: `{ direction, movement, velocity, event, target }`.
 
+<CodeExample
+  demo={Demo_gesture_useGesture_SwipeExample}
+  code={Code_gesture_useGesture_SwipeExample}
+/>
+
 ## Gesture.Hover()
 
 Enter/leave/move-while-over: deliberately leaner than `Gesture.Move()` (no
@@ -132,6 +175,11 @@ useGesture(
 ```
 
 Event shape: `{ hovering, offset, event, target }`.
+
+<CodeExample
+  demo={Demo_gesture_useGesture_HoverExample}
+  code={Code_gesture_useGesture_HoverExample}
+/>
 
 ## Gesture.Pinch()
 
@@ -149,6 +197,11 @@ Config: `.enabled(bool)`, `.threshold(v)` (minimum `|scale - 1|` before
 recognized as active, default `0.02`).
 Event shape: `{ phase, scale, velocity, center, event, target, cancel }`.
 
+<CodeExample
+  demo={Demo_gesture_useGesture_PinchExample}
+  code={Code_gesture_useGesture_PinchExample}
+/>
+
 ## Gesture.Rotate()
 
 Two-finger rotation, in degrees from the pointer pair's starting angle.
@@ -165,6 +218,11 @@ useGesture(
 Config: `.enabled(bool)`, `.threshold(degrees)` (minimum rotation before
 recognized as active, default `2`).
 Event shape: `{ phase, rotation, velocity, center, event, target, cancel }`.
+
+<CodeExample
+  demo={Demo_gesture_useGesture_RotateExample}
+  code={Code_gesture_useGesture_RotateExample}
+/>
 
 ## Array mode
 

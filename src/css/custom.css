@@ -344,37 +344,60 @@ h6 {
 }
 
 /* ===== Navbar ===== */
+/* The blur/background live on ::before rather than directly on .navbar:
+   backdrop-filter on .navbar itself would make it the containing block for
+   its `position: fixed` descendants (Docusaurus renders the mobile sidebar
+   drawer as a child of <nav class="navbar">), which traps the drawer inside
+   the navbar's own box instead of the viewport and makes it appear to never
+   open on mobile. */
 .navbar {
   box-shadow: none !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  transition: border-color 0.3s ease;
+}
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 [data-theme='dark'] .navbar {
   border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .navbar::before {
   background: rgba(8, 9, 13, 0.72);
 }
 
 /* Homepage: navbar floats over the dark hero so it blends seamlessly,
    then condenses into a solid bar once the user scrolls past the hero. */
 body.nav-overlay .navbar {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background: transparent;
   border-bottom-color: transparent;
+}
+
+body.nav-overlay .navbar::before {
+  background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 body.nav-overlay.nav-scrolled .navbar {
-  background: rgba(8, 9, 13, 0.8);
   border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+body.nav-overlay.nav-scrolled .navbar::before {
+  background: rgba(8, 9, 13, 0.8);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
