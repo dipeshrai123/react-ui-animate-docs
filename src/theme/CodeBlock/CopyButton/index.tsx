@@ -5,9 +5,6 @@ import {translate} from '@docusaurus/Translate';
 import type {Props} from '@theme/CodeBlock/CopyButton';
 import {FiCopy, FiCheck} from 'react-icons/fi';
 
-// Matches CodeExample.tsx's toolbar buttons exactly (same class, same
-// react-icons set) so every code block on the site — plain fences and
-// live-demo snippets alike — uses one consistent copy button.
 export default function CopyButton({code, className}: Props): JSX.Element {
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeout = useRef<number | undefined>(undefined);
@@ -21,30 +18,39 @@ export default function CopyButton({code, className}: Props): JSX.Element {
 
   useEffect(() => () => window.clearTimeout(copyTimeout.current), []);
 
+  const label = isCopied
+    ? translate({
+        id: 'theme.CodeBlock.copied',
+        message: 'Copied',
+        description: 'The copied button label on code blocks',
+      })
+    : translate({
+        id: 'theme.CodeBlock.copy',
+        message: 'Copy',
+        description: 'The copy button label on code blocks',
+      });
+
   return (
     <button
       type="button"
       aria-label={
         isCopied
-          ? translate({
-              id: 'theme.CodeBlock.copied',
-              message: 'Copied',
-              description: 'The copied button label on code blocks',
-            })
+          ? label
           : translate({
               id: 'theme.CodeBlock.copyButtonAriaLabel',
               message: 'Copy code to clipboard',
               description: 'The ARIA label for copy code blocks button',
             })
       }
-      title={translate({
-        id: 'theme.CodeBlock.copy',
-        message: 'Copy',
-        description: 'The copy button label on code blocks',
-      })}
-      className={clsx('clean-btn', className, 'example-icon-btn')}
+      title={label}
+      className={clsx('clean-btn', 'code-icon-btn', className)}
       onClick={handleCopyCode}>
-      {isCopied ? <FiCheck /> : <FiCopy />}
+      {isCopied ? (
+        <FiCheck size={14} strokeWidth={2} aria-hidden="true" />
+      ) : (
+        <FiCopy size={14} strokeWidth={2} aria-hidden="true" />
+      )}
+      <span className="code-icon-btn__label">{label}</span>
     </button>
   );
 }

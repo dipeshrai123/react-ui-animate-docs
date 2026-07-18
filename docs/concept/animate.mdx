@@ -6,7 +6,7 @@ title: The animate Component
 
 `animate.*` (e.g. `animate.div`, `animate.button`) is a drop-in replacement
 for any HTML/SVG tag that understands animated values and adds a handful of
-declarative animation props — the foundation everything else in the library
+declarative animation props: the foundation everything else in the library
 builds on.
 
 ## Basic usage
@@ -26,7 +26,7 @@ function AnimatedBox() {
 }
 ```
 
-`width` is an `AnimateValue` from `useValue` — passing it into `style`
+`width` is an `AnimateValue` from `useValue`. Passing it into `style`
 subscribes the element directly, so it updates outside React's render cycle.
 
 ## Declarative props
@@ -38,7 +38,7 @@ it on the matching trigger:
 |---|---|
 | `animate` | mount, or whenever the prop's value changes |
 | `exit` | unmount (needs a [`Presence`](../presence/presence-basics) wrapper) |
-| `hover` | pointer enter/leave — see [Interactive Props](../interactive/hover-animations) |
+| `hover` | pointer enter/leave, see [Interactive Props](../interactive/hover-animations) |
 | `press` | pointer down/up |
 | `focus` | focus/blur |
 | `view` | entering the viewport (+ `viewOptions`) |
@@ -67,12 +67,12 @@ regular CSS properties:
 <animate.div style={{ width: 100, translateX: 100, scale: 1.2, rotate: 45 }} />
 ```
 
-Prefer these over animating `width`/`height`/`top`/`left` — transforms are
+Prefer these over animating `width`/`height`/`top`/`left`. Transforms are
 GPU-accelerated and don't trigger layout.
 
 ## Next steps
 
-- [useValue](./useValue) — creating the animated values `animate.*` reads.
-- [Animation Modifiers](../animation-modifier/overview) — `withSpring`,
+- [useValue](./useValue): creating the animated values `animate.*` reads.
+- [Animation Modifiers](../animation-modifier/overview): `withSpring`,
   `withTiming`, and the rest.
-- [Presence & Layout](../presence/presence-basics) — exit animations.
+- [Presence & Layout](../presence/presence-basics): exit animations.

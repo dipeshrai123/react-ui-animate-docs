@@ -5,7 +5,7 @@ title: Presence Basics
 ---
 
 Conditional rendering (`{isOpen && <div>...}`) removes elements from the DOM
-instantly — there's no chance to animate them out. `Presence` keeps an
+instantly, so there's no chance to animate them out. `Presence` keeps an
 exiting child mounted until its `exit` animation finishes, then removes it.
 
 ## Usage
@@ -33,7 +33,7 @@ function Toggle() {
 ```
 
 Each direct child of `Presence` needs a unique `key` if there's more than
-one (e.g. a modal's backdrop + panel) — that's how `Presence` tracks which
+one (e.g. a modal's backdrop + panel). That's how `Presence` tracks which
 child is entering/exiting across renders.
 
 ```jsx
@@ -65,9 +65,9 @@ child is entering/exiting across renders.
 
 ## Next steps
 
-- [The animate Component](../concept/animate-component) — the `animate`/`exit`
+- [The animate Component](../concept/animate-component): the `animate`/`exit`
   props themselves.
-- [usePresence & useIsPresent](./use-presence) — drive an exit animation
+- [usePresence & useIsPresent](./use-presence): drive an exit animation
   manually instead of via the `exit` prop.
-- [recipes](../recipes/overview) — ready-made `exitFade`/`exitSlideUp`/etc.
+- [recipes](../recipes/overview): ready-made `exitFade`/`exitSlideUp`/etc.
   values for the `exit` prop.

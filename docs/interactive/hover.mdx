@@ -13,7 +13,6 @@ import { animate, withSpring, recipes } from 'react-ui-animate';
 
 <animate.button hover={{ scale: withSpring(1.1) }}>Hover me</animate.button>
 
-// Multiple properties, or a ready-made recipe:
 <animate.div
   hover={{ scale: withSpring(1.05), translateY: withSpring(-8) }}
 />
@@ -31,10 +30,10 @@ import { animate, withSpring, recipes } from 'react-ui-animate';
 </animate.button>
 ```
 
-Note `hover` fires from real pointer enter/leave — on touch devices, prefer
+Note `hover` fires from real pointer enter/leave. On touch devices, prefer
 [press](./press-animations) instead, since there's no true "hover" state.
 
 ## Next steps
 
-- [Press Animations](./press-animations) — pairs naturally with `hover`.
-- [Focus Animations](./focus-animations) — for keyboard navigation.
+- [Press Animations](./press-animations): pairs naturally with `hover`.
+- [Focus Animations](./focus-animations): for keyboard navigation.

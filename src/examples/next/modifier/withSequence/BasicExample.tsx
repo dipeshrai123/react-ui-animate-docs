@@ -7,7 +7,6 @@ import {
   withSpring,
   withDelay,
 } from 'react-ui-animate';
-import '../../styles.css';
 
 export default function BasicExample() {
   const [obj, setObj] = useValue({ x: 0, y: 0, width: 100, height: 100 });

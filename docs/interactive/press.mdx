@@ -4,7 +4,7 @@ id: press-animations
 title: Press Animations
 ---
 
-The `press` prop animates on pointer down/up — immediate feedback that a
+The `press` prop animates on pointer down/up for immediate feedback that a
 tap or click registered.
 
 ## Usage
@@ -13,8 +13,6 @@ tap or click registered.
 import { animate, withSpring, recipes } from 'react-ui-animate';
 
 <animate.button press={{ scale: withSpring(0.95) }}>Press me</animate.button>
-
-// Equivalent, via the ready-made recipe:
 <animate.button press={recipes.pressScale}>Press me</animate.button>
 ```
 
@@ -35,6 +33,6 @@ the hover state, and leaving returns to the base style.
 
 ## Next steps
 
-- [Hover Animations](./hover-animations) — pairs naturally with `press`.
-- [Focus Animations](./focus-animations) — the keyboard-navigation
+- [Hover Animations](./hover-animations): pairs naturally with `press`.
+- [Focus Animations](./focus-animations): the keyboard-navigation
   equivalent.

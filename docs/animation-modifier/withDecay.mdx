@@ -8,7 +8,7 @@ import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withDecay_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withDecay/BasicExample.tsx';
 import Demo_modifier_withDecay_BasicExample from '@site/src/examples/next/modifier/withDecay/BasicExample';
 
-`withDecay` simulates momentum with friction — a value keeps moving and
+`withDecay` simulates momentum with friction. A value keeps moving and
 gradually slows to a stop, rather than animating to a fixed target. Built
 for the tail end of gestures (flicks, swipes, momentum scrolling).
 
@@ -50,12 +50,12 @@ function Flingable() {
 />
 
 `useDrag`'s `momentum`/`bounds`/`elastic` options already wire this up for
-dragging — reach for `withDecay` directly when you need momentum from
+dragging. Reach for `withDecay` directly when you need momentum from
 something other than a drag gesture (e.g. a button-triggered flick, or a
 custom `Gesture.Scroll()`/`Gesture.Wheel()` velocity).
 
 ## Next steps
 
-- [useDrag](../gesture/useDrag) — momentum built in for drag gestures.
-- [useGesture](../gesture/useGesture) — raw velocity from `Gesture.Scroll()`/`Gesture.Wheel()`.
-- [withSpring](./withSpring) — for a fixed-destination alternative.
+- [useDrag](../gesture/useDrag): momentum built in for drag gestures.
+- [useGesture](../gesture/useGesture): raw velocity from `Gesture.Scroll()`/`Gesture.Wheel()`.
+- [withSpring](./withSpring): for a fixed-destination alternative.

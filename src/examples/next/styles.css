@@ -1,74 +1,68 @@
-/* Shared demo styles. Scoped under .example-preview so these generic class
-   names (.container, .button, ...) can't leak into the rest of the docs
-   site now that examples render natively instead of inside a sandboxed
-   iframe. */
+/* Demo controls — scoped under .example-preview so class names never leak. */
 
 .example-preview .container {
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
   text-align: center;
 }
 
 .example-preview .button {
-  padding: 12px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  margin: 0 4px 6px;
+  font-family: var(--site-font);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #f8fafc;
+  background: rgba(96, 165, 250, 0.16);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  margin-right: 12px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  letter-spacing: 0.3px;
-}
-
-.example-preview .button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-}
-
-.example-preview .button:hover::before {
-  width: 300px;
-  height: 300px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .example-preview .button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(96, 165, 250, 0.24);
+  border-color: rgba(96, 165, 250, 0.42);
+  color: #fff;
 }
 
 .example-preview .button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(96, 165, 250, 0.3);
 }
 
-.example-preview .button:focus {
+.example-preview .button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.35);
 }
 
 .example-preview .buttonPrimary {
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  background: #3b82f6;
+  border-color: transparent;
+  color: #fff;
 }
 
 .example-preview .buttonPrimary:hover {
-  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  background: #2563eb;
+  border-color: transparent;
+  color: #fff;
 }
 
 .example-preview .buttonSecondary {
-  background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .example-preview .buttonSecondary:hover {
-  background: linear-gradient(135deg, #545b62 0%, #3d4146 100%);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
 }

@@ -8,7 +8,7 @@ import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withKeyframes_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withKeyframes/BasicExample.tsx';
 import Demo_modifier_withKeyframes_BasicExample from '@site/src/examples/next/modifier/withKeyframes/BasicExample';
 
-`withKeyframes` animates through a list of intermediate values in one call —
+`withKeyframes` animates through a list of intermediate values in one call,
 a shorthand for `withSequence` of `withTiming` steps. Each stop gets an
 equal share of the total `duration` unless it specifies its own.
 
@@ -21,7 +21,7 @@ function withKeyframes(
 ): Descriptor;
 ```
 
-- `duration` (options) — total duration across all steps, in ms. Default
+- `duration` (options), total duration across all steps, in ms. Default
   `300`.
 - A step can be a plain value (gets an equal share of `duration`) or an
   object `{ to, duration, easing }` to override the timing for that one
@@ -61,11 +61,11 @@ setX(
 ```
 
 Since it's built on `withTiming` + `withSequence`, each stop starts from
-wherever the previous one left off — the same `from`-chaining behavior those
-have individually.
+wherever the previous one left off (the same `from`-chaining behavior those
+have individually).
 
 ## Next steps
 
-- [withSequence](./withSequence) — the more general multi-step primitive
+- [withSequence](./withSequence): the more general multi-step primitive
   `withKeyframes` is shorthand for.
-- [withTiming](./withTiming) — the driver used for each keyframe step.
+- [withTiming](./withTiming): the driver used for each keyframe step.

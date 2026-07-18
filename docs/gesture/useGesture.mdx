@@ -5,7 +5,7 @@ title: useGesture
 ---
 
 `useGesture` attaches a `Gesture.*` descriptor to an element, `window`, or an
-array of elements. Config and handlers stay live across renders — editing
+array of elements. Config and handlers stay live across renders, so editing
 them after mount takes effect without re-attaching listeners.
 
 ```ts
@@ -14,14 +14,14 @@ useGesture(window, descriptor);
 useGesture(refs, descriptor | ((index: number) => descriptor));
 ```
 
-Every `Gesture.*()` call returns a chainable builder — call `.onStart()`,
+Every `Gesture.*()` call returns a chainable builder. Call `.onStart()`,
 `.onChange()`, `.onEnd()` (and, where relevant, `.onFinalize()` or
 `.onSwipe()`) plus any config methods, then pass the built descriptor to
 `useGesture`.
 
 ## Gesture.Pan()
 
-Streams a full press-move-release cycle. `useDrag` is built on this — reach
+Streams a full press-move-release cycle. `useDrag` is built on this. Reach
 for `Gesture.Pan()` directly when you need drag data without `useDrag`'s
 built-in spring/decay behavior.
 
@@ -49,7 +49,7 @@ Event shape: `{ phase, down, movement, offset, velocity, event, target, cancel }
 
 ## Gesture.Move()
 
-Tracks pointer position with no press required — cursor-follow effects,
+Tracks pointer position with no press required: cursor-follow effects,
 magnetic hover.
 
 ```jsx
@@ -63,7 +63,7 @@ Event shape: `{ movement, offset, velocity, event, cancel }`.
 
 ## Gesture.Wheel()
 
-Trackpad/mouse-wheel deltas — custom zoom or horizontal scroll.
+Trackpad/mouse-wheel deltas, for custom zoom or horizontal scroll.
 
 ```jsx
 useGesture(
@@ -76,10 +76,10 @@ Event shape: `{ movement, offset, velocity, event, cancel }`.
 
 ## Gesture.Scroll()
 
-Native scroll events with movement/velocity — scroll-linked animation and
+Native scroll events with movement/velocity, for scroll-linked animation and
 progress bars. (For intersection-based reveal-on-scroll, see
 [useInView](../hooks/useInView) or the [`view`](../interactive/view-animations) prop
-instead — `Gesture.Scroll()` is for continuous scroll position, not
+instead: `Gesture.Scroll()` is for continuous scroll position, not
 enter/exit detection.)
 
 ```jsx
@@ -96,7 +96,7 @@ Event shape: `{ movement, offset, velocity, event, cancel }`.
 
 ## Gesture.Swipe()
 
-A fast, short, directional flick resolved once at release. Not a stream —
+A fast, short, directional flick resolved once at release. Not a stream:
 only `onSwipe` fires, and only if the release clears both thresholds.
 
 ```jsx
@@ -117,7 +117,7 @@ Event shape: `{ direction, movement, velocity, event, target }`.
 
 ## Gesture.Hover()
 
-Enter/leave/move-while-over — deliberately leaner than `Gesture.Move()` (no
+Enter/leave/move-while-over: deliberately leaner than `Gesture.Move()` (no
 movement/velocity). Use `Gesture.Move()` instead if you need those while
 hovering.
 
@@ -142,8 +142,8 @@ useGesture(
 );
 ```
 
-Config: `.enabled(bool)`, `.threshold(v)` — minimum `|scale - 1|` before
-recognized as active (default `0.02`).
+Config: `.enabled(bool)`, `.threshold(v)` (minimum `|scale - 1|` before
+recognized as active, default `0.02`).
 Event shape: `{ phase, scale, velocity, center, event, target, cancel }`.
 
 ## Gesture.Rotate()
@@ -159,14 +159,14 @@ useGesture(
 );
 ```
 
-Config: `.enabled(bool)`, `.threshold(degrees)` — minimum rotation before
-recognized as active (default `2`).
+Config: `.enabled(bool)`, `.threshold(degrees)` (minimum rotation before
+recognized as active, default `2`).
 Event shape: `{ phase, rotation, velocity, center, event, target, cancel }`.
 
 ## Array mode
 
 Passing an array of refs registers each one individually, diffed by ref
-identity (not array length) — reordering or adding/removing refs doesn't
+identity (not array length). Reordering or adding/removing refs doesn't
 tear down unrelated registrations. Every emitted event gets `index` merged
 in:
 

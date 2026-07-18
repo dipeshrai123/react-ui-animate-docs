@@ -9,7 +9,7 @@ import Code_modifier_withSequence_BasicExample from '!!raw-loader!@site/src/exam
 import Demo_modifier_withSequence_BasicExample from '@site/src/examples/next/modifier/withSequence/BasicExample';
 
 `withSequence` chains animation steps, each starting only after the previous
-one completes — for multi-phase motion a single spring/timing can't express.
+one completes, for multi-phase motion that a single spring or timing can't express.
 
 ## Signature
 
@@ -47,12 +47,12 @@ function Sequenced() {
   code={Code_modifier_withSequence_BasicExample}
 />
 
-Steps can mix any driver — `withSpring`, `withTiming`, `withDelay`,
-`withDecay` — freely within the same sequence.
+Steps can mix any driver: `withSpring`, `withTiming`, `withDelay`,
+`withDecay`, freely within the same sequence.
 
 ## Next steps
 
-- [withDelay](./withDelay) — add a pause between steps.
-- [withLoop](./withLoop) — repeat a whole sequence.
-- [withStagger](./withStagger) / [withParallel](./withParallel) — run steps
+- [withDelay](./withDelay): add a pause between steps.
+- [withLoop](./withLoop): repeat a whole sequence.
+- [withStagger](./withStagger) / [withParallel](./withParallel): run steps
   across multiple values instead of one after another.

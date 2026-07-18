@@ -81,7 +81,7 @@ const config = {
           lastVersion: '5.3.2',
           versions: {
             current: {
-              label: '5.4.0-next.2',
+              label: 'next',
               path: 'next',
             },
             '5.3.2': {

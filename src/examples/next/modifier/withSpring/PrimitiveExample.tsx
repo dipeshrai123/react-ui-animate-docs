@@ -1,6 +1,5 @@
 import React from 'react';
 import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
-import '../../styles.css';
 
 const App: React.FC = () => {
   const [bg, setBg] = useValue('teal');

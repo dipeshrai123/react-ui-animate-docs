@@ -8,7 +8,6 @@ export default function App() {
 
   useEffect(() => {
     if (isInView && !imageSrc) {
-      // Simulate loading delay
       setTimeout(() => {
         setImageSrc('https://picsum.photos/800/400');
       }, 500);

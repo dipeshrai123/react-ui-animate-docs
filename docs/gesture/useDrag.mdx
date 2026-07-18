@@ -12,7 +12,7 @@ import Demo_gesture_useDrag_MultipleElements from '@site/src/examples/next/gestu
 
 `useDrag` wires up [`Gesture.Pan()`](./useGesture#gesturepan) with live
 position tracking, optional bounds, edge rubber-banding, and momentum on
-release — everything you'd otherwise hand-roll with `withSpring`/`withDecay`
+release: everything you'd otherwise hand-roll with `withSpring`/`withDecay`
 for a draggable element. Position persists across drags instead of resetting
 each time.
 
@@ -32,8 +32,8 @@ interface UseDragOptions {
   minDistance?: number;
   initial?: { x?: number; y?: number };
   bounds?: DragBounds | RefObject<HTMLElement>;
-  elastic?: boolean | number; // default true (0.15)
-  momentum?: boolean;         // default true
+  elastic?: boolean | number;
+  momentum?: boolean;
   onStart?: (e: PanEvent) => void;
   onChange?: (e: PanEvent) => void;
   onEnd?: (e: PanEvent) => void;
@@ -100,8 +100,8 @@ useDrag(ref, {
 
 - `bounds` accepts a fixed `{ left, right, top, bottom }` box or a container
   `ref` to constrain against.
-- `elastic` controls the rubber-band feel while dragging past `bounds` —
-  `true` uses the default elastic constant, a `number` sets a custom one,
+- `elastic` controls the rubber-band feel while dragging past `bounds`.
+  `true` uses the default elastic constant; a `number` sets a custom one;
   `false` hard-clamps instead. Momentum on release always hard-stops at
   `bounds` regardless of this setting.
 - `momentum` flings the element on release using the pointer's release
@@ -117,16 +117,16 @@ useDrag(ref, {
 - `axis: 'x' | 'y'` locks movement to one axis.
 - `minDistance` requires the pointer to travel that many pixels before the
   drag is recognized (useful to avoid hijacking clicks/taps).
-- `initial: { x, y }` sets the starting position — read once on mount, like
+- `initial: { x, y }` sets the starting position, read once on mount, like
   `useValue`'s initial value.
 - `enabled: false` disables the gesture without unmounting it.
 - `onStart` / `onChange` / `onEnd` receive the same `PanEvent` shape as
-  [`Gesture.Pan()`](./useGesture#gesturepan) — use these when you need side
+  [`Gesture.Pan()`](./useGesture#gesturepan): use these when you need side
   effects beyond position (e.g. triggering a dismiss action).
 
 ## Multiple draggable elements
 
-`useDrag` takes a single ref — for several independent draggables, call it
+`useDrag` takes a single ref. For several independent draggables, call it
 once per element (typically by extracting a small child component), rather
 than passing an array. Each call gets its own bounds/position/state.
 
@@ -134,11 +134,11 @@ than passing an array. Each call gets its own bounds/position/state.
 
 ```jsx
 const { x, y, isDragging, controls } = useDrag(ref);
-
-// isDragging: true while actively pressed and moving
-// controls.reset() / .cancel() / .pause() / .resume() act on the current
-// release animation (spring-to-bounds or momentum decay)
 ```
+
+`isDragging` is `true` while actively pressed and moving. `controls.reset()` /
+`.cancel()` / `.pause()` / `.resume()` act on the current release animation
+(spring-to-bounds or momentum decay).
 
 ## Best practices
 
@@ -146,21 +146,21 @@ const { x, y, isDragging, controls } = useDrag(ref);
 
 - Animate `translateX`/`translateY`, not `left`/`top`.
 - Prefer `bounds` + `elastic`/`momentum` over hand-rolling `withSpring`
-  snap-back logic — it's the same physics, already wired up.
+  snap-back logic. It's the same physics, already wired up.
 - Provide a visual cue for draggability (`cursor: 'grab'` /
   `'grabbing'`) and a non-gesture fallback where the interaction matters
   (e.g. buttons alongside a draggable slider).
 
 ### Don't
 
-- Don't set `minDistance` to `0` if the element also handles clicks — give
+- Don't set `minDistance` to `0` if the element also handles clicks. Give
   clicks a little slop so they don't get swallowed as micro-drags.
-- Don't pass a new `ref` object on every render — a stable ref is required
+- Don't pass a new `ref` object on every render. A stable ref is required
   since registration happens once on mount.
 
 ## Next steps
 
-- [useGesture](./useGesture) — the lower-level `Gesture.Pan()` builder this
+- [useGesture](./useGesture): the lower-level `Gesture.Pan()` builder this
   hook is built on, plus the other seven gesture types.
-- [withDecay](../animation-modifier/withDecay) — the momentum animation
+- [withDecay](../animation-modifier/withDecay): the momentum animation
   `useDrag` uses internally for `momentum: true`.

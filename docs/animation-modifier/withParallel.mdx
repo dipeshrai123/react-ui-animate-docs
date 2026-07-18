@@ -9,7 +9,7 @@ import Code_modifier_withParallel_BasicExample from '!!raw-loader!@site/src/exam
 import Demo_modifier_withParallel_BasicExample from '@site/src/examples/next/modifier/withParallel/BasicExample';
 
 An object/array `useValue` already animates every key at once when you pass
-it a single descriptor — but all keys share that one driver and options. Use
+it a single descriptor, but all keys share that one driver and options. Use
 `withParallel` when different keys need genuinely different
 drivers/options/timing, running concurrently.
 
@@ -53,7 +53,7 @@ function Card() {
 
 ## Array mode (with withStagger)
 
-For an array `useValue`, pass a `Descriptor[]` aligned by index — this is
+For an array `useValue`, pass a `Descriptor[]` aligned by index. This is
 also how per-item staggered animations work, since `withStagger` only wraps
 one item's delay:
 
@@ -65,7 +65,7 @@ setHeights(
 
 ## Next steps
 
-- [withStagger](./withStagger) — per-item delay, typically combined with
+- [withStagger](./withStagger): per-item delay, typically combined with
   `withParallel` for staggered lists.
-- [withSequence](./withSequence) — for steps that should run one after
+- [withSequence](./withSequence): for steps that should run one after
   another instead of concurrently.

@@ -5,7 +5,7 @@ title: usePresence & useIsPresent
 ---
 
 `usePresence` and `useIsPresent` read whether the component they're called
-in is currently exiting — useful when the animation itself needs to be
+in is currently exiting. Useful when the animation itself needs to be
 driven by something other than `animate`'s `exit` prop (e.g. animating a
 child, or running non-style side effects during exit).
 
@@ -31,7 +31,7 @@ function ListItem() {
 function usePresence(): [isPresent: boolean, safeToRemove: () => void];
 ```
 
-Same `isPresent` flag, plus `safeToRemove` — call it once your own exit
+Same `isPresent` flag, plus `safeToRemove`. Call it once your own exit
 animation is done to tell the surrounding `Presence` it can actually unmount
 the element. Use this when you're driving the exit animation manually
 instead of via the `exit` prop.
@@ -52,7 +52,7 @@ function CustomExit() {
 ```
 
 Outside of a `Presence` tree, both hooks report present/mounted (`isPresent:
-true`) — they're safe to call unconditionally even if a component is
+true`), they're safe to call unconditionally even if a component is
 sometimes rendered without a surrounding `Presence`.
 
 ## Presence-level options
@@ -64,6 +64,6 @@ A few `Presence` props worth knowing about alongside these hooks:
   or `'popLayout'` (exiting children are pulled out of layout flow
   immediately, so siblings reflow around them right away instead of waiting
   for the exit animation).
-- `initial={false}` skips the enter animation on first mount — useful for
+- `initial={false}` skips the enter animation on first mount. Useful for
   content that should already be in its "entered" state on page load.
 - `onExitComplete` fires once every currently-exiting child has finished.

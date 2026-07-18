@@ -10,8 +10,8 @@ import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/
 import Code_modifier_withSpring_ObjectExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/ObjectExample.tsx';
 import Demo_modifier_withSpring_ObjectExample from '@site/src/examples/next/modifier/withSpring/ObjectExample';
 
-`withSpring` animates using spring physics rather than a fixed duration —
-the default for most UI motion (buttons, cards, modals) since it feels
+`withSpring` animates using spring physics rather than a fixed duration.
+It's the default for most UI motion (buttons, cards, modals) since it feels
 responsive rather than mechanical.
 
 ## Signature
@@ -20,9 +20,9 @@ responsive rather than mechanical.
 function withSpring(
   to: number | string | object | array,
   options?: {
-    stiffness?: number; // default 170 — higher = faster, snappier
-    damping?: number;   // default 14  — higher = less bounce
-    mass?: number;      // default 1   — higher = more inertia
+    stiffness?: number;
+    damping?: number;
+    mass?: number;
     onStart?: () => void;
     onChange?: (value: number) => void;
     onComplete?: () => void;
@@ -30,6 +30,7 @@ function withSpring(
 ): Descriptor;
 ```
 
+Defaults: `stiffness` 170, `damping` 14, `mass` 1.
 ## Usage
 
 ```jsx
@@ -54,11 +55,11 @@ function Expandable() {
 
 ## Tuning stiffness/damping/mass
 
-- **stiffness** — speed and bounce. Low (50–100): slow, gentle. High (300+):
+- **stiffness**: speed and bounce. Low (50–100): slow, gentle. High (300+):
   fast, snappy.
-- **damping** — how much overshoot. Low (5–15): very bouncy. High (30+):
+- **damping**: how much overshoot. Low (5–15): very bouncy. High (30+):
   minimal bounce, controlled.
-- **mass** — inertia. Low (0.5–1, default): quick to respond. High (3+):
+- **mass**: inertia. Low (0.5–1, default): quick to respond. High (3+):
   heavy, slow to start/stop.
 
 ## Objects and arrays
@@ -78,5 +79,5 @@ setPosition(withSpring({ x: 100, y: 100 }));
 
 ## Next steps
 
-- [withTiming](./withTiming) — exact-duration alternative.
-- [withSequence](./withSequence) — chain springs with other drivers.
+- [withTiming](./withTiming): exact-duration alternative.
+- [withSequence](./withSequence): chain springs with other drivers.

@@ -6,20 +6,20 @@ title: Gestures Overview
 
 React UI Animate has two layers for handling pointer/touch/wheel input:
 
-- **`Gesture` + `useGesture`** — the low-level primitive. `Gesture.Pan()`,
+- **`Gesture` + `useGesture`**: the low-level primitive. `Gesture.Pan()`,
   `.Move()`, `.Wheel()`, `.Scroll()`, `.Swipe()`, `.Hover()`, `.Pinch()`, and
   `.Rotate()` are chainable builders that describe a gesture; `useGesture`
   attaches the built descriptor to a ref, an array of refs, or `window`.
   Every gesture type is registered against the same shared per-element
   tracker, so multiple `useGesture` calls on one node compose instead of
   fighting each other.
-- **`useDrag`** — a high-level convenience hook built on top of
+- **`useDrag`**: a high-level convenience hook built on top of
   `Gesture.Pan()`. It returns ready-to-use `x`/`y` `AnimateValue`s with
   momentum, bounds, and rubber-banding built in, so you don't have to wire
   `withDecay`/`withSpring` yourself for the common drag-a-thing case.
 
 Reach for `useDrag` first for draggable elements. Reach for `Gesture` +
-`useGesture` for anything else — scroll tracking, wheel/zoom controls, swipe
+`useGesture` for anything else: scroll tracking, wheel/zoom controls, swipe
 detection, hover/cursor effects, or pinch-to-zoom and rotate.
 
 ## Available gesture types
@@ -60,7 +60,7 @@ function DraggableCard() {
 ```
 
 `useDrag` springs back to bounds automatically when `bounds` is set, and
-flings with momentum on release by default — see [useDrag](./useDrag) for
+flings with momentum on release by default. See [useDrag](./useDrag) for
 every option.
 
 ## Best practices
@@ -71,14 +71,14 @@ every option.
   `left`/`top`.
 - Let `useDrag`'s `momentum`/`elastic`/`bounds` options do the physics work
   instead of hand-rolling `withDecay` for simple drag cases.
-- Pass a stable `ref` — gesture registration happens once on mount and stays
+- Pass a stable `ref`. Gesture registration happens once on mount and stays
   live for config/handler changes, but the element itself isn't expected to
   swap out from under it.
 
 ### Don't
 
-- Don't skip a fallback/keyboard interaction for anything gesture-driven —
-  gestures should enhance an already-usable UI, not be the only way to
+- Don't skip a fallback/keyboard interaction for anything gesture-driven.
+  Gestures should enhance an already-usable UI, not be the only way to
   trigger an action.
-- Don't set overly small `minDistance`/`threshold` values — a little slop
+- Don't set overly small `minDistance`/`threshold` values. A little slop
   avoids gestures firing on what was meant to be a click/tap.

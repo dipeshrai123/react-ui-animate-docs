@@ -9,7 +9,7 @@ import Code_hook_useInView_BasicExample from '!!raw-loader!@site/src/examples/ne
 import Demo_hook_useInView_BasicExample from '@site/src/examples/next/hook/useInView/BasicExample';
 
 `useInView` returns whether an element is currently in the viewport, via the
-native `IntersectionObserver` API — the programmatic building block behind
+native `IntersectionObserver` API: the programmatic building block behind
 scroll-reveal effects, lazy loading, and view-based analytics.
 
 ## Signature
@@ -18,13 +18,15 @@ scroll-reveal effects, lazy loading, and view-based analytics.
 function useInView(
   ref: RefObject<HTMLElement>,
   options?: {
-    threshold?: number | number[]; // default 0
+    threshold?: number | number[];
     root?: Element | null;
     rootMargin?: string;
     once?: boolean;
   }
 ): boolean;
 ```
+
+`threshold` defaults to `0`.
 
 ## Usage
 
@@ -60,7 +62,7 @@ at all.
 
 ## Next steps
 
-- [`view` prop](../interactive/view-animations) — declarative scroll-reveal
+- [`view` prop](../interactive/view-animations): declarative scroll-reveal
   without a hook.
-- [useScrollProgress](./useScrollProgress) — continuous scroll position
+- [useScrollProgress](./useScrollProgress): continuous scroll position
   instead of a boolean.

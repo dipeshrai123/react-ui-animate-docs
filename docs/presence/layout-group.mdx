@@ -11,7 +11,7 @@ props: `layout`, `layoutId`, and `layoutOptions`. `LayoutGroup` scopes
 ## layout
 
 Set `layout` to animate position/size changes caused by reordering,
-resizing, or sibling insertion/removal — a FLIP-style transform animation,
+resizing, or sibling insertion/removal: a FLIP-style transform animation,
 composed with whatever transform the element already has from `style`/
 `animate`/`hover`/etc.
 
@@ -19,21 +19,21 @@ composed with whatever transform the element already has from `style`/
 <animate.div layout style={{ width: expanded ? 300 : 100 }} />
 ```
 
-## layoutId — shared-element transitions
+## layoutId: shared-element transitions
 
 Give two different elements the same `layoutId`. When the one carrying it
 unmounts (or a new one mounts) with a matching `layoutId` already active,
 the new element automatically plays a FLIP transition from the previous
-element's last known position/size to its own — the classic "morph between
-elements" pattern (tab indicators, expanding cards, shared images between a
-list and a detail view).
+element's last known position/size to its own (the classic "morph between
+elements" pattern used for tab indicators, expanding cards, and shared
+images between a list and a detail view).
 
 ```jsx
 {selectedTab === 'a' && <animate.div layoutId="indicator" />}
 {selectedTab === 'b' && <animate.div layoutId="indicator" />}
 ```
 
-`layoutOptions` sets the transition (spring or timing, options-only — no
+`layoutOptions` sets the transition (spring or timing, options-only, with no
 target, since a FLIP transform always settles at identity):
 
 ```jsx
@@ -62,14 +62,15 @@ function TabsA() {
 function TabsB() {
   return (
     <LayoutGroup>
-      {/* Same layoutId string, but scoped to this LayoutGroup — */}
-      {/* won't transition with TabsA's "indicator". */}
       {tab === 'b1' && <animate.div layoutId="indicator" />}
       {tab === 'b2' && <animate.div layoutId="indicator" />}
     </LayoutGroup>
   );
 }
 ```
+
+`TabsA` and `TabsB` both use `layoutId="indicator"`, but each is scoped to its
+own `LayoutGroup`, so they won't cross-animate.
 
 Elements outside any `LayoutGroup` keep using the global registry, so
 existing `layoutId` usage without a `LayoutGroup` is unaffected.

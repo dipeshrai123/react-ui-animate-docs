@@ -4,7 +4,7 @@ id: overview
 title: Animation Modifiers Overview
 ---
 
-A modifier tells `useValue` *how* to get to a target — without one, a value
+A modifier tells `useValue` *how* to get to a target. Without one, a value
 snaps instantly:
 
 ```jsx
@@ -12,15 +12,15 @@ import { useValue, withSpring } from 'react-ui-animate';
 
 const [x, setX] = useValue(0);
 
-setX(100);            // instant
-setX(withSpring(100)); // animated
+setX(100);
+setX(withSpring(100));
 ```
 
 ## Available modifiers
 
 | Modifier | Motion | Best for |
 |---|---|---|
-| [withSpring](./withSpring) | Physics-based | Buttons, cards, modals — anything that should feel alive |
+| [withSpring](./withSpring) | Physics-based | Buttons, cards, modals, anything that should feel alive |
 | [withTiming](./withTiming) | Fixed duration | Tooltips, dropdowns, progress bars |
 | [withDecay](./withDecay) | Momentum/friction | Flicks, swipes, momentum scrolling |
 | [withSequence](./withSequence) | Multi-step, in order | Choreographed, multi-phase motion |
@@ -33,10 +33,8 @@ setX(withSpring(100)); // animated
 ## Composing modifiers
 
 ```jsx
-// Sequence mixing different drivers
 setX(withSequence([withTiming(50, { duration: 200 }), withSpring(100), withDecay(0.3)]));
 
-// Loop a sequence
 setX(withLoop(withSequence([withSpring(100), withSpring(0)]), 3));
 ```
 

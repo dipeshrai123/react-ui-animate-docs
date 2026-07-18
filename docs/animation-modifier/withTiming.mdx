@@ -8,7 +8,7 @@ import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withTiming_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withTiming/BasicExample.tsx';
 import Demo_modifier_withTiming_BasicExample from '@site/src/examples/next/modifier/withTiming/BasicExample';
 
-`withTiming` animates to a target value over a fixed duration — unlike
+`withTiming` animates to a target value over a fixed duration, unlike
 `withSpring`'s physics-based motion, you get exact control over how long an
 animation takes.
 
@@ -18,14 +18,16 @@ animation takes.
 function withTiming(
   to: number | string | object | array,
   options?: {
-    duration?: number;               // default 300ms
-    easing?: (t: number) => number;  // default linear
+    duration?: number;
+    easing?: (t: number) => number;
     onStart?: () => void;
     onChange?: (value: number) => void;
     onComplete?: () => void;
   }
 ): Descriptor;
 ```
+
+Defaults: `duration` 300ms, `easing` linear.
 
 ## Usage
 
@@ -48,7 +50,7 @@ function FadeIn() {
 
 `Easing` ships common curves (`linear`, `quad`, `cubic`, `sin`, `circle`,
 `exp`, `elastic`, `back`, `bounce`, `bezier`) plus `Easing.in`/`.out`/`.inOut`
-wrappers — reach for those instead of hand-rolling cubic functions.
+wrappers. Reach for those instead of hand-rolling cubic functions.
 
 <CodeExample
   demo={Demo_modifier_withTiming_BasicExample}
@@ -59,10 +61,10 @@ wrappers — reach for those instead of hand-rolling cubic functions.
 
 | | `withTiming` | `withSpring` |
 |---|---|---|
-| Best for | Tooltips, dropdowns, progress bars — anything needing an exact duration | Buttons, cards, modals — anything wanting a natural, physical feel |
+| Best for | Tooltips, dropdowns, progress bars, anything needing an exact duration | Buttons, cards, modals, anything wanting a natural, physical feel |
 | Control | Duration + easing curve | Stiffness/damping/mass |
 
 ## Next steps
 
-- [withSpring](./withSpring) — physics-based alternative.
-- [withSequence](./withSequence) — chain multiple timing steps.
+- [withSpring](./withSpring): physics-based alternative.
+- [withSequence](./withSequence): chain multiple timing steps.

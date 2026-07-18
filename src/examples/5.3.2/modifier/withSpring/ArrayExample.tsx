@@ -1,6 +1,5 @@
 import React from 'react';
 import { useValue, withSpring, animate } from 'react-ui-animate';
-import '../../styles.css';
 
 export default function App() {
   const [values, setValues] = useValue([0, 0, 0]);
