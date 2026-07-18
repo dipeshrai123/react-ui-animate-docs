@@ -25,6 +25,17 @@
   --space-12: 96px;
   --space-16: 128px;
 
+  /* Type scale — homepage section headings share these so every
+     section reads as the same hierarchy, not a different size/weight
+     each time. Weights are kept to Inter's real steps (400/500/600/700);
+     avoid in-between values like 550/650, which render inconsistently. */
+  --fs-h2: clamp(1.85rem, 3vw, 2.5rem);
+  --fw-h2: 700;
+  --fs-lede: 1.05rem;
+  --fw-lede: 400;
+  --fs-label: 13px;
+  --fw-label: 600;
+
   /* Corner radii */
   --radius-sm: 8px;
   --radius-md: 10px;

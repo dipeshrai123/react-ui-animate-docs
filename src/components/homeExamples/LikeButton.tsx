@@ -8,7 +8,7 @@ const Stage = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
 `;
 
 const Button = styled.button`

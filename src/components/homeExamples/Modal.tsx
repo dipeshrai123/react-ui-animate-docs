@@ -105,7 +105,7 @@ const Solid = styled.button`
   padding: 8px 0;
   border-radius: 8px;
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 600;
   cursor: pointer;
   color: #eff6ff;
   background: rgba(96, 165, 250, 0.18);

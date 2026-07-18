@@ -67,11 +67,13 @@ const Question = styled.span<{ $open: boolean }>`
   transition: color 0.15s ease;
 `;
 
-const Chevron = styled(animate.div)<{ $open: boolean }>`
+/* animate.div wraps a custom component rather than a DOM tag string, so
+   emotion can't auto-filter $-prefixed transient props here — pass the
+   open state through the style prop instead of a styled prop. */
+const Chevron = styled(animate.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(p) => (p.$open ? '#60a5fa' : 'rgba(255, 255, 255, 0.35)')};
   transition: color 0.15s ease;
 `;
 
@@ -160,8 +162,10 @@ function AccordionItem({
         <Index $open={open}>{String(index + 1).padStart(2, '0')}</Index>
         <Question $open={open}>{q}</Question>
         <Chevron
-          $open={open}
-          style={{ rotateZ: progress.to([0, 1], [0, 180]) }}
+          style={{
+            rotateZ: progress.to([0, 1], [0, 180]),
+            color: open ? '#60a5fa' : 'rgba(255, 255, 255, 0.35)',
+          }}
         >
           <FiChevronDown size={14} strokeWidth={2.25} />
         </Chevron>
