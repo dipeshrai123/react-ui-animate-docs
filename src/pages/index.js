@@ -284,7 +284,7 @@ function FeatureCard({ feature }) {
         translateY: withSpring(0, { damping: 20 }),
       }}
       viewOptions={{ threshold: 0.1, once: true }}
-      hover={{ translateY: withSpring(-4) }}
+      hover={{ scale: withSpring(1.02) }}
     >
       <span className={styles.featureIcon}>
         <Icon />
