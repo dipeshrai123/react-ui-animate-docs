@@ -1,6 +1,13 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { animate, useValue, withSequence, withSpring, withTiming } from 'react-ui-animate';
+import {
+  animate,
+  LayoutGroup,
+  useValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from 'react-ui-animate';
 
 const Stage = styled.div`
   width: 100%;
@@ -8,24 +15,14 @@ const Stage = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-family: 'Inter', sans-serif;
 `;
 
 const TabBar = styled.div`
-  position: relative;
   display: flex;
   padding: 5px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const Indicator = styled(animate.div)`
-  position: absolute;
-  top: 5px;
-  bottom: 5px;
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.1);
 `;
 
 const Tab = styled.button<{ active: boolean }>`
@@ -36,9 +33,11 @@ const Tab = styled.button<{ active: boolean }>`
   border: none;
   background: transparent;
   cursor: pointer;
+  font-family: inherit;
   font-size: 12.5px;
   font-weight: 600;
-  color: ${(p) => (p.active ? '#ffffff' : 'rgba(226, 232, 240, 0.6)')};
+  letter-spacing: -0.01em;
+  color: ${(p) => (p.active ? '#ffffff' : 'rgba(226, 232, 240, 0.55)')};
   transition: color 0.2s ease;
 `;
 
@@ -53,6 +52,7 @@ const Panel = styled(animate.div)`
 const PanelTitle = styled.div`
   font-size: 13px;
   font-weight: 700;
+  letter-spacing: -0.015em;
   color: #f5f7ff;
   margin-bottom: 4px;
 `;
@@ -83,47 +83,55 @@ const TABS = [
 
 export function TabsDemo() {
   const [active, setActive] = useState(0);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [left, setLeft] = useValue(0);
-  const [width, setWidth] = useValue(0);
   const [enter, setEnter] = useValue(1);
+  const current = TABS[active];
 
-  useLayoutEffect(() => {
-    const el = tabRefs.current[active];
-    if (el) {
-      setLeft(withSpring(el.offsetLeft, { damping: 20, stiffness: 240 }));
-      setWidth(withSpring(el.offsetWidth, { damping: 20, stiffness: 240 }));
-    }
+  const select = (index: number) => {
+    if (index === active) return;
+    setActive(index);
     setEnter(
       withSequence([
         withTiming(0, { duration: 0 }),
-        withTiming(1, { duration: 240 }),
+        withSpring(1, { damping: 22, stiffness: 280 }),
       ])
     );
-  }, [active, setLeft, setWidth, setEnter]);
-
-  const current = TABS[active];
+  };
 
   return (
     <Stage>
-      <TabBar>
-        <Indicator style={{ translateX: left, width }} />
-        {TABS.map((t, i) => (
-          <Tab
-            key={t.label}
-            ref={(el) => {
-              tabRefs.current[i] = el;
-            }}
-            active={active === i}
-            onClick={() => setActive(i)}
-          >
-            {t.label}
-          </Tab>
-        ))}
-      </TabBar>
+      <LayoutGroup>
+        <TabBar>
+          {TABS.map((t, i) => (
+            <Tab
+              key={t.label}
+              type="button"
+              active={active === i}
+              onClick={() => select(i)}
+            >
+              {active === i && (
+                <animate.div
+                  layoutId="home-tabs-indicator"
+                  layoutOptions={withSpring({ stiffness: 420, damping: 34 })}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 7,
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    zIndex: -1,
+                  }}
+                />
+              )}
+              {t.label}
+            </Tab>
+          ))}
+        </TabBar>
+      </LayoutGroup>
 
       <Panel
-        style={{ opacity: enter, translateY: enter.to([0, 1], [8, 0]) }}
+        style={{
+          opacity: enter,
+          translateY: enter.to([0, 1], [6, 0]),
+        }}
       >
         <PanelTitle>{current.title}</PanelTitle>
         <PanelText>{current.text}</PanelText>

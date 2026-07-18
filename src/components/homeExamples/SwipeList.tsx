@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { MdDelete, MdDragIndicator } from 'react-icons/md';
+import { FiTrash2 } from 'react-icons/fi';
 import {
   animate,
   Presence,
@@ -8,30 +8,37 @@ import {
   useGesture,
   useValue,
   withSpring,
+  withStagger,
   withTiming,
 } from 'react-ui-animate';
 
 const Stage = styled.div`
   width: 100%;
-  max-width: 280px;
-  font-family: 'Inter', sans-serif;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 const Hint = styled.div`
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(226, 232, 240, 0.4);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.38);
   text-align: center;
-  margin-bottom: 12px;
+`;
+
+const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 188px;
 `;
 
 const RowWrap = styled(animate.div)`
   position: relative;
   width: 100%;
-  border-radius: 12px;
   overflow: hidden;
+  border-radius: 10px;
 `;
 
 const DeleteBg = styled.div`
@@ -40,12 +47,13 @@ const DeleteBg = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
-  padding-right: 16px;
-  font-size: 13px;
+  gap: 8px;
+  padding-right: 18px;
+  font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
-  background: #ef4444;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  background: #dc2626;
 `;
 
 const Fore = styled(animate.div)`
@@ -53,136 +61,231 @@ const Fore = styled(animate.div)`
   inset: 0;
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 0 12px;
-  background: #14161f;
+  gap: 12px;
+  padding: 0 12px 0 14px;
+  background: #14161c;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
   cursor: grab;
   user-select: none;
   touch-action: pan-y;
+
   &:active {
     cursor: grabbing;
   }
 `;
 
-const Grip = styled.div`
+const Avatar = styled.div<{ $color: string }>`
   display: flex;
-  color: rgba(226, 232, 240, 0.35);
-  font-size: 18px;
-`;
-
-const Avatar = styled.div<{ color: string }>`
-  width: 30px;
-  height: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
-  border-radius: 8px;
-  background: ${(p) => p.color};
+  border-radius: 9px;
+  background: ${(p) => p.$color};
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.92);
 `;
 
 const Meta = styled.div`
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 `;
 
 const Name = styled.div`
   font-size: 13px;
   font-weight: 600;
-  color: #f5f7ff;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.94);
 `;
 
 const Detail = styled.div`
-  font-size: 11px;
-  color: rgba(226, 232, 240, 0.55);
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.42);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const ROW_H = 54;
-const THRESHOLD = 84;
+const Time = styled.div`
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.28);
+`;
 
-interface ItemData {
+const ROW_H = 56;
+const THRESHOLD = 88;
+
+type ItemData = {
   id: number;
+  order: number;
   name: string;
   detail: string;
+  time: string;
   color: string;
-}
+  initials: string;
+};
 
-const INITIAL: ItemData[] = [
-  { id: 1, name: 'Olivia Hart', detail: 'Sent you a file', color: '#60a5fa' },
-  { id: 2, name: 'Liam Chen', detail: 'Liked your post', color: '#64748b' },
-  { id: 3, name: 'Ava Patel', detail: 'New comment', color: '#94a3b8' },
+const SEED: Omit<ItemData, 'id' | 'order'>[] = [
+  {
+    name: 'Olivia Hart',
+    detail: 'Sent you design.fig',
+    time: '2m',
+    color: 'rgba(96, 165, 250, 0.22)',
+    initials: 'OH',
+  },
+  {
+    name: 'Liam Chen',
+    detail: 'Liked your update',
+    time: '1h',
+    color: 'rgba(52, 211, 153, 0.2)',
+    initials: 'LC',
+  },
+  {
+    name: 'Ava Patel',
+    detail: 'Commented on Draft',
+    time: '3h',
+    color: 'rgba(251, 191, 36, 0.18)',
+    initials: 'AP',
+  },
 ];
 
-function Row({ item, onDelete }: { item: ItemData; onDelete: (id: number) => void }) {
+let nextId = 1;
+
+function createItems(): ItemData[] {
+  return SEED.map((item, order) => ({ ...item, id: nextId++, order }));
+}
+
+function Row({
+  item,
+  onDelete,
+}: {
+  item: ItemData;
+  onDelete: (id: number) => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [tx, setTx] = useValue(0);
+  const deleting = useRef(false);
 
   useGesture(
     ref,
     Gesture.Pan()
       .onChange(({ movement }) => {
+        if (deleting.current) return;
         setTx(Math.min(0, movement.x));
       })
       .onEnd(({ movement }) => {
+        if (deleting.current) return;
         const nx = Math.min(0, movement.x);
         if (nx < -THRESHOLD) {
-          setTx(withTiming(-320, { duration: 160 }));
-          onDelete(item.id);
+          deleting.current = true;
+          setTx(
+            withTiming(-320, {
+              duration: 180,
+              onComplete: () => onDelete(item.id),
+            })
+          );
         } else {
-          setTx(withSpring(0, { damping: 18, stiffness: 240 }));
+          setTx(withSpring(0, { damping: 20, stiffness: 280 }));
         }
       })
   );
 
   return (
     <RowWrap
-      style={{ height: ROW_H, marginBottom: 10, opacity: 1 }}
+      style={{ height: 0, opacity: 0, scale: 0.98, marginBottom: 0 }}
+      animate={{
+        height: withStagger(
+          item.order,
+          withSpring(ROW_H, { damping: 22, stiffness: 260 }),
+          { each: 55 }
+        ),
+        marginBottom: withStagger(
+          item.order,
+          withSpring(8, { damping: 22, stiffness: 260 }),
+          { each: 55 }
+        ),
+        opacity: withStagger(item.order, withTiming(1, { duration: 200 }), {
+          each: 55,
+        }),
+        scale: withStagger(
+          item.order,
+          withSpring(1, { damping: 22, stiffness: 260 }),
+          { each: 55 }
+        ),
+      }}
       exit={{
-        height: withSpring(0, { damping: 20 }),
-        marginBottom: withSpring(0, { damping: 20 }),
+        height: withSpring(0, { damping: 22, stiffness: 280 }),
+        marginBottom: withSpring(0, { damping: 22, stiffness: 280 }),
         opacity: withTiming(0, { duration: 160 }),
+        scale: withTiming(0.98, { duration: 160 }),
       }}
     >
       <DeleteBg>
-        <MdDelete />
+        <FiTrash2 size={14} strokeWidth={2.25} />
         Delete
       </DeleteBg>
       <Fore ref={ref} style={{ translateX: tx }}>
-        <Grip>
-          <MdDragIndicator />
-        </Grip>
-        <Avatar color={item.color} />
+        <Avatar $color={item.color}>{item.initials}</Avatar>
         <Meta>
           <Name>{item.name}</Name>
           <Detail>{item.detail}</Detail>
         </Meta>
+        <Time>{item.time}</Time>
       </Fore>
     </RowWrap>
   );
 }
 
 export function SwipeListDemo() {
-  const [items, setItems] = useState<ItemData[]>(INITIAL);
+  const [items, setItems] = useState<ItemData[]>(() => createItems());
+  const shouldRestore = useRef(false);
+  const restoreTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const remove = (id: number) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
-  };
+  const remove = useCallback((id: number) => {
+    setItems((prev) => {
+      const next = prev.filter((item) => item.id !== id);
+      shouldRestore.current = next.length === 0;
+      return next;
+    });
+  }, []);
+
+  const handleExitComplete = useCallback(() => {
+    if (!shouldRestore.current) return;
+    shouldRestore.current = false;
+
+    if (restoreTimer.current) clearTimeout(restoreTimer.current);
+    restoreTimer.current = setTimeout(() => {
+      setItems(createItems());
+    }, 420);
+  }, []);
 
   useEffect(() => {
-    if (items.length === 0) {
-      const t = setTimeout(() => setItems(INITIAL), 900);
-      return () => clearTimeout(t);
-    }
-  }, [items.length]);
+    return () => {
+      if (restoreTimer.current) clearTimeout(restoreTimer.current);
+    };
+  }, []);
 
   return (
     <Stage>
-      <Hint>← Swipe a row to delete</Hint>
-      <Presence>
-        {items.map((item) => (
-          <Row key={item.id} item={item} onDelete={remove} />
-        ))}
-      </Presence>
+      <Hint>Swipe left on a row to delete</Hint>
+      <List>
+        <Presence onExitComplete={handleExitComplete}>
+          {items.map((item) => (
+            <Row key={item.id} item={item} onDelete={remove} />
+          ))}
+        </Presence>
+      </List>
     </Stage>
   );
 }

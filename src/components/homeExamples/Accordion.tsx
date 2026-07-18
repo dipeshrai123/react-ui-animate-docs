@@ -1,47 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import { MdExpandMore } from 'react-icons/md';
+import { FiChevronDown } from 'react-icons/fi';
 import { animate, useValue, withSpring } from 'react-ui-animate';
-
-const PANEL_HEIGHT = 46;
 
 const Stage = styled.div`
   width: 100%;
-  max-width: 280px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-family: 'Inter', sans-serif;
+  gap: 6px;
 `;
 
-const Item = styled.div`
-  border-radius: 12px;
+const Eyebrow = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.38);
+  text-align: center;
+`;
+
+const List = styled.div`
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  background: #14161c;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+`;
+
+const Item = styled.div<{ $last: boolean; $open: boolean }>`
+  border-bottom: ${(p) =>
+    p.$last ? 'none' : '1px solid rgba(255, 255, 255, 0.07)'};
+  background: ${(p) =>
+    p.$open ? 'rgba(255, 255, 255, 0.025)' : 'transparent'};
 `;
 
 const Header = styled.button`
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 20px;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px;
+  column-gap: 10px;
+  padding: 11px 12px;
   cursor: pointer;
   background: transparent;
   border: none;
   text-align: left;
-  font-size: 13px;
-  font-weight: 600;
-  color: #f5f7ff;
+  font-family: inherit;
 `;
 
-const Chevron = styled(animate.div)`
+const Index = styled.span<{ $open: boolean }>`
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: ${(p) => (p.$open ? '#60a5fa' : 'rgba(255, 255, 255, 0.28)')};
+  transition: color 0.15s ease;
+`;
+
+const Question = styled.span<{ $open: boolean }>`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: ${(p) =>
+    p.$open ? 'rgba(255, 255, 255, 0.96)' : 'rgba(255, 255, 255, 0.78)'};
+  transition: color 0.15s ease;
+`;
+
+const Chevron = styled(animate.div)<{ $open: boolean }>`
   display: flex;
-  flex-shrink: 0;
-  color: rgba(226, 232, 240, 0.6);
-  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  color: ${(p) => (p.$open ? '#60a5fa' : 'rgba(255, 255, 255, 0.35)')};
+  transition: color 0.15s ease;
 `;
 
 const Panel = styled(animate.div)`
@@ -49,59 +80,96 @@ const Panel = styled(animate.div)`
 `;
 
 const Answer = styled.div`
-  padding: 0 14px 13px;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 20px;
+  column-gap: 10px;
+  padding: 0 12px 11px;
   font-size: 12px;
-  line-height: 1.55;
-  color: rgba(226, 232, 240, 0.62);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.45);
+
+  span {
+    grid-column: 2;
+  }
 `;
 
 const FAQ = [
   {
     q: 'Is it production ready?',
-    a: 'Yes. It ships with TypeScript types and is tree-shakeable.',
+    a: 'Yes. It ships with TypeScript types, works in React 18+, and is tree-shakeable.',
   },
   {
     q: 'Does it support gestures?',
-    a: 'Drag, move, scroll, and wheel gestures are built in as hooks.',
+    a: 'Drag, move, scroll, and wheel are built in as hooks you can drop onto any element.',
   },
   {
     q: 'How big is the bundle?',
-    a: 'Small, and you only pay for the pieces you actually import.',
+    a: 'Small by default. You only pay for the modifiers and gestures you import.',
   },
 ];
 
 function AccordionItem({
+  index,
   q,
   a,
   open,
+  last,
   onToggle,
 }: {
+  index: number;
   q: string;
   a: string;
   open: boolean;
+  last: boolean;
   onToggle: () => void;
 }) {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useValue(0);
+  const [height, setHeight] = useValue(0);
+  const contentHeight = useRef(0);
+
+  useLayoutEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      contentHeight.current = el.scrollHeight;
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [a]);
 
   useEffect(() => {
-    setProgress(withSpring(open ? 1 : 0, { damping: 20, stiffness: 220 }));
-  }, [open, setProgress]);
+    setProgress(withSpring(open ? 1 : 0, { damping: 22, stiffness: 260 }));
+    setHeight(
+      withSpring(open ? contentHeight.current : 0, {
+        damping: 22,
+        stiffness: 260,
+      })
+    );
+  }, [open, setProgress, setHeight]);
 
   return (
-    <Item>
-      <Header onClick={onToggle}>
-        {q}
-        <Chevron style={{ rotateZ: progress.to([0, 1], [0, 180]) }}>
-          <MdExpandMore />
+    <Item $last={last} $open={open}>
+      <Header type="button" onClick={onToggle} aria-expanded={open}>
+        <Index $open={open}>{String(index + 1).padStart(2, '0')}</Index>
+        <Question $open={open}>{q}</Question>
+        <Chevron
+          $open={open}
+          style={{ rotateZ: progress.to([0, 1], [0, 180]) }}
+        >
+          <FiChevronDown size={14} strokeWidth={2.25} />
         </Chevron>
       </Header>
-      <Panel
-        style={{
-          height: progress.to([0, 1], [0, PANEL_HEIGHT]),
-          opacity: progress,
-        }}
-      >
-        <Answer>{a}</Answer>
+      <Panel style={{ height, opacity: progress }}>
+        <Answer ref={contentRef}>
+          <span>{a}</span>
+        </Answer>
       </Panel>
     </Item>
   );
@@ -112,15 +180,20 @@ export function AccordionDemo() {
 
   return (
     <Stage>
-      {FAQ.map((item, i) => (
-        <AccordionItem
-          key={item.q}
-          q={item.q}
-          a={item.a}
-          open={active === i}
-          onToggle={() => setActive((cur) => (cur === i ? -1 : i))}
-        />
-      ))}
+      <Eyebrow>Frequently asked</Eyebrow>
+      <List>
+        {FAQ.map((item, i) => (
+          <AccordionItem
+            key={item.q}
+            index={i}
+            q={item.q}
+            a={item.a}
+            open={active === i}
+            last={i === FAQ.length - 1}
+            onToggle={() => setActive((cur) => (cur === i ? -1 : i))}
+          />
+        ))}
+      </List>
     </Stage>
   );
 }
