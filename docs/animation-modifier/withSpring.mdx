@@ -6,8 +6,9 @@ title: withSpring
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/modifier/withSpring/GetStartedExample';
 import Code_modifier_withSpring_ObjectExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/ObjectExample.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withSpring_ObjectExample from '@site/src/examples/next/modifier/withSpring/ObjectExample';
 
 The `withSpring` modifier creates natural, physics-based animations using spring physics. It's perfect for UI elements that should feel alive and responsive, like buttons, cards, modals, and interactive components.
 
@@ -52,8 +53,8 @@ function MyComponent() {
 ```
 
 <CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
   code={Code_modifier_withSpring_GetStartedExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Configuration Options
@@ -196,8 +197,8 @@ setPosition(withSpring({ x: 100, y: 100 }));
 ```
 
 <CodeExample
+  demo={Demo_modifier_withSpring_ObjectExample}
   code={Code_modifier_withSpring_ObjectExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Using Callbacks

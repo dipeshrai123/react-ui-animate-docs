@@ -1,11 +1,14 @@
-/* Shared styles for all examples */
+/* Shared demo styles. Scoped under .example-preview so these generic class
+   names (.container, .button, ...) can't leak into the rest of the docs
+   site now that examples render natively instead of inside a sandboxed
+   iframe. */
 
-.container {
+.example-preview .container {
   padding: 2rem;
   text-align: center;
 }
 
-.button {
+.example-preview .button {
   padding: 12px 24px;
   font-size: 15px;
   font-weight: 600;
@@ -21,7 +24,7 @@
   letter-spacing: 0.3px;
 }
 
-.button::before {
+.example-preview .button::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -34,39 +37,38 @@
   transition: width 0.4s, height 0.4s;
 }
 
-.button:hover::before {
+.example-preview .button:hover::before {
   width: 300px;
   height: 300px;
 }
 
-.button:hover {
+.example-preview .button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.button:active {
+.example-preview .button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.button:focus {
+.example-preview .button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
-.buttonPrimary {
+.example-preview .buttonPrimary {
   background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
 }
 
-.buttonPrimary:hover {
+.example-preview .buttonPrimary:hover {
   background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
 }
 
-.buttonSecondary {
+.example-preview .buttonSecondary {
   background: linear-gradient(135deg, #6c757d 0%, #545b62 100%);
 }
 
-.buttonSecondary:hover {
+.example-preview .buttonSecondary:hover {
   background: linear-gradient(135deg, #545b62 0%, #3d4146 100%);
 }
-

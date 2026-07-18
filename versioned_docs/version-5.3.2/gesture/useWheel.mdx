@@ -6,7 +6,7 @@ title: useWheel
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_gesture_useWheel_BasicSetup from '!!raw-loader!@site/src/examples/5.3.2/gesture/useWheel/BasicSetup.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_gesture_useWheel_BasicSetup from '@site/src/examples/5.3.2/gesture/useWheel/BasicSetup';
 
 The `useWheel` hook listens to wheel/touchpad gestures and provides detailed information about wheel movement, velocity, and accumulated offset. Perfect for zoom interactions, custom scroll behavior, and gesture-driven UIs.
 
@@ -60,8 +60,8 @@ function WheelTracker() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useWheel_BasicSetup}
   code={Code_gesture_useWheel_BasicSetup}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Wheel Event Data

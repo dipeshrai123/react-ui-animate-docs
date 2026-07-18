@@ -1,42 +1,53 @@
-import React, { useRef } from 'react';
-import { useScroll, animate } from 'react-ui-animate';
+import React, { useRef, useState, useEffect } from 'react';
+import { useScrollProgress, animate } from 'react-ui-animate';
 
 export default function App() {
-  const { scrollYProgress } = useScroll(window);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScrollProgress(containerRef);
+  const [percent, setPercent] = useState(0);
+
+  useEffect(
+    () => scrollYProgress.subscribe((v) => setPercent(Math.round(v * 100))),
+    [scrollYProgress]
+  );
 
   return (
-    <div style={{ height: 3000 }}>
-      <h1 style={{ padding: 40 }}>Scroll down to see progress</h1>
-      
-      {/* Progress Bar */}
+    <div
+      ref={containerRef}
+      style={{
+        height: 280,
+        width: '100%',
+        maxWidth: 360,
+        overflow: 'auto',
+        borderRadius: 8,
+        background: '#111',
+      }}
+    >
       <animate.div
         style={{
-          position: 'fixed',
+          position: 'sticky',
           top: 0,
           left: 0,
           width: scrollYProgress.to([0, 1], ['0%', '100%']),
           height: 4,
           background: 'linear-gradient(90deg, #667eea, #764ba2)',
-          zIndex: 1000,
         }}
       />
 
-      {/* Animated Box */}
-      <animate.div
+      <div style={{ padding: 24, color: 'white' }}>
+        <p>Scroll this box to see progress.</p>
+        <div style={{ height: 600 }} />
+        <p>Keep scrolling...</p>
+      </div>
+
+      <div
         style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          translateX: -50,
-          translateY: -50,
-          width: 150,
-          height: 150,
-          scale: scrollYProgress.to([0, 1], [1, 1.5]),
-          opacity: scrollYProgress.to([0, 0.5, 1], [1, 0.5, 1]),
-          backgroundColor: scrollYProgress.to(
-            [0, 1],
-            ['#0069d9', '#ff5733']
-          ),
+          position: 'sticky',
+          bottom: 16,
+          left: 16,
+          width: 64,
+          height: 64,
+          background: '#764ba2',
           borderRadius: 8,
           display: 'flex',
           alignItems: 'center',
@@ -45,13 +56,8 @@ export default function App() {
           fontWeight: 'bold',
         }}
       >
-        {Math.round(scrollYProgress.get() * 100)}%
-      </animate.div>
-
-      <div style={{ height: 2000, padding: 40 }}>
-        <p>Keep scrolling to see the progress change</p>
+        {percent}%
       </div>
     </div>
   );
 }
-

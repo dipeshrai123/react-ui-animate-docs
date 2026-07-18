@@ -6,9 +6,11 @@ title: useMove
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_gesture_useMove_BasicSetup from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/BasicSetup.tsx';
+import Demo_gesture_useMove_BasicSetup from '@site/src/examples/5.3.2/gesture/useMove/BasicSetup';
 import Code_gesture_useMove_SingleElements from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/SingleElements.tsx';
+import Demo_gesture_useMove_SingleElements from '@site/src/examples/5.3.2/gesture/useMove/SingleElements';
 import Code_gesture_useMove_MultipleElements from '!!raw-loader!@site/src/examples/5.3.2/gesture/useMove/MultipleElements.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_gesture_useMove_MultipleElements from '@site/src/examples/5.3.2/gesture/useMove/MultipleElements';
 
 The `useMove` hook tracks pointer movement without requiring a press or drag. It provides real-time feedback about cursor position, movement, and velocity - perfect for hover effects, custom cursors, and interactive elements that respond to mouse position.
 
@@ -69,8 +71,8 @@ function CustomCursor() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useMove_BasicSetup}
   code={Code_gesture_useMove_BasicSetup}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Move Event Data
@@ -242,8 +244,8 @@ function TrackedArea() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useMove_SingleElements}
   code={Code_gesture_useMove_SingleElements}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ### Example 4: Multiple Tracked Elements
@@ -300,8 +302,8 @@ function MultiTrackArea() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useMove_MultipleElements}
   code={Code_gesture_useMove_MultipleElements}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Common Patterns

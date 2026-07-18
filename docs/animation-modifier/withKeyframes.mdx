@@ -6,7 +6,7 @@ title: withKeyframes
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withKeyframes_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withKeyframes/BasicExample.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withKeyframes_BasicExample from '@site/src/examples/next/modifier/withKeyframes/BasicExample';
 
 `withKeyframes` animates through a list of intermediate values in one call —
 a shorthand for `withSequence` of `withTiming` steps. Each stop gets an
@@ -45,8 +45,8 @@ function Wiggle() {
 ```
 
 <CodeExample
+  demo={Demo_modifier_withKeyframes_BasicExample}
   code={Code_modifier_withKeyframes_BasicExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 Per-step overrides:

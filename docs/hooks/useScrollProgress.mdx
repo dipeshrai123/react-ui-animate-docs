@@ -6,8 +6,9 @@ title: useScrollProgress
 
 import CodeExample from '@site/src/components/CodeExample';
 import Code_hook_useScrollProgress_BasicExample from '!!raw-loader!@site/src/examples/next/hook/useScrollProgress/BasicExample.tsx';
+import Demo_hook_useScrollProgress_BasicExample from '@site/src/examples/next/hook/useScrollProgress/BasicExample';
 import Code_hook_useScrollProgress_ElementProgress from '!!raw-loader!@site/src/examples/next/hook/useScrollProgress/ElementProgress.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_hook_useScrollProgress_ElementProgress from '@site/src/examples/next/hook/useScrollProgress/ElementProgress';
 
 `useScrollProgress` returns animated `0`–`1` values tracking scroll progress
 for `window` or a scrollable container, over a customizable range. It's
@@ -58,8 +59,8 @@ function ProgressBar() {
 ```
 
 <CodeExample
+  demo={Demo_hook_useScrollProgress_BasicExample}
   code={Code_hook_useScrollProgress_BasicExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Progress relative to an element
@@ -93,8 +94,8 @@ function RevealOnScroll() {
 ```
 
 <CodeExample
+  demo={Demo_hook_useScrollProgress_ElementProgress}
   code={Code_hook_useScrollProgress_ElementProgress}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Options

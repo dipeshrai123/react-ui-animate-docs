@@ -6,7 +6,7 @@ title: useInView
 
 import CodeExample from '@site/src/components/CodeExample';
 import Code_hook_useInView_BasicExample from '!!raw-loader!@site/src/examples/next/hook/useInView/BasicExample.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_hook_useInView_BasicExample from '@site/src/examples/next/hook/useInView/BasicExample';
 
 The `useInView` hook detects when an element enters or leaves the viewport using the Intersection Observer API. It's perfect for scroll-triggered animations, lazy loading, analytics tracking, and performance optimizations.
 
@@ -80,8 +80,8 @@ function ScrollReveal() {
 ```
 
 <CodeExample
+  demo={Demo_hook_useInView_BasicExample}
   code={Code_hook_useInView_BasicExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Understanding Threshold

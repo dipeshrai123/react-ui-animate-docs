@@ -1,4 +1,6 @@
 const { themes } = require('prism-react-renderer');
+const webpack = require('webpack');
+const path = require('path');
 
 const config = {
   title: 'React UI Animate',
@@ -37,6 +39,34 @@ const config = {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700;800&display=swap',
       },
+    },
+  ],
+  plugins: [
+    // Live demos under src/examples/5.3.2/** need to run against the actual
+    // 5.3.2 build (not whatever `react-ui-animate` currently means, which
+    // tracks `next`), so their `import ... from 'react-ui-animate'` gets
+    // rewritten at bundle time to the aliased `react-ui-animate-stable`
+    // package (see package.json). Examples under src/examples/next/**
+    // resolve `react-ui-animate` normally, since that's pinned to next.
+    function reactUiAnimateVersionAlias() {
+      return {
+        name: 'react-ui-animate-version-alias',
+        configureWebpack() {
+          return {
+            plugins: [
+              new webpack.NormalModuleReplacementPlugin(
+                /^react-ui-animate$/,
+                (resource) => {
+                  const importer = (resource.context || '').split(path.sep).join('/');
+                  if (importer.includes('/src/examples/5.3.2/')) {
+                    resource.request = 'react-ui-animate-stable';
+                  }
+                }
+              ),
+            ],
+          };
+        },
+      };
     },
   ],
   presets: [
@@ -156,7 +186,6 @@ const config = {
       copyright: `Copyright © ${new Date().getFullYear()} React UI Animate. Built with ❤️ by Dipesh Rai.`,
     },
   },
-  themes: ['@docusaurus/theme-live-codeblock'],
 };
 
 module.exports = config;

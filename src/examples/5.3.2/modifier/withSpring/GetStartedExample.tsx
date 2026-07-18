@@ -1,6 +1,6 @@
 import React from 'react';
 import { animate, useValue, withSpring } from 'react-ui-animate';
-import './styles.css';
+import '../../styles.css';
 
 export default function App() {
   const [width, setWidth] = useValue(100);

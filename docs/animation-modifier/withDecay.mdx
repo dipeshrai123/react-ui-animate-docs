@@ -6,7 +6,7 @@ title: withDecay
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withDecay_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withDecay/BasicExample.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withDecay_BasicExample from '@site/src/examples/next/modifier/withDecay/BasicExample';
 
 The `withDecay` modifier simulates natural momentum with friction. It's perfect for scenarios where you want values to gradually slow down, like a thrown ball losing speed or a scroll that decelerates naturally.
 
@@ -185,8 +185,8 @@ function FlickableCard() {
 ```
 
 <CodeExample
+  demo={Demo_modifier_withDecay_BasicExample}
   code={Code_modifier_withDecay_BasicExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Understanding Velocity

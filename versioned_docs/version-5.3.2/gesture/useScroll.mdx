@@ -6,7 +6,7 @@ title: useScroll
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_gesture_useScroll_BasicSetup from '!!raw-loader!@site/src/examples/5.3.2/gesture/useScroll/BasicSetup.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_gesture_useScroll_BasicSetup from '@site/src/examples/5.3.2/gesture/useScroll/BasicSetup';
 
 The `useScroll` hook captures scroll activity on any DOM element or the window. It provides detailed scroll information including position, velocity, and movement deltas - perfect for scroll-triggered animations, parallax effects, and progress indicators.
 
@@ -58,8 +58,8 @@ function ScrollTracker() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useScroll_BasicSetup}
   code={Code_gesture_useScroll_BasicSetup}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Scroll Event Data

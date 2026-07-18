@@ -6,7 +6,7 @@ title: withStagger
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withStagger_BasicExample from '!!raw-loader!@site/src/examples/next/modifier/withStagger/BasicExample.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withStagger_BasicExample from '@site/src/examples/next/modifier/withStagger/BasicExample';
 
 `withStagger` delays a descriptor proportionally to an `index` — animating a
 list with increasing indices makes items start one after another instead of
@@ -50,8 +50,8 @@ function StaggeredBars() {
 ```
 
 <CodeExample
+  demo={Demo_modifier_withStagger_BasicExample}
   code={Code_modifier_withStagger_BasicExample}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Next steps

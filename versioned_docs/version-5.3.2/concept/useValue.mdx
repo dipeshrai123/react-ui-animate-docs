@@ -53,13 +53,15 @@ setWidth(withTiming(200, { duration: 300 }));
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/5.3.2/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/5.3.2/modifier/withSpring/GetStartedExample';
 import Code_modifier_withSpring_ArrayExample from '!!raw-loader!@site/src/examples/5.3.2/modifier/withSpring/ArrayExample.tsx';
+import Demo_modifier_withSpring_ArrayExample from '@site/src/examples/5.3.2/modifier/withSpring/ArrayExample';
 import Code_modifier_withSpring_ObjectExample from '!!raw-loader!@site/src/examples/5.3.2/modifier/withSpring/ObjectExample.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withSpring_ObjectExample from '@site/src/examples/5.3.2/modifier/withSpring/ObjectExample';
 
 <CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
   code={Code_modifier_withSpring_GetStartedExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 **Try it yourself:** Click "Animate" to see a smooth spring animation, then "Reset" to see a timing-based transition back.
@@ -98,8 +100,8 @@ function ExpandableButton() {
 <details>
   <summary>View full example</summary>
   <CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
   code={Code_modifier_withSpring_GetStartedExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 </details>
 
@@ -138,8 +140,8 @@ function AnimatedList() {
 <details>
   <summary>View full example</summary>
   <CodeExample
+  demo={Demo_modifier_withSpring_ArrayExample}
   code={Code_modifier_withSpring_ArrayExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 </details>
 
@@ -194,8 +196,8 @@ function AnimatedCard() {
 <details>
   <summary>View full example</summary>
   <CodeExample
+  demo={Demo_modifier_withSpring_ObjectExample}
   code={Code_modifier_withSpring_ObjectExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 </details>
 

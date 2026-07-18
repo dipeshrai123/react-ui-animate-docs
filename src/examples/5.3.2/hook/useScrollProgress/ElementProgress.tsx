@@ -1,58 +1,54 @@
-import React, { useRef } from 'react';
-import { useScroll, animate } from 'react-ui-animate';
+import React, { useRef, useState, useEffect } from 'react';
+import { useScrollProgress, animate } from 'react-ui-animate';
 
 export default function App() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll(window, {
-    target: containerRef,
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [percent, setPercent] = useState(0);
+
+  const { scrollYProgress } = useScrollProgress(scrollRef, {
+    target: targetRef,
     offset: ['start end', 'start start'],
   });
 
+  useEffect(
+    () => scrollYProgress.subscribe((v) => setPercent(Math.round(v * 100))),
+    [scrollYProgress]
+  );
+
   return (
-    <div style={{ height: 2000 }}>
-      <div style={{ padding: 40, height: 600 }}>
-        <h1>Element-Specific Progress</h1>
-        <p>Scroll to see this element animate as it enters the viewport</p>
+    <div
+      ref={scrollRef}
+      style={{
+        height: 280,
+        width: '100%',
+        maxWidth: 360,
+        overflow: 'auto',
+        borderRadius: 8,
+        background: '#111',
+      }}
+    >
+      <div style={{ padding: 24, color: 'white' }}>
+        <p>Scroll down to reveal the card below.</p>
+        <div style={{ height: 200 }} />
       </div>
 
       <animate.div
-        ref={containerRef}
+        ref={targetRef}
         style={{
-          margin: 40,
-          padding: 40,
+          margin: '0 24px 24px',
+          padding: 24,
           background: 'teal',
           borderRadius: 8,
           opacity: scrollYProgress.to([0, 1], [0, 1]),
-          translateY: scrollYProgress.to([0, 1], [50, 0]),
-          scale: scrollYProgress.to([0, 1], [0.9, 1]),
+          translateY: scrollYProgress.to([0, 1], [30, 0]),
           color: 'white',
         }}
       >
-        <h2>This element animates as you scroll</h2>
-        <p>Progress: {Math.round(scrollYProgress.get() * 100)}%</p>
-        <div
-          style={{
-            marginTop: 20,
-            height: 4,
-            background: 'rgba(255,255,255,0.3)',
-            borderRadius: 2,
-            overflow: 'hidden',
-          }}
-        >
-          <animate.div
-            style={{
-              width: scrollYProgress.to([0, 1], ['0%', '100%']),
-              height: '100%',
-              background: 'white',
-            }}
-          />
-        </div>
+        <p>This card animates in as it enters view. Progress: {percent}%</p>
       </animate.div>
 
-      <div style={{ height: 800, padding: 40 }}>
-        <p>Keep scrolling...</p>
-      </div>
+      <div style={{ height: 200 }} />
     </div>
   );
 }
-

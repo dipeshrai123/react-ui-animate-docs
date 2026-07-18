@@ -625,257 +625,60 @@ code .token.operator,
   background-color: var(--ifm-color-primary-darker);
 }
 
-/* Sandpack Styling - Elegant and Professional */
-.sandpack-wrapper {
-  margin: 2rem 0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: var(--ifm-background-color);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+/* Live example preview + code toggle */
+.example-block {
+  margin: 1.5rem 0;
 }
 
-[data-theme='dark'] .sandpack-wrapper {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-.sandpack-wrapper:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-[data-theme='dark'] .sandpack-wrapper:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-}
-
-/* Sandpack internal styling overrides */
-.sandpack-wrapper :global(.sp-wrapper) {
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.sandpack-wrapper :global(.sp-layout) {
-  border-radius: 12px;
-}
-
-/* Custom Tabs - Modern Enhanced Design with Rounded Tabs */
-.sandpack-custom-tabs {
-  display: flex;
-  justify-content: flex-end;
-  background: #f8f9fa;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0;
-  margin: 0;
-  gap: 6px;
-  padding: 6px;
-  border-radius: 12px 12px 0 0;
-}
-
-[data-theme='dark'] .sandpack-custom-tabs {
-  background: #1a1a1a;
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-
-.sandpack-tab {
-  background: transparent;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 24px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin: 0;
-  outline: none;
+.example-preview {
   position: relative;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  font-size: 11px;
-  overflow: hidden;
-}
-
-/* Fancy animated underline with gradient */
-.sandpack-tab::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 80%;
-  height: 3px;
-  background: linear-gradient(90deg, #007bff 0%, #3399ff 50%, #007bff 100%);
-  border-radius: 3px 3px 0 0;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(0, 123, 255, 0.2);
-}
-
-/* Hover effect with subtle glow */
-.sandpack-tab::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(51, 153, 255, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.sandpack-tab:hover {
-  color: #334155;
-  background-color: rgba(0, 0, 0, 0.03);
-  transform: translateY(-1px);
-}
-
-.sandpack-tab:hover::before {
-  opacity: 1;
-}
-
-[data-theme='dark'] .sandpack-tab {
-  color: #94a3b8;
-}
-
-[data-theme='dark'] .sandpack-tab:hover {
-  color: #e2e8f0;
-  background-color: rgba(255, 255, 255, 0.06);
-}
-
-.sandpack-tab.active {
-  color: #007bff;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
-  transform: translateY(0);
-}
-
-.sandpack-tab.active::after {
-  transform: translateX(-50%) scaleX(1);
-  width: 90%;
-  animation: underlineGlow 2s ease-in-out infinite;
-}
-
-@keyframes underlineGlow {
-  0%, 100% {
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(0, 123, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 2px 12px rgba(0, 123, 255, 0.6), 0 0 16px rgba(0, 123, 255, 0.4);
-  }
-}
-
-[data-theme='dark'] .sandpack-tab.active {
-  color: #60a5fa;
-  background: #1e1e1e;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='dark'] .sandpack-tab.active::after {
-  background: linear-gradient(90deg, #60a5fa 0%, #93c5fd 50%, #60a5fa 100%);
-  box-shadow: 0 2px 8px rgba(96, 165, 250, 0.5), 0 0 12px rgba(96, 165, 250, 0.3);
-}
-
-@keyframes underlineGlowDark {
-  0%, 100% {
-    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.5), 0 0 12px rgba(96, 165, 250, 0.3);
-  }
-  50% {
-    box-shadow: 0 2px 12px rgba(96, 165, 250, 0.7), 0 0 16px rgba(96, 165, 250, 0.5);
-  }
-}
-
-[data-theme='dark'] .sandpack-tab.active::after {
-  animation: underlineGlowDark 2s ease-in-out infinite;
-}
-
-.sandpack-wrapper :global(.sp-tabs) {
-  display: none; /* Hide default Sandpack tabs */
-}
-
-/* Hide editor when preview only */
-.sandpack-preview-only :global(.sp-layout) {
+  overflow: auto;
+  max-height: 420px;
+  transform: translateZ(0);
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
 }
 
-.sandpack-preview-only :global(.sp-stack) {
-  display: none !important; /* Hide editor stack */
+[data-theme='dark'] .example-preview {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
-.sandpack-preview-only :global(.sp-preview-container) {
-  width: 100% !important;
-  border-left: none !important;
-  border-top: none !important;
+.example-code-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-/* Show editor when JS/TS tabs are selected */
-.sandpack-with-editor :global(.sp-layout) {
-  display: flex !important;
+.example-code-toggle:hover {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
 }
 
-.sandpack-with-editor :global(.sp-stack) {
-  display: flex !important;
-  width: 50% !important;
+.example-code {
+  margin-top: 0.75rem;
 }
 
-.sandpack-with-editor :global(.sp-preview-container) {
-  width: 50% !important;
-  display: flex !important;
-}
-
-.sandpack-wrapper :global(.sp-code-editor) {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.sandpack-wrapper :global(.sp-preview-container) {
-  background: var(--ifm-background-color);
-  border-left: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-[data-theme='dark'] .sandpack-wrapper :global(.sp-preview-container) {
-  border-left-color: rgba(255, 255, 255, 0.1);
-}
-
-.sandpack-wrapper :global(.sp-preview-iframe) {
-  border-radius: 0;
-}
-
-/* Improve code editor appearance */
-.sandpack-wrapper :global(.cm-editor) {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
-}
-
-.sandpack-wrapper :global(.cm-lineNumbers) {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.4);
-}
-
-[data-theme='dark'] .sandpack-wrapper :global(.cm-lineNumbers) {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-  .sandpack-wrapper {
-    margin: 1.5rem 0;
+@media (max-width: 768px) {
+  .example-preview {
+    padding: 1.25rem;
     border-radius: 8px;
-  }
-
-  .sandpack-wrapper :global(.sp-wrapper) {
-    border-radius: 8px;
-  }
-
-  .sandpack-wrapper :global(.sp-layout) {
-    flex-direction: column;
-  }
-
-  .sandpack-wrapper :global(.sp-preview-container) {
-    border-left: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
-
-  [data-theme='dark'] .sandpack-wrapper :global(.sp-preview-container) {
-    border-top-color: rgba(255, 255, 255, 0.1);
+    max-height: 320px;
   }
 }

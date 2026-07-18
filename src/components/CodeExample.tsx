@@ -1,66 +1,52 @@
-import React from 'react';
-import SandPack from './SandPack';
-import { STABLE_VERSION } from '../constants/versions';
-import sharedStyles from '!!raw-loader!../examples/styles.css';
+import React, { useState, type ComponentType } from 'react';
+import CodeBlock from '@theme/CodeBlock';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 interface CodeExampleProps {
   /**
-   * Example source, imported at build time via raw-loader, e.g.:
+   * The example component itself, imported directly, e.g.:
+   * import Demo from '@site/src/examples/next/presence/Basic';
+   */
+  demo: ComponentType;
+  /**
+   * The same example's source, imported as raw text for display, e.g.:
    * import Code from '!!raw-loader!@site/src/examples/next/presence/Basic.tsx';
    */
   code: string;
-  /**
-   * Optional example-specific CSS, imported the same way as `code`.
-   */
-  css?: string;
-  /**
-   * Version of react-ui-animate to install in the Sandpack sandbox.
-   * Defaults to STABLE_VERSION; pass NEXT_VERSION for `next`-docs examples.
-   */
-  version?: {
-    reactAnimate: string;
-  };
-  /**
-   * Additional files to include in Sandpack (optional)
-   */
-  additionalFiles?: Record<string, string>;
-  /**
-   * Custom file name to display in Sandpack (defaults to "App.tsx")
-   */
-  fileName?: string;
+  language?: string;
 }
 
 /**
- * Renders a runnable Sandpack example from raw-loader-imported source.
- *
- * Usage in MDX:
- * ```jsx
- * import Code from '!!raw-loader!@site/src/examples/next/presence/Basic.tsx';
- * import { NEXT_VERSION } from '@site/src/constants/versions';
- *
- * <CodeExample code={Code} version={{ reactAnimate: NEXT_VERSION }} />
- * ```
+ * Renders a live, natively-rendered example (no iframe/sandbox) alongside
+ * its syntax-highlighted source, matching the docs site's own styling.
  */
 export default function CodeExample({
+  demo: Demo,
   code,
-  css,
-  version = { reactAnimate: STABLE_VERSION },
-  additionalFiles = {},
-  fileName = 'App.tsx',
+  language = 'tsx',
 }: CodeExampleProps) {
-  const files: Record<string, string> = {
-    [fileName]: code,
-    'styles.css': sharedStyles,
-    ...additionalFiles,
-  };
+  const [showCode, setShowCode] = useState(false);
 
-  if (css) {
-    const cssImportMatch = code.match(/import\s+['"](\.\/)?([^'"]+\.css)['"]/);
-    const cssFileName = cssImportMatch
-      ? cssImportMatch[2].replace(/^\.\//, '')
-      : `${fileName.replace(/\.tsx?$/, '')}.css`;
-    files[cssFileName] = css;
-  }
-
-  return <SandPack version={version} files={files} />;
+  return (
+    <div className="example-block">
+      <div className="example-preview">
+        <BrowserOnly fallback={<div className="example-preview-fallback" />}>
+          {() => <Demo />}
+        </BrowserOnly>
+      </div>
+      <button
+        type="button"
+        className="example-code-toggle"
+        onClick={() => setShowCode((v) => !v)}
+        aria-expanded={showCode}
+      >
+        {showCode ? 'Hide code' : 'Show code'}
+      </button>
+      {showCode && (
+        <CodeBlock language={language} className="example-code">
+          {code.trim()}
+        </CodeBlock>
+      )}
+    </div>
+  );
 }

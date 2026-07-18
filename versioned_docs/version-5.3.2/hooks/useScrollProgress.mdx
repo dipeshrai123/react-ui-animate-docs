@@ -6,7 +6,7 @@ title: useScrollProgress
 
 import CodeExample from '@site/src/components/CodeExample';
 import Code_hook_useScrollProgress_BasicExample from '!!raw-loader!@site/src/examples/5.3.2/hook/useScrollProgress/BasicExample.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_hook_useScrollProgress_BasicExample from '@site/src/examples/5.3.2/hook/useScrollProgress/BasicExample';
 
 The `useScrollProgress` hook provides an animated value that tracks scroll progress (0 to 1) for any scrollable element or the window. It's perfect for creating scroll-based animations, progress indicators, and scroll-triggered effects.
 
@@ -91,8 +91,8 @@ function ScrollProgressBar() {
 ```
 
 <CodeExample
+  demo={Demo_hook_useScrollProgress_BasicExample}
   code={Code_hook_useScrollProgress_BasicExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Understanding Progress Values

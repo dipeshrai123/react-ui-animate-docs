@@ -6,7 +6,7 @@ title: withLoop
 
 import CodeExample from "@site/src/components/CodeExample"
 import Code_modifier_withLoop_BasicExample from '!!raw-loader!@site/src/examples/5.3.2/modifier/withLoop/BasicExample.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_modifier_withLoop_BasicExample from '@site/src/examples/5.3.2/modifier/withLoop/BasicExample';
 
 The `withLoop` modifier repeats an animation a specified number of times or infinitely. Perfect for loading indicators, pulsing effects, continuous animations, and any animation that needs to repeat.
 
@@ -197,8 +197,8 @@ function BounceAnimation() {
 ```
 
 <CodeExample
+  demo={Demo_modifier_withLoop_BasicExample}
   code={Code_modifier_withLoop_BasicExample}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Looping Different Animation Types

@@ -6,8 +6,9 @@ title: useDrag
 
 import CodeExample from '@site/src/components/CodeExample';
 import Code_gesture_useDrag_BasicSetup from '!!raw-loader!@site/src/examples/next/gesture/useDrag/BasicSetup.tsx';
+import Demo_gesture_useDrag_BasicSetup from '@site/src/examples/next/gesture/useDrag/BasicSetup';
 import Code_gesture_useDrag_MultipleElements from '!!raw-loader!@site/src/examples/next/gesture/useDrag/MultipleElements.tsx';
-import { NEXT_VERSION } from '@site/src/constants/versions';
+import Demo_gesture_useDrag_MultipleElements from '@site/src/examples/next/gesture/useDrag/MultipleElements';
 
 `useDrag` wires up [`Gesture.Pan()`](./useGesture#gesturepan) with live
 position tracking, optional bounds, edge rubber-banding, and momentum on
@@ -80,8 +81,8 @@ function DraggableBox() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useDrag_BasicSetup}
   code={Code_gesture_useDrag_BasicSetup}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 `x` and `y` are `AnimateValue`s, so they can be read directly in `style` (as
@@ -107,8 +108,8 @@ useDrag(ref, {
   velocity (via `withDecay` under the hood); set `false` for a hard stop.
 
 <CodeExample
+  demo={Demo_gesture_useDrag_MultipleElements}
   code={Code_gesture_useDrag_MultipleElements}
-  version={{ reactAnimate: NEXT_VERSION }}
 />
 
 ## Other options

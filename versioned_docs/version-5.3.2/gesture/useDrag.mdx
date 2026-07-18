@@ -6,8 +6,9 @@ title: useDrag
 
 import CodeExample from '@site/src/components/CodeExample';
 import Code_gesture_useDrag_BasicSetup from '!!raw-loader!@site/src/examples/5.3.2/gesture/useDrag/BasicSetup.tsx';
+import Demo_gesture_useDrag_BasicSetup from '@site/src/examples/5.3.2/gesture/useDrag/BasicSetup';
 import Code_gesture_useDrag_MultipleElements from '!!raw-loader!@site/src/examples/5.3.2/gesture/useDrag/MultipleElements.tsx';
-import { STABLE_VERSION } from '@site/src/constants/versions';
+import Demo_gesture_useDrag_MultipleElements from '@site/src/examples/5.3.2/gesture/useDrag/MultipleElements';
 
 The `useDrag` hook enables drag gesture recognition on any DOM element. It handles pointer events, calculates movement, offset, and velocity, providing a clean callback-based API for building draggable interfaces.
 
@@ -78,8 +79,8 @@ function DraggableBox() {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useDrag_BasicSetup}
   code={Code_gesture_useDrag_BasicSetup}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Drag Event Data
@@ -268,8 +269,8 @@ function DraggableList({ items }) {
 ```
 
 <CodeExample
+  demo={Demo_gesture_useDrag_MultipleElements}
   code={Code_gesture_useDrag_MultipleElements}
-  version={{ reactAnimate: STABLE_VERSION }}
 />
 
 ## Configuration Options
