@@ -26,11 +26,21 @@ useOutsideClick(
 import CodeExample from "@site/src/components/CodeExample"
 import Code_hook_useOutsideClick_BasicExample from '!!raw-loader!@site/src/examples/next/hook/useOutsideClick/BasicExample.tsx';
 import Demo_hook_useOutsideClick_BasicExample from '@site/src/examples/next/hook/useOutsideClick/BasicExample';
+import Code_hook_useOutsideClick_DropdownExample from '!!raw-loader!@site/src/examples/next/hook/useOutsideClick/DropdownExample.tsx';
+import Demo_hook_useOutsideClick_DropdownExample from '@site/src/examples/next/hook/useOutsideClick/DropdownExample';
 
 ## Example
 
-It listens for clicks outside the box and automatically hides it whenever you click anywhere else on the page.
+Click inside the box to mark it "inside", or click anywhere else to trigger the outside-click callback.
 <CodeExample
   demo={Demo_hook_useOutsideClick_BasicExample}
   code={Code_hook_useOutsideClick_BasicExample}
+/>
+
+## Dropdown menu
+
+A common real-world use case: closing an open dropdown/menu when the user clicks anywhere outside of it.
+<CodeExample
+  demo={Demo_hook_useOutsideClick_DropdownExample}
+  code={Code_hook_useOutsideClick_DropdownExample}
 />
