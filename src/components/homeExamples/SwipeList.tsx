@@ -24,7 +24,7 @@ const Hint = styled.div`
   font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.38);
+  color: #6b7280;
   text-align: center;
 `;
 
@@ -52,7 +52,7 @@ const DeleteBg = styled.div`
   font-size: 12px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.92);
+  color: #ffffff;
   background: #dc2626;
 `;
 
@@ -63,10 +63,9 @@ const Fore = styled(animate.div)`
   align-items: center;
   gap: 12px;
   padding: 0 12px 0 14px;
-  background: #14161c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
   border-radius: 10px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
   cursor: grab;
   user-select: none;
   touch-action: pan-y;
@@ -88,7 +87,7 @@ const Avatar = styled.div<{ $color: string }>`
   font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: rgba(255, 255, 255, 0.92);
+  color: #ffffff;
 `;
 
 const Meta = styled.div`
@@ -104,13 +103,13 @@ const Name = styled.div`
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.3;
-  color: rgba(255, 255, 255, 0.94);
+  color: #e5e7eb;
 `;
 
 const Detail = styled.div`
   font-size: 12px;
   line-height: 1.35;
-  color: rgba(255, 255, 255, 0.42);
+  color: #9ca3af;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -120,7 +119,7 @@ const Time = styled.div`
   flex-shrink: 0;
   font-size: 11px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.28);
+  color: #6b7280;
 `;
 
 const ROW_H = 56;
@@ -141,21 +140,21 @@ const SEED: Omit<ItemData, 'id' | 'order'>[] = [
     name: 'Olivia Hart',
     detail: 'Sent you design.fig',
     time: '2m',
-    color: 'rgba(96, 165, 250, 0.22)',
+    color: '#3b82f6',
     initials: 'OH',
   },
   {
     name: 'Liam Chen',
     detail: 'Liked your update',
     time: '1h',
-    color: 'rgba(52, 211, 153, 0.2)',
+    color: '#10b981',
     initials: 'LC',
   },
   {
     name: 'Ava Patel',
     detail: 'Commented on Draft',
     time: '3h',
-    color: 'rgba(251, 191, 36, 0.18)',
+    color: '#f59e0b',
     initials: 'AP',
   },
 ];

@@ -26,10 +26,10 @@ const Trigger = styled.button`
   font-family: inherit;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: #e5e7eb;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const Backdrop = styled(animate.div)`
@@ -38,8 +38,7 @@ const Backdrop = styled(animate.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
+  background: #08090d;
 `;
 
 const Dialog = styled(animate.div)`
@@ -48,8 +47,8 @@ const Dialog = styled(animate.div)`
   max-width: 260px;
   padding: 20px 18px 18px;
   border-radius: 12px;
-  background: #12141a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #15171e;
+  border: 1px solid #2a2e38;
   font-family: inherit;
 `;
 
@@ -63,24 +62,24 @@ const CloseBtn = styled.button`
   width: 26px;
   height: 26px;
   border-radius: 8px;
-  color: rgba(226, 232, 240, 0.7);
+  color: #9ca3af;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const DialogTitle = styled.h3`
   margin: 0 0 6px;
   font-size: 16px;
   font-weight: 700;
-  color: #f5f7ff;
+  color: #e5e7eb;
 `;
 
 const DialogText = styled.p`
   margin: 0 0 18px;
   font-size: 13px;
   line-height: 1.5;
-  color: rgba(226, 232, 240, 0.65);
+  color: #9ca3af;
 `;
 
 const Actions = styled.div`
@@ -95,9 +94,9 @@ const Ghost = styled.button`
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  color: #e6e9f5;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e5e7eb;
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const Solid = styled.button`
@@ -108,8 +107,8 @@ const Solid = styled.button`
   font-weight: 600;
   cursor: pointer;
   color: #eff6ff;
-  background: rgba(96, 165, 250, 0.18);
-  border: 1px solid rgba(96, 165, 250, 0.28);
+  background: #1e3a5f;
+  border: 1px solid #3b5a80;
 `;
 
 function Dialog_({ onClose }: { onClose: () => void }) {

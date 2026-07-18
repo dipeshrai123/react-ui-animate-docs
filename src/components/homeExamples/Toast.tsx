@@ -33,15 +33,15 @@ const Trigger = styled.button`
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.88);
+  color: #e5e7eb;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
   transition: background 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.18);
+    background: #1f222b;
+    border-color: #3a3f4a;
   }
 `;
 
@@ -54,8 +54,8 @@ const Tray = styled.div`
   gap: 8px;
   padding: 10px;
   border-radius: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid #2a2e38;
+  background: #12141a;
 `;
 
 const ToastCard = styled(animate.div)`
@@ -63,9 +63,8 @@ const ToastCard = styled(animate.div)`
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  background: #14161c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const Body = styled.div`
@@ -84,7 +83,7 @@ const Icon = styled.div`
   flex-shrink: 0;
   margin-top: 1px;
   border-radius: 8px;
-  background: rgba(52, 211, 153, 0.12);
+  background: #143528;
   color: #34d399;
 `;
 
@@ -99,14 +98,14 @@ const Title = styled.div`
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.3;
-  color: rgba(255, 255, 255, 0.94);
+  color: #e5e7eb;
 `;
 
 const Detail = styled.div`
   margin-top: 2px;
   font-size: 12px;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.45);
+  color: #9ca3af;
 `;
 
 const Dismiss = styled.button`
@@ -121,13 +120,13 @@ const Dismiss = styled.button`
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.35);
+  color: #6b7280;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.7);
+    background: #1f222b;
+    color: #d1d5db;
   }
 `;
 
@@ -137,7 +136,7 @@ const Track = styled.div`
   right: 0;
   bottom: 0;
   height: 2px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #1f222b;
 `;
 
 const Progress = styled(animate.div)`
@@ -155,7 +154,7 @@ const EmptyHint = styled.div`
   pointer-events: none;
   font-size: 12px;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.3);
+  color: #6b7280;
   opacity: ${(p: { $visible: boolean }) => (p.$visible ? 1 : 0)};
   transition: opacity 0.2s ease;
 `;

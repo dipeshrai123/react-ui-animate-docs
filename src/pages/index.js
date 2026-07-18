@@ -109,7 +109,7 @@ function AnimatedButton({ children, to, href, variant = 'primary' }) {
   );
 }
 
-/** Tabbed terminal-style install card — pick a package manager, copy the command. */
+/** Tabbed terminal-style install card. Pick a package manager, copy the command. */
 function InstallCommand() {
   const [tab, setTab] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -239,42 +239,36 @@ const FEATURES = [
     title: 'Declarative API',
     description:
       'Animate with props like animate, hover, press, and view. No imperative timelines or boilerplate.',
-    tone: 'indigo',
   },
   {
     icon: FiZap,
     title: '60fps Performance',
     description:
       'Values update outside React’s render cycle, so motion stays smooth without triggering re-renders.',
-    tone: 'cyan',
   },
   {
     icon: FiMove,
     title: 'Gestures Built-in',
     description:
       'First-class hooks for drag, move, scroll, and wheel let you craft rich, tactile interactions.',
-    tone: 'violet',
   },
   {
     icon: FiLayers,
     title: 'Presence & Exit',
     description:
       'Animate components as they leave the DOM. Built for modals, tooltips, and dropdowns.',
-    tone: 'violet',
   },
   {
     icon: FiCode,
     title: 'TypeScript First',
     description:
       'Fully typed components, hooks, and utilities with autocomplete that guides you as you build.',
-    tone: 'cyan',
   },
   {
     icon: FiPackage,
     title: 'Tiny & Tree-shakeable',
     description:
       'Import only what you use. Side-effect free and optimized for modern bundlers.',
-    tone: 'indigo',
   },
 ];
 
@@ -292,12 +286,7 @@ function FeatureCard({ feature }) {
       viewOptions={{ threshold: 0.1, once: true }}
       hover={{ translateY: withSpring(-4) }}
     >
-      <span
-        className={clsx(
-          styles.featureIcon,
-          styles[`featureIcon${feature.tone[0].toUpperCase()}${feature.tone.slice(1)}`]
-        )}
-      >
+      <span className={styles.featureIcon}>
         <Icon />
       </span>
       <h3 className={styles.featureTitle}>{feature.title}</h3>
@@ -413,7 +402,7 @@ function Examples() {
           <div className={styles.showcaseHeading}>
             <h2 className={styles.showcaseTitle}>Examples</h2>
             <p className={styles.showcaseLede}>
-              Interactive patterns built with React UI Animate — real source,
+              Interactive patterns built with React UI Animate. Real source,
               not a mockup.
             </p>
           </div>
@@ -564,7 +553,6 @@ function CallToAction() {
             Install React UI Animate and ship your first animation today.
           </p>
           <div className={styles.ctaActions}>
-            <InstallCommand />
             <AnimatedButton to="/docs/getting-started" variant="primary">
               Read the Docs
               <MdArrowForward className={styles.buttonIcon} />

@@ -20,8 +20,8 @@ const Button = styled.button`
   height: 72px;
   border-radius: 50%;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const Heart = styled(animate.div)`
@@ -46,7 +46,7 @@ const Particle = styled(animate.div)`
 const Count = styled.div`
   font-size: 13px;
   font-weight: 600;
-  color: rgba(226, 232, 240, 0.7);
+  color: #9ca3af;
 `;
 
 const PARTICLES = 6;
@@ -122,10 +122,7 @@ export function LikeButtonDemo() {
         <Heart
           style={{
             scale,
-            color: color.to(
-              [0, 1],
-              ['rgba(255,255,255,0.45)', '#f43f5e']
-            ),
+            color: color.to([0, 1], ['#6b7280', '#f43f5e']),
           }}
         >
           <MdFavorite />

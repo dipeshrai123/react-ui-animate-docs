@@ -22,11 +22,8 @@ const Card = styled(animate.div)`
   user-select: none;
   touch-action: none;
   color: #ffffff;
-  background: linear-gradient(140deg, #6366f1 0%, #8b5cf6 55%, #a855f7 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 24px 48px -16px rgba(99, 102, 241, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: #3b82f6;
+  border: 1px solid #2563eb;
 
   &:active {
     cursor: grabbing;
@@ -38,7 +35,7 @@ const Caption = styled.div`
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: rgba(226, 232, 240, 0.5);
+  color: #6b7280;
 `;
 
 export function DragDemo() {

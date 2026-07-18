@@ -21,8 +21,8 @@ const TabBar = styled.div`
   display: flex;
   padding: 5px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #15171e;
+  border: 1px solid #2a2e38;
 `;
 
 const Tab = styled.button<{ active: boolean }>`
@@ -37,7 +37,7 @@ const Tab = styled.button<{ active: boolean }>`
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: ${(p) => (p.active ? '#ffffff' : 'rgba(226, 232, 240, 0.55)')};
+  color: ${(p) => (p.active ? '#ffffff' : '#9ca3af')};
   transition: color 0.2s ease;
 `;
 
@@ -45,22 +45,22 @@ const Panel = styled(animate.div)`
   min-height: 92px;
   padding: 14px 16px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #15171e;
+  border: 1px solid #2a2e38;
 `;
 
 const PanelTitle = styled.div`
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: #f5f7ff;
+  color: #e5e7eb;
   margin-bottom: 4px;
 `;
 
 const PanelText = styled.div`
   font-size: 12px;
   line-height: 1.55;
-  color: rgba(226, 232, 240, 0.62);
+  color: #9ca3af;
 `;
 
 const TABS = [
@@ -116,7 +116,7 @@ export function TabsDemo() {
                     position: 'absolute',
                     inset: 0,
                     borderRadius: 7,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: '#1f222b',
                     zIndex: -1,
                   }}
                 />

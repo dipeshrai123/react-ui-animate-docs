@@ -15,23 +15,20 @@ const Eyebrow = styled.div`
   font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.38);
+  color: #6b7280;
   text-align: center;
 `;
 
 const List = styled.div`
   overflow: hidden;
   border-radius: 12px;
-  background: #14161c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  background: #1a1d24;
+  border: 1px solid #2a2e38;
 `;
 
 const Item = styled.div<{ $last: boolean; $open: boolean }>`
-  border-bottom: ${(p) =>
-    p.$last ? 'none' : '1px solid rgba(255, 255, 255, 0.07)'};
-  background: ${(p) =>
-    p.$open ? 'rgba(255, 255, 255, 0.025)' : 'transparent'};
+  border-bottom: ${(p) => (p.$last ? 'none' : '1px solid #2a2e38')};
+  background: ${(p) => (p.$open ? '#15171e' : 'transparent')};
 `;
 
 const Header = styled.button`
@@ -53,7 +50,7 @@ const Index = styled.span<{ $open: boolean }>`
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: ${(p) => (p.$open ? '#60a5fa' : 'rgba(255, 255, 255, 0.28)')};
+  color: ${(p) => (p.$open ? '#60a5fa' : '#6b7280')};
   transition: color 0.15s ease;
 `;
 
@@ -62,13 +59,12 @@ const Question = styled.span<{ $open: boolean }>`
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.3;
-  color: ${(p) =>
-    p.$open ? 'rgba(255, 255, 255, 0.96)' : 'rgba(255, 255, 255, 0.78)'};
+  color: ${(p) => (p.$open ? '#e5e7eb' : '#d1d5db')};
   transition: color 0.15s ease;
 `;
 
 /* animate.div wraps a custom component rather than a DOM tag string, so
-   emotion can't auto-filter $-prefixed transient props here — pass the
+   emotion can't auto-filter $-prefixed transient props here. Pass the
    open state through the style prop instead of a styled prop. */
 const Chevron = styled(animate.div)`
   display: flex;
@@ -89,7 +85,7 @@ const Answer = styled.div`
   font-size: 12px;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.45);
+  color: #9ca3af;
 
   span {
     grid-column: 2;
@@ -164,7 +160,7 @@ function AccordionItem({
         <Chevron
           style={{
             rotateZ: progress.to([0, 1], [0, 180]),
-            color: open ? '#60a5fa' : 'rgba(255, 255, 255, 0.35)',
+            color: open ? '#60a5fa' : '#6b7280',
           }}
         >
           <FiChevronDown size={14} strokeWidth={2.25} />
