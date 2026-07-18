@@ -56,15 +56,15 @@ const Answer = styled.div`
 const FAQ = [
   {
     q: 'Is it production ready?',
-    a: 'Yes — it ships with TypeScript types, is tree-shakeable, and runs at 60fps.',
+    a: 'Yes. It ships with TypeScript types and is tree-shakeable.',
   },
   {
     q: 'Does it support gestures?',
-    a: 'Drag, move, scroll, and wheel gestures are built in as first-class hooks.',
+    a: 'Drag, move, scroll, and wheel gestures are built in as hooks.',
   },
   {
     q: 'How big is the bundle?',
-    a: 'Tiny and side-effect free, so you only pay for the pieces you import.',
+    a: 'Small, and you only pay for the pieces you actually import.',
   },
 ];
 

@@ -126,8 +126,6 @@ const STATS = ['v5.3.0', 'TypeScript', 'MIT licensed', 'Zero dependencies'];
 function HeroSection() {
   return (
     <header className={styles.hero}>
-      <div className={styles.heroMesh} aria-hidden="true" />
-      <div className={styles.heroGrain} aria-hidden="true" />
       <div className={styles.heroFade} aria-hidden="true" />
 
       <div className={clsx('container', styles.heroContainer)}>
@@ -302,8 +300,8 @@ function Examples() {
           <span className={styles.eyebrow}>Live examples</span>
           <h2 className={styles.sectionTitle}>Real components, real motion</h2>
           <p className={styles.sectionLede}>
-            The interactions you actually ship — toasts, modals, tabs, and more,
-            built with React UI Animate. Click, drag, and swipe to try them.
+            Toasts, modals, tabs, and more, built with React UI Animate.
+            Click, drag, and swipe to try them.
           </p>
         </ViewReveal>
 

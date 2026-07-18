@@ -11,13 +11,7 @@ export default function App() {
         className="button buttonPrimary"
         onClick={() => setValues(withSpring([10, 100, 200]))}
       >
-        Start
-      </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setValues([0, 0, 0])}
-      >
-        Reset
+        Animate
       </button>
 
       <div style={{ marginTop: 20, display: 'flex', gap: 10, justifyContent: 'center' }}>

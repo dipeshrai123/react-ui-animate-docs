@@ -9,25 +9,9 @@ export default function App() {
     <div className="container">
       <button
         className="button buttonPrimary"
-        onClick={() =>
-          setObj(
-            withSpring(
-              { x: 100, y: 100, width: 200, height: 200 },
-              {
-                onStart: () => console.log('START'),
-                onComplete: () => console.log('Animation complete'),
-              }
-            )
-          )
-        }
+        onClick={() => setObj(withSpring({ x: 100, y: 100, width: 200, height: 200 }))}
       >
-        Start
-      </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
-      >
-        Reset
+        Move & Resize
       </button>
 
       <animate.div

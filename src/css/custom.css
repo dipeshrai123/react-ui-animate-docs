@@ -130,16 +130,128 @@ h6 {
   width: auto !important;
 }
 
+/* ===== Sidebar =====
+   All sidebar styling lives in this one section — nothing elsewhere in this
+   file should touch .menu* selectors, so the cascade stays predictable. */
+.menu {
+  padding: 1rem 0.75rem 2rem !important;
+  font-size: 0.875rem;
+}
+
+/* Nested items: modest indent, no guide line */
+.menu__list .menu__list {
+  margin-top: 2px;
+  margin-left: 0;
+  padding-left: 0.75rem;
+}
+
+/* Top-level groups: separated by a hairline with symmetric spacing.
+   The divider lives on the <li>, not the label row, so the gap above and
+   below the line is identical. */
+.theme-doc-sidebar-item-category-level-1 {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 {
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Category label row */
 .menu__list-item-collapsible {
-  font-weight: bold;
+  border-radius: 6px;
 }
 
-.menu__link--sublist-caret:after {
-  opacity: 0;
+.menu__list-item-collapsible:hover {
+  background: transparent;
 }
 
-.menu__link--sublist-caret:hover::after {
-  opacity: 1;
+.menu__list-item-collapsible > .menu__link,
+.menu__list-item-collapsible > .menu__caret {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ifm-font-color-base);
+}
+
+.menu__list-item-collapsible:hover > .menu__link {
+  background: transparent;
+  color: var(--ifm-font-color-base);
+}
+
+[data-theme='dark'] .menu__list-item-collapsible > .menu__link,
+[data-theme='dark'] .menu__list-item-collapsible > .menu__caret {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.menu__category-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-right: 8px;
+  font-size: 14px;
+  color: var(--ifm-color-emphasis-500);
+}
+
+[data-theme='dark'] .menu__category-icon {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* Collapse caret: small and quiet */
+.menu__link--sublist-caret:after,
+.menu__caret:before {
+  min-width: 0.9rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background-size: 1.3rem 1.3rem;
+  opacity: 0.45;
+  transition: opacity 0.15s ease, transform 0.2s ease;
+}
+
+.menu__link--sublist-caret:hover::after,
+.menu__caret:hover::before {
+  opacity: 0.8;
+}
+
+/* Leaf links: muted until hovered/active; active is a tinted pill with the
+   primary color — same size and weight as siblings, so nothing shifts. */
+.menu__link {
+  padding: 5px 10px;
+  border-radius: 6px;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-700);
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+[data-theme='dark'] .menu__link {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.menu__link:hover {
+  color: var(--ifm-font-color-base);
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .menu__link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.menu__link--active,
+.menu__link--active:hover {
+  font-weight: inherit;
+  color: var(--ifm-color-primary);
+  background-color: rgba(0, 123, 255, 0.09);
+}
+
+[data-theme='dark'] .menu__link--active,
+[data-theme='dark'] .menu__link--active:hover {
+  color: #60a5fa;
+  background-color: rgba(96, 165, 250, 0.1);
 }
 
 /* ===== Navbar ===== */
@@ -274,6 +386,27 @@ body.nav-overlay .navbar .dropdown > .navbar__link {
   display: none !important;
 }
 
+/* ===== Doc prose: readable column + tighter vertical rhythm ===== */
+article .markdown {
+  max-width: 760px;
+}
+
+.markdown > h2 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.markdown > h3 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-1);
+}
+
+.markdown > p,
+.markdown > ul,
+.markdown > ol {
+  margin-bottom: var(--space-2);
+}
+
 .hero__title {
   color: white;
 }
@@ -316,6 +449,10 @@ div[class*='codeBlockContainer'] {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* The copy button on ordinary code fences is src/theme/CodeBlock/CopyButton
+   (swizzled) — it renders with the same `example-icon-btn` class as the
+   live-demo toolbar directly, so no extra styling is needed here. */
+
 /* Links inside docs/blog prose — dark theme visibility.
    Scoped to .markdown so it never touches UI chrome (navbar, menu, TOC,
    footer) or the custom landing page, whose buttons/links style themselves. */
@@ -333,27 +470,8 @@ div[class*='codeBlockContainer'] {
   color: #60a5fa;
 }
 
-/* Sidebar Menu Links - White in dark mode, only active highlighted */
-[data-theme='dark'] .menu__link {
-  color: #ffffff !important;
-  text-decoration: none !important;
-}
-
-[data-theme='dark'] .menu__link:hover {
-  color: #ffffff !important;
-  text-decoration: none !important;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme='dark'] .menu__link--active {
-  color: #60a5fa !important;
-  background-color: rgba(96, 165, 250, 0.1);
-}
-
-[data-theme='dark'] .menu__link--active:hover {
-  color: #60a5fa !important;
-  background-color: rgba(96, 165, 250, 0.15);
-}
+/* (Sidebar styling lives entirely in the "===== Sidebar =====" section
+   near the top of this file.) */
 
 /* Version Dropdown - White in dark mode */
 [data-theme='dark'] .navbar__item--dropdown .navbar__link,
@@ -625,9 +743,64 @@ code .token.operator,
   background-color: var(--ifm-color-primary-darker);
 }
 
-/* Live example preview + code toggle */
+/* Live example: one bordered frame, corner toolbar (reset/code/copy) */
 .example-block {
+  position: relative;
   margin: 1.5rem 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+}
+
+[data-theme='dark'] .example-block {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.example-toolbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+}
+
+.example-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  line-height: 0;
+  color: var(--prism-color, var(--ifm-color-emphasis-700));
+  background: var(--prism-background-color, var(--ifm-background-color));
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.example-icon-btn:hover {
+  opacity: 1;
+  color: var(--ifm-color-primary);
+}
+
+.example-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.example-icon-btn svg {
+  font-size: 13px;
+}
+
+/* Our .example-toolbar owns copy/reset/toggle here — hide the CodeBlock's
+   entire built-in button group (copy + the word-wrap button that appears on
+   long/scrollable code), which otherwise overlaps our toolbar. */
+.example-code div[class*='buttonGroup'] {
+  display: none !important;
 }
 
 .example-preview {
@@ -639,46 +812,74 @@ code .token.operator,
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid var(--ifm-color-emphasis-200);
-  background: var(--ifm-background-surface-color);
 }
 
-[data-theme='dark'] .example-preview {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: rgba(255, 255, 255, 0.08);
-}
-
-.example-code-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--ifm-color-emphasis-700);
-  background: transparent;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-}
-
-.example-code-toggle:hover {
-  color: var(--ifm-color-primary);
-  border-color: var(--ifm-color-primary);
-  background: var(--ifm-color-emphasis-100);
-}
-
-.example-code {
-  margin-top: 0.75rem;
+/* Nested inside .example-block, which already has the frame border —
+   strip the CodeBlock's own border/radius so it sits flush. The toolbar
+   overlays the first line the same way Docusaurus's own copy button
+   does on a plain code fence — no reserved space needed. */
+.example-code div[class*='codeBlockContainer'] {
+  border: none;
+  border-radius: 0;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
   .example-preview {
     padding: 1.25rem;
-    border-radius: 8px;
     max-height: 320px;
   }
+
+  .example-block {
+    border-radius: 8px;
+  }
+}
+
+/* ===== Footer ===== */
+.footer.footer--dark {
+  --ifm-footer-background-color: #08090d;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 3.5rem 0 2.5rem;
+}
+
+.footer__title {
+  margin-bottom: 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.45);
+}
+
+.footer__item {
+  margin-top: 0;
+}
+
+.footer__link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(226, 232, 240, 0.65);
+  transition: color 0.15s ease;
+}
+
+.footer__link-item:hover {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+/* Infima appends an external-link arrow icon; keep it subtle */
+.footer__link-item svg {
+  opacity: 0.5;
+}
+
+.footer__copyright {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.8rem;
+  color: rgba(226, 232, 240, 0.4);
 }

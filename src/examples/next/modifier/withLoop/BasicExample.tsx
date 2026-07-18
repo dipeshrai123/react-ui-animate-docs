@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  useValue,
-  animate,
-  withTiming,
-  withSequence,
-  withSpring,
-  withDelay,
-  withDecay,
-  withLoop,
-} from 'react-ui-animate';
+import { useValue, animate, withTiming, withSequence, withLoop } from 'react-ui-animate';
 import '../../styles.css';
 
 export default function BasicExample() {
@@ -27,26 +18,12 @@ export default function BasicExample() {
                 withTiming({ x: 0 }),
                 withTiming({ y: 0 }),
               ]),
-              5,
-              {
-                onStart() {
-                  console.log('Loop started');
-                },
-                onComplete() {
-                  console.log('Loop completed');
-                },
-              }
+              5
             )
           )
         }
       >
-        Start
-      </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
-      >
-        Reset
+        Loop 5 times
       </button>
 
       <animate.div

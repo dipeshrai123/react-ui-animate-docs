@@ -13,12 +13,6 @@ export default function App() {
       >
         Expand
       </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setWidth(withSpring(100))}
-      >
-        Reset
-      </button>
       <animate.div
         style={{
           width,

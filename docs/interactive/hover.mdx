@@ -4,187 +4,37 @@ id: hover-animations
 title: Hover Animations
 ---
 
-Hover animations are one of the most common interactions in web applications. React UI Animate makes it easy to create smooth, responsive hover effects using the `hover` prop.
+The `hover` prop animates on pointer enter/leave.
 
-## Basic Usage
-
-The `hover` prop accepts an animation descriptor that runs when the user hovers over the element:
+## Usage
 
 ```jsx
-import { animate, withSpring } from 'react-ui-animate';
+import { animate, withSpring, recipes } from 'react-ui-animate';
 
-function HoverButton() {
-  return (
-    <animate.button
-      hover={{
-        scale: withSpring(1.1),
-      }}
-      style={{
-        padding: '12px 24px',
-        backgroundColor: '#3399ff',
-        color: 'white',
-        border: 'none',
-        borderRadius: 8,
-      }}
-    >
-      Hover me
-    </animate.button>
-  );
-}
+<animate.button hover={{ scale: withSpring(1.1) }}>Hover me</animate.button>
+
+// Multiple properties, or a ready-made recipe:
+<animate.div
+  hover={{ scale: withSpring(1.05), translateY: withSpring(-8) }}
+/>
+<animate.button hover={recipes.hoverScale}>Preset</animate.button>
 ```
 
-## Multiple Properties
-
-You can animate multiple properties on hover:
+## Combining with other props
 
 ```jsx
 <animate.button
-  hover={{
-    scale: withSpring(1.1),
-    backgroundColor: withSpring('#ff6d6d'),
-    translateY: withSpring(-2),
-  }}
->
-  Hover me
-</animate.button>
-```
-
-## Using Preset Animations
-
-React UI Animate includes a preset for common hover effects:
-
-```jsx
-import { hoverScale } from 'react-ui-animate';
-
-<animate.button hover={hoverScale}>
-  Button with preset
-</animate.button>
-```
-
-The `hoverScale` preset is equivalent to:
-
-```jsx
-hover={{ scale: withSpring(1.1) }}
-```
-
-## Real-World Examples
-
-### Example 1: Interactive Card
-
-```jsx
-function InteractiveCard() {
-  return (
-    <animate.div
-      style={{
-        width: 200,
-        height: 200,
-        background: 'white',
-        borderRadius: 8,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        cursor: 'pointer',
-      }}
-      hover={{
-        scale: withSpring(1.05),
-        translateY: withSpring(-8),
-        boxShadow: withSpring('0 8px 24px rgba(0,0,0,0.15)'),
-      }}
-    >
-      <h3>Card Title</h3>
-      <p>Hover to see the effect</p>
-    </animate.div>
-  );
-}
-```
-
-### Example 2: Navigation Link
-
-```jsx
-function NavLink({ children, href }) {
-  return (
-    <animate.a
-      href={href}
-      style={{
-        color: '#333',
-        textDecoration: 'none',
-        padding: '8px 16px',
-        borderRadius: 4,
-      }}
-      hover={{
-        backgroundColor: withSpring('rgba(51, 153, 255, 0.1)'),
-        color: withSpring('#3399ff'),
-      }}
-    >
-      {children}
-    </animate.a>
-  );
-}
-```
-
-### Example 3: Image Gallery
-
-```jsx
-function GalleryImage({ src, alt }) {
-  return (
-    <animate.img
-      src={src}
-      alt={alt}
-      style={{
-        width: '100%',
-        height: 'auto',
-        borderRadius: 8,
-        cursor: 'pointer',
-      }}
-      hover={{
-        scale: withSpring(1.05),
-        filter: withSpring('brightness(1.1)'),
-      }}
-    />
-  );
-}
-```
-
-## Combining with Other Props
-
-You can combine `hover` with other animation props:
-
-```jsx
-<animate.button
-  hover={{
-    scale: withSpring(1.1),
-  }}
-  press={{
-    scale: withSpring(0.95),
-  }}
+  hover={{ scale: withSpring(1.1) }}
+  press={{ scale: withSpring(0.95) }}
 >
   Interactive Button
 </animate.button>
 ```
 
-## Best Practices
+Note `hover` fires from real pointer enter/leave — on touch devices, prefer
+[press](./press-animations) instead, since there's no true "hover" state.
 
-### ✅ Do
+## Next steps
 
-- Use `withSpring` for natural, responsive hover effects
-- Keep hover animations subtle (small scale changes, 1.05-1.1)
-- Use transforms (`scale`, `translateY`) instead of layout properties
-- Combine hover with press for better feedback
-
-### ❌ Don't
-
-- Don't make hover animations too aggressive (large scale changes)
-- Don't animate layout properties (`width`, `height`) on hover
-- Don't forget to provide visual feedback for interactive elements
-- Don't use hover on mobile (use `press` instead)
-
-## Performance Tips
-
-1. **Use transforms** - `scale`, `translateX`, `translateY` are GPU-accelerated
-2. **Keep it simple** - Simple hover effects perform better
-3. **Use spring animations** - They feel more natural and responsive
-
-## Next Steps
-
-- Learn about [Press Animations](./press-animations) for click/touch feedback
-- Explore [Focus Animations](./focus-animations) for accessibility
-- Check out [View Animations](./view-animations) for scroll-triggered effects
-
+- [Press Animations](./press-animations) — pairs naturally with `hover`.
+- [Focus Animations](./focus-animations) — for keyboard navigation.

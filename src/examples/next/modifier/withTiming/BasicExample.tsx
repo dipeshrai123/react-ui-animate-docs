@@ -10,25 +10,10 @@ export default function BasicExample() {
       <button
         className="button buttonPrimary"
         onClick={() =>
-          setObj(
-            withTiming(
-              { x: 0, y: 0, width: 300, height: 100 },
-              {
-                duration: 400,
-                onStart: () => console.log('START'),
-                onComplete: () => console.log('Animation complete'),
-              }
-            )
-          )
+          setObj(withTiming({ x: 0, y: 0, width: 300, height: 100 }, { duration: 400 }))
         }
       >
-        Start
-      </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
-      >
-        Reset
+        Expand
       </button>
 
       <animate.div

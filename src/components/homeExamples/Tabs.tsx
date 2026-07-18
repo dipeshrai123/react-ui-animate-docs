@@ -68,17 +68,17 @@ const TABS = [
   {
     label: 'Overview',
     title: 'Declarative motion',
-    text: 'Animate with simple props — no timelines, no boilerplate to manage.',
+    text: 'Animate with simple props instead of hand-writing timelines.',
   },
   {
     label: 'Gestures',
     title: 'Built-in gestures',
-    text: 'Drag, move, scroll, and wheel hooks for rich, tactile interactions.',
+    text: 'Drag, move, scroll, and wheel hooks for tactile interactions.',
   },
   {
     label: 'Presence',
     title: 'Exit animations',
-    text: 'Animate elements as they leave the DOM — perfect for modals & toasts.',
+    text: 'Animate elements out as they leave the DOM, e.g. modals and toasts.',
   },
 ];
 

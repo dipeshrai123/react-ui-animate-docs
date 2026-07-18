@@ -134,10 +134,6 @@ const config = {
               label: 'Get Started',
               to: '/docs/getting-started',
             },
-            // {
-            //   label: 'Core Concepts',
-            //   to: '/docs/concept/animate-component',
-            // },
             {
               label: 'Animation Modifiers',
               to: '/docs/animation-modifier/overview',
@@ -146,44 +142,40 @@ const config = {
               label: 'Gestures',
               to: '/docs/gesture/overview',
             },
+            {
+              label: 'Presence & Layout',
+              to: '/docs/presence/presence-basics',
+            },
           ],
         },
-        // {
-        //   title: 'Features',
-        //   items: [
-        //     {
-        //       label: 'Interactive Props',
-        //       to: '/docs/interactive/hover-animations',
-        //     },
-        //     {
-        //       label: 'Presence & Exit',
-        //       to: '/docs/presence/presence-basics',
-        //     },
-        //     {
-        //       label: 'Hooks',
-        //       to: '/docs/hooks/useInView',
-        //     },
-        //     {
-        //       label: 'View Animations',
-        //       to: '/docs/interactive/view-animations',
-        //     },
-        //   ],
-        // },
         {
-          title: 'Resources',
+          title: 'Community',
           items: [
             {
               label: 'GitHub',
               href: 'https://github.com/dipeshrai123/react-ui-animate',
             },
             {
-              label: 'NPM',
+              label: 'Discord',
+              href: 'https://discord.gg/qPqsD8pv',
+            },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {
+              label: 'npm',
               href: 'https://www.npmjs.com/package/react-ui-animate',
+            },
+            {
+              label: 'Releases',
+              href: 'https://github.com/dipeshrai123/react-ui-animate/releases',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} React UI Animate. Built with ❤️ by Dipesh Rai.`,
+      copyright: `Copyright © ${new Date().getFullYear()} React UI Animate. Built by Dipesh Rai.`,
     },
   },
 };

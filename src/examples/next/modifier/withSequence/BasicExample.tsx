@@ -6,7 +6,6 @@ import {
   withSequence,
   withSpring,
   withDelay,
-  withDecay,
 } from 'react-ui-animate';
 import '../../styles.css';
 
@@ -19,33 +18,16 @@ export default function BasicExample() {
         className="button buttonPrimary"
         onClick={() =>
           setObj(
-            withSequence(
-              [
-                withSpring({ x: 100, y: 100 }),
-                withTiming({ width: 200, height: 200 }),
-                withDelay(1000),
-                withTiming({ x: 0, y: 0 }, { duration: 3000 }),
-                withDecay(0.5),
-              ],
-              {
-                onStart() {
-                  console.log('obj sequence started');
-                },
-                onComplete() {
-                  console.log('obj sequence completed');
-                },
-              }
-            )
+            withSequence([
+              withSpring({ x: 100, y: 100 }),
+              withTiming({ width: 200, height: 200 }),
+              withDelay(500),
+              withTiming({ x: 0, y: 0 }, { duration: 600 }),
+            ])
           )
         }
       >
-        Start
-      </button>
-      <button
-        className="button buttonSecondary"
-        onClick={() => setObj({ x: 0, y: 0, width: 100, height: 100 })}
-      >
-        Reset
+        Run sequence
       </button>
 
       <animate.div

@@ -4,46 +4,23 @@ id: getting-started
 title: Getting Started
 ---
 
-Welcome to **React UI Animate**! This library makes it incredibly simple to create smooth, performant animations and interactive gestures in your React applications. Whether you're building a simple fade-in effect or complex gesture-based interactions, React UI Animate provides the tools you need.
+import CodeExample from '@site/src/components/CodeExample';
+import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/modifier/withSpring/GetStartedExample';
 
-## What is React UI Animate?
+**React UI Animate** is a lightweight, declarative animation and gesture
+library for React — springs, sequences, gestures, and exit animations with
+values that update outside React's render cycle.
 
-React UI Animate is a lightweight, powerful animation library that:
+## Install
 
-- 🚀 **Performs well** - Uses optimized animation loops that don't block React's render cycle
-- 🎯 **Easy to use** - Simple, intuitive API that feels natural to React developers
-- 🎨 **Flexible** - Works with numbers, strings, arrays, and objects
-- 🖱️ **Gesture-ready** - Built-in hooks for drag, scroll, wheel, and pointer interactions
-- ⚡ **Declarative** - Use props like `hover`, `press`, `focus`, and `view` for common interactions
-
-## Prerequisites
-
-Before diving in, make sure you're comfortable with:
-
-- **JavaScript/TypeScript** fundamentals
-- **React** basics (especially hooks)
-
-If you're new to React hooks, we recommend checking out the [React documentation](https://react.dev/reference/react) first.
-
-## Installation
-
-React UI Animate requires **React 16.8+** (hooks support is required).
-
-Install the latest version:
+Requires React 16.8+ (hooks).
 
 ```bash
 npm install react-ui-animate@next
 ```
 
-or with yarn:
-
-```bash
-yarn add react-ui-animate@next
-```
-
-## Quick Example
-
-Here's a simple example to get you started:
+## Quick example
 
 ```jsx
 import { animate, useValue, withSpring } from 'react-ui-animate';
@@ -52,125 +29,26 @@ function MyComponent() {
   const [width, setWidth] = useValue(100);
 
   return (
-    <>
-      <button onClick={() => setWidth(withSpring(200))}>Expand</button>
-      <animate.div
-        style={{
-          width,
-          height: 100,
-          backgroundColor: 'teal',
-          borderRadius: 4,
-        }}
-      />
-    </>
+    <animate.div
+      style={{ width, height: 100, backgroundColor: 'teal', borderRadius: 4 }}
+      onClick={() => setWidth(withSpring(200))}
+    />
   );
 }
 ```
 
-**What's happening:**
-
-1. `useValue(100)` creates an animated width starting at 100
-2. `withSpring(200)` animates the width to 200 with a spring effect
-3. The `<animate.div>` automatically updates as the width changes
-
-## Core Concepts
-
-React UI Animate is built around a few key concepts:
-
-### 1. The `animate` Component
-
-The `<animate>` component works just like regular HTML elements (`div`, `span`, etc.) but understands animated values:
-
-```jsx
-<animate.div style={{ width: 100 }} />
-```
-
-### 2. The `useValue` Hook
-
-`useValue` creates animated values that update smoothly without causing React re-renders:
-
-```jsx
-const [width, setWidth] = useValue(100);
-```
-
-### 3. Animation Modifiers
-
-Modifiers tell `useValue` _how_ to animate. Without a modifier, values change instantly:
-
-```jsx
-// Instant change
-setWidth(200);
-
-// Smooth animation
-setWidth(withSpring(200));
-```
-
-### 4. Declarative Animations
-
-You can also use props directly on `animate` components for common interactions:
-
-```jsx
-<animate.button
-  hover={{ scale: withSpring(1.1) }}
-  press={{ scale: withSpring(0.95) }}
->
-  Click me
-</animate.button>
-```
-
-## What's New in 5.3.0?
-
-The latest version introduces powerful new features:
-
-- **Presence Component** - Smooth exit animations for components leaving the DOM (essential for modals, tooltips, dropdowns)
-- **Declarative Props** - `hover`, `press`, `focus`, and `view` props for common interactions
-- **View Animations** - Automatically animate when elements enter the viewport
-- **New Utilities** - `makeAnimated`, `to` (interpolation), `combine`
-- **Enhanced Gestures** - `useScrollProgress` for progress-based animations
-
-## Learning Path
-
-We've organized the documentation to guide you from basics to advanced:
-
-1. **[Core Concepts](./concept/useValue)** - Learn `animate` and `useValue`
-2. **[Animation Modifiers](./animation-modifier/overview)** - Master `withSpring`, `withTiming`, and more
-3. **[Presence & Exit](./presence/presence-basics)** - Animate components entering/leaving the DOM (essential for modals, dropdowns, etc.)
-4. **[Interactive Animations](./interactive/hover-animations)** - Use `hover`, `press`, `focus`, and `view` props
-5. **[Gestures](./gesture/overview)** - Build drag, scroll, and wheel interactions
-6. **[Interpolation](./concept/interpolation)** - Interpolation, combining values, and more
-
-## Your First Animation
-
-Let's build a simple, interactive example:
-
-import CodeExample from '@site/src/components/CodeExample';
-import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/next/modifier/withSpring/GetStartedExample.tsx';
-import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/next/modifier/withSpring/GetStartedExample';
+`useValue(100)` creates an animated width; `withSpring(200)` animates it —
+`animate.div` picks up the change directly, no re-render involved.
 
 <CodeExample
   demo={Demo_modifier_withSpring_GetStartedExample}
   code={Code_modifier_withSpring_GetStartedExample}
 />
 
-**Try it yourself:**
+## Where to next
 
-- Click "Expand" to see the box grow wider with a smooth spring animation
-- Click "Reset" to see it smoothly return to its original size
-
-**What's happening:**
-
-1. We use `useValue` to create an animated value starting at `100`
-2. The `animate.div` component uses this value for its `width` style
-3. When you click the button, `setWidth(withSpring(200))` animates the width to `200`
-4. The `withSpring` modifier creates a natural, bouncy animation
-
-## Next Steps
-
-Now that you understand the basics, explore:
-
-- **[useValue Hook](./concept/useValue)** - Deep dive into managing animated values
-- **[Animation Modifiers](./animation-modifier/overview)** - Learn about `withSpring`, `withTiming`, and more
-- **[Presence & Exit](./presence/presence-basics)** - Learn how to animate components entering/leaving the DOM
-- **[Interactive Animations](./interactive/hover-animations)** - Use declarative props for common interactions
-
-Happy animating! 🎉
+- [The animate Component](./concept/animate-component) & [useValue](./concept/useValue) — the core mental model.
+- [Animation Modifiers](./animation-modifier/overview) — `withSpring`, `withTiming`, and the rest.
+- [Interactive Props](./interactive/hover-animations) — `hover`/`press`/`focus`/`view`.
+- [Gestures](./gesture/overview) — `useDrag`, `useGesture`.
+- [Presence & Layout](./presence/presence-basics) — exit animations.
