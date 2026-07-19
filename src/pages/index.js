@@ -320,6 +320,100 @@ function Features() {
   );
 }
 
+const BUNDLE_SIZES = [
+  { name: 'react-ui-animate', size: 14.2, note: null, highlight: true },
+  {
+    name: 'react-spring + @use-gesture/react',
+    size: 25.9,
+    note: 'needed for hover/press',
+    highlight: false,
+  },
+  {
+    name: 'framer-motion (LazyMotion + m)',
+    size: 27.4,
+    note: 'size-optimized import',
+    highlight: false,
+  },
+  {
+    name: 'framer-motion (motion)',
+    size: 41.0,
+    note: 'typical import',
+    highlight: false,
+  },
+];
+const MAX_BUNDLE_SIZE = Math.max(...BUNDLE_SIZES.map((b) => b.size));
+
+function BundleSize() {
+  return (
+    <section className={styles.section}>
+      <div className="container">
+        <ViewReveal className={styles.sectionHeader}>
+          <span className={styles.eyebrow}>Bundle size</span>
+          <h2 className={styles.sectionTitle}>How much this actually costs you</h2>
+          <p className={styles.sectionLede}>
+            We built the same component with each library: a spring animation
+            with hover and press gestures. Then we bundled it with esbuild and
+            gzipped the output, with React excluded from the count in every
+            case.
+          </p>
+        </ViewReveal>
+
+        <ViewReveal className={styles.bundleChart}>
+          {BUNDLE_SIZES.map((lib) => (
+            <div
+              key={lib.name}
+              className={clsx(
+                styles.bundleRow,
+                lib.highlight && styles.bundleRowHighlight
+              )}
+            >
+              <div className={styles.bundleRowHead}>
+                <div className={styles.bundleLabel}>
+                  <span className={styles.bundleName}>{lib.name}</span>
+                  {lib.note && (
+                    <span className={styles.bundleNote}>{lib.note}</span>
+                  )}
+                </div>
+                <span className={styles.bundleValue}>
+                  {lib.size.toFixed(1)} KB
+                </span>
+              </div>
+              <div className={styles.bundleBarTrack}>
+                <div
+                  className={clsx(
+                    styles.bundleBar,
+                    lib.highlight && styles.bundleBarHighlight
+                  )}
+                  style={{ width: `${(lib.size / MAX_BUNDLE_SIZE) * 100}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </ViewReveal>
+
+        <p className={styles.bundleCaveat}>
+          If your component only needs animation and no gestures,
+          react-spring alone is smaller at 17.4 KB. It grows past
+          react-ui-animate once you add @use-gesture/react for hover, press,
+          or drag, which is why that combined weight is what's shown above.
+          Numbers come from the public packages available when we ran this
+          test and will shift as those projects release new versions, so
+          treat them as a snapshot rather than a permanent guarantee. Full
+          methodology and source is in our{' '}
+          <a
+            href={`${GITHUB_URL}#why-react-ui-animate`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            README
+          </a>
+          .
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /** Strip leading/trailing noise so the shown source is clean and copy-pasteable. */
 function prepareSource(code) {
   return code.replace(/\n{3,}/g, '\n\n').trim();
@@ -621,6 +715,7 @@ export default function Home() {
       <HeroSection />
       <main>
         <Features />
+        <BundleSize />
         <Examples />
         <CallToAction />
       </main>

@@ -511,6 +511,117 @@
   margin: 0;
 }
 
+/* ===== Bundle size ===== */
+.bundleChart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: #16181f;
+  border: 1px solid #2e323c;
+}
+
+.bundleRow {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md, 10px);
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.bundleRowHighlight {
+  background: rgba(96, 130, 255, 0.08);
+  border-color: rgba(96, 130, 255, 0.35);
+}
+
+.bundleRowHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.bundleLabel {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.bundleName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.bundleRowHighlight .bundleName {
+  color: #fff;
+}
+
+.bundleNote {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.bundleValue {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+.bundleRowHighlight .bundleValue {
+  color: var(--ifm-color-primary);
+}
+
+.bundleBarTrack {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: #1f222b;
+  overflow: hidden;
+}
+
+.bundleBar {
+  height: 100%;
+  border-radius: 999px;
+  background: #3a3f4a;
+  transition: width 0.6s ease;
+}
+
+.bundleBarHighlight {
+  background: var(--ifm-color-primary);
+}
+
+.bundleCaveat {
+  max-width: 640px;
+  margin: var(--space-4) auto 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #6b7280;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .bundleRowHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .bundleLabel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+}
+
 /* ===== Examples showcase ===== */
 .showcaseWrap {
   max-width: 1080px;
