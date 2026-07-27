@@ -254,7 +254,7 @@ const FEATURES = [
   },
   {
     icon: FiLayers,
-    title: 'Presence & Exit',
+    title: 'Unmount & Exit',
     description:
       'Animate components as they leave the DOM. Built for modals, tooltips, and dropdowns.',
   },
@@ -429,7 +429,7 @@ const EXAMPLES = [
   {
     key: 'ToastDemo',
     title: 'Toast',
-    description: 'Enter, hold, then exit with Presence.',
+    description: 'Enter, hold, then exit with Unmount.',
     code: ToastDemoSource,
   },
   {

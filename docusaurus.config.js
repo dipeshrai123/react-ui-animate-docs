@@ -141,7 +141,7 @@ const config = {
               to: '/docs/gesture/overview',
             },
             {
-              label: 'Presence & Layout',
+              label: 'Unmount & Flip',
               to: '/docs/presence/presence-basics',
             },
           ],

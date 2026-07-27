@@ -41,7 +41,7 @@ const CATEGORY_ICONS: Record<string, React.ComponentType> = {
   'Interactive Props': FiMousePointer,
   Gestures: FiMove,
   Hooks: FiAnchor,
-  'Presence & Layout': FiLayout,
+  'Unmount & Flip': FiLayout,
   Utilities: FiTool,
   Recipes: FiBookOpen,
   // 5.3.2

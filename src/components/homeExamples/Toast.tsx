@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FiCheck, FiX } from 'react-icons/fi';
 import {
   animate,
-  Presence,
+  Unmount,
   withSequence,
   withSpring,
   withTiming,
@@ -12,7 +12,7 @@ import {
 const MESSAGES = [
   { title: 'Changes saved', detail: 'Your draft was synced' },
   { title: 'Invite sent', detail: 'Alex will get an email shortly' },
-  { title: 'Deploy complete', detail: 'Production is live on v5.3.2' },
+  { title: 'Deploy complete', detail: 'Production is live on v6.0.0-next.1' },
 ];
 
 const Stage = styled.div`
@@ -183,7 +183,7 @@ function Toast({
         scale: withSpring(1, { damping: 18 }),
         y: withSpring(0, { damping: 18 }),
       }}
-      exit={{
+      unmount={{
         height: withSpring(0, { damping: 18 }),
         opacity: withTiming(0, { duration: 160 }),
         scale: withSpring(0.97, { damping: 18 }),
@@ -248,11 +248,11 @@ export function ToastDemo() {
         <EmptyHint $visible={toasts.length === 0}>
           Notifications appear here
         </EmptyHint>
-        <Presence>
+        <Unmount>
           {toasts.map((item) => (
             <Toast key={item.id} item={item} onEnd={remove} />
           ))}
-        </Presence>
+        </Unmount>
       </Tray>
     </Stage>
   );

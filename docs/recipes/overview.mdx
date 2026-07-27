@@ -10,21 +10,21 @@ import Demo_recipes_BasicExample from '@site/src/examples/next/recipes/BasicExam
 
 `recipes` is a namespace object of ready-made `AnimateProp` values for
 common transitions you'd otherwise write by hand as `{ opacity: withSpring(1) }`
-and friends. Pass one straight into `animate`, `exit`, `hover`, `press`, or
+and friends. Pass one straight into `animate`, `unmount`, `hover`, `press`, or
 `set(...)` instead of hand-writing the descriptor.
 
 ```jsx
-import { animate, Presence, recipes } from 'react-ui-animate';
+import { animate, Unmount, recipes } from 'react-ui-animate';
 
-<Presence>
+<Unmount>
   {open && (
     <animate.div
       key="card"
       animate={recipes.scaleIn}
-      exit={recipes.scaleOut}
+      unmount={recipes.scaleOut}
     />
   )}
-</Presence>
+</Unmount>
 ```
 
 <CodeExample
@@ -82,10 +82,10 @@ Use recipes for common enter/exit/hover/press motion; reach for
 `pressScale`, `pressDown`: designed for `onPointerDown`/`onPointerUp`, or
 as the `press` prop's target.
 
-### Exit
+### Unmount
 
-`exitFade`, `exitSlideUp`, `exitSlideDown`, `exitScale`: meant for
-`Presence`'s `exit` prop.
+`unmountFade`, `unmountSlideUp`, `unmountSlideDown`, `unmountScale`: meant for
+`animate.*`'s `unmount` prop, inside an `Unmount` wrapper.
 
 ## Why not the old flat exports?
 

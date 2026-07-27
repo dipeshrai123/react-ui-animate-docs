@@ -51,7 +51,7 @@ it on the matching trigger:
 | Prop | Fires on |
 |---|---|
 | `animate` | mount, or whenever the prop's value changes |
-| `exit` | unmount (needs a [`Presence`](../presence/presence-basics) wrapper) |
+| `unmount` | unmount (needs an [`Unmount`](../presence/presence-basics) wrapper) |
 | `hover` | pointer enter/leave, see [Interactive Props](../interactive/hover-animations) |
 | `press` | pointer down/up |
 | `focus` | focus/blur |
@@ -104,4 +104,4 @@ are GPU-accelerated and don't trigger layout.
 - [useValue](./useValue): creating the animated values `animate.*` reads.
 - [Animation Modifiers](../animation-modifier/overview): `withSpring`,
   `withTiming`, and the rest.
-- [Presence & Layout](../presence/presence-basics): exit animations.
+- [Unmount & Flip](../presence/presence-basics): exit animations.

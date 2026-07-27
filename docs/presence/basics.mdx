@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 id: presence-basics
-title: Presence Basics
+title: Unmount Basics
 ---
 
 import CodeExample from '@site/src/components/CodeExample';
@@ -9,13 +9,13 @@ import Code_presence_ToggleExample from '!!raw-loader!@site/src/examples/next/pr
 import Demo_presence_ToggleExample from '@site/src/examples/next/presence/ToggleExample';
 
 Conditional rendering (`{isOpen && <div>...}`) removes elements from the DOM
-instantly, so there's no chance to animate them out. `Presence` keeps an
-exiting child mounted until its `exit` animation finishes, then removes it.
+instantly, so there's no chance to animate them out. `Unmount` keeps an
+exiting child mounted until its `unmount` animation finishes, then removes it.
 
 ## Usage
 
 ```jsx
-import { Presence, animate, withTiming, withSpring } from 'react-ui-animate';
+import { Unmount, animate, withTiming, withSpring } from 'react-ui-animate';
 
 function Toggle() {
   const [isVisible, setIsVisible] = useState(true);
@@ -24,16 +24,16 @@ function Toggle() {
     <>
       <button onClick={() => setIsVisible((v) => !v)}>Toggle</button>
       // highlight-start
-      {/* Presence keeps the child mounted until exit finishes */}
-      <Presence>
+      {/* Unmount keeps the child mounted until unmount finishes */}
+      <Unmount>
         {isVisible && (
           <animate.div
             animate={{ opacity: withSpring(1), scale: withSpring(1) }}
-            exit={{ opacity: withTiming(0), scale: withSpring(0.85) }}
+            unmount={{ opacity: withTiming(0), scale: withSpring(0.85) }}
             style={{ opacity: 0, scale: 0.85, width: 100, height: 100 }}
           />
         )}
-      </Presence>
+      </Unmount>
       // highlight-end
     </>
   );
@@ -46,36 +46,36 @@ function Toggle() {
 />
 
 :::note
-Each direct child of `Presence` needs a unique `key` if there's more than
-one (e.g. a modal's backdrop + panel). That's how `Presence` tracks which
+Each direct child of `Unmount` needs a unique `key` if there's more than
+one (e.g. a modal's backdrop + panel). That's how `Unmount` tracks which
 child is entering/exiting across renders.
 :::
 
 ```jsx
-<Presence>
+<Unmount>
   {isOpen && (
     // highlight-start
-    /* Unique keys let Presence track each exiting child */
+    /* Unique keys let Unmount track each exiting child */
     <>
-      <animate.div key="backdrop" exit={{ opacity: withTiming(0) }} />
-      <animate.div key="panel" exit={{ opacity: withTiming(0), scale: withSpring(0.9) }} />
+      <animate.div key="backdrop" unmount={{ opacity: withTiming(0) }} />
+      <animate.div key="panel" unmount={{ opacity: withTiming(0), scale: withSpring(0.9) }} />
     </>
     // highlight-end
   )}
-</Presence>
+</Unmount>
 ```
 
 ## Enter + exit together
 
-`animate` (mount) and `exit` (unmount) compose on the same element: mount
-target in `animate`, leave target in `exit`, and keep the initial hidden
+`animate` (mount) and `unmount` (unmount) compose on the same element: mount
+target in `animate`, leave target in `unmount`, and keep the initial hidden
 values in `style`.
 
 ## Next steps
 
-- [The animate Component](../concept/animate-component): the `animate`/`exit`
+- [The animate Component](../concept/animate-component): the `animate`/`unmount`
   props themselves.
-- [usePresence & useIsPresent](./use-presence): drive an exit animation
-  manually instead of via the `exit` prop.
-- [recipes](../recipes/overview): ready-made `exitFade`/`exitSlideUp`/etc.
-  values for the `exit` prop.
+- [useUnmount & useIsUnmounting](./use-presence): drive an exit animation
+  manually instead of via the `unmount` prop.
+- [recipes](../recipes/overview): ready-made `unmountFade`/`unmountSlideUp`/etc.
+  values for the `unmount` prop.
