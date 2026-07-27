@@ -21,7 +21,14 @@ import {
 } from 'react-icons/fi';
 import { FaGithub, FaDiscord, FaNpm, FaReact } from 'react-icons/fa';
 import { SiTypescript } from 'react-icons/si';
-import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
+import {
+  animate,
+  Easing,
+  useValue,
+  withSpring,
+  withStagger,
+  withTiming,
+} from 'react-ui-animate';
 
 import DragDemoSource from '!!raw-loader!@site/src/components/homeExamples/DragDemo.tsx';
 import ToastDemoSource from '!!raw-loader!@site/src/components/homeExamples/Toast.tsx';
@@ -61,6 +68,92 @@ function Reveal({ children, delay = 0, y = 14, className }) {
     <animate.div className={className} style={{ opacity, translateY }}>
       {children}
     </animate.div>
+  );
+}
+
+// GSAP's signature "power4.out" deceleration curve — no spring bounce, just
+// a long, fluid settle. This plus a tight, overlapping stagger is most of
+// what makes GSAP's SplitText reveals read as smooth rather than springy.
+const fluidEasing = Easing.bezier(0.16, 1, 0.3, 1);
+
+/**
+ * One word of a sentence: masked by an overflow-hidden wrapper and flows
+ * up into place on a slow, overlapping timing curve (no spring), staggered
+ * by its position in the sentence. Mirrors the "Fluid Character Flow"
+ * pattern from the react-ui-animate examples (TextRevealWordByWord),
+ * applied per-word instead of per-character.
+ */
+function TextRevealWord({ word, index, active, accent, stagger, duration }) {
+  const [y, setY] = useValue('100%');
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    if (!active) return;
+    setY(
+      withStagger(index, withTiming('0%', { duration, easing: fluidEasing }), {
+        each: stagger,
+      })
+    );
+    setOpacity(
+      withStagger(index, withTiming(1, { duration: duration * 0.6 }), {
+        each: stagger,
+      })
+    );
+  }, [active, index, stagger, duration, setY, setOpacity]);
+
+  return (
+    <span style={{ display: 'inline-block', overflow: 'hidden', paddingBottom: '0.15em' }}>
+      <animate.span
+        className={accent ? styles.heroTitleAccent : undefined}
+        style={{ display: 'inline-block', translateY: y, opacity }}
+      >
+        {word}
+      </animate.span>
+    </span>
+  );
+}
+
+/**
+ * Splits `text` into words and reveals them one at a time instead of
+ * fading/sliding the whole sentence in as a block. `indexOffset` lets
+ * multiple TextReveal calls (e.g. across a <br/>) share one continuous
+ * stagger sequence. `stagger`/`duration` control the overlap and settle
+ * time — smaller `stagger` relative to `duration` means more overlap
+ * between neighboring words, which is what reads as "fluid".
+ */
+function TextReveal({
+  text,
+  delay = 0,
+  indexOffset = 0,
+  accent = false,
+  stagger = 90,
+  duration = 900,
+}) {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setActive(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  const words = text.split(' ');
+
+  return (
+    <>
+      {words.map((word, i) => (
+        <React.Fragment key={i}>
+          <TextRevealWord
+            word={word}
+            index={indexOffset + i}
+            active={active}
+            accent={accent}
+            stagger={stagger}
+            duration={duration}
+          />
+          {i < words.length - 1 ? ' ' : ''}
+        </React.Fragment>
+      ))}
+    </>
   );
 }
 
@@ -187,21 +280,20 @@ function HeroSection() {
             </Link>
           </Reveal>
 
-          <Reveal delay={80}>
-            <h1 className={styles.heroTitle}>
-              Fluid motion,
-              <br />
-              <span className={styles.heroTitleAccent}>built for React.</span>
-            </h1>
-          </Reveal>
+          <h1 className={styles.heroTitle}>
+            <TextReveal text="Fluid motion," delay={80} indexOffset={0} />
+            <br />
+            <TextReveal text="built for React." delay={80} indexOffset={2} accent />
+          </h1>
 
-          <Reveal delay={160}>
-            <p className={styles.heroLede}>
-              A lightweight, declarative library for springs, gestures, and exit
-              animations. Silky 60fps motion with an API you&apos;ll actually
-              enjoy writing.
-            </p>
-          </Reveal>
+          <p className={styles.heroLede}>
+            <TextReveal
+              text="A lightweight, declarative library for springs, gestures, and exit animations. Silky 60fps motion with an API you'll actually enjoy writing."
+              delay={520}
+              stagger={28}
+              duration={650}
+            />
+          </p>
 
           <Reveal delay={240}>
             <div className={styles.heroActions}>
