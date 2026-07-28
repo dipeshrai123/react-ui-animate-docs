@@ -9,6 +9,8 @@ import Code_gesture_useDrag_BasicSetup from '!!raw-loader!@site/src/examples/nex
 import Demo_gesture_useDrag_BasicSetup from '@site/src/examples/next/gesture/useDrag/BasicSetup';
 import Code_gesture_useDrag_MultipleElements from '!!raw-loader!@site/src/examples/next/gesture/useDrag/MultipleElements.tsx';
 import Demo_gesture_useDrag_MultipleElements from '@site/src/examples/next/gesture/useDrag/MultipleElements';
+import Code_gesture_useDrag_BounceExample from '!!raw-loader!@site/src/examples/next/gesture/useDrag/BounceExample.tsx';
+import Demo_gesture_useDrag_BounceExample from '@site/src/examples/next/gesture/useDrag/BounceExample';
 
 `useDrag` wires up [`Gesture.Pan()`](./useGesture#gesturepan) with live
 position tracking, optional bounds, edge rubber-banding, and momentum on
@@ -34,6 +36,10 @@ interface UseDragOptions {
   bounds?: DragBounds | RefObject<HTMLElement>;
   elastic?: boolean | number;
   momentum?: boolean;
+  bounce?: boolean | number;
+  snapPoints?: { x?: number[]; y?: number[] };
+  transition?: FlipOptions;
+  decay?: number;
   onStart?: (e: PanEvent) => void;
   onChange?: (e: PanEvent) => void;
   onEnd?: (e: PanEvent) => void;
@@ -111,17 +117,78 @@ useDrag(ref, {
 
 - `bounds` accepts a fixed `{ left, right, top, bottom }` box or a container
   `ref` to constrain against.
-- `elastic` controls the rubber-band feel while dragging past `bounds`.
-  `true` uses the default elastic constant; a `number` sets a custom one;
-  `false` hard-clamps instead. Momentum on release always hard-stops at
-  `bounds` regardless of this setting.
+- `elastic` controls the rubber-band feel while actively dragging past
+  `bounds`. `true` uses the default elastic constant; a `number` sets a
+  custom one; `false` hard-clamps instead.
 - `momentum` flings the element on release using the pointer's release
   velocity (via `withDecay` under the hood); set `false` for a hard stop.
+  By default a momentum fling still hard-stops at `bounds`, unless `bounce`
+  says otherwise.
 
 <CodeExample
   demo={Demo_gesture_useDrag_MultipleElements}
   code={Code_gesture_useDrag_MultipleElements}
 />
+
+## Bouncing off bounds
+
+`bounce` makes a momentum fling reflect off `bounds` instead of stopping
+dead at them, like a ball off a wall, losing some speed on each bounce:
+
+```jsx
+useDrag(ref, {
+  bounds: { left: -80, right: 80, top: -80, bottom: 80 },
+  bounce: true,
+});
+```
+
+<CodeExample
+  demo={Demo_gesture_useDrag_BounceExample}
+  code={Code_gesture_useDrag_BounceExample}
+/>
+
+`true` uses a default restitution of `0.5` (each bounce keeps half the
+speed); pass a `number` between `0` and `1` for a custom restitution, or
+`false` (the default) for the regular hard-stop-at-bounds behavior. `bounce`
+only affects the momentum fling, not clicking/dragging past `bounds` while
+actively pressed, that's still `elastic`'s job.
+
+## Snapping to fixed points
+
+`snapPoints` settles the drag onto the nearest of a fixed list of positions
+on release, per axis, instead of wherever `bounds`/`momentum` would
+otherwise land it:
+
+```jsx
+useDrag(ref, {
+  axis: 'x',
+  snapPoints: { x: [0, 120, 240] },
+});
+```
+
+The nearest point is chosen by projecting the release velocity forward
+first (the same [`snapTo`](../utilities/helpers#snapto) helper `Reorder`
+and the rest of the library use), so a fast flick snaps to the *next* point
+in that direction rather than always the closest one at release. When set
+for an axis, `snapPoints` takes priority over `bounds`/`momentum` for that
+axis.
+
+## Custom release transition and decay
+
+- `transition` overrides the spring used to settle into `bounds` or
+  `snapPoints` on release (it has no effect on the momentum fling itself,
+  only springing back to a point). Accepts the same shape as `flipOptions`
+  on `animate.*` (see [flip transitions](../presence/flip-group)):
+  ```jsx
+  useDrag(ref, {
+    bounds: { left: -100, right: 100 },
+    transition: withSpring({ stiffness: 500, damping: 30 }),
+  });
+  ```
+- `decay` tunes the deceleration constant used for the momentum fling
+  (lower values add more friction, so the fling slows down faster).
+  Defaults to `0.998`, the same default [`withDecay`](../animation-modifier/withDecay)
+  uses.
 
 ## Other options
 
@@ -175,3 +242,5 @@ const { x, y, isDragging, controls } = useDrag(ref);
   hook is built on, plus the other seven gesture types.
 - [withDecay](../animation-modifier/withDecay): the momentum animation
   `useDrag` uses internally for `momentum: true`.
+- [Reorder](./reorder): the drag-to-reorder list component, for dragging
+  items within a list instead of freely around the screen.

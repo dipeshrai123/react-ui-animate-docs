@@ -1,0 +1,84 @@
+---
+sidebar_position: 4
+id: useScrollReveal
+title: useScrollReveal
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_hook_useScrollReveal_BasicExample from '!!raw-loader!@site/src/examples/next/hook/useScrollReveal/BasicExample.tsx';
+import Demo_hook_useScrollReveal_BasicExample from '@site/src/examples/next/hook/useScrollReveal/BasicExample';
+
+`useScrollReveal` is the shorthand for the most common
+[`useScrollProgress`](./useScrollProgress) use case: fading/sliding an
+element in as it enters the viewport. It returns a single animated `0`–`1`
+progress value scoped to one axis, instead of the `scrollXProgress` /
+`scrollYProgress` pair.
+
+## Signature
+
+```ts
+function useScrollReveal(
+  ref: RefObject<HTMLElement>,
+  options?: UseScrollRevealOptions
+): { progress: AnimateValue<number> };
+
+interface UseScrollRevealOptions {
+  container?: Window | RefObject<HTMLElement>; // default: window
+  axis?: 'x' | 'y'; // default: 'y'
+  offset?: ScrollOffset; // default: ['start end', 'end start']
+  animate?: boolean; // default: true
+  toDescriptor?: (t: number) => Descriptor; // default: withSpring
+}
+```
+
+The default `offset` reads `0` when the element's leading edge enters the
+viewport and `1` once its trailing edge has fully passed through, which is
+the range most reveal-on-scroll effects want out of the box.
+
+## Usage
+
+```jsx
+import { useRef } from 'react';
+import { useScrollReveal, animate } from 'react-ui-animate';
+
+function RevealCard() {
+  const ref = useRef(null);
+  const { progress } = useScrollReveal(ref);
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        opacity: progress.to([0, 1], [0, 1]),
+        translateY: progress.to([0, 1], [40, 0]),
+      }}
+    >
+      Fades and slides in on scroll
+    </animate.div>
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_hook_useScrollReveal_BasicExample}
+  code={Code_hook_useScrollReveal_BasicExample}
+/>
+
+## Inside a scrollable container
+
+Pass `container` when the element scrolls inside something other than the
+window, such as a modal or a scrollable panel:
+
+```jsx
+const panelRef = useRef(null);
+const cardRef = useRef(null);
+
+const { progress } = useScrollReveal(cardRef, { container: panelRef });
+```
+
+## Next steps
+
+- [useScrollProgress](./useScrollProgress): the underlying hook, for when
+  you need both axes or the un-shortened API.
+- [useInView](./useInView): a boolean in/out of view instead of continuous
+  progress.
