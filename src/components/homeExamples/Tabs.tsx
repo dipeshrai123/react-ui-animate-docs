@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import {
   animate,
-  LayoutGroup,
+  FlipGroup,
   useValue,
   withSequence,
   withSpring,
@@ -75,7 +75,7 @@ const TABS = [
     text: 'Drag, move, scroll, and wheel hooks for tactile interactions.',
   },
   {
-    label: 'Presence',
+    label: 'Unmount',
     title: 'Exit animations',
     text: 'Animate elements out as they leave the DOM, e.g. modals and toasts.',
   },
@@ -99,7 +99,7 @@ export function TabsDemo() {
 
   return (
     <Stage>
-      <LayoutGroup>
+      <FlipGroup>
         <TabBar>
           {TABS.map((t, i) => (
             <Tab
@@ -110,8 +110,8 @@ export function TabsDemo() {
             >
               {active === i && (
                 <animate.div
-                  layoutId="home-tabs-indicator"
-                  layoutOptions={withSpring({ stiffness: 420, damping: 34 })}
+                  flipId="home-tabs-indicator"
+                  flipOptions={withSpring({ stiffness: 420, damping: 34 })}
                   style={{
                     position: 'absolute',
                     inset: 0,
@@ -125,7 +125,7 @@ export function TabsDemo() {
             </Tab>
           ))}
         </TabBar>
-      </LayoutGroup>
+      </FlipGroup>
 
       <Panel
         style={{

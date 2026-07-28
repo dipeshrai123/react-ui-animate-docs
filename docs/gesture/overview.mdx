@@ -41,7 +41,10 @@ Start with [useDrag](./useDrag) for the common case. Drop down to
 | `Gesture.Rotate()` | `onStart` / `onChange` / `onEnd` / `onFinalize` | Two-finger rotation |
 
 See [useGesture](./useGesture) for the full API and one example per builder,
-and [useDrag](./useDrag) for the drag convenience hook.
+and [useDrag](./useDrag) for the drag convenience hook. For a full
+drag-to-reorder list, skip both and use [Reorder](./reorder), a component
+built on `Gesture.Pan()` that also handles list order and the settle
+animation for displaced items.
 
 ## Common pattern: drag with a spring back
 

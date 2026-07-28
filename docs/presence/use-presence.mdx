@@ -1,44 +1,45 @@
 ---
 sidebar_position: 2
 id: use-presence
-title: usePresence & useIsPresent
+title: useUnmount & useIsUnmounting
 ---
 
-`usePresence` and `useIsPresent` read whether the component they're called
+`useUnmount` and `useIsUnmounting` read whether the component they're called
 in is currently exiting. Useful when the animation itself needs to be
-driven by something other than `animate`'s `exit` prop (e.g. animating a
+driven by something other than `animate`'s `unmount` prop (e.g. animating a
 child, or running non-style side effects during exit).
 
-## useIsPresent
+## useIsUnmounting
 
 ```ts
-function useIsPresent(): boolean;
+function useIsUnmounting(): boolean;
 ```
 
-`true` for as long as the element is mounted and not exiting; flips to
-`false` the instant its parent removes it from `Presence`'s children.
+`false` for as long as the element is mounted and not exiting; flips to
+`true` the instant its parent removes it from `Unmount`'s children.
 
 ```jsx
 function ListItem() {
-  const isPresent = useIsPresent();
-  return <li style={{ opacity: isPresent ? 1 : 0.5 }}>...</li>;
+  const isUnmounting = useIsUnmounting();
+  return <li style={{ opacity: isUnmounting ? 0.5 : 1 }}>...</li>;
 }
 ```
 
-## usePresence
+## useUnmount
 
 ```ts
-function usePresence(): [isPresent: boolean, safeToRemove: () => void];
+function useUnmount(): [isPresent: boolean, safeToRemove: () => void];
 ```
 
-Same `isPresent` flag, plus `safeToRemove`. Call it once your own exit
-animation is done to tell the surrounding `Presence` it can actually unmount
+Same presence flag as before (inverted from `useIsUnmounting`: `true` while
+mounted and not exiting), plus `safeToRemove`. Call it once your own exit
+animation is done to tell the surrounding `Unmount` it can actually unmount
 the element. Use this when you're driving the exit animation manually
-instead of via the `exit` prop.
+instead of via the `unmount` prop.
 
 ```jsx
 function CustomExit() {
-  const [isPresent, safeToRemove] = usePresence();
+  const [isPresent, safeToRemove] = useUnmount();
   const [opacity, setOpacity] = useValue(1);
 
   useEffect(() => {
@@ -51,19 +52,20 @@ function CustomExit() {
 }
 ```
 
-Outside of a `Presence` tree, both hooks report present/mounted (`isPresent:
-true`), they're safe to call unconditionally even if a component is
-sometimes rendered without a surrounding `Presence`.
+Outside of an `Unmount` tree, both hooks report present/mounted
+(`useUnmount`'s `isPresent: true`, `useIsUnmounting(): false`) — they're
+safe to call unconditionally even if a component is sometimes rendered
+without a surrounding `Unmount`.
 
 :::note
-Prefer the declarative `exit` prop when you only need style animation. Use
-`usePresence` when exit must drive custom logic (child animations, timeouts,
+Prefer the declarative `unmount` prop when you only need style animation. Use
+`useUnmount` when exit must drive custom logic (child animations, timeouts,
 non-style cleanup) and you call `safeToRemove` yourself.
 :::
 
-## Presence-level options
+## Unmount-level options
 
-A few `Presence` props worth knowing about alongside these hooks:
+A few `Unmount` props worth knowing about alongside these hooks:
 
 - `mode`: `'sync'` (default, exiting and entering children animate
   together), `'wait'` (entering children wait for exiting ones to finish),

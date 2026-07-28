@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Presence, animate, recipes } from 'react-ui-animate';
+import { Unmount, animate, recipes } from 'react-ui-animate';
 
 export default function App() {
   const [open, setOpen] = useState(true);
@@ -13,12 +13,12 @@ export default function App() {
         Toggle recipe
       </button>
       <div style={{ height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Presence>
+        <Unmount>
           {open && (
             <animate.div
               key="card"
               animate={recipes.scaleIn}
-              exit={recipes.scaleOut}
+              unmount={recipes.scaleOut}
               style={{
                 width: 100,
                 height: 100,
@@ -27,7 +27,7 @@ export default function App() {
               }}
             />
           )}
-        </Presence>
+        </Unmount>
       </div>
     </div>
   );

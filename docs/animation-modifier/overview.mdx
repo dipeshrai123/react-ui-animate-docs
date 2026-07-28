@@ -29,6 +29,7 @@ setX(withSpring(100));
 | [withKeyframes](./withKeyframes) | Multiple stops, one call | Shorthand for a `withSequence` of `withTiming` steps |
 | [withParallel](./withParallel) | Different driver per key | Object/array values where keys need different timing |
 | [withLoop](./withLoop) | Repeats | Spinners, pulses, ambient motion |
+| [withCustom](./withCustom) | Your own tick function | Hand-rolled physics, external clocks, anything the built-ins don't cover |
 
 ## Composing modifiers
 
@@ -53,5 +54,5 @@ setX(withSpring(100, {
 ## Next steps
 
 Pick a modifier above, or continue to
-[Presence & Layout](../presence/presence-basics) to use these as exit
+[Unmount & Flip](../presence/presence-basics) to use these as exit
 animations.

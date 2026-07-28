@@ -1,0 +1,112 @@
+---
+sidebar_position: 5
+id: helpers
+title: clamp, rubberClamp, snapTo, move
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_utilities_helpers_BasicExample from '!!raw-loader!@site/src/examples/next/utilities/helpers/BasicExample.tsx';
+import Demo_utilities_helpers_BasicExample from '@site/src/examples/next/utilities/helpers/BasicExample';
+
+A handful of small, dependency-free number and array helpers. They're the
+same math `useDrag` and `Reorder` use internally for bounds, elastic
+edges, and index swapping, exposed directly for when you're wiring up
+similar behavior by hand.
+
+## clamp
+
+```ts
+function clamp(value: number, lowerbound: number, upperbound: number): number;
+```
+
+Restricts `value` to `[lowerbound, upperbound]`. A hard stop, no bounce.
+
+```jsx
+import { clamp } from 'react-ui-animate';
+
+clamp(150, 0, 100); // 100
+clamp(-20, 0, 100); // 0
+```
+
+## rubberClamp
+
+```ts
+function rubberClamp(
+  value: number,
+  lowerbound: number,
+  upperbound: number,
+  constant?: number // default: 0.15
+): number;
+```
+
+Like `clamp`, but instead of stopping dead at the bounds it lets `value`
+travel past them with resistance, the "rubber band" feel `useDrag`'s
+`elastic` option is built on. Higher `constant` values resist less (travel
+further past the bound for the same input); `constant: 0` behaves exactly
+like `clamp`.
+
+```jsx
+import { rubberClamp } from 'react-ui-animate';
+
+rubberClamp(120, 0, 100); // slightly past 100, not clamped flat to it
+```
+
+Reach for this directly when building elastic behavior outside of
+`useDrag`, for example resistance on a custom `Gesture.Pan()` handler.
+
+The demo below drags with `rubberClamp` (resistance past the dashed bound)
+and settles back with `clamp` on release, the same pairing `useDrag` uses
+for `elastic` + hard bounds:
+
+<CodeExample
+  demo={Demo_utilities_helpers_BasicExample}
+  code={Code_utilities_helpers_BasicExample}
+/>
+
+## snapTo
+
+```ts
+function snapTo(value: number, velocity: number, snapPoints: number[]): number;
+```
+
+Given a current value, its velocity, and a list of candidate stopping
+points, returns whichever point the value is heading toward. Projects the
+value forward slightly using `velocity` before picking the nearest point,
+so a fast flick snaps to the *next* point in that direction rather than
+wherever the pointer happened to release.
+
+```jsx
+import { snapTo, withSpring } from 'react-ui-animate';
+
+const target = snapTo(x.current, velocity, [0, 200, 400]);
+setX(withSpring(target));
+```
+
+Typical use: a carousel or paginated drawer, where a drag should settle on
+one of a few fixed positions instead of anywhere the pointer let go.
+
+## move
+
+```ts
+function move<T>(array: T[], moveIndex: number, toIndex: number): T[];
+```
+
+Returns a new array with the item at `moveIndex` relocated to `toIndex`,
+shifting everything between the two positions. Doesn't mutate the input.
+
+```jsx
+import { move } from 'react-ui-animate';
+
+move(['a', 'b', 'c', 'd'], 0, 2); // ['b', 'c', 'a', 'd']
+```
+
+This is the array update `Reorder` calls on every drag frame internally.
+Reach for it directly if you're building custom drag-to-reorder logic that
+doesn't fit `Reorder`'s component shape.
+
+## Next steps
+
+- [useDrag](../gesture/useDrag): `clamp`/`rubberClamp` wired up as `bounds`
+  and `elastic`.
+- [Reorder](../gesture/reorder): `move` wired up as a full drag-to-reorder
+  component.

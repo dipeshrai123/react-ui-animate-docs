@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FiTrash2 } from 'react-icons/fi';
 import {
   animate,
-  Presence,
+  Unmount,
   Gesture,
   useGesture,
   useValue,
@@ -223,7 +223,7 @@ function Row({
           { each: 55 }
         ),
       }}
-      exit={{
+      unmount={{
         height: withSpring(0, { damping: 22, stiffness: 280 }),
         marginBottom: withSpring(0, { damping: 22, stiffness: 280 }),
         opacity: withTiming(0, { duration: 160 }),
@@ -279,11 +279,11 @@ export function SwipeListDemo() {
     <Stage>
       <Hint>Swipe left on a row to delete</Hint>
       <List>
-        <Presence onExitComplete={handleExitComplete}>
+        <Unmount onExitComplete={handleExitComplete}>
           {items.map((item) => (
             <Row key={item.id} item={item} onDelete={remove} />
           ))}
-        </Presence>
+        </Unmount>
       </List>
     </Stage>
   );

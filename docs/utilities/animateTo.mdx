@@ -1,0 +1,68 @@
+---
+sidebar_position: 4
+id: animateTo
+title: animateTo
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_utilities_animateTo_BasicExample from '!!raw-loader!@site/src/examples/next/utilities/animateTo/BasicExample.tsx';
+import Demo_utilities_animateTo_BasicExample from '@site/src/examples/next/utilities/animateTo/BasicExample';
+
+`animateTo` wraps a `set` call in a promise that resolves when the
+animation's `onComplete` fires. Useful when a later step needs to wait for
+an animation to actually finish, like `await`ing a spring settle before
+removing an element from the DOM.
+
+## Signature
+
+```ts
+function animateTo(
+  setValue: (to: Descriptor) => void,
+  descriptor: Descriptor
+): Promise<void>;
+```
+
+It calls `setValue(descriptor)` and resolves once `descriptor`'s
+`onComplete` runs. If `descriptor` already has an `onComplete`, that
+callback still runs first, `animateTo` just resolves right after it.
+
+## Usage
+
+```jsx
+import { useValue, withSpring, animateTo, animate } from 'react-ui-animate';
+
+function DismissibleCard({ onDismiss }) {
+  const [opacity, setOpacity] = useValue(1);
+
+  const dismiss = async () => {
+    await animateTo(setOpacity, withSpring(0));
+    onDismiss(); // runs only after the fade-out finishes
+  };
+
+  return <animate.div style={{ opacity }} onClick={dismiss} />;
+}
+```
+
+Without `animateTo`, this would need a manual `onComplete` callback wired
+into the descriptor. Wrapping it in a promise makes it possible to write the
+sequence linearly with `async`/`await`, or `Promise.all` several of them to
+wait on more than one value at once:
+
+```jsx
+await Promise.all([
+  animateTo(setX, withSpring(0)),
+  animateTo(setOpacity, withTiming(0, { duration: 200 })),
+]);
+```
+
+<CodeExample
+  demo={Demo_utilities_animateTo_BasicExample}
+  code={Code_utilities_animateTo_BasicExample}
+/>
+
+## Next steps
+
+- [useTimeline](../concept/useTimeline): schedule several updates against
+  a shared clock instead of chaining promises.
+- [withSequence](../animation-modifier/withSequence): chain steps on a
+  single value without leaving the descriptor API.

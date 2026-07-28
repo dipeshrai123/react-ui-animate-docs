@@ -21,8 +21,16 @@ import {
 } from 'react-icons/fi';
 import { FaGithub, FaDiscord, FaNpm, FaReact } from 'react-icons/fa';
 import { SiTypescript } from 'react-icons/si';
-import { animate, useValue, withSpring, withTiming } from 'react-ui-animate';
+import {
+  animate,
+  Easing,
+  useValue,
+  withSpring,
+  withStagger,
+  withTiming,
+} from 'react-ui-animate';
 
+import HeroParticles from '@site/src/components/HeroParticles';
 import DragDemoSource from '!!raw-loader!@site/src/components/homeExamples/DragDemo.tsx';
 import ToastDemoSource from '!!raw-loader!@site/src/components/homeExamples/Toast.tsx';
 import ModalDemoSource from '!!raw-loader!@site/src/components/homeExamples/Modal.tsx';
@@ -61,6 +69,92 @@ function Reveal({ children, delay = 0, y = 14, className }) {
     <animate.div className={className} style={{ opacity, translateY }}>
       {children}
     </animate.div>
+  );
+}
+
+// GSAP's signature "power4.out" deceleration curve — no spring bounce, just
+// a long, fluid settle. This plus a tight, overlapping stagger is most of
+// what makes GSAP's SplitText reveals read as smooth rather than springy.
+const fluidEasing = Easing.bezier(0.16, 1, 0.3, 1);
+
+/**
+ * One word of a sentence: masked by an overflow-hidden wrapper and flows
+ * up into place on a slow, overlapping timing curve (no spring), staggered
+ * by its position in the sentence. Mirrors the "Fluid Character Flow"
+ * pattern from the react-ui-animate examples (TextRevealWordByWord),
+ * applied per-word instead of per-character.
+ */
+function TextRevealWord({ word, index, active, accent, stagger, duration }) {
+  const [y, setY] = useValue('100%');
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    if (!active) return;
+    setY(
+      withStagger(index, withTiming('0%', { duration, easing: fluidEasing }), {
+        each: stagger,
+      })
+    );
+    setOpacity(
+      withStagger(index, withTiming(1, { duration: duration * 0.6 }), {
+        each: stagger,
+      })
+    );
+  }, [active, index, stagger, duration, setY, setOpacity]);
+
+  return (
+    <span style={{ display: 'inline-block', overflow: 'hidden', paddingBottom: '0.15em' }}>
+      <animate.span
+        className={accent ? styles.heroTitleAccent : undefined}
+        style={{ display: 'inline-block', translateY: y, opacity }}
+      >
+        {word}
+      </animate.span>
+    </span>
+  );
+}
+
+/**
+ * Splits `text` into words and reveals them one at a time instead of
+ * fading/sliding the whole sentence in as a block. `indexOffset` lets
+ * multiple TextReveal calls (e.g. across a <br/>) share one continuous
+ * stagger sequence. `stagger`/`duration` control the overlap and settle
+ * time — smaller `stagger` relative to `duration` means more overlap
+ * between neighboring words, which is what reads as "fluid".
+ */
+function TextReveal({
+  text,
+  delay = 0,
+  indexOffset = 0,
+  accent = false,
+  stagger = 90,
+  duration = 900,
+}) {
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setActive(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  const words = text.split(' ');
+
+  return (
+    <>
+      {words.map((word, i) => (
+        <React.Fragment key={i}>
+          <TextRevealWord
+            word={word}
+            index={indexOffset + i}
+            active={active}
+            accent={accent}
+            stagger={stagger}
+            duration={duration}
+          />
+          {i < words.length - 1 ? ' ' : ''}
+        </React.Fragment>
+      ))}
+    </>
   );
 }
 
@@ -175,6 +269,7 @@ function HeroSection() {
   return (
     <header className={styles.hero}>
       <div className={styles.heroGrid} aria-hidden="true" />
+      <HeroParticles />
       <div className={styles.heroFade} aria-hidden="true" />
 
       <div className={clsx('container', styles.heroContainer)}>
@@ -187,21 +282,20 @@ function HeroSection() {
             </Link>
           </Reveal>
 
-          <Reveal delay={80}>
-            <h1 className={styles.heroTitle}>
-              Fluid motion,
-              <br />
-              <span className={styles.heroTitleAccent}>built for React.</span>
-            </h1>
-          </Reveal>
+          <h1 className={styles.heroTitle}>
+            <TextReveal text="Fluid motion," delay={80} indexOffset={0} />
+            <br />
+            <TextReveal text="built for React." delay={80} indexOffset={2} accent />
+          </h1>
 
-          <Reveal delay={160}>
-            <p className={styles.heroLede}>
-              A lightweight, declarative library for springs, gestures, and exit
-              animations. Silky 60fps motion with an API you&apos;ll actually
-              enjoy writing.
-            </p>
-          </Reveal>
+          <p className={styles.heroLede}>
+            <TextReveal
+              text="A lightweight, declarative library for springs, gestures, and exit animations. Silky 60fps motion with an API you'll actually enjoy writing."
+              delay={520}
+              stagger={28}
+              duration={650}
+            />
+          </p>
 
           <Reveal delay={240}>
             <div className={styles.heroActions}>
@@ -254,7 +348,7 @@ const FEATURES = [
   },
   {
     icon: FiLayers,
-    title: 'Presence & Exit',
+    title: 'Unmount & Exit',
     description:
       'Animate components as they leave the DOM. Built for modals, tooltips, and dropdowns.',
   },
@@ -320,100 +414,6 @@ function Features() {
   );
 }
 
-const BUNDLE_SIZES = [
-  { name: 'react-ui-animate', size: 14.2, note: null, highlight: true },
-  {
-    name: 'react-spring + @use-gesture/react',
-    size: 25.9,
-    note: 'needed for hover/press',
-    highlight: false,
-  },
-  {
-    name: 'framer-motion (LazyMotion + m)',
-    size: 27.4,
-    note: 'size-optimized import',
-    highlight: false,
-  },
-  {
-    name: 'framer-motion (motion)',
-    size: 41.0,
-    note: 'typical import',
-    highlight: false,
-  },
-];
-const MAX_BUNDLE_SIZE = Math.max(...BUNDLE_SIZES.map((b) => b.size));
-
-function BundleSize() {
-  return (
-    <section className={styles.section}>
-      <div className="container">
-        <ViewReveal className={styles.sectionHeader}>
-          <span className={styles.eyebrow}>Bundle size</span>
-          <h2 className={styles.sectionTitle}>How much this actually costs you</h2>
-          <p className={styles.sectionLede}>
-            We built the same component with each library: a spring animation
-            with hover and press gestures. Then we bundled it with esbuild and
-            gzipped the output, with React excluded from the count in every
-            case.
-          </p>
-        </ViewReveal>
-
-        <ViewReveal className={styles.bundleChart}>
-          {BUNDLE_SIZES.map((lib) => (
-            <div
-              key={lib.name}
-              className={clsx(
-                styles.bundleRow,
-                lib.highlight && styles.bundleRowHighlight
-              )}
-            >
-              <div className={styles.bundleRowHead}>
-                <div className={styles.bundleLabel}>
-                  <span className={styles.bundleName}>{lib.name}</span>
-                  {lib.note && (
-                    <span className={styles.bundleNote}>{lib.note}</span>
-                  )}
-                </div>
-                <span className={styles.bundleValue}>
-                  {lib.size.toFixed(1)} KB
-                </span>
-              </div>
-              <div className={styles.bundleBarTrack}>
-                <div
-                  className={clsx(
-                    styles.bundleBar,
-                    lib.highlight && styles.bundleBarHighlight
-                  )}
-                  style={{ width: `${(lib.size / MAX_BUNDLE_SIZE) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </ViewReveal>
-
-        <p className={styles.bundleCaveat}>
-          If your component only needs animation and no gestures,
-          react-spring alone is smaller at 17.4 KB. It grows past
-          react-ui-animate once you add @use-gesture/react for hover, press,
-          or drag, which is why that combined weight is what's shown above.
-          Numbers come from the public packages available when we ran this
-          test and will shift as those projects release new versions, so
-          treat them as a snapshot rather than a permanent guarantee. Full
-          methodology and source is in our{' '}
-          <a
-            href={`${GITHUB_URL}#why-react-ui-animate`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            README
-          </a>
-          .
-        </p>
-      </div>
-    </section>
-  );
-}
-
 /** Strip leading/trailing noise so the shown source is clean and copy-pasteable. */
 function prepareSource(code) {
   return code.replace(/\n{3,}/g, '\n\n').trim();
@@ -429,7 +429,7 @@ const EXAMPLES = [
   {
     key: 'ToastDemo',
     title: 'Toast',
-    description: 'Enter, hold, then exit with Presence.',
+    description: 'Enter, hold, then exit with Unmount.',
     code: ToastDemoSource,
   },
   {
@@ -715,7 +715,6 @@ export default function Home() {
       <HeroSection />
       <main>
         <Features />
-        <BundleSize />
         <Examples />
         <CallToAction />
       </main>

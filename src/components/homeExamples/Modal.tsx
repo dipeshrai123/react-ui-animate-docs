@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { MdClose } from 'react-icons/md';
 import {
   animate,
-  Presence,
+  Unmount,
   useOutsideClick,
   withSpring,
   withTiming,
@@ -120,7 +120,7 @@ function Dialog_({ onClose }: { onClose: () => void }) {
     <Backdrop
       style={{ opacity: 0 }}
       animate={{ opacity: withTiming(1, { duration: 200 }) }}
-      exit={{ opacity: withTiming(0, { duration: 180 }) }}
+      unmount={{ opacity: withTiming(0, { duration: 180 }) }}
     >
       <Dialog
         ref={ref}
@@ -130,7 +130,7 @@ function Dialog_({ onClose }: { onClose: () => void }) {
           scale: withSpring(1, { damping: 18, stiffness: 240 }),
           translateY: withSpring(0, { damping: 18, stiffness: 240 }),
         }}
-        exit={{
+        unmount={{
           opacity: withTiming(0, { duration: 160 }),
           scale: withSpring(0.86, { damping: 18, stiffness: 240 }),
           translateY: withSpring(16, { damping: 18, stiffness: 240 }),
@@ -159,9 +159,9 @@ export function ModalDemo() {
   return (
     <Stage>
       <Trigger onClick={() => setOpen(true)}>Open dialog</Trigger>
-      <Presence>
+      <Unmount>
         {open && <Dialog_ key="dialog" onClose={() => setOpen(false)} />}
-      </Presence>
+      </Unmount>
     </Stage>
   );
 }
