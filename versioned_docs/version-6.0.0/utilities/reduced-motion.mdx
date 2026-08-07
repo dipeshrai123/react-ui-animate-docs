@@ -1,0 +1,53 @@
+---
+sidebar_position: 3
+id: reduced-motion
+title: Reduced Motion
+---
+
+Every animation driven through React UI Animate (`withSpring`, `withTiming`,
+`withDecay`, `withSequence`, `withLoop`, ...) automatically respects the
+OS-level `prefers-reduced-motion: reduce` setting, with no opt-in required. When
+it's active, animations resolve straight to their end value instead of
+running, and a looping animation with `iterations: Infinity` runs exactly
+once instead of spinning forever.
+
+## isReducedMotionEnabled
+
+```ts
+function isReducedMotionEnabled(): boolean;
+```
+
+Reads the current effective state: the OS media query, or whatever
+`setReducedMotion` last forced. Useful for branching your own logic (e.g.
+skipping a decorative parallax effect entirely) the same way the animation
+drivers already do internally.
+
+```jsx
+import { isReducedMotionEnabled } from 'react-ui-animate';
+
+function ParallaxHero() {
+  if (isReducedMotionEnabled()) {
+    return <StaticHero />;
+  }
+  return <AnimatedHero />;
+}
+```
+
+## setReducedMotion
+
+```ts
+function setReducedMotion(value: boolean | null): void;
+```
+
+Forces reduced motion on or off for every animation in the app, overriding
+the OS media query. Pass `null` to go back to following the media query.
+Primarily useful for a manual in-app "reduce motion" toggle, or for tests
+that need deterministic (instant) animations.
+
+```jsx
+setReducedMotion(true);
+setReducedMotion(null);
+```
+
+The override takes effect for animations that *start* afterward. It
+doesn't retroactively change one already in progress.

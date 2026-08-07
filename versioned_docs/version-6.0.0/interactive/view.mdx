@@ -1,0 +1,67 @@
+---
+sidebar_position: 4
+id: view-animations
+title: View Animations
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_interactive_ViewExample from '!!raw-loader!@site/src/examples/6.0.0/interactive/ViewExample.tsx';
+import Demo_interactive_ViewExample from '@site/src/examples/6.0.0/interactive/ViewExample';
+
+The `view` prop animates an element when it enters the viewport, via
+`IntersectionObserver`: a declarative alternative to
+[useInView](../hooks/useInView) for the common "reveal on scroll" case.
+
+## Usage
+
+```jsx
+import { animate, withTiming, withSpring } from 'react-ui-animate';
+
+// highlight-start
+/* Reveal when the element scrolls into view */
+<animate.div
+  view={{ opacity: withTiming(1), translateY: withSpring(0) }}
+  viewOptions={{ threshold: 0.3, once: true }}
+  style={{ opacity: 0, translateY: 50 }}
+>
+  Scroll to see me
+</animate.div>
+// highlight-end
+```
+
+<CodeExample
+  demo={Demo_interactive_ViewExample}
+  code={Code_interactive_ViewExample}
+/>
+
+:::tip
+Start from the hidden style (`opacity: 0`, `translateY: 50`) and animate
+*to* the visible target in `view`. Set `once: true` for one-shot reveals.
+:::
+
+## viewOptions
+
+| Option | Default | Description |
+|---|---|---|
+| `threshold` | `0` | Fraction of the element that must be visible (0–1) |
+| `once` | `false` | Animate only the first time it enters |
+| `rootMargin` | `'0px'` | Expand/shrink the trigger area, e.g. `'100px'` to fire earlier |
+
+## Combining with other props
+
+`view`, `animate`, `hover`, and `press` all compose on the same element:
+
+```jsx
+<animate.div
+  view={{ translateY: withSpring(0) }}
+  hover={{ scale: withSpring(1.05) }}
+  style={{ translateY: 50 }}
+/>
+```
+
+## Next steps
+
+- [useInView](../hooks/useInView): the hook version, for non-style side
+  effects (lazy loading, analytics) or multiple thresholds.
+- [Hover](./hover-animations) / [Press](./press-animations) / [Focus](./focus-animations):
+  the other declarative interaction props.

@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -18,9 +25,14 @@ import {
   FiAlignLeft,
   FiCopy,
   FiCheck,
+  FiBell,
+  FiMaximize2,
+  FiChevronDown,
+  FiColumns,
+  FiHeart,
+  FiTrash2,
 } from 'react-icons/fi';
 import { FaGithub, FaDiscord, FaNpm, FaReact } from 'react-icons/fa';
-import { SiTypescript } from 'react-icons/si';
 import {
   animate,
   Easing,
@@ -30,7 +42,8 @@ import {
   withTiming,
 } from 'react-ui-animate';
 
-import HeroParticles from '@site/src/components/HeroParticles';
+import HeroMesh from '@site/src/components/HeroMesh';
+import HeroShowcase from '@site/src/components/HeroShowcase';
 import DragDemoSource from '!!raw-loader!@site/src/components/homeExamples/DragDemo.tsx';
 import ToastDemoSource from '!!raw-loader!@site/src/components/homeExamples/Toast.tsx';
 import ModalDemoSource from '!!raw-loader!@site/src/components/homeExamples/Modal.tsx';
@@ -175,31 +188,104 @@ function ViewReveal({ children, className, y = 24 }) {
   );
 }
 
-function AnimatedButton({ children, to, href, variant = 'primary' }) {
+/**
+ * Every interactive motion here — hover lift, press squash, icon nudge —
+ * is driven by react-ui-animate springs instead of CSS transitions, so the
+ * button's own primary CTA doubles as a live demo of the library.
+ */
+function AnimatedButton({
+  children,
+  to,
+  href,
+  variant = 'primary',
+  icon: Icon,
+  iconPosition = 'right',
+}) {
+  const [scale, setScale] = useValue(1);
+  const [lift, setLift] = useValue(0);
+  const [iconX, setIconX] = useValue(0);
+
+  const handleEnter = () => {
+    setScale(withSpring(1.025, { damping: 15, stiffness: 260 }));
+    setLift(withSpring(-2, { damping: 15, stiffness: 260 }));
+    setIconX(withSpring(4, { damping: 14, stiffness: 320 }));
+  };
+
+  const handleLeave = () => {
+    setScale(withSpring(1, { damping: 16 }));
+    setLift(withSpring(0, { damping: 16 }));
+    setIconX(withSpring(0, { damping: 14, stiffness: 320 }));
+  };
+
+  const handlePressStart = () => {
+    setScale(withSpring(0.96, { damping: 14, stiffness: 420 }));
+  };
+
+  const handlePressEnd = () => {
+    setScale(withSpring(1, { damping: 14, stiffness: 320 }));
+  };
+
   const className = clsx(
     styles.button,
     variant === 'primary' ? styles.buttonPrimary : styles.buttonGhost
   );
 
+  const iconEl = Icon ? (
+    <animate.span
+      className={iconPosition === 'right' ? styles.buttonIcon : styles.buttonIconLeft}
+      style={
+        iconPosition === 'right'
+          ? { translateX: iconX }
+          : { scale: iconX.to([0, 4], [1, 1.1]) }
+      }
+    >
+      <Icon aria-hidden="true" />
+    </animate.span>
+  ) : null;
+
+  const content = (
+    <>
+      <span className={styles.buttonShine} aria-hidden="true" />
+      <span className={styles.buttonContent}>
+        {iconPosition === 'left' && iconEl}
+        {children}
+        {iconPosition === 'right' && iconEl}
+      </span>
+    </>
+  );
+
+  const interactionHandlers = {
+    onMouseEnter: handleEnter,
+    onMouseLeave: handleLeave,
+    onPointerDown: handlePressStart,
+    onPointerUp: handlePressEnd,
+  };
+
   if (href) {
     return (
-      <a
+      <animate.a
         className={className}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        style={{ scale, translateY: lift }}
+        {...interactionHandlers}
       >
-        <span className={styles.buttonShine} aria-hidden="true" />
-        <span className={styles.buttonContent}>{children}</span>
-      </a>
+        {content}
+      </animate.a>
     );
   }
 
   return (
-    <Link to={to} className={clsx(styles.buttonLink, className)}>
-      <span className={styles.buttonShine} aria-hidden="true" />
-      <span className={styles.buttonContent}>{children}</span>
-    </Link>
+    <animate.div
+      className={styles.buttonLink}
+      style={{ scale, translateY: lift }}
+      {...interactionHandlers}
+    >
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    </animate.div>
   );
 }
 
@@ -258,69 +344,83 @@ function InstallCommand() {
   );
 }
 
-const TECH_ICONS = [
-  { icon: FaReact, label: 'React' },
-  { icon: SiTypescript, label: 'TypeScript' },
-  { icon: FiZap, label: '60fps performance' },
-  { icon: FiPackage, label: 'Zero dependencies' },
+const TRUST_ITEMS = [
+  { icon: FiPackage, label: '2.1kb gzipped' },
+  { icon: FiCode, label: '100% TypeScript' },
+  { icon: FaReact, label: 'React 18 & 19' },
+  { icon: FaGithub, label: 'MIT licensed' },
 ];
 
 function HeroSection() {
   return (
     <header className={styles.hero}>
-      <div className={styles.heroGrid} aria-hidden="true" />
-      <HeroParticles />
+      <HeroMesh />
+      <div className={styles.heroGlow} aria-hidden="true" />
       <div className={styles.heroFade} aria-hidden="true" />
 
       <div className={clsx('container', styles.heroContainer)}>
-        <div className={styles.heroCopy}>
-          <Reveal delay={0}>
-            <Link to="/docs/getting-started" className={styles.badge}>
-              <span className={styles.badgeDot} />
-              <span className={styles.badgeLabel}>React UI Animate 5.3</span>
-              <MdArrowForward className={styles.badgeArrow} />
-            </Link>
-          </Reveal>
+        <div className={styles.heroLayout}>
+          <div className={styles.heroCopy}>
+            <Reveal delay={0}>
+              <Link to="/docs/getting-started" className={styles.badge}>
+                <span className={styles.badgeDot} />
+                <span className={styles.badgeLabel}>React UI Animate 6.0</span>
+                <MdArrowForward className={styles.badgeArrow} />
+              </Link>
+            </Reveal>
 
-          <h1 className={styles.heroTitle}>
-            <TextReveal text="Fluid motion," delay={80} indexOffset={0} />
-            <br />
-            <TextReveal text="built for React." delay={80} indexOffset={2} accent />
-          </h1>
+            <h1 className={styles.heroTitle}>
+              <TextReveal text="Fluid motion," delay={80} indexOffset={0} />
+              <br />
+              <TextReveal text="built for React." delay={80} indexOffset={2} accent />
+            </h1>
 
-          <p className={styles.heroLede}>
-            <TextReveal
-              text="A lightweight, declarative library for springs, gestures, and exit animations. Silky 60fps motion with an API you'll actually enjoy writing."
-              delay={520}
-              stagger={28}
-              duration={650}
-            />
-          </p>
+            <p className={styles.heroLede}>
+              <TextReveal
+                text="A lightweight, declarative library for springs, gestures, and exit animations. Silky 60fps motion with an API you'll actually enjoy writing."
+                delay={520}
+                stagger={28}
+                duration={650}
+              />
+            </p>
 
-          <Reveal delay={240}>
-            <div className={styles.heroActions}>
-              <AnimatedButton to="/docs/getting-started" variant="primary">
-                Get Started
-                <MdArrowForward className={styles.buttonIcon} />
-              </AnimatedButton>
-              <AnimatedButton href={GITHUB_URL} variant="ghost">
-                <FaGithub className={styles.buttonIconLeft} />
-                Star on GitHub
-              </AnimatedButton>
-            </div>
-          </Reveal>
+            <Reveal delay={240}>
+              <div className={styles.heroActions}>
+                <AnimatedButton
+                  to="/docs/getting-started"
+                  variant="primary"
+                  icon={MdArrowForward}
+                >
+                  Get Started
+                </AnimatedButton>
+                <AnimatedButton
+                  href={GITHUB_URL}
+                  variant="ghost"
+                  icon={FaGithub}
+                  iconPosition="left"
+                >
+                  Star on GitHub
+                </AnimatedButton>
+              </div>
+            </Reveal>
 
-          <Reveal delay={320}>
-            <InstallCommand />
-          </Reveal>
+            <Reveal delay={320}>
+              <InstallCommand />
+            </Reveal>
 
-          <Reveal delay={400} className={styles.techRow}>
-            {TECH_ICONS.map(({ icon: Icon, label }) => (
-              <span key={label} className={styles.techIcon} title={label}>
-                <Icon aria-hidden="true" />
-              </span>
-            ))}
-          </Reveal>
+            <Reveal delay={400} className={styles.trustRow}>
+              {TRUST_ITEMS.map(({ icon: Icon, label }) => (
+                <span key={label} className={styles.trustItem}>
+                  <Icon aria-hidden="true" />
+                  {label}
+                </span>
+              ))}
+            </Reveal>
+          </div>
+
+          <div className={styles.heroVisual}>
+            <HeroShowcase />
+          </div>
         </div>
       </div>
     </header>
@@ -425,42 +525,49 @@ const EXAMPLES = [
     title: 'Drag & spring',
     description: 'Grab, release, and watch it spring back into place.',
     code: DragDemoSource,
+    icon: FiMove,
   },
   {
     key: 'ToastDemo',
     title: 'Toast',
     description: 'Enter, hold, then exit with Unmount.',
     code: ToastDemoSource,
+    icon: FiBell,
   },
   {
     key: 'ModalDemo',
     title: 'Modal',
     description: 'Scale-in dialog with outside-click dismiss.',
     code: ModalDemoSource,
+    icon: FiMaximize2,
   },
   {
     key: 'AccordionDemo',
     title: 'Accordion',
     description: 'Height spring for expanding panels.',
     code: AccordionDemoSource,
+    icon: FiChevronDown,
   },
   {
     key: 'TabsDemo',
     title: 'Tabs',
     description: 'Sliding indicator that follows the active tab.',
     code: TabsDemoSource,
+    icon: FiColumns,
   },
   {
     key: 'LikeButtonDemo',
     title: 'Like button',
     description: 'Press feedback with a spring pop.',
     code: LikeButtonDemoSource,
+    icon: FiHeart,
   },
   {
     key: 'SwipeListDemo',
     title: 'Swipe to delete',
     description: 'Drag with snap-back and dismiss.',
     code: SwipeListDemoSource,
+    icon: FiTrash2,
   },
 ];
 
@@ -470,6 +577,9 @@ function Examples() {
   const [wordWrap, setWordWrap] = useState(false);
   const [copied, setCopied] = useState(false);
   const [demoKey, setDemoKey] = useState(0);
+  const [indicator, setIndicator] = useState(null);
+  const navRef = useRef(null);
+  const itemRefs = useRef([]);
   const current = EXAMPLES[active];
 
   const source = useMemo(() => prepareSource(current.code), [current.code]);
@@ -489,6 +599,29 @@ function Examples() {
     setDemoKey((k) => k + 1);
   }, []);
 
+  const measureIndicator = useCallback(() => {
+    const el = itemRefs.current[active];
+    if (!el) return;
+    setIndicator({
+      top: el.offsetTop,
+      left: el.offsetLeft,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+    });
+  }, [active]);
+
+  useLayoutEffect(() => {
+    measureIndicator();
+  }, [measureIndicator]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav || typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(() => measureIndicator());
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, [measureIndicator]);
+
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className={clsx('container', styles.showcaseWrap)}>
@@ -506,13 +639,26 @@ function Examples() {
         </ViewReveal>
 
         <ViewReveal className={styles.showcaseFrame}>
-          <nav className={styles.showcaseNav} aria-label="Examples">
+          <nav className={styles.showcaseNav} aria-label="Examples" ref={navRef}>
+            {indicator && (
+              <span
+                className={styles.showcaseNavIndicator}
+                aria-hidden="true"
+                style={{
+                  transform: `translate(${indicator.left}px, ${indicator.top}px)`,
+                  width: indicator.width,
+                  height: indicator.height,
+                }}
+              />
+            )}
             {EXAMPLES.map((example, index) => {
               const selected = index === active;
+              const Icon = example.icon;
               return (
                 <button
                   key={example.key}
                   type="button"
+                  ref={(el) => (itemRefs.current[index] = el)}
                   className={clsx(
                     styles.showcaseNavItem,
                     selected && styles.showcaseNavItemActive
@@ -520,8 +666,8 @@ function Examples() {
                   onClick={() => selectExample(index)}
                   aria-current={selected ? 'true' : undefined}
                 >
-                  <span className={styles.showcaseNavIndex}>
-                    {String(index + 1).padStart(2, '0')}
+                  <span className={styles.showcaseNavIcon}>
+                    <Icon aria-hidden="true" />
                   </span>
                   <span className={styles.showcaseNavCopy}>
                     <span className={styles.showcaseNavTitle}>
@@ -646,9 +792,12 @@ function CallToAction() {
             Install React UI Animate and ship your first animation today.
           </p>
           <div className={styles.ctaActions}>
-            <AnimatedButton to="/docs/getting-started" variant="primary">
+            <AnimatedButton
+              to="/docs/getting-started"
+              variant="primary"
+              icon={MdArrowForward}
+            >
               Read the Docs
-              <MdArrowForward className={styles.buttonIcon} />
             </AnimatedButton>
           </div>
           <div className={styles.ctaLinks}>

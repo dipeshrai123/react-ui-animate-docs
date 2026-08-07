@@ -1,0 +1,76 @@
+---
+sidebar_position: 3
+id: flip-group
+title: FlipGroup
+---
+
+`animate.*` components support automatic layout-change animations via three
+props: `flip`, `flipId`, and `flipOptions`. `FlipGroup` scopes
+`flipId` transitions to a subtree.
+
+## flip
+
+Set `flip` to animate position/size changes caused by reordering,
+resizing, or sibling insertion/removal: a FLIP (First, Last, Invert, Play)
+transform animation, composed with whatever transform the element already
+has from `style`/`animate`/`hover`/etc.
+
+```jsx
+<animate.div flip style={{ width: expanded ? 300 : 100 }} />
+```
+
+## flipId: shared-element transitions
+
+Give two different elements the same `flipId`. When the one carrying it
+unmounts (or a new one mounts) with a matching `flipId` already active,
+the new element automatically plays a FLIP transition from the previous
+element's last known position/size to its own (the classic "morph between
+elements" pattern used for tab indicators, expanding cards, and shared
+images between a list and a detail view).
+
+```jsx
+{selectedTab === 'a' && <animate.div flipId="indicator" />}
+{selectedTab === 'b' && <animate.div flipId="indicator" />}
+```
+
+`flipOptions` sets the transition (spring or timing, options-only, with no
+target, since a FLIP transform always settles at identity):
+
+```jsx
+<animate.div flipId="card" flipOptions={withSpring({ stiffness: 400, damping: 32 })} />
+```
+
+## FlipGroup
+
+`flipId`s are tracked in a single global registry by default, so two
+unrelated parts of your app using the same `flipId` string would
+cross-transition with each other. Wrap a subtree in `FlipGroup` to scope
+its `flipId`s to that subtree instead:
+
+```jsx
+import { FlipGroup, animate } from 'react-ui-animate';
+
+function TabsA() {
+  return (
+    <FlipGroup>
+      {tab === 'a1' && <animate.div flipId="indicator" />}
+      {tab === 'a2' && <animate.div flipId="indicator" />}
+    </FlipGroup>
+  );
+}
+
+function TabsB() {
+  return (
+    <FlipGroup>
+      {tab === 'b1' && <animate.div flipId="indicator" />}
+      {tab === 'b2' && <animate.div flipId="indicator" />}
+    </FlipGroup>
+  );
+}
+```
+
+`TabsA` and `TabsB` both use `flipId="indicator"`, but each is scoped to its
+own `FlipGroup`, so they won't cross-animate.
+
+Elements outside any `FlipGroup` keep using the global registry, so
+existing `flipId` usage without a `FlipGroup` is unaffected.

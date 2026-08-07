@@ -15,7 +15,7 @@ const config = {
   projectName: 'react-ui-animate-docs',
   trailingSlash: false,
   customFields: {
-    version: '5.3.2',
+    version: '6.0.0',
   },
   headTags: [
     {
@@ -42,13 +42,18 @@ const config = {
     },
   ],
   plugins: [
-    // Live demos under src/examples/5.3.2/** need to run against the actual
-    // 5.3.2 build (not whatever `react-ui-animate` currently means, which
-    // tracks `next`), so their `import ... from 'react-ui-animate'` gets
-    // rewritten at bundle time to the aliased `react-ui-animate-stable`
-    // package (see package.json). Examples under src/examples/next/**
-    // resolve `react-ui-animate` normally, since that's pinned to next.
+    // Live demos under src/examples/<version>/** for a *released, versioned*
+    // doc (5.3.2, 6.0.0) need to keep running against that exact build,
+    // regardless of what `react-ui-animate` currently means (it tracks
+    // whatever `next` docs are being developed against). So their
+    // `import ... from 'react-ui-animate'` gets rewritten at bundle time to
+    // the matching pinned alias package (see package.json). Examples under
+    // src/examples/next/** resolve `react-ui-animate` normally.
     function reactUiAnimateVersionAlias() {
+      const versionAliases = {
+        '/src/examples/5.3.2/': 'react-ui-animate-stable',
+        '/src/examples/6.0.0/': 'react-ui-animate-6.0.0',
+      };
       return {
         name: 'react-ui-animate-version-alias',
         configureWebpack() {
@@ -58,8 +63,11 @@ const config = {
                 /^react-ui-animate$/,
                 (resource) => {
                   const importer = (resource.context || '').split(path.sep).join('/');
-                  if (importer.includes('/src/examples/5.3.2/')) {
-                    resource.request = 'react-ui-animate-stable';
+                  const aliasEntry = Object.entries(versionAliases).find(([dir]) =>
+                    importer.includes(dir)
+                  );
+                  if (aliasEntry) {
+                    resource.request = aliasEntry[1];
                   }
                 }
               ),
@@ -76,11 +84,14 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           sidebarCollapsed: true,
-          lastVersion: '5.3.2',
+          lastVersion: '6.0.0',
           versions: {
             current: {
               label: 'next',
               path: 'next',
+            },
+            '6.0.0': {
+              label: '6.0.0',
             },
             '5.3.2': {
               label: '5.3.2',

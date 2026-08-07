@@ -1,0 +1,59 @@
+---
+sidebar_position: 8
+id: withLoop
+title: withLoop
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withLoop_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withLoop/BasicExample.tsx';
+import Demo_modifier_withLoop_BasicExample from '@site/src/examples/6.0.0/modifier/withLoop/BasicExample';
+
+`withLoop` repeats an animation a fixed number of times, or forever:
+loading spinners, pulses, and any other continuously-repeating motion.
+
+## Signature
+
+```ts
+function withLoop(
+  animation: Descriptor,
+  iterations?: number,
+  options?: { yoyo?: boolean; onStart?: () => void; onComplete?: () => void }
+): Descriptor;
+```
+
+`iterations` defaults to `Infinity`. `yoyo: true` alternates direction each
+iteration (there and back) instead of restarting from the beginning every time.
+
+## Usage
+
+```jsx
+import { useValue, withLoop, withSpring, animate } from 'react-ui-animate';
+
+function Spinner() {
+  const [rotation, setRotation] = useValue(0);
+
+  useEffect(() => {
+    // highlight-start
+    /* Repeat forever — omit iterations (or pass Infinity) */
+    setRotation(withLoop(withSpring(360, { stiffness: 200, damping: 0 })));
+    // highlight-end
+  }, []);
+
+  return <animate.div style={{ rotate: rotation }} />;
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withLoop_BasicExample}
+  code={Code_modifier_withLoop_BasicExample}
+/>
+
+A finite loop (e.g. bounce 3 times) just passes a number instead of omitting
+it: `withLoop(withSequence([withSpring(50), withSpring(0)]), 3)`.
+
+## Next steps
+
+- [withSequence](./withSequence): build the multi-step pattern that gets
+  looped.
+- [withSpring](./withSpring) / [withTiming](./withTiming): the drivers
+  most commonly looped.

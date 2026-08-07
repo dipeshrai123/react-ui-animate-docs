@@ -1,0 +1,93 @@
+---
+sidebar_position: 4
+id: useTimeline
+title: useTimeline
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_core_useTimeline_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/core/useTimeline/BasicExample.tsx';
+import Demo_core_useTimeline_BasicExample from '@site/src/examples/6.0.0/core/useTimeline/BasicExample';
+
+`useTimeline` schedules a batch of updates across multiple `AnimateValue`s
+against one shared clock. It's the tool to reach for when several values
+need to kick off at different offsets but you don't want to hand-wire a
+pile of `setTimeout`s or nest `withSequence`/`withDelay` across unrelated
+values.
+
+## Signature
+
+```ts
+function useTimeline(): Timeline;
+
+interface Timeline {
+  add<T>(setter: (to: T) => void, to: T, options?: { at?: number }): Timeline;
+  play(): void;
+  cancel(): void;
+  clear(): void;
+}
+```
+
+`add` queues a setter call; `at` is the delay in milliseconds from when
+`play()` runs (default `0`, meaning "immediately"). `add` returns the
+timeline, so calls can be chained.
+
+## Usage
+
+```jsx
+import { useValue, useTimeline, withSpring, animate } from 'react-ui-animate';
+
+function Intro() {
+  const [opacity, setOpacity] = useValue(0);
+  const [y, setY] = useValue(20);
+  const [scale, setScale] = useValue(0.9);
+
+  const timeline = useTimeline();
+
+  const play = () => {
+    timeline
+      .add(setOpacity, withSpring(1), { at: 0 })
+      .add(setY, withSpring(0), { at: 0 })
+      .add(setScale, withSpring(1), { at: 150 })
+      .play();
+  };
+
+  return (
+    <animate.div
+      style={{ opacity, translateY: y, scale }}
+      onClick={play}
+    >
+      Intro
+    </animate.div>
+  );
+}
+```
+
+Each `add` call is independent, so every entry can carry its own modifier
+(`withSpring`, `withTiming`, a bare value, and so on). The `at` offsets are
+only about when each setter *fires*; how long the resulting animation takes
+is still controlled by that entry's own modifier.
+
+<CodeExample
+  demo={Demo_core_useTimeline_BasicExample}
+  code={Code_core_useTimeline_BasicExample}
+/>
+
+## Replaying and cancelling
+
+Calling `play()` again re-runs every queued entry from the start, which is
+useful for a "replay this intro" button. `cancel()` stops any pending
+`setTimeout`s without clearing the queue, so a later `play()` still works.
+`clear()` empties the queue entirely. The timeline also cancels its pending
+timers automatically on unmount.
+
+```jsx
+<button onClick={() => timeline.play()}>Replay</button>
+<button onClick={() => timeline.cancel()}>Stop</button>
+```
+
+## Next steps
+
+- [Animation Modifiers](../animation-modifier/overview): the drivers you'll
+  typically pass into each `add` call.
+- [withSequence](../animation-modifier/withSequence): for chaining steps on
+  a *single* value instead of coordinating several.

@@ -1,0 +1,78 @@
+---
+sidebar_position: 3
+id: withTiming
+title: withTiming
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withTiming_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withTiming/BasicExample.tsx';
+import Demo_modifier_withTiming_BasicExample from '@site/src/examples/6.0.0/modifier/withTiming/BasicExample';
+
+`withTiming` animates to a target value over a fixed duration, unlike
+`withSpring`'s physics-based motion, you get exact control over how long an
+animation takes.
+
+## Signature
+
+```ts
+function withTiming(
+  to: number | string | object | array,
+  options?: {
+    duration?: number;
+    easing?: (t: number) => number;
+    onStart?: () => void;
+    onChange?: (value: number) => void;
+    onComplete?: () => void;
+  }
+): Descriptor;
+```
+
+Defaults: `duration` 300ms, `easing` linear.
+
+## Usage
+
+```jsx
+import { useValue, withTiming, Easing, animate } from 'react-ui-animate';
+
+function FadeIn() {
+  const [opacity, setOpacity] = useValue(0);
+
+  return (
+    <animate.div
+      style={{ opacity }}
+      onClick={() =>
+        // highlight-start
+        /* Exact duration + easing curve — unlike withSpring's physics */
+        setOpacity(
+          withTiming(1, {
+            duration: 300,
+            easing: Easing.inOut(Easing.quad),
+          })
+        )
+        // highlight-end
+      }
+    />
+  );
+}
+```
+
+`Easing` ships common curves (`linear`, `quad`, `cubic`, `sin`, `circle`,
+`exp`, `elastic`, `back`, `bounce`, `bezier`) plus `Easing.in`/`.out`/`.inOut`
+wrappers. Reach for those instead of hand-rolling cubic functions.
+
+<CodeExample
+  demo={Demo_modifier_withTiming_BasicExample}
+  code={Code_modifier_withTiming_BasicExample}
+/>
+
+## withTiming vs. withSpring
+
+| | `withTiming` | `withSpring` |
+|---|---|---|
+| Best for | Tooltips, dropdowns, progress bars, anything needing an exact duration | Buttons, cards, modals, anything wanting a natural, physical feel |
+| Control | Duration + easing curve | Stiffness/damping/mass |
+
+## Next steps
+
+- [withSpring](./withSpring): physics-based alternative.
+- [withSequence](./withSequence): chain multiple timing steps.

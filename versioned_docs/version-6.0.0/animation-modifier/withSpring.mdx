@@ -1,0 +1,96 @@
+---
+sidebar_position: 2
+id: withSpring
+title: withSpring
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/6.0.0/modifier/withSpring/GetStartedExample';
+import Code_modifier_withSpring_ObjectExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withSpring/ObjectExample.tsx';
+import Demo_modifier_withSpring_ObjectExample from '@site/src/examples/6.0.0/modifier/withSpring/ObjectExample';
+
+`withSpring` animates using spring physics rather than a fixed duration.
+It's the default for most UI motion (buttons, cards, modals) since it feels
+responsive rather than mechanical.
+
+## Signature
+
+```ts
+function withSpring(
+  to: number | string | object | array,
+  options?: {
+    stiffness?: number;
+    damping?: number;
+    mass?: number;
+    onStart?: () => void;
+    onChange?: (value: number) => void;
+    onComplete?: () => void;
+  }
+): Descriptor;
+```
+
+Defaults: `stiffness` 170, `damping` 14, `mass` 1.
+
+:::tip
+Need an exact duration instead of physics? Use
+[withTiming](./withTiming). Reach for `withSpring` when motion should feel
+responsive and natural.
+:::
+
+## Usage
+
+```jsx
+import { useValue, withSpring, animate } from 'react-ui-animate';
+
+function Expandable() {
+  const [width, setWidth] = useValue(100);
+
+  return (
+    // highlight-start
+    /* Spring feels responsive — physics instead of a fixed duration */
+    <animate.div
+      style={{ width, height: 100, background: '#60a5fa' }}
+      onClick={() => setWidth(withSpring(200))}
+    />
+    // highlight-end
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
+  code={Code_modifier_withSpring_GetStartedExample}
+/>
+
+## Tuning stiffness/damping/mass
+
+- **stiffness**: speed and bounce. Low (50–100): slow, gentle. High (300+):
+  fast, snappy.
+- **damping**: how much overshoot. Low (5–15): very bouncy. High (30+):
+  minimal bounce, controlled.
+- **mass**: inertia. Low (0.5–1, default): quick to respond. High (3+):
+  heavy, slow to start/stop.
+
+## Objects and arrays
+
+`withSpring` animates every key of an object/array `useValue` with the same
+driver in one call:
+
+```jsx
+const [position, setPosition] = useValue({ x: 0, y: 0 });
+// highlight-start
+/* One call springs every key together */
+setPosition(withSpring({ x: 100, y: 100 }));
+// highlight-end
+```
+
+<CodeExample
+  demo={Demo_modifier_withSpring_ObjectExample}
+  code={Code_modifier_withSpring_ObjectExample}
+/>
+
+## Next steps
+
+- [withTiming](./withTiming): exact-duration alternative.
+- [withSequence](./withSequence): chain springs with other drivers.

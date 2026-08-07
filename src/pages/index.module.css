@@ -11,8 +11,8 @@
   display: flex;
   align-items: center;
   min-height: 0;
-  padding-top: calc(var(--ifm-navbar-height) + var(--space-4));
-  padding-bottom: var(--space-6);
+  padding-top: calc(var(--ifm-navbar-height) + var(--space-6));
+  padding-bottom: var(--space-8);
   background: var(--brand-bg);
   color: #f5f7ff;
 }
@@ -28,17 +28,15 @@
   z-index: 1;
 }
 
-/* Flat line mesh — an actual grid, no blur or color. Visible but quiet,
-   fading out toward the bottom of the hero. */
-.heroGrid {
+/* One deliberate light source instead of a scattering of particles —
+   quietly anchors the copy/visual split without reading as decoration. */
+.heroGlow {
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, #000, transparent 90%);
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 90%);
+  top: -10%;
+  right: -10%;
+  width: 60%;
+  height: 70%;
+  background: radial-gradient(closest-side, rgba(59, 130, 246, 0.16), transparent);
   pointer-events: none;
 }
 
@@ -48,13 +46,26 @@
   width: 100%;
 }
 
+.heroLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: var(--space-10);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .heroCopy {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 56rem;
-  margin: 0 auto;
+  align-items: flex-start;
+  text-align: left;
+  max-width: 34rem;
+}
+
+.heroVisual {
+  height: 100%;
+  min-height: 460px;
 }
 
 /* Badge */
@@ -116,18 +127,18 @@
 }
 
 .heroLede {
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   line-height: 1.6;
   font-weight: 400;
   color: #9ca3af;
-  max-width: 40rem;
-  margin: 0 auto var(--space-4);
+  max-width: 34rem;
+  margin: 0 0 var(--space-4);
 }
 
 .heroActions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-2);
   margin-bottom: var(--space-3);
 }
@@ -145,24 +156,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px;
+  padding: 13px 24px;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  border-radius: var(--radius-md);
+  border-radius: 999px;
   cursor: pointer;
   border: 1px solid transparent;
   text-decoration: none !important;
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease,
-    background 0.2s ease, border-color 0.2s ease;
-}
-
-.button:hover {
-  transform: scale(1.02);
-}
-
-.button:active {
-  transform: scale(0.98);
+  /* Transform (hover lift/press squash) is spring-driven via react-ui-animate,
+     not CSS — only the discrete color/shadow swaps below stay as transitions. */
+  transition: box-shadow 0.25s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .button:focus-visible {
@@ -250,22 +254,12 @@
   box-shadow: none;
 }
 
-.buttonIcon {
-  font-size: 16px;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.button:hover .buttonIcon {
-  transform: translateX(3px);
-}
-
+/* translateX/scale on these are spring-driven via react-ui-animate (see
+   AnimatedButton) — only static sizing lives in CSS. */
+.buttonIcon,
 .buttonIconLeft {
+  display: inline-flex;
   font-size: 16px;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.button:hover .buttonIconLeft {
-  transform: scale(1.08);
 }
 
 /* ===== Install command — tabbed terminal card ===== */
@@ -376,31 +370,32 @@
   }
 }
 
-/* ===== Tech row ===== */
-.techRow {
+/* ===== Trust row ===== */
+.trustRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-5);
+  justify-content: flex-start;
+  gap: var(--space-1) var(--space-4);
   margin-top: var(--space-4);
   padding-top: var(--space-3);
   border-top: 1px solid #2a2e38;
   width: 100%;
 }
 
-.techIcon {
+.trustItem {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22px;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
   color: #6b7280;
-  transition: color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
-.techIcon:hover {
-  color: #d1d5db;
-  transform: scale(1.08);
+.trustItem svg {
+  font-size: 15px;
+  color: #4b5563;
 }
 
 /* ===== Sections ===== */
@@ -545,21 +540,40 @@
   border: 1px solid #2a2e38;
   border-radius: 14px;
   background: #0c0d12;
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
 }
 
 .showcaseNav {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 4px;
   padding: 10px;
   border-right: 1px solid #2a2e38;
   background: #0e0f14;
 }
 
+.showcaseNavIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 9px;
+  background: #1a1d24;
+  border-left: 2px solid #60a5fa;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  will-change: transform;
+  z-index: 0;
+}
+
 .showcaseNavItem {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 10px;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 11px;
   align-items: start;
   width: 100%;
   margin: 0;
@@ -577,22 +591,28 @@
   background: #15171e;
 }
 
-.showcaseNavItemActive {
-  background: #1a1d24;
+.showcaseNavItemActive:hover {
+  background: transparent;
 }
 
-.showcaseNavIndex {
-  padding-top: 2px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+.showcaseNavIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 15px;
   color: #6b7280;
-  line-height: 1.4;
+  background: #1a1c23;
+  border: 1px solid #262a33;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
-.showcaseNavItemActive .showcaseNavIndex {
-  color: #60a5fa;
+.showcaseNavItemActive .showcaseNavIcon {
+  color: #93c5fd;
+  background: #1a2230;
+  border-color: #3b5a80;
 }
 
 .showcaseNavCopy {
@@ -600,6 +620,7 @@
   flex-direction: column;
   gap: 3px;
   min-width: 0;
+  padding-top: 1px;
 }
 
 .showcaseNavTitle {
@@ -608,6 +629,7 @@
   letter-spacing: -0.015em;
   color: #9ca3af;
   line-height: 1.35;
+  transition: color 0.15s ease;
 }
 
 .showcaseNavItemActive .showcaseNavTitle {
@@ -622,6 +644,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.15s ease;
 }
 
 .showcaseNavItemActive .showcaseNavDesc {
@@ -641,6 +664,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 18px 20px 14px;
+  background: #0e0f14;
   border-bottom: 1px solid #2a2e38;
 }
 
@@ -706,13 +730,19 @@
 }
 
 .showcaseCanvas {
+  position: relative;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 340px;
   padding: 28px 24px;
-  background: #0c0d12;
+  background-color: #0c0d12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center;
   animation: showcaseIn 0.28s ease;
 }
 
@@ -838,8 +868,32 @@
     padding-bottom: var(--space-8);
   }
 
+  .heroLayout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  .heroCopy {
+    align-items: center;
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
   .heroLede {
     max-width: 42rem;
+  }
+
+  .heroActions {
+    justify-content: center;
+  }
+
+  .trustRow {
+    justify-content: center;
+  }
+
+  .heroVisual {
+    min-height: 380px;
   }
 
   .section {
@@ -877,9 +931,14 @@
     gap: 0;
   }
 
-  .showcaseNavIndex,
+  .showcaseNavIcon,
   .showcaseNavDesc {
     display: none;
+  }
+
+  .showcaseNavIndicator {
+    border-left: none;
+    border-bottom: 2px solid #60a5fa;
   }
 
   .showcaseStage {
@@ -915,6 +974,10 @@
 
   .installCard {
     max-width: 100%;
+  }
+
+  .heroVisual {
+    min-height: 320px;
   }
 
   .showcaseStageHead {

@@ -1,0 +1,189 @@
+---
+sidebar_position: 4
+id: reorder
+title: Reorder
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_gesture_reorder_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/gesture/reorder/BasicExample.tsx';
+import Demo_gesture_reorder_BasicExample from '@site/src/examples/6.0.0/gesture/reorder/BasicExample';
+import Code_gesture_reorder_HandleExample from '!!raw-loader!@site/src/examples/6.0.0/gesture/reorder/HandleExample.tsx';
+import Demo_gesture_reorder_HandleExample from '@site/src/examples/6.0.0/gesture/reorder/HandleExample';
+
+`Reorder` is a drag-to-reorder list component built on `Gesture.Pan()` and
+the FLIP layout engine: drag an item, drop it in a new spot, and every other
+item animates into place. It handles list order, gap-closing, and the
+settle animation for you, so you don't have to wire drag position, index
+math, and FLIP transitions by hand.
+
+## Pieces
+
+```ts
+const Reorder = {
+  Group: ReorderGroup,
+  Item: ReorderItem,
+  Handle: ReorderHandle,
+  Context: ReorderContextProvider,
+};
+```
+
+- `Reorder.Group` owns the list: the array of values and the axis it
+  reorders along.
+- `Reorder.Item` wraps a single row/card. It's what's actually draggable.
+- `Reorder.Handle` (optional) restricts dragging to a smaller area inside an
+  item, like a grip icon, instead of the whole row.
+- `Reorder.Context` (optional) wraps multiple `Reorder.Group`s so items can
+  be dragged *between* them, not just reordered within one.
+
+## Basic usage
+
+```jsx
+import { useState } from 'react';
+import { Reorder } from 'react-ui-animate';
+
+function List() {
+  const [items, setItems] = useState(['Alpha', 'Bravo', 'Charlie', 'Delta']);
+
+  return (
+    <Reorder.Group values={items} onReorder={setItems}>
+      {items.map((item) => (
+        <Reorder.Item key={item} value={item} style={{ padding: 12 }}>
+          {item}
+        </Reorder.Item>
+      ))}
+    </Reorder.Group>
+  );
+}
+```
+
+`onReorder` fires with the reordered array while dragging, so state stays in
+sync live rather than only on drop. `value` is what identifies each item
+(it's used for both the `key` and drag tracking), so use something stable
+like an id, not the array index.
+
+<CodeExample
+  demo={Demo_gesture_reorder_BasicExample}
+  code={Code_gesture_reorder_BasicExample}
+/>
+
+## Signature
+
+```ts
+interface ReorderGroupProps<T> {
+  values: T[];
+  onReorder: (values: T[]) => void;
+  axis?: 'x' | 'y'; // default: 'y'
+  transition?: FlipOptions; // settle animation for displaced items
+  style?: CSSProperties;
+  className?: string;
+}
+
+interface ReorderItemProps<T> {
+  value: T;
+  style?: CSSProperties;
+  className?: string;
+}
+
+interface ReorderHandleProps {
+  style?: CSSProperties;
+  className?: string;
+}
+```
+
+## Drag handles
+
+By default the whole item is draggable. Wrap just the part that should
+initiate dragging in `Reorder.Handle` to leave the rest of the row free for
+clicks, text selection, or other controls:
+
+```jsx
+<Reorder.Item value={item}>
+  <Reorder.Handle style={{ cursor: 'grab' }}>⠿</Reorder.Handle>
+  <span>{item.label}</span>
+  <button onClick={() => remove(item)}>Delete</button>
+</Reorder.Item>
+```
+
+<CodeExample
+  demo={Demo_gesture_reorder_HandleExample}
+  code={Code_gesture_reorder_HandleExample}
+/>
+
+## Horizontal lists
+
+```jsx
+<Reorder.Group values={items} onReorder={setItems} axis="x" style={{ display: 'flex' }}>
+  {items.map((item) => (
+    <Reorder.Item key={item} value={item}>{item}</Reorder.Item>
+  ))}
+</Reorder.Group>
+```
+
+## Dragging between lists
+
+Wrap sibling `Reorder.Group`s in `Reorder.Context` to allow dragging an item
+from one group into another, such as moving a card between Kanban columns:
+
+```jsx
+import { Reorder } from 'react-ui-animate';
+
+function Board() {
+  const [todo, setTodo] = useState(['Write docs']);
+  const [done, setDone] = useState(['Ship feature']);
+
+  return (
+    <Reorder.Context>
+      <Reorder.Group values={todo} onReorder={setTodo}>
+        {todo.map((t) => <Reorder.Item key={t} value={t}>{t}</Reorder.Item>)}
+      </Reorder.Group>
+
+      <Reorder.Group values={done} onReorder={setDone}>
+        {done.map((t) => <Reorder.Item key={t} value={t}>{t}</Reorder.Item>)}
+      </Reorder.Group>
+    </Reorder.Context>
+  );
+}
+```
+
+Each group keeps its own state and `onReorder` callback; `Reorder.Context`
+only tracks which group an item is currently hovering over so it can hand
+the item off between them on drop.
+
+## Custom settle transition
+
+`transition` controls the animation displaced items use to settle into
+their new spot. It accepts the same shape as `flipOptions` on `animate.*`
+components (a spring or timing descriptor, options-only, see [flip
+transitions](../presence/flip-group)):
+
+```jsx
+import { Reorder, withSpring } from 'react-ui-animate';
+
+<Reorder.Group
+  values={items}
+  onReorder={setItems}
+  transition={withSpring({ stiffness: 500, damping: 35 })}
+/>
+```
+
+## Best practices
+
+### Do
+
+- Use a stable identity (an id, not the index) for `value`.
+- Reach for `Reorder.Handle` on rows that contain other interactive
+  elements (buttons, links, inputs), so dragging doesn't swallow clicks on
+  them.
+
+### Don't
+
+- Don't mutate `items` in place inside `onReorder`. Treat the callback's
+  argument as the new array and set it directly, the same as any other
+  list state update.
+
+## Next steps
+
+- [useGesture](./useGesture): the `Gesture.Pan()` primitive `Reorder` is
+  built on, for reorder-like interactions this component doesn't cover.
+- [FlipGroup](../presence/flip-group): the lower-level FLIP layout engine
+  that powers the settle animation.
