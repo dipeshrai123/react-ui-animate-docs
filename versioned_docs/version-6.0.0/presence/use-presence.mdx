@@ -1,0 +1,77 @@
+---
+sidebar_position: 2
+id: use-presence
+title: useUnmount & useIsUnmounting
+---
+
+`useUnmount` and `useIsUnmounting` read whether the component they're called
+in is currently exiting. Useful when the animation itself needs to be
+driven by something other than `animate`'s `unmount` prop (e.g. animating a
+child, or running non-style side effects during exit).
+
+## useIsUnmounting
+
+```ts
+function useIsUnmounting(): boolean;
+```
+
+`false` for as long as the element is mounted and not exiting; flips to
+`true` the instant its parent removes it from `Unmount`'s children.
+
+```jsx
+function ListItem() {
+  const isUnmounting = useIsUnmounting();
+  return <li style={{ opacity: isUnmounting ? 0.5 : 1 }}>...</li>;
+}
+```
+
+## useUnmount
+
+```ts
+function useUnmount(): [isPresent: boolean, safeToRemove: () => void];
+```
+
+Same presence flag as before (inverted from `useIsUnmounting`: `true` while
+mounted and not exiting), plus `safeToRemove`. Call it once your own exit
+animation is done to tell the surrounding `Unmount` it can actually unmount
+the element. Use this when you're driving the exit animation manually
+instead of via the `unmount` prop.
+
+```jsx
+function CustomExit() {
+  const [isPresent, safeToRemove] = useUnmount();
+  const [opacity, setOpacity] = useValue(1);
+
+  useEffect(() => {
+    if (!isPresent) {
+      setOpacity(withTiming(0, { duration: 300, onComplete: safeToRemove }));
+    }
+  }, [isPresent]);
+
+  return <animate.div style={{ opacity }}>...</animate.div>;
+}
+```
+
+Outside of an `Unmount` tree, both hooks report present/mounted
+(`useUnmount`'s `isPresent: true`, `useIsUnmounting(): false`) — they're
+safe to call unconditionally even if a component is sometimes rendered
+without a surrounding `Unmount`.
+
+:::note
+Prefer the declarative `unmount` prop when you only need style animation. Use
+`useUnmount` when exit must drive custom logic (child animations, timeouts,
+non-style cleanup) and you call `safeToRemove` yourself.
+:::
+
+## Unmount-level options
+
+A few `Unmount` props worth knowing about alongside these hooks:
+
+- `mode`: `'sync'` (default, exiting and entering children animate
+  together), `'wait'` (entering children wait for exiting ones to finish),
+  or `'popLayout'` (exiting children are pulled out of layout flow
+  immediately, so siblings reflow around them right away instead of waiting
+  for the exit animation).
+- `initial={false}` skips the enter animation on first mount. Useful for
+  content that should already be in its "entered" state on page load.
+- `onExitComplete` fires once every currently-exiting child has finished.

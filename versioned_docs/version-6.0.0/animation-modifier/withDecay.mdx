@@ -1,0 +1,66 @@
+---
+sidebar_position: 4
+id: withDecay
+title: withDecay
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withDecay_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withDecay/BasicExample.tsx';
+import Demo_modifier_withDecay_BasicExample from '@site/src/examples/6.0.0/modifier/withDecay/BasicExample';
+
+`withDecay` simulates momentum with friction. A value keeps moving and
+gradually slows to a stop, rather than animating to a fixed target. Built
+for the tail end of gestures (flicks, swipes, momentum scrolling).
+
+## Signature
+
+```ts
+function withDecay(
+  velocity: number,
+  options?: {
+    clamp?: [number, number]; // hard-stop bounds
+    elastic?: boolean | number; // rubber-band past clamp; true = default constant
+    onStart?: () => void;
+    onChange?: (value: number) => void;
+    onComplete?: () => void;
+  }
+): Descriptor;
+```
+
+## Usage
+
+```jsx
+import { useValue, withDecay, animate } from 'react-ui-animate';
+
+function Flingable() {
+  const [x, setX] = useValue(0);
+
+  return (
+    <animate.div
+      style={{ translateX: x }}
+      onClick={() =>
+        // highlight-start
+        /* Momentum from velocity — slows to a stop inside clamp */
+        setX(withDecay(0.8, { clamp: [-200, 200] }))
+        // highlight-end
+      }
+    />
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withDecay_BasicExample}
+  code={Code_modifier_withDecay_BasicExample}
+/>
+
+`useDrag`'s `momentum`/`bounds`/`elastic` options already wire this up for
+dragging. Reach for `withDecay` directly when you need momentum from
+something other than a drag gesture (e.g. a button-triggered flick, or a
+custom `Gesture.Scroll()`/`Gesture.Wheel()` velocity).
+
+## Next steps
+
+- [useDrag](../gesture/useDrag): momentum built in for drag gestures.
+- [useGesture](../gesture/useGesture): raw velocity from `Gesture.Scroll()`/`Gesture.Wheel()`.
+- [withSpring](./withSpring): for a fixed-destination alternative.

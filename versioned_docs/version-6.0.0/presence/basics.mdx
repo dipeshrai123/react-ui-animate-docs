@@ -1,0 +1,81 @@
+---
+sidebar_position: 1
+id: presence-basics
+title: Unmount Basics
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_presence_ToggleExample from '!!raw-loader!@site/src/examples/6.0.0/presence/ToggleExample.tsx';
+import Demo_presence_ToggleExample from '@site/src/examples/6.0.0/presence/ToggleExample';
+
+Conditional rendering (`{isOpen && <div>...}`) removes elements from the DOM
+instantly, so there's no chance to animate them out. `Unmount` keeps an
+exiting child mounted until its `unmount` animation finishes, then removes it.
+
+## Usage
+
+```jsx
+import { Unmount, animate, withTiming, withSpring } from 'react-ui-animate';
+
+function Toggle() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  return (
+    <>
+      <button onClick={() => setIsVisible((v) => !v)}>Toggle</button>
+      // highlight-start
+      {/* Unmount keeps the child mounted until unmount finishes */}
+      <Unmount>
+        {isVisible && (
+          <animate.div
+            animate={{ opacity: withSpring(1), scale: withSpring(1) }}
+            unmount={{ opacity: withTiming(0), scale: withSpring(0.85) }}
+            style={{ opacity: 0, scale: 0.85, width: 100, height: 100 }}
+          />
+        )}
+      </Unmount>
+      // highlight-end
+    </>
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_presence_ToggleExample}
+  code={Code_presence_ToggleExample}
+/>
+
+:::note
+Each direct child of `Unmount` needs a unique `key` if there's more than
+one (e.g. a modal's backdrop + panel). That's how `Unmount` tracks which
+child is entering/exiting across renders.
+:::
+
+```jsx
+<Unmount>
+  {isOpen && (
+    // highlight-start
+    /* Unique keys let Unmount track each exiting child */
+    <>
+      <animate.div key="backdrop" unmount={{ opacity: withTiming(0) }} />
+      <animate.div key="panel" unmount={{ opacity: withTiming(0), scale: withSpring(0.9) }} />
+    </>
+    // highlight-end
+  )}
+</Unmount>
+```
+
+## Enter + exit together
+
+`animate` (mount) and `unmount` (unmount) compose on the same element: mount
+target in `animate`, leave target in `unmount`, and keep the initial hidden
+values in `style`.
+
+## Next steps
+
+- [The animate Component](../concept/animate-component): the `animate`/`unmount`
+  props themselves.
+- [useUnmount & useIsUnmounting](./use-presence): drive an exit animation
+  manually instead of via the `unmount` prop.
+- [recipes](../recipes/overview): ready-made `unmountFade`/`unmountSlideUp`/etc.
+  values for the `unmount` prop.

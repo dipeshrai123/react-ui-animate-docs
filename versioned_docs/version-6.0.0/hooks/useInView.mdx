@@ -1,0 +1,74 @@
+---
+sidebar_position: 3
+id: useInView
+title: useInView
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_hook_useInView_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/hook/useInView/BasicExample.tsx';
+import Demo_hook_useInView_BasicExample from '@site/src/examples/6.0.0/hook/useInView/BasicExample';
+
+`useInView` returns whether an element is currently in the viewport, via the
+native `IntersectionObserver` API: the programmatic building block behind
+scroll-reveal effects, lazy loading, and view-based analytics.
+
+## Signature
+
+```ts
+function useInView(
+  ref: RefObject<HTMLElement>,
+  options?: {
+    threshold?: number | number[];
+    root?: Element | null;
+    rootMargin?: string;
+    once?: boolean;
+  }
+): boolean;
+```
+
+`threshold` defaults to `0`.
+
+:::tip
+For style-only scroll reveals, prefer the declarative
+[`view`](../interactive/view-animations) prop. Use `useInView` when you need
+the boolean for logic (lazy load, analytics, branching).
+:::
+
+## Usage
+
+```jsx
+import { useRef } from 'react';
+import { useInView, useValue, withSpring, animate } from 'react-ui-animate';
+
+function RevealOnScroll() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.3, once: true });
+  const [opacity, setOpacity] = useValue(0);
+
+  useEffect(() => {
+    if (isInView) setOpacity(withSpring(1));
+  }, [isInView]);
+
+  return <animate.div ref={ref} style={{ opacity }} />;
+}
+```
+
+<CodeExample
+  demo={Demo_hook_useInView_BasicExample}
+  code={Code_hook_useInView_BasicExample}
+/>
+
+## vs. the `view` prop
+
+`useInView` is the hook to reach for when you need the boolean itself (for
+non-style side effects like lazy-loading or analytics) or multiple
+thresholds; for a purely declarative "animate this element in/out as it
+scrolls," the [`view`](../interactive/view-animations) prop needs no `useEffect`
+at all.
+
+## Next steps
+
+- [`view` prop](../interactive/view-animations): declarative scroll-reveal
+  without a hook.
+- [useScrollProgress](./useScrollProgress): continuous scroll position
+  instead of a boolean.

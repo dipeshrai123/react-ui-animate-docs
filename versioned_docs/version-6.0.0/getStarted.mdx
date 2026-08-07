@@ -1,0 +1,65 @@
+---
+sidebar_position: 1
+id: getting-started
+title: Getting Started
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_modifier_withSpring_GetStartedExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withSpring/GetStartedExample.tsx';
+import Demo_modifier_withSpring_GetStartedExample from '@site/src/examples/6.0.0/modifier/withSpring/GetStartedExample';
+
+**React UI Animate** is a lightweight, declarative animation and gesture
+library for React. It covers springs, sequences, gestures, and exit animations
+with values that update outside React's render cycle.
+
+## Install
+
+Requires React 16.8+ (hooks).
+
+```bash
+npm install react-ui-animate@next
+```
+
+## Quick example
+
+```jsx
+import { animate, useValue, withSpring } from 'react-ui-animate';
+
+function MyComponent() {
+  // highlight-start
+  /* 1. Create an animated value (updates outside React render) */
+  const [width, setWidth] = useValue(100);
+  // highlight-end
+
+  return (
+    // highlight-start
+    /* 2. Spring the width on click — animate.div reads it directly */
+    <animate.div
+      style={{ width, height: 100, backgroundColor: '#60a5fa', borderRadius: 4 }}
+      onClick={() => setWidth(withSpring(200))}
+    />
+    // highlight-end
+  );
+}
+```
+
+`useValue(100)` creates an animated width; `withSpring(200)` animates it.
+`animate.div` picks up the change directly, with no re-render involved.
+
+<CodeExample
+  demo={Demo_modifier_withSpring_GetStartedExample}
+  code={Code_modifier_withSpring_GetStartedExample}
+/>
+
+:::tip
+Start here, then learn [useValue](./concept/useValue) and
+[withSpring](./animation-modifier/withSpring) when you need more control.
+:::
+
+## Where to next
+
+- [The animate Component](./concept/animate-component) & [useValue](./concept/useValue): the core mental model.
+- [Animation Modifiers](./animation-modifier/overview): `withSpring`, `withTiming`, and the rest.
+- [Interactive Props](./interactive/hover-animations): `hover`/`press`/`focus`/`view`.
+- [Gestures](./gesture/overview): `useDrag`, `useGesture`.
+- [Unmount & Flip](./presence/presence-basics): exit animations.

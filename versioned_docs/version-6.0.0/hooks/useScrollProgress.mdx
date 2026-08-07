@@ -1,0 +1,123 @@
+---
+sidebar_position: 2
+id: useScrollProgress
+title: useScrollProgress
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_hook_useScrollProgress_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/hook/useScrollProgress/BasicExample.tsx';
+import Demo_hook_useScrollProgress_BasicExample from '@site/src/examples/6.0.0/hook/useScrollProgress/BasicExample';
+import Code_hook_useScrollProgress_ElementProgress from '!!raw-loader!@site/src/examples/6.0.0/hook/useScrollProgress/ElementProgress.tsx';
+import Demo_hook_useScrollProgress_ElementProgress from '@site/src/examples/6.0.0/hook/useScrollProgress/ElementProgress';
+
+`useScrollProgress` returns animated `0`–`1` values tracking scroll progress
+for `window` or a scrollable container, over a customizable range. It's
+built on [`Gesture.Scroll()`](../gesture/useGesture#gesturescroll), so the
+raw scroll delta/velocity are also available if you drop down to that level.
+
+## Signature
+
+```ts
+function useScrollProgress(
+  target: Window | RefObject<HTMLElement>,
+  options?: UseScrollProgressOptions
+): {
+  scrollYProgress: AnimateValue<number>;
+  scrollXProgress: AnimateValue<number>;
+};
+
+interface UseScrollProgressOptions {
+  target?: RefObject<HTMLElement>;
+  axis?: 'x' | 'y';
+  offset?: ScrollOffset;
+  animate?: boolean;
+  toDescriptor?: (t: number) => Descriptor;
+}
+```
+
+Defaults: `axis` `'y'`, `offset` `['start start', 'end end']`, `animate` `true`,
+`toDescriptor` `withSpring`.
+
+## Whole-page progress
+
+```jsx
+import { useScrollProgress, animate } from 'react-ui-animate';
+
+function ProgressBar() {
+  const { scrollYProgress } = useScrollProgress(window);
+
+  return (
+    <animate.div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: scrollYProgress.to([0, 1], ['0%', '100%']),
+        height: 4,
+        background: '#60a5fa',
+      }}
+    />
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_hook_useScrollProgress_BasicExample}
+  code={Code_hook_useScrollProgress_BasicExample}
+/>
+
+## Progress relative to an element
+
+Pass a `target` ref plus an `offset`: two markers (`"<element edge>
+<container edge>"`) describing where progress should read `0` and where it
+should read `1`. Edges accept `start`/`center`/`end`, a percentage, or a
+`px`/`vw`/`vh` value.
+
+```jsx
+import { useRef } from 'react';
+import { useScrollProgress, animate } from 'react-ui-animate';
+
+function RevealOnScroll() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScrollProgress(window, {
+    target: ref,
+    offset: ['start end', 'start start'], // 0 when element enters viewport,
+  }); //                                     1 when its top hits the viewport top
+
+  return (
+    <animate.div
+      ref={ref}
+      style={{
+        opacity: scrollYProgress.to([0, 1], [0, 1]),
+        translateY: scrollYProgress.to([0, 1], [50, 0]),
+      }}
+    />
+  );
+}
+```
+
+<CodeExample
+  demo={Demo_hook_useScrollProgress_ElementProgress}
+  code={Code_hook_useScrollProgress_ElementProgress}
+/>
+
+## Options
+
+- `axis`: track horizontal (`'x'`) or vertical (`'y'`, default) scroll.
+- `animate`: when `true` (default), progress updates through `toDescriptor`
+  (a spring by default) instead of snapping directly to the raw value; set
+  `false` for a 1:1, non-smoothed value.
+- `toDescriptor`: customize the animation driver used per update, e.g.
+  `toDescriptor: (t) => withTiming(t, { duration: 100 })`.
+- Track a scrollable container instead of `window` by passing its ref as the
+  first argument: `useScrollProgress(containerRef)`.
+
+## Next steps
+
+- [Gesture.Scroll()](../gesture/useGesture#gesturescroll): the lower-level
+  primitive this hook is built on, for raw scroll events instead of a
+  normalized progress value.
+- [useInView](./useInView): for enter/exit detection instead of continuous
+  progress.
+- [useScrollReveal](./useScrollReveal): the shorthand for the common
+  fade/slide-in-on-scroll case, when you don't need both axes.

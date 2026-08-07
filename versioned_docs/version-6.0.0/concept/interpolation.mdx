@@ -1,0 +1,60 @@
+---
+sidebar_position: 3
+id: interpolation
+title: Interpolation
+---
+
+import CodeExample from '@site/src/components/CodeExample';
+import Code_core_interpolation_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/core/interpolation/BasicExample.tsx';
+import Demo_core_interpolation_BasicExample from '@site/src/examples/6.0.0/core/interpolation/BasicExample';
+
+Interpolation maps one range of values to another. In animation it's commonly
+used to convert a driver (like `0 → 200`) into a different output (opacity,
+color, degrees).
+
+:::note
+Call `.to(inRange, outRange)` on an `AnimateValue`. The result stays reactive
+as the source value changes.
+:::
+
+## Basic usage
+
+```jsx
+const [x, setX] = useValue(0);
+
+<animate.div
+  style={{
+    translateX: x,
+    background: x.to([0, 200], ['#60a5fa', '#818cf8']),
+  }}
+/>
+```
+
+<CodeExample
+  demo={Demo_core_interpolation_BasicExample}
+  code={Code_core_interpolation_BasicExample}
+/>
+
+## Parameters
+
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| inRange | `number[]` | The input range (must be ascending). At least 2 values. |
+| outRange | `(number \| string)[]` | Outputs mapped to each `inRange` entry. Numbers, units, functions, or colors. |
+| config | `ExtrapolateConfig` (optional) | Extrapolation and easing. |
+
+## ExtrapolateConfig
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| extrapolate | `clamp` \| `extend` \| `identity` | `extend` | Global fallback for left/right |
+| extrapolateLeft | `clamp` \| `extend` \| `identity` | Inherits | Input below first `inRange` |
+| extrapolateRight | `clamp` \| `extend` \| `identity` | Inherits | Input above last `inRange` |
+| easing | `(t: number) => number` | `undefined` | Easing on normalized `t` |
+
+## Supported output formats
+
+1. **Numbers** — `value.to([0, 1], [10, 20]) → 15`
+2. **Strings with units** — `value.to([0, 1], ['10px', '20px'])`
+3. **CSS functions** — `value.to([0, 1], ['rotate(0deg)', 'rotate(180deg)'])`
+4. **Colors** — named, HEX, RGBA, HSL

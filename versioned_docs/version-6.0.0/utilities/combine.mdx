@@ -1,0 +1,49 @@
+---
+sidebar_position: 2
+id: combine
+title: combine
+---
+
+`combine` derives one `AnimateValue` from several others, recomputing
+whenever any input changes. Useful when a style depends on more than one
+animated value at once.
+
+```ts
+function combine<T extends any[], U>(
+  inputs: { [K in keyof T]: AnimateValue<T[K]> },
+  combiner: (...values: T) => U
+): AnimateValue<U>;
+```
+
+## Usage
+
+```jsx
+import { useValue, combine, animate } from 'react-ui-animate';
+
+function Card() {
+  const [width, setWidth] = useValue(100);
+  const [height, setHeight] = useValue(100);
+
+  const area = combine([width, height], (w, h) => Math.round(w * h));
+
+  return (
+    <animate.div style={{ width, height }}>
+      Area: {area}
+    </animate.div>
+  );
+}
+```
+
+`combine`'s return value is itself an `AnimateValue`, so it can be read
+directly in JSX (as above), passed into `style`, or combined again.
+
+## When to reach for it
+
+Use `combine` when a value depends on more than one `AnimateValue`. For a
+single value's own transform, `value.to(...)` is simpler and is what you
+want most of the time:
+
+```jsx
+const opacity = scrollProgress.to([0, 1], [0, 1]);
+const distance = combine([x, y], (x, y) => Math.hypot(x, y));
+```

@@ -1,0 +1,87 @@
+---
+sidebar_position: 11
+id: withCustom
+title: withCustom
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withCustom_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withCustom/BasicExample.tsx';
+import Demo_modifier_withCustom_BasicExample from '@site/src/examples/6.0.0/modifier/withCustom/BasicExample';
+
+`withCustom` hands you the per-frame tick loop directly. Use it when none of
+the built-in modifiers fit: physics you're computing yourself, a value
+driven by an external clock, or an effect that needs raw access to elapsed
+time and delta time on every frame.
+
+## Signature
+
+```ts
+function withCustom(
+  tick: (ctx: { elapsed: number; dt: number; from: number }) => number,
+  options?: {
+    duration?: number; // omit for an indefinite driver, stopped via cancel()/pause()
+    from?: number;
+    onStart?: () => void;
+    onChange?: (value: number) => void;
+    onComplete?: () => void;
+    onPause?: () => void;
+    onResume?: () => void;
+  }
+): Descriptor;
+```
+
+`tick` runs once per animation frame and returns the next value. `elapsed`
+excludes any time spent paused, `dt` is the time since the previous frame,
+and `from` is the starting value (either the value's current number or the
+`from` option, if set).
+
+## Usage
+
+```jsx
+import { useValue, withCustom, animate } from 'react-ui-animate';
+
+function Wobble() {
+  const [x, setX] = useValue(0);
+
+  return (
+    <animate.div
+      style={{ translateX: x }}
+      onClick={() =>
+        setX(
+          withCustom(({ elapsed, from }) => from + Math.sin(elapsed / 100) * 20, {
+            duration: 2000,
+          })
+        )
+      }
+    />
+  );
+}
+```
+
+Because `tick` returns a plain number, you're free to compute it however you
+like: a hand-rolled easing curve, a value read off a `<canvas>`, or the
+output of a physics library.
+
+<CodeExample
+  demo={Demo_modifier_withCustom_BasicExample}
+  code={Code_modifier_withCustom_BasicExample}
+/>
+
+## Duration vs. indefinite
+
+- With `duration` set, the driver calls `onComplete` and stops once `elapsed`
+  reaches it. `pause`/`resume` on the returned controls shift `elapsed`
+  correctly, so a paused animation doesn't jump ahead when resumed.
+- Without `duration`, the driver runs until you call `cancel()` (or a new
+  `set` call replaces it). This is the shape to use for a value that tracks
+  something external, like a WebSocket-driven counter.
+
+Reduced motion is respected the same way as other modifiers: if the user has
+reduced motion enabled and `duration` is set, the driver jumps straight to
+the final tick instead of animating through it.
+
+## Next steps
+
+- [Animation Modifiers overview](./overview): compare `withCustom` against
+  the built-in drivers.
+- [useValue](../concept/useValue): the hook that consumes these descriptors.

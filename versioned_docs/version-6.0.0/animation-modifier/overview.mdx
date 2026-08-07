@@ -1,0 +1,58 @@
+---
+sidebar_position: 1
+id: overview
+title: Animation Modifiers Overview
+---
+
+A modifier tells `useValue` *how* to get to a target. Without one, a value
+snaps instantly:
+
+```jsx
+import { useValue, withSpring } from 'react-ui-animate';
+
+const [x, setX] = useValue(0);
+
+setX(100);
+setX(withSpring(100));
+```
+
+## Available modifiers
+
+| Modifier | Motion | Best for |
+|---|---|---|
+| [withSpring](./withSpring) | Physics-based | Buttons, cards, modals, anything that should feel alive |
+| [withTiming](./withTiming) | Fixed duration | Tooltips, dropdowns, progress bars |
+| [withDecay](./withDecay) | Momentum/friction | Flicks, swipes, momentum scrolling |
+| [withSequence](./withSequence) | Multi-step, in order | Choreographed, multi-phase motion |
+| [withDelay](./withDelay) | Pause | A step inside `withSequence` |
+| [withStagger](./withStagger) | Per-item delay | Staggering a list (with `withParallel`) |
+| [withKeyframes](./withKeyframes) | Multiple stops, one call | Shorthand for a `withSequence` of `withTiming` steps |
+| [withParallel](./withParallel) | Different driver per key | Object/array values where keys need different timing |
+| [withLoop](./withLoop) | Repeats | Spinners, pulses, ambient motion |
+| [withCustom](./withCustom) | Your own tick function | Hand-rolled physics, external clocks, anything the built-ins don't cover |
+
+## Composing modifiers
+
+```jsx
+setX(withSequence([withTiming(50, { duration: 200 }), withSpring(100), withDecay(0.3)]));
+
+setX(withLoop(withSequence([withSpring(100), withSpring(0)]), 3));
+```
+
+## Callbacks
+
+Every modifier accepts `onStart`/`onChange`/`onComplete`:
+
+```jsx
+setX(withSpring(100, {
+  onStart: () => {},
+  onChange: (value) => {},
+  onComplete: () => {},
+}));
+```
+
+## Next steps
+
+Pick a modifier above, or continue to
+[Unmount & Flip](../presence/presence-basics) to use these as exit
+animations.

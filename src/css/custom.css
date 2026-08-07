@@ -1393,3 +1393,30 @@ code .token.operator,
     display: none;
   }
 }
+
+/* Ambient float used by the hero showcase's decorative mini-cards/pills.
+   Kept as a plain CSS animation (not react-ui-animate) since it's a purely
+   decorative idle loop with no interaction to drive it. */
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.heroFloatSlow {
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+.heroFloatDelay {
+  animation-delay: 1.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroFloatSlow {
+    animation: none;
+  }
+}

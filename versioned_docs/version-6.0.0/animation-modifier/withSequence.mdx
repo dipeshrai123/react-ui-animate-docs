@@ -1,0 +1,61 @@
+---
+sidebar_position: 5
+id: withSequence
+title: withSequence
+---
+
+import CodeExample from "@site/src/components/CodeExample"
+import Code_modifier_withSequence_BasicExample from '!!raw-loader!@site/src/examples/6.0.0/modifier/withSequence/BasicExample.tsx';
+import Demo_modifier_withSequence_BasicExample from '@site/src/examples/6.0.0/modifier/withSequence/BasicExample';
+
+`withSequence` chains animation steps, each starting only after the previous
+one completes, for multi-phase motion that a single spring or timing can't express.
+
+## Signature
+
+```ts
+function withSequence(
+  animations: Descriptor[],
+  options?: { onStart?: () => void; onComplete?: () => void }
+): Descriptor;
+```
+
+## Usage
+
+```jsx
+import { useValue, withSequence, withSpring, withTiming, animate } from 'react-ui-animate';
+
+function Sequenced() {
+  const [x, setX] = useValue(0);
+
+  const run = () => {
+    // highlight-start
+    /* Each step waits for the previous one to finish */
+    setX(
+      withSequence([
+        withSpring(100),
+        withTiming(200, { duration: 500 }),
+        withSpring(0),
+      ])
+    );
+    // highlight-end
+  };
+
+  return <animate.div style={{ translateX: x }} onClick={run} />;
+}
+```
+
+<CodeExample
+  demo={Demo_modifier_withSequence_BasicExample}
+  code={Code_modifier_withSequence_BasicExample}
+/>
+
+Steps can mix any driver: `withSpring`, `withTiming`, `withDelay`,
+`withDecay`, freely within the same sequence.
+
+## Next steps
+
+- [withDelay](./withDelay): add a pause between steps.
+- [withLoop](./withLoop): repeat a whole sequence.
+- [withStagger](./withStagger) / [withParallel](./withParallel): run steps
+  across multiple values instead of one after another.
